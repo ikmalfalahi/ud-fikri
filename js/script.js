@@ -33,21 +33,34 @@ const paymentInfo = document.getElementById('payment-info');
 // ================== FETCH DATA ==================
 async function loadData() {
   try {
-    const prodRes = await fetch('/products.json');
-    const storeRes = await fetch('/store.json');
+    // 🔹 coba ambil root data.json
+    const rootRes = await fetch('/data.json');
 
-    if (prodRes.ok) {
-      products = await prodRes.json();
+    if (rootRes.ok) {
+      const rootData = await rootRes.json();
+      products = rootData.products || [];
+      storeSettings = rootData.storeSettings || storeSettings;
+
       localStorage.setItem(STORAGE.products, JSON.stringify(products));
-    } else {
-      products = JSON.parse(localStorage.getItem(STORAGE.products)) || [];
-    }
-
-    if (storeRes.ok) {
-      storeSettings = await storeRes.json();
       localStorage.setItem(STORAGE.storeSettings, JSON.stringify(storeSettings));
     } else {
-      storeSettings = JSON.parse(localStorage.getItem(STORAGE.storeSettings)) || storeSettings;
+      // 🔹 fallback ke products.json & store.json
+      const prodRes = await fetch('/products.json');
+      const storeRes = await fetch('/store.json');
+
+      if (prodRes.ok) {
+        products = await prodRes.json();
+        localStorage.setItem(STORAGE.products, JSON.stringify(products));
+      } else {
+        products = JSON.parse(localStorage.getItem(STORAGE.products)) || [];
+      }
+
+      if (storeRes.ok) {
+        storeSettings = await storeRes.json();
+        localStorage.setItem(STORAGE.storeSettings, JSON.stringify(storeSettings));
+      } else {
+        storeSettings = JSON.parse(localStorage.getItem(STORAGE.storeSettings)) || storeSettings;
+      }
     }
   } catch (e) {
     console.warn('⚠️ Gagal ambil data server, pakai localStorage', e);
@@ -147,9 +160,6 @@ function renderProducts() {
     card.querySelector('button').addEventListener('click', () => addToCart(p.id));
   });
 }
-
-// ================== KERANJANG ==================
-// (fungsi addToCart, renderCart, increaseQty, decreaseQty, removeItem, checkout ... tetap lanjut di bawah)
 
 // ================== EVENT ==================
 searchInput.addEventListener('input', renderProducts);
