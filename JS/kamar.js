@@ -7,7 +7,7 @@ let products = JSON.parse(localStorage.getItem(STORAGE.products)) || [];
 let storeSettings = JSON.parse(localStorage.getItem(STORAGE.storeSettings)) || {
   status: 'open',
   description: '',
-  hours: '', // jam operasional
+  hours: '',
   contact: '',
   address: '',
   map: ''
@@ -30,19 +30,19 @@ const productStock = document.getElementById('product-stock');
 const productCategory = document.getElementById('product-category');
 const newCategory = document.getElementById('new-category');
 const addCategoryBtn = document.getElementById('add-category-btn');
-const productDesc = document.getElementById('product-desc'); // <- disamakan dengan HTML
+const productDesc = document.getElementById('product-description'); // ✅ diperbaiki
 const productImage = document.getElementById('product-image');
 const productPublish = document.getElementById('product-publish');
 const discountPrice = document.getElementById('discount-price');
 const discountQtyMin = document.getElementById('discount-qty-min');
 const discountQtyPrice = document.getElementById('discount-qty-price');
-const productForm = document.getElementById('product-form');
+const addProductBtn = document.getElementById('add-product'); // ✅ ganti
 const productList = document.getElementById('product-list');
 
-// ================= STORE ==================
 const storeBank = document.getElementById('store-bank');
 const storeQris = document.getElementById('store-qris');
 
+// ================= STORE ==================
 function renderStoreSettings() {
   storeStatus.value = storeSettings.status;
   storeDescription.value = storeSettings.description;
@@ -57,7 +57,7 @@ function renderStoreSettings() {
 saveStoreInfoBtn.addEventListener('click', () => {
   storeSettings.status = storeStatus.value;
   storeSettings.description = storeDescription.value;
-  storeSettings.hours = storeHours.value; // simpan jam operasional
+  storeSettings.hours = storeHours.value;
   storeSettings.contact = storeContact.value;
   storeSettings.address = storeAddress.value;
   storeSettings.map = storeMap.value;
@@ -67,7 +67,6 @@ saveStoreInfoBtn.addEventListener('click', () => {
   localStorage.setItem(STORAGE.storeSettings, JSON.stringify(storeSettings));
   alert('Info toko berhasil disimpan!');
 });
-
 
 // ================= PRODUCT ==================
 function renderCategories() {
@@ -111,9 +110,7 @@ function renderProducts() {
   });
 }
 
-productForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-
+addProductBtn.addEventListener('click', () => {  // ✅ ganti submit jadi click
   const imgFile = productImage.value.trim();
   const product = {
     id: editIndex !== null ? products[editIndex].id : Date.now().toString(),
@@ -141,7 +138,18 @@ productForm.addEventListener('submit', (e) => {
   localStorage.setItem(STORAGE.products, JSON.stringify(products));
   renderProducts();
   renderCategories();
-  productForm.reset();
+
+  // reset manual
+  productName.value = '';
+  productPrice.value = '';
+  productStock.value = '';
+  productCategory.value = '';
+  productDesc.value = '';
+  productImage.value = '';
+  productPublish.checked = false;
+  discountPrice.value = '';
+  discountQtyMin.value = '';
+  discountQtyPrice.value = '';
 });
 
 function editProduct(index) {
@@ -173,4 +181,3 @@ function deleteProduct(index) {
 renderStoreSettings();
 renderProducts();
 renderCategories();
-
