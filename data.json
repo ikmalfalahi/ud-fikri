@@ -1,0 +1,24 @@
+{
+  "storeSettings": {
+    "status": "open",
+    "description": "Toko sembako murah lengkap",
+    "hours": "08.00 - 21.00",
+    "contact": "08123456789",
+    "address": "Jl. Raya Pasar No. 123",
+    "map": "<iframe src='...' width='100%' height='250'></iframe>",
+    "image": "images/toko.jpg"
+  },
+  "products": [
+    {
+      "id": 1,
+      "name": "Beras Premium 5kg",
+      "description": "Beras pulen wangi",
+      "price": 65000,
+      "discountPrice": 10,
+      "stock": 50,
+      "publish": true,
+      "category": "Beras",
+      "image": "images/beras.jpg"
+    }
+  ]
+}
