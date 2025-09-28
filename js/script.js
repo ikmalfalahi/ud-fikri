@@ -1,19 +1,6 @@
-// ================== STORAGE KEY ==================
-const STORAGE = {
-  products: 'products',
-  storeSettings: 'storeSettings'
-};
-
 // ================== STATE ==================
 let products = [];
-let storeSettings = {
-  status: 'open',
-  description: '',
-  hours: '',
-  contact: '',
-  address: '',
-  map: ''
-};
+let storeSettings = {};
 let cart = [];
 
 // ================== DOM ==================
@@ -33,39 +20,16 @@ const paymentInfo = document.getElementById('payment-info');
 // ================== FETCH DATA ==================
 async function loadData() {
   try {
-    // 🔹 coba ambil root data.json
-    const rootRes = await fetch('/data.json');
-
-    if (rootRes.ok) {
-      const rootData = await rootRes.json();
-      products = rootData.products || [];
-      storeSettings = rootData.storeSettings || storeSettings;
-
-      localStorage.setItem(STORAGE.products, JSON.stringify(products));
-      localStorage.setItem(STORAGE.storeSettings, JSON.stringify(storeSettings));
+    const res = await fetch('/api/saveData');
+    if (res.ok) {
+      const data = await res.json();
+      products = data.products || [];
+      storeSettings = data.storeSettings || {};
     } else {
-      // 🔹 fallback ke products.json & store.json
-      const prodRes = await fetch('/products.json');
-      const storeRes = await fetch('/store.json');
-
-      if (prodRes.ok) {
-        products = await prodRes.json();
-        localStorage.setItem(STORAGE.products, JSON.stringify(products));
-      } else {
-        products = JSON.parse(localStorage.getItem(STORAGE.products)) || [];
-      }
-
-      if (storeRes.ok) {
-        storeSettings = await storeRes.json();
-        localStorage.setItem(STORAGE.storeSettings, JSON.stringify(storeSettings));
-      } else {
-        storeSettings = JSON.parse(localStorage.getItem(STORAGE.storeSettings)) || storeSettings;
-      }
+      console.warn("⚠️ Gagal ambil data dari API");
     }
   } catch (e) {
-    console.warn('⚠️ Gagal ambil data server, pakai localStorage', e);
-    products = JSON.parse(localStorage.getItem(STORAGE.products)) || [];
-    storeSettings = JSON.parse(localStorage.getItem(STORAGE.storeSettings)) || storeSettings;
+    console.error("⚠️ Error fetch API", e);
   }
 
   renderCategories();
@@ -160,6 +124,101 @@ function renderProducts() {
     card.querySelector('button').addEventListener('click', () => addToCart(p.id));
   });
 }
+
+// ================== KERANJANG ==================
+function addToCart(id) {
+  const product = products.find(p => p.id === id);
+  if (!product) return;
+
+  const item = cart.find(c => c.id === id);
+  if (item) {
+    item.qty++;
+  } else {
+    cart.push({ ...product, qty: 1 });
+  }
+  renderCart();
+}
+
+function increaseQty(id) {
+  const item = cart.find(c => c.id === id);
+  if (item) {
+    item.qty++;
+    renderCart();
+  }
+}
+
+function decreaseQty(id) {
+  const item = cart.find(c => c.id === id);
+  if (item && item.qty > 1) {
+    item.qty--;
+  } else {
+    cart = cart.filter(c => c.id !== id);
+  }
+  renderCart();
+}
+
+function removeItem(id) {
+  cart = cart.filter(c => c.id !== id);
+  renderCart();
+}
+
+function renderCart() {
+  cartItems.innerHTML = "";
+  let total = 0;
+
+  cart.forEach(item => {
+    let harga = item.price;
+
+    // Diskon persentase
+    if (item.discountPrice && item.discountPrice > 0) {
+      harga = Math.round(item.price - (item.price * item.discountPrice / 100));
+    }
+
+    // Diskon jumlah
+    if (item.discountQty && item.discountQty.min > 0 && item.qty >= item.discountQty.min) {
+      harga = item.discountQty.price;
+    }
+
+    let subtotal = harga * item.qty;
+    total += subtotal;
+
+    const li = document.createElement('li');
+    li.innerHTML = `
+      ${item.name} - Rp ${harga} x ${item.qty} = Rp ${subtotal}
+      <div>
+        <button onclick="increaseQty(${item.id})">+</button>
+        <button onclick="decreaseQty(${item.id})">-</button>
+        <button onclick="removeItem(${item.id})">Hapus</button>
+      </div>
+    `;
+    cartItems.appendChild(li);
+  });
+
+  cartTotal.textContent = `Total: Rp ${total}`;
+}
+
+// ================== CHECKOUT ==================
+checkoutBtn.addEventListener('click', () => {
+  if (cart.length === 0) {
+    alert("Keranjang masih kosong!");
+    return;
+  }
+
+  let metode = paymentMethod.value;
+  let pesan = `🛒 Pesanan Baru:\n\n`;
+  cart.forEach(item => {
+    pesan += `- ${item.name} x ${item.qty}\n`;
+  });
+  pesan += `\n${cartTotal.textContent}\n`;
+  pesan += `Metode Bayar: ${metode}`;
+
+  if (storeSettings.contact) {
+    let wa = storeSettings.contact.replace(/\D/g, "");
+    window.open(`https://wa.me/${wa}?text=${encodeURIComponent(pesan)}`, "_blank");
+  } else {
+    alert("Nomor kontak belum diatur.");
+  }
+});
 
 // ================== EVENT ==================
 searchInput.addEventListener('input', renderProducts);
