@@ -1,20 +1,22 @@
-const STORAGE = { 
-  products: 'products', 
-  storeSettings: 'storeSettings' 
+// ================== STORAGE KEY ==================
+const STORAGE = {
+  products: 'products',
+  storeSettings: 'storeSettings'
 };
 
+// ================== STATE ==================
 let products = [];
 let storeSettings = {
   status: 'open',
   description: '',
+  hours: '',
   contact: '',
   address: '',
   map: ''
 };
-
 let cart = [];
 
-// ============ DOM =============
+// ================== DOM ==================
 const productsContainer = document.getElementById('products-container');
 const storeStatusMsg = document.getElementById('store-status-msg');
 const storeContactDiv = document.getElementById('store-contact');
@@ -28,7 +30,7 @@ const checkoutBtn = document.getElementById('checkout');
 const paymentMethod = document.getElementById('payment-method');
 const paymentInfo = document.getElementById('payment-info');
 
-// ============ FETCH DATA DARI SERVER ============
+// ================== FETCH DATA ==================
 async function loadData() {
   try {
     const prodRes = await fetch('/products.json');
@@ -36,17 +38,19 @@ async function loadData() {
 
     if (prodRes.ok) {
       products = await prodRes.json();
+      localStorage.setItem(STORAGE.products, JSON.stringify(products));
     } else {
       products = JSON.parse(localStorage.getItem(STORAGE.products)) || [];
     }
 
     if (storeRes.ok) {
       storeSettings = await storeRes.json();
+      localStorage.setItem(STORAGE.storeSettings, JSON.stringify(storeSettings));
     } else {
       storeSettings = JSON.parse(localStorage.getItem(STORAGE.storeSettings)) || storeSettings;
     }
   } catch (e) {
-    console.error('Gagal ambil data dari server, fallback ke localStorage', e);
+    console.warn('⚠️ Gagal ambil data server, pakai localStorage', e);
     products = JSON.parse(localStorage.getItem(STORAGE.products)) || [];
     storeSettings = JSON.parse(localStorage.getItem(STORAGE.storeSettings)) || storeSettings;
   }
@@ -57,17 +61,17 @@ async function loadData() {
   renderCart();
 }
 
-// ============ RENDER INFO TOKO ============
+// ================== RENDER STORE ==================
 function renderStoreInfo() {
   if (storeSettings.status === 'closed') {
     storeStatusMsg.textContent = "⚠️ Maaf, toko sedang tutup.";
     storeStatusMsg.className = "store-closed";
     productsContainer.innerHTML = "";
-  } else {
-    storeStatusMsg.textContent = "✅ Toko sedang buka.";
-    storeStatusMsg.className = "store-open";
-    renderProducts();
+    return;
   }
+
+  storeStatusMsg.textContent = "✅ Toko sedang buka.";
+  storeStatusMsg.className = "store-open";
 
   document.getElementById('store-desc-text').textContent = storeSettings.description || "Belum ada deskripsi toko.";
   document.getElementById('store-desc-img').src = storeSettings.image || "images/deskripsi.jpg";
@@ -77,26 +81,31 @@ function renderStoreInfo() {
 
   storeContactDiv.textContent = storeSettings.contact ? `Kontak: ${storeSettings.contact}` : "";
   storeAddressDiv.textContent = storeSettings.address ? `Alamat: ${storeSettings.address}` : "";
-  storeMapDiv.innerHTML = storeSettings.map ? storeSettings.map : "";
+  storeMapDiv.innerHTML = storeSettings.map || "";
 }
 
-// ============ RENDER PRODUK & KATEGORI ============
-function renderCategories(){
-  const cats = [...new Set(products.filter(p=>p.publish).map(p=>p.category))];
+// ================== RENDER KATEGORI ==================
+function renderCategories() {
+  const cats = [...new Set(products.filter(p => p.publish).map(p => p.category))];
   filterCategory.innerHTML = `<option value="">Semua Kategori</option>`;
-  cats.forEach(c=>{
+  cats.forEach(c => {
     const opt = document.createElement('option');
-    opt.value=c; opt.textContent=c;
+    opt.value = c;
+    opt.textContent = c;
     filterCategory.appendChild(opt);
   });
 }
 
+// ================== RENDER PRODUK ==================
 function renderProducts() {
   if (storeSettings.status === 'closed') return;
+
   productsContainer.innerHTML = '';
   let searchText = searchInput.value.toLowerCase();
   let selectedCat = filterCategory.value;
-  let filtered = products.filter(p => p.publish)
+
+  let filtered = products
+    .filter(p => p.publish)
     .filter(p => selectedCat ? p.category === selectedCat : true)
     .filter(p => p.name.toLowerCase().includes(searchText));
 
@@ -104,6 +113,7 @@ function renderProducts() {
     const card = document.createElement('div');
     card.className = 'product-card';
 
+    // Hitung diskon
     let hargaAsli = p.price;
     let hargaDiskon = p.discountPrice && p.discountPrice > 0
       ? Math.round(p.price - (p.price * p.discountPrice / 100))
@@ -138,11 +148,12 @@ function renderProducts() {
   });
 }
 
-// ============ KERANJANG ============
-// (fungsi addToCart, hitungSubtotal, renderCart, increaseQty, decreaseQty, removeItem, checkout tetap sama dengan punyamu)
+// ================== KERANJANG ==================
+// (fungsi addToCart, renderCart, increaseQty, decreaseQty, removeItem, checkout ... tetap lanjut di bawah)
 
-searchInput.addEventListener('input',renderProducts);
-filterCategory.addEventListener('change',renderProducts);
+// ================== EVENT ==================
+searchInput.addEventListener('input', renderProducts);
+filterCategory.addEventListener('change', renderProducts);
 
-// Panggil load data pertama kali
+// ================== INIT ==================
 loadData();
