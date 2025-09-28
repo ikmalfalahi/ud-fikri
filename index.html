@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Usaha Dagang Fikri</title>
-  <link rel="icon" href="images/favicon.png">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://kit.fontawesome.com/yourfontawesomekit.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="./images/favicon.png">
+  <link rel="stylesheet" href="./css/style.css">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
 <header>
   <div id="logo-container">
-    <img src="images/logo.png" alt="Logo" width="50">
+    <img src="./images/logo.png" alt="Logo" width="50">
     <h1>USAHA DAGANG FIKRI</h1>
   </div>
   <div class="search-filter">
@@ -21,25 +22,19 @@
   </div>
 </header>
 
-<head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-  <div id="welcome">
-    <i class="fa-solid fa-handshake handshake-icon"></i>
-    Selamat datang di <strong>Usaha Dagang Fikri!</strong>
-  </div>
-</body>
-
+<div id="welcome">
+  <i class="fa-solid fa-handshake handshake-icon"></i>
+  Selamat datang di <strong>Usaha Dagang Fikri!</strong>
+</div>
 
 <div id="store-info">
   <div id="store-status-msg"></div>
   <div id="store-description">
-  <div class="desc-text" id="store-desc-text"></div>
-  <div class="desc-image">
-    <img id="store-desc-img" src="images/deskripsi.jpg" alt="Gambar Toko">
+    <div class="desc-text" id="store-desc-text"></div>
+    <div class="desc-image">
+      <img id="store-desc-img" src="./images/deskripsi.jpg" alt="Gambar Toko">
+    </div>
   </div>
-</div>
   <div id="store-hours"></div>
   <div id="store-contact"></div>
   <div id="store-address"></div>
@@ -51,15 +46,11 @@
   <ul id="cart-items"></ul>
   <div id="cart-total">Total: Rp 0</div>
 
-  <label for="customer-name">
-  <i class="fas fa-user"></i> Nama Pemesan
-</label>
-<input type="text" id="customer-name" placeholder="Masukkan nama anda">
+  <label for="customer-name"><i class="fas fa-user"></i> Nama Pemesan</label>
+  <input type="text" id="customer-name" placeholder="Masukkan nama anda">
 
-<label for="customer-address">
-  <i class="fas fa-map-marker-alt"></i> Alamat (jalan/nomor rumah)
-</label>
-<input type="text" id="customer-address" placeholder="Contoh: Jl. Melati No. 10">
+  <label for="customer-address"><i class="fas fa-map-marker-alt"></i> Alamat (jalan/nomor rumah)</label>
+  <input type="text" id="customer-address" placeholder="Contoh: Jl. Melati No. 10">
 
   <div id="payment-section">
     <select id="payment-method">
@@ -76,8 +67,8 @@
 
 <section id="products-container"></section>
 
-<footer>&copy; 2025 Ikmal Falahi. All Reserve.</footer>
+<footer>&copy; 2025 Ikmal Falahi. All Rights Reserved.</footer>
 
-<script src="js/script.js"></script>
+<script src="./js/script.js"></script>
 </body>
 </html>
