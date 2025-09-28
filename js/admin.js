@@ -1,4 +1,4 @@
-// ================== STORAGE ==================
+// ================= STORAGE KEY =================
 const STORAGE = {
   products: 'products',
   storeSettings: 'storeSettings'
@@ -8,8 +8,7 @@ let products = [];
 let storeSettings = {};
 let editIndex = null;
 
-// ================== DOM ==================
-// Store
+// ================= DOM =================
 const storeStatus = document.getElementById('store-status');
 const storeDescription = document.getElementById('store-description');
 const storeHours = document.getElementById('store-hours');
@@ -20,7 +19,6 @@ const storeBank = document.getElementById('store-bank');
 const storeQris = document.getElementById('store-qris');
 const saveStoreInfoBtn = document.getElementById('save-store-info');
 
-// Produk
 const productName = document.getElementById('product-name');
 const productPrice = document.getElementById('product-price');
 const productStock = document.getElementById('product-stock');
@@ -36,7 +34,22 @@ const discountQtyPrice = document.getElementById('discount-qty-price');
 const addProductBtn = document.getElementById('add-product');
 const productList = document.getElementById('product-list');
 
-// ================== FETCH / SAVE DATA ==================
+// ================= API =================
+async function saveData() {
+  try {
+    await fetch('/api/saveData', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        products,
+        storeSettings
+      })
+    });
+  } catch (err) {
+    console.error("❌ Gagal simpan ke server", err);
+  }
+}
+
 async function loadData() {
   try {
     const res = await fetch('/api/saveData');
@@ -44,25 +57,21 @@ async function loadData() {
       const data = await res.json();
       products = data.products || [];
       storeSettings = data.storeSettings || {};
+      localStorage.setItem(STORAGE.products, JSON.stringify(products));
+      localStorage.setItem(STORAGE.storeSettings, JSON.stringify(storeSettings));
     }
-  } catch (e) {
-    console.warn("⚠️ Gagal ambil data.json", e);
+  } catch (err) {
+    console.warn("⚠️ Gagal ambil data dari server, fallback localStorage");
+    products = JSON.parse(localStorage.getItem(STORAGE.products)) || [];
+    storeSettings = JSON.parse(localStorage.getItem(STORAGE.storeSettings)) || {};
   }
+
+  renderStoreSettings();
   renderProducts();
   renderCategories();
-  renderStoreSettings();
 }
 
-async function saveData() {
-  const data = { products, storeSettings };
-  await fetch('/api/saveData', {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  });
-}
-
-// ================== STORE ==================
+// ================= STORE =================
 function renderStoreSettings() {
   storeStatus.value = storeSettings.status || 'open';
   storeDescription.value = storeSettings.description || '';
@@ -74,7 +83,7 @@ function renderStoreSettings() {
   storeQris.value = storeSettings.qrisImage || '';
 }
 
-saveStoreInfoBtn.addEventListener("click", async () => {
+saveStoreInfoBtn.addEventListener('click', async () => {
   storeSettings = {
     status: storeStatus.value,
     description: storeDescription.value,
@@ -85,11 +94,14 @@ saveStoreInfoBtn.addEventListener("click", async () => {
     bankAccount: storeBank.value,
     qrisImage: storeQris.value
   };
+
+  localStorage.setItem(STORAGE.storeSettings, JSON.stringify(storeSettings));
+
   await saveData();
-  alert("✅ Info toko berhasil disimpan!");
+  alert('✅ Info toko berhasil disimpan!');
 });
 
-// ================== PRODUK ==================
+// ================= PRODUCT =================
 function renderCategories() {
   productCategory.innerHTML = '<option value="">Pilih Kategori</option>';
   const categories = [...new Set(products.map(p => p.category).filter(Boolean))];
@@ -118,10 +130,12 @@ function renderProducts() {
   products.forEach((p, i) => {
     const li = document.createElement('li');
     li.innerHTML = `
-      <strong>${p.name}</strong> - Rp ${p.price} | Stok: ${p.stock} | Kategori: ${p.category || '-'}
-      ${p.publish ? '<span style="color:green">[Publish]</span>' : '<span style="color:red">[Draft]</span>'}
-      <br>Diskon Harga: ${p.discountPrice || 0}% 
-      | Paket: ${p.discountQty?.min || '-'} → Rp ${p.discountQty?.price || '-'}
+      <div>
+        <strong>${p.name}</strong> - Rp ${p.price} | Stok: ${p.stock} | Kategori: ${p.category || '-'}
+        ${p.publish ? '<span style="color:green">[Publish]</span>' : '<span style="color:red">[Draft]</span>'}
+        <br>Diskon: ${p.discountPrice || 0}% 
+        | Paket: ${p.discountQty?.min || '-'} → Rp ${p.discountQty?.price || '-'}
+      </div>
       <div>
         <button onclick="editProduct(${i})">Edit</button>
         <button onclick="deleteProduct(${i})">Hapus</button>
@@ -132,6 +146,7 @@ function renderProducts() {
 }
 
 addProductBtn.addEventListener('click', async () => {
+  const imgFile = productImage.value.trim();
   const product = {
     id: editIndex !== null ? products[editIndex].id : Date.now().toString(),
     name: productName.value,
@@ -139,7 +154,7 @@ addProductBtn.addEventListener('click', async () => {
     stock: parseInt(productStock.value) || 0,
     category: productCategory.value,
     description: productDesc.value,
-    image: productImage.value ? "images/" + productImage.value : "",
+    image: imgFile ? "images/" + imgFile : "",
     publish: productPublish.checked,
     discountPrice: parseInt(discountPrice.value) || 0,
     discountQty: {
@@ -155,7 +170,9 @@ addProductBtn.addEventListener('click', async () => {
     products.push(product);
   }
 
+  localStorage.setItem(STORAGE.products, JSON.stringify(products));
   await saveData();
+
   renderProducts();
   renderCategories();
 
@@ -172,7 +189,7 @@ addProductBtn.addEventListener('click', async () => {
   discountQtyPrice.value = '';
 });
 
-window.editProduct = function (index) {
+function editProduct(index) {
   const p = products[index];
   productName.value = p.name;
   productPrice.value = p.price;
@@ -185,16 +202,17 @@ window.editProduct = function (index) {
   discountQtyMin.value = p.discountQty?.min || '';
   discountQtyPrice.value = p.discountQty?.price || '';
   editIndex = index;
-};
+}
 
-window.deleteProduct = async function (index) {
+async function deleteProduct(index) {
   if (confirm('Hapus produk ini?')) {
     products.splice(index, 1);
+    localStorage.setItem(STORAGE.products, JSON.stringify(products));
     await saveData();
     renderProducts();
     renderCategories();
   }
-};
+}
 
-// ================== INIT ==================
+// ================= INIT =================
 loadData();
