@@ -29,7 +29,7 @@ const productPrice = document.getElementById('product-price');
 const productStock = document.getElementById('product-stock');
 const productCategory = document.getElementById('product-category');
 const newCategory = document.getElementById('new-category');
-const addCategoryBtn = document.getElementById('add-category');
+const addCategoryBtn = document.getElementById('add-category-btn');
 const productDesc = document.getElementById('product-desc'); // <- disamakan dengan HTML
 const productImage = document.getElementById('product-image');
 const productPublish = document.getElementById('product-publish');
@@ -173,3 +173,4 @@ function deleteProduct(index) {
 renderStoreSettings();
 renderProducts();
 renderCategories();
+
