@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kamar - Toko Sembako</title>
+  <link rel="icon" href="images/favicon.png">
+  <link rel="stylesheet" href="css/kamar.css">
+  <script src="https://kit.fontawesome.com/yourfontawesomekit.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+  <h1><i class="fas fa-cogs"></i> Panel kamar</h1>
+</header>
+
+<main>
+  <!-- Status Toko -->
+  <section class="panel">
+    <h2><i class="fas fa-store"></i> Status Toko</h2>
+    <select id="store-status">
+      <option value="open">Buka</option>
+      <option value="closed">Tutup</option>
+    </select>
+  </section>
+
+  <!-- Info Toko -->
+  <section class="panel">
+    <h2><i class="fas fa-info-circle"></i> Info Toko</h2>
+    <label>Deskripsi:</label>
+    <textarea id="store-description"></textarea>
+
+    <label>Jam Operasional:</label>
+    <input type="text" id="store-hours" placeholder="08.00 - 21.00">
+
+    <label>Kontak (Opsional):</label>
+    <input type="text" id="store-contact" placeholder="08123456789">
+
+    <label>Alamat:</label>
+    <input type="text" id="store-address" placeholder="Jl. Contoh No. 123">
+
+    <label>Embed Maps (iframe):</label>
+    <textarea id="store-map" placeholder="<iframe ... ></iframe>"></textarea>
+
+    <label>Nomor Rekening:</label>
+    <input type="text" id="store-bank" placeholder="123-456-789 Bank XYZ">
+    
+    <label>File QRIS (nama file di /images):</label>
+    <input type="text" id="store-qris" placeholder="qris.png">
+
+    <button id="save-store-info">Simpan Info Toko</button>
+  </section>
+
+  <!-- Produk -->
+  <section class="panel">
+    <h2>Tambah Produk</h2>
+<form id="product-form">
+  <input type="text" id="product-name" placeholder="Nama Produk" required>
+  <textarea id="product-desc" placeholder="Deskripsi Produk"></textarea>
+  <input type="number" id="product-price" placeholder="Harga Produk" required>
+  <input type="number" id="product-stock" placeholder="Stok Produk" required>
+
+  <select id="product-category"></select>
+  <input type="text" id="new-category" placeholder="Tambah kategori baru">
+  <button type="button" id="add-category">Tambah Kategori</button>
+
+  <input type="text" id="product-image" placeholder="Nama File Gambar (contoh: beras.jpg)" required>
+
+  <!-- Diskon -->
+  <h3>Diskon</h3>
+  <input type="number" id="discount-price" placeholder="Diskon harga %">
+  
+  <h3>Diskon Quantity</h3>
+  <input type="number" id="discount-qty-min" placeholder="Jumlah minimal (contoh: 3)">
+  <input type="number" id="discount-qty-price" placeholder="Harga paket (contoh: 20000)">
+  
+  <label><input type="checkbox" id="product-publish"> Publish produk ini</label>
+  
+  <button type="submit">Simpan Produk</button>
+</form>
+  </section>
+
+  <!-- Daftar Produk -->
+  <section class="panel">
+    <h2><i class="fas fa-list"></i> Daftar Produk</h2>
+    <ul id="product-list"></ul>
+  </section>
+</main>
+
+
+<footer>
+  &copy; 2025 Ikmal Falahi. Panel kamar
+</footer>
+
+<script src="js/kamar.js"></script>
+</body>
+</html>
