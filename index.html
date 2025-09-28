@@ -6,69 +6,67 @@
   <title>Usaha Dagang Fikri</title>
   <link rel="icon" href="./images/favicon.png">
   <link rel="stylesheet" href="./css/style.css">
-  <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-
-<header>
-  <div id="logo-container">
-    <img src="./images/logo.png" alt="Logo" width="50">
-    <h1>USAHA DAGANG FIKRI</h1>
-  </div>
-  <div class="search-filter">
-    <input type="text" id="search-input" placeholder="Cari produk...">
-    <select id="filter-category"><option value="">Semua Kategori</option></select>
-  </div>
-</header>
-
-<div id="welcome">
-  <i class="fa-solid fa-handshake handshake-icon"></i>
-  Selamat datang di <strong>Usaha Dagang Fikri!</strong>
-</div>
-
-<div id="store-info">
-  <div id="store-status-msg"></div>
-  <div id="store-description">
-    <div class="desc-text" id="store-desc-text"></div>
-    <div class="desc-image">
-      <img id="store-desc-img" src="./images/deskripsi.jpg" alt="Gambar Toko">
+  <header>
+    <div id="logo-container">
+      <img src="./images/logo.png" alt="Logo" width="50">
+      <h1>Usaha Dagang Fikri</h1>
     </div>
-  </div>
-  <div id="store-hours"></div>
-  <div id="store-contact"></div>
-  <div id="store-address"></div>
-  <div id="store-map"></div>
-</div>
+    <div class="search-filter">
+      <input type="text" id="search-input" placeholder="Cari produk...">
+      <select id="filter-category"><option value="">Semua Kategori</option></select>
+    </div>
+  </header>
 
-<section id="cart">
-  <h2><i class="fas fa-shopping-cart"></i> Keranjang</h2>
-  <ul id="cart-items"></ul>
-  <div id="cart-total">Total: Rp 0</div>
-
-  <label for="customer-name"><i class="fas fa-user"></i> Nama Pemesan</label>
-  <input type="text" id="customer-name" placeholder="Masukkan nama anda">
-
-  <label for="customer-address"><i class="fas fa-map-marker-alt"></i> Alamat (jalan/nomor rumah)</label>
-  <input type="text" id="customer-address" placeholder="Contoh: Jl. Melati No. 10">
-
-  <div id="payment-section">
-    <select id="payment-method">
-      <option value="">Pilih Metode Pembayaran</option>
-      <option value="transfer">Transfer</option>
-      <option value="qris">QRIS</option>
-      <option value="tunai">Tunai</option>
-    </select>
-    <div id="payment-info"></div>
+  <div id="welcome">
+    <i class="fa-solid fa-handshake handshake-icon" style="color:black;"></i>
+    Selamat datang di <strong>Usaha Dagang Fikri!</strong>
   </div>
 
-  <button id="checkout">Pesan Sekarang</button>
-</section>
+  <div id="store-info">
+    <div id="store-status-msg"></div>
+    <div id="store-description">
+      <div class="desc-text" id="store-desc-text"></div>
+      <div class="desc-image">
+        <img id="store-desc-img" src="./images/deskripsi.jpg" alt="Gambar Toko">
+      </div>
+    </div>
+    <div id="store-hours"></div>
+    <div id="store-contact"></div>
+    <div id="store-address"></div>
+    <div id="store-map"></div>
+  </div>
 
-<section id="products-container"></section>
+  <section id="cart">
+    <h2><i class="fas fa-shopping-cart"></i> Keranjang</h2>
+    <ul id="cart-items"></ul>
+    <div id="cart-total">Total: Rp 0</div>
 
-<footer>&copy; 2025 Ikmal Falahi. All Rights Reserved.</footer>
+    <label for="customer-name"><i class="fas fa-user"></i> Nama Pemesan</label>
+    <input type="text" id="customer-name" placeholder="Masukkan nama anda">
 
-<script src="./js/script.js"></script>
+    <label for="customer-address"><i class="fas fa-map-marker-alt"></i> Alamat</label>
+    <input type="text" id="customer-address" placeholder="Jl. Contoh No. 10">
+
+    <div id="payment-section">
+      <select id="payment-method">
+        <option value="">Pilih Metode</option>
+        <option value="transfer">Transfer</option>
+        <option value="qris">QRIS</option>
+        <option value="tunai">Tunai</option>
+      </select>
+      <div id="payment-info"></div>
+    </div>
+
+    <button id="checkout">Pesan Sekarang</button>
+  </section>
+
+  <section id="products-container"></section>
+
+  <footer>&copy; 2025 Ikmal Falahi. All Rights Reserved.</footer>
+
+  <script src="./js/script.js"></script>
 </body>
 </html>
