@@ -1,100 +1,114 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>admin Panel - Usaha Dagang Fikri</title>
-  <link rel="icon" href="images/favicon.png">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+  <h1>Admin Panel</h1>
 
-  <header>
-    <h1><i class="fas fa-cogs"></i> Panel admin - Usaha Dagang Fikri</h1>
-  </header>
-
-  <main>
-    <section class="panel">
-      <h2><i class="fas fa-info-circle"></i> Info Toko</h2>
-      <label>Status Toko:</label>
+  <!-- ================== STORE INFO ================== -->
+  <section>
+    <h2>Info Toko</h2>
+    <label>Status Toko:
       <select id="store-status">
         <option value="open">Buka</option>
         <option value="closed">Tutup</option>
       </select>
+    </label><br/>
 
-      <label>Deskripsi:</label>
-      <textarea id="store-description" placeholder="Tuliskan deskripsi toko"></textarea>
+    <label>Deskripsi:<br/>
+      <textarea id="store-description"></textarea>
+    </label><br/>
 
-      <label>Kontak (WhatsApp):</label>
-      <input type="text" id="store-contact" placeholder="628123456789">
+    <label>Jam Operasional:<br/>
+      <input type="text" id="store-hours"/>
+    </label><br/>
 
-      <label>Alamat:</label>
-      <input type="text" id="store-address" placeholder="Jl. Contoh No. 123">
+    <label>Kontak:<br/>
+      <input type="text" id="store-contact"/>
+    </label><br/>
 
-      <label>Jam Operasional:</label>
-      <input type="text" id="store-hours" placeholder="Setiap hari 06.00 - 18.00">
+    <label>Alamat:<br/>
+      <input type="text" id="store-address"/>
+    </label><br/>
 
-      <label>Embed Maps (iframe):</label>
-      <textarea id="store-map" placeholder="<iframe ... ></iframe>"></textarea>
+    <label>Link Google Maps:<br/>
+      <input type="text" id="store-map"/>
+    </label><br/>
 
-      <label>Nomor Rekening:</label>
-      <input type="text" id="store-bank" placeholder="123-456-789 Bank XYZ">
+    <label>Rekening Bank:<br/>
+      <input type="text" id="store-bank"/>
+    </label><br/>
 
-      <label>File QRIS (nama file di /images):</label>
-      <input type="text" id="store-qris" placeholder="qris.png">
+    <label>QRIS (gambar/link):<br/>
+      <input type="text" id="store-qris"/>
+    </label><br/>
 
-      <button id="save-store-info">Simpan Info Toko</button>
-    </section>
+    <button id="save-store-info">Simpan Info Toko</button>
+  </section>
 
-    <section class="panel">
-      <h2><i class="fas fa-box"></i> Produk</h2>
-      <label>Nama Produk:</label>
-      <input type="text" id="product-name">
+  <hr/>
 
-      <label>Harga Produk:</label>
-      <input type="number" id="product-price">
+  <!-- ================== PRODUCT ================== -->
+  <section>
+    <h2>Produk</h2>
+    <label>Nama Produk:<br/>
+      <input type="text" id="product-name"/>
+    </label><br/>
 
-      <label>Stok Produk:</label>
-      <input type="number" id="product-stock">
+    <label>Harga:<br/>
+      <input type="number" id="product-price"/>
+    </label><br/>
 
-      <label>Kategori:</label>
-      <select id="product-category">
-        <option value="">Pilih Kategori</option>
-      </select>
-      
-      <input type="text" id="new-category" placeholder="Tambah kategori baru">
-      <button id="add-category-btn" type="button">Tambah Kategori</button>
+    <label>Stok:<br/>
+      <input type="number" id="product-stock"/>
+    </label><br/>
 
-      <label>Deskripsi Produk:</label>
+    <label>Kategori:<br/>
+      <select id="product-category"></select>
+      <input type="text" id="new-category" placeholder="Tambah kategori baru"/>
+      <button type="button" id="add-category-btn">Tambah</button>
+    </label><br/>
+
+    <label>Deskripsi Produk:<br/>
       <textarea id="product-description"></textarea>
+    </label><br/>
 
-      <label>Gambar (nama file di folder images):</label>
-      <input type="text" id="product-image" placeholder="contoh.jpg">
+    <label>Gambar (nama file):<br/>
+      <input type="text" id="product-image" placeholder="contoh.jpg"/>
+    </label><br/>
 
-      <label><input type="checkbox" id="product-delivery-fee"> Biaya antar Rp 1.000</label>
-      <label><input type="checkbox" id="product-publish"> Publish produk ini</label>
+    <label>
+      <input type="checkbox" id="product-publish"/> Publish?
+    </label><br/>
 
-      <button id="add-product">Tambah Produk</button>
+    <h3>Diskon</h3>
+    <label>Diskon Harga (%):<br/>
+      <input type="number" id="discount-price"/>
+    </label><br/>
 
-      <ul id="product-list"></ul>
-    </section>
+    <label>Minimal Qty:<br/>
+      <input type="number" id="discount-qty-min"/>
+    </label><br/>
 
-    <section class="panel">
-      <h2><i class="fas fa-tags"></i> Diskon</h2>
-      <label>Diskon Harga (%):</label>
-      <input type="number" id="discount-price" placeholder="10">
+    <label>Harga per Qty:<br/>
+      <input type="number" id="discount-qty-price"/>
+    </label><br/>
 
-      <label>Diskon Quantity (paket):</label>
-      <input type="number" id="discount-qty-min" placeholder="3">
-      <input type="number" id="discount-qty-price" placeholder="20000">
+    <button type="button" id="add-product">Simpan Produk</button>
+  </section>
 
-      <button id="set-discount">Simpan Diskon</button>
-    </section>
-  </main>
+  <hr/>
 
-  <footer>&copy; 2025 Usaha Dagang Fikri. All Rights Reserved.</footer>
+  <!-- ================== LIST PRODUK ================== -->
+  <section>
+    <h2>Daftar Produk</h2>
+    <ul id="product-list"></ul>
+  </section>
 
-  <script src="js/admin.js"></script>
+  <script src="admin.js"></script>
 </body>
 </html>
