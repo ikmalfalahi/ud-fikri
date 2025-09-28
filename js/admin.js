@@ -1,3 +1,4 @@
+// ================= STORAGE KEY ==================
 const STORAGE = {
   products: 'products',
   storeSettings: 'storeSettings'
@@ -5,14 +6,17 @@ const STORAGE = {
 
 let products = [];
 let storeSettings = {};
+let editIndex = null;
 
 // ================= INIT DATA DARI API ==================
 async function loadProducts() {
   try {
     const res = await fetch('/api/saveProducts');
+    if (!res.ok) throw new Error('Produk tidak bisa dimuat');
     products = await res.json();
     localStorage.setItem(STORAGE.products, JSON.stringify(products)); // cache
   } catch (e) {
+    console.warn('Load products dari cache:', e);
     products = JSON.parse(localStorage.getItem(STORAGE.products)) || [];
   }
   renderProducts();
@@ -22,30 +26,34 @@ async function loadProducts() {
 async function loadStore() {
   try {
     const res = await fetch('/api/saveStore');
+    if (!res.ok) throw new Error('Store tidak bisa dimuat');
     storeSettings = await res.json();
     localStorage.setItem(STORAGE.storeSettings, JSON.stringify(storeSettings)); // cache
   } catch (e) {
+    console.warn('Load store dari cache:', e);
     storeSettings = JSON.parse(localStorage.getItem(STORAGE.storeSettings)) || {
       status: 'open',
       description: '',
       hours: '',
       contact: '',
       address: '',
-      map: ''
+      map: '',
+      bankAccount: '',
+      qrisImage: ''
     };
   }
   renderStoreSettings();
 }
 
-let editIndex = null;
-
-// ================= DOM ==================
+// ================= DOM ELEMENTS ==================
 const storeStatus = document.getElementById('store-status');
 const storeDescription = document.getElementById('store-description');
 const storeHours = document.getElementById('store-hours');
 const storeContact = document.getElementById('store-contact');
 const storeAddress = document.getElementById('store-address');
 const storeMap = document.getElementById('store-map');
+const storeBank = document.getElementById('store-bank');
+const storeQris = document.getElementById('store-qris');
 const saveStoreInfoBtn = document.getElementById('save-store-info');
 
 const productName = document.getElementById('product-name');
@@ -62,9 +70,6 @@ const discountQtyMin = document.getElementById('discount-qty-min');
 const discountQtyPrice = document.getElementById('discount-qty-price');
 const addProductBtn = document.getElementById('add-product');
 const productList = document.getElementById('product-list');
-
-const storeBank = document.getElementById('store-bank');
-const storeQris = document.getElementById('store-qris');
 
 // ================= STORE ==================
 function renderStoreSettings() {
@@ -92,14 +97,18 @@ saveStoreInfoBtn.addEventListener('click', async () => {
 
   localStorage.setItem(STORAGE.storeSettings, JSON.stringify(storeSettings));
 
-  // simpan ke server
-  await fetch('/api/saveStore', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(storeSettings)
-  });
-
-  alert('Info toko berhasil disimpan!');
+  try {
+    const res = await fetch('/api/saveStore', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(storeSettings)
+    });
+    const result = await res.json();
+    alert(result.message || 'Info toko berhasil disimpan!');
+  } catch (err) {
+    console.error(err);
+    alert('Gagal simpan info toko!');
+  }
 });
 
 // ================= PRODUCT ==================
@@ -171,17 +180,25 @@ addProductBtn.addEventListener('click', async () => {
 
   localStorage.setItem(STORAGE.products, JSON.stringify(products));
 
-  // simpan ke server
-  await fetch('/api/saveProducts', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(products)
-  });
+  try {
+    const res = await fetch('/api/saveProducts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(products)
+    });
+    const result = await res.json();
+    console.log(result.message || 'Produk tersimpan');
+  } catch (err) {
+    console.error(err);
+    alert('Gagal simpan produk!');
+  }
 
   renderProducts();
   renderCategories();
+  resetForm();
+});
 
-  // reset form
+function resetForm() {
   productName.value = '';
   productPrice.value = '';
   productStock.value = '';
@@ -192,7 +209,7 @@ addProductBtn.addEventListener('click', async () => {
   discountPrice.value = '';
   discountQtyMin.value = '';
   discountQtyPrice.value = '';
-});
+}
 
 function editProduct(index) {
   const p = products[index];
@@ -215,11 +232,18 @@ async function deleteProduct(index) {
     products.splice(index, 1);
     localStorage.setItem(STORAGE.products, JSON.stringify(products));
 
-    await fetch('/api/saveProducts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(products)
-    });
+    try {
+      const res = await fetch('/api/saveProducts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(products)
+      });
+      const result = await res.json();
+      console.log(result.message || 'Produk terhapus');
+    } catch (err) {
+      console.error(err);
+      alert('Gagal hapus produk!');
+    }
 
     renderProducts();
     renderCategories();
