@@ -28,38 +28,40 @@
   Selamat datang di <strong>Usaha Dagang Fikri!</strong>
 </div>
 
- <section id="store-status">
+<section id="store-status">
   <div id="store-status-msg" class="store-status"></div>
 </section>
 
 <!-- Info & Deskripsi Toko -->
- <div id="store-info"> 
-  <div id="store-status-msg"></div> 
- <div id="store-description"> 
-  <div class="desc-text"> 
-    <p><li> Menjual GAS ELPIJI 12Kg & 3Kg, AQUA, LEMINERAL, PRIMA, VIT dan bahan pokok sehari-hari seperti BERAS, MINYAK, TELUR, dan TISSUE.</li>
-      <br><li>Kami siap antar pesanan sampai depan rumah. Standar operasional untuk GRATIS ONGKOS KIRIM hanya sampai depan rumah. </li>  
-       <br><li>Jika ingin diantar hingga kedalam rumah/dapur, dikenakan biaya tambahan Rp1.000 per item (hanya untuk produk tertentu) silahkan ceklist di keranjang!!!.</li> 
-    </p> 
-      <div class="desc-image"> <img src="images/deskripsi.jpg" alt="Gambar Toko"> 
+<div id="store-info"> 
+  <div id="store-description"> 
+    <div class="desc-text"> 
+      <p>
+        <li> Menjual GAS ELPIJI 12Kg & 3Kg, AQUA, LEMINERAL, PRIMA, VIT dan bahan pokok sehari-hari seperti BERAS, MINYAK, TELUR, dan TISSUE.</li>
+        <br><li>Kami siap antar pesanan sampai depan rumah. Standar operasional untuk GRATIS ONGKOS KIRIM hanya sampai depan rumah. </li>  
+        <br><li>Jika ingin diantar hingga kedalam rumah/dapur, dikenakan biaya tambahan Rp1.000 per item (hanya untuk produk tertentu) silahkan ceklist di keranjang!!!.</li> 
+      </p> 
+      <div class="desc-image">
+        <img src="images/deskripsi.jpg" alt="Gambar Toko"> 
       </div> 
     </div> 
   </div>
+</div>
 
-  <!-- Section Baru: Detail Toko -->
+<!-- Section Baru: Detail Toko -->
 <section id="store-details"> 
   <h3>Informasi Toko</h3> 
   <div id="store-details-content">
     <ul> 
-     <li><i class="fa-regular fa-clock"></i> Jam Buka: </li>
-     <strong> Setiap Hari Pukul 06:00 - 18:00 WIB </strong>
-      <br><li><i class="fa-solid fa-phone"></i> Kontak WhatsApp Opsional:</li></i>  <strong> 0852-8106-6230 </strong>
-       <br><li> <i class="fa-solid fa-location-dot"></i> Alamat Toko: </li><strong> UD. FIKRI RT.6/RW.2, Ragunan, Ps. Minggu, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12560 </strong>
-      </ul>
-      <div class="map-container"> 
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.8118961438554!2d106.81596807478407!3d-6.288438361550301!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f375ec5af3a1%3A0xeaaa81162b77c181!2sUD.%20FIKRI!5e0!3m2!1sid!2sid!4v1759140315801!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-  </div> 
+      <li><i class="fa-regular fa-clock"></i> Jam Buka: </li>
+      <strong> Setiap Hari Pukul 06:00 - 18:00 WIB </strong>
+      <br><li><i class="fa-solid fa-phone"></i> Kontak WhatsApp Opsional:</li> <strong>0852-8106-6230</strong>
+      <br><li><i class="fa-solid fa-location-dot"></i> Alamat Toko: </li>
+      <strong> UD. FIKRI RT.6/RW.2, Ragunan, Ps. Minggu, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12560 </strong>
+    </ul>
+    <div class="map-container"> 
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.8118961438554!2d106.81596807478407!3d-6.288438361550301!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f375ec5af3a1%3A0xeaaa81162b77c181!2sUD.%20FIKRI!5e0!3m2!1sid!2sid!4v1759140315801!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div> 
   </div>
 </section>
 
@@ -76,26 +78,27 @@
 
   <div id="payment-section">
     <!-- Select metode pembayaran -->
-<label for="payment-method">Metode Pembayaran:</label>
-<select id="payment-method">
-  <option value="">-- Pilih --</option>
-  <option value="Transfer">Transfer Bank</option>
-  <option value="QRIS">QRIS</option>
-  <option value="CASH">Tunai</option>
-</select>
+    <label for="payment-method">Metode Pembayaran:</label>
+    <select id="payment-method">
+      <option value="">-- Pilih --</option>
+      <option value="Transfer">Transfer Bank</option>
+      <option value="QRIS">QRIS</option>
+      <option value="CASH">Tunai</option>
+    </select>
 
-<!-- Modal pembayaran -->
-<div id="payment-modal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closePaymentModal()">&times;</span>
-    <div id="payment-info"></div>
+    <!-- Modal pembayaran -->
+    <div id="payment-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closePaymentModal()">&times;</span>
+        <div id="payment-info-modal"></div>
+      </div>
+    </div>
+
+    <!-- Tempat info pembayaran -->
+    <div id="payment-info" class="payment-info"></div>
+
+    <button id="checkout">Pesan Sekarang</button>
   </div>
-</div>
-
-  <!-- Tempat info pembayaran -->
-<div id="payment-info" class="payment-info"></div>
-
-  <button id="checkout">Pesan Sekarang</button>
 </section>
 
 <section id="products-container" class="products-grid">
@@ -104,15 +107,41 @@
 
 <footer>&copy; 2025 Ikmal Falahi. All Reserve.</footer>
 
-     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script>
-    const supabaseUrl = "https://nnohtnywmhuzueamsats.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ub2h0bnl3bWh1enVlYW1zYXRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkwNjM4NDksImV4cCI6MjA3NDYzOTg0OX0.S8FeDIdXQ32WH9QPVlSsYGRjxYbLMg6HXQicZ35A1pg";
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-  </script>
+<!-- Supabase SDK -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+  const supabaseUrl = "https://nnohtnywmhuzueamsats.supabase.co";
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ub2h0bnl3bWh1enVlYW1zYXRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkwNjM4NDksImV4cCI6MjA3NDYzOTg0OX0.S8FeDIdXQ32WH9QPVlSsYGRjxYbLMg6HXQicZ35A1pg";
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+  // Ambil status toko dari Supabase
+  async function loadStoreStatus() {
+    const { data, error } = await supabase
+      .from("store_status")
+      .select("*")
+      .single();
+
+    const storeStatusEl = document.getElementById("store-status-msg");
+
+    if (error) {
+      console.error("Gagal ambil status:", error);
+      storeStatusEl.textContent = "Tidak bisa memuat status toko ⚠️";
+      storeStatusEl.style.color = "gray";
+      return;
+    }
+
+    if (data.is_open) {
+      storeStatusEl.textContent = "Toko Sedang Buka ✅";
+      storeStatusEl.style.color = "green";
+    } else {
+      storeStatusEl.textContent = "Toko Sedang Tutup ❌";
+      storeStatusEl.style.color = "red";
+    }
+  }
+
+  loadStoreStatus();
+</script>
 
 <script src="js/script.js"></script>
 </body>
 </html>
-
