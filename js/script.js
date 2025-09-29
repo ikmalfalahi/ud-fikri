@@ -71,8 +71,8 @@ if (storeOpen) {
     { name: "Aqua 330ml", price: 42000, img: "images/aqua-330ml.jpg", category: "AQUA", tambahanBiaya: true },
     { name: "Aqua Gelas", price: 35000, img: "images/aqua-gelas.jpg", category: "AQUA", tambahanBiaya: true },
     { name: "leMineral Galon", price: 20000, img: "images/lemineral-galon.jpg", category: "LEMINERAL", tambahanBiaya: true },
-    { name: "leMineral 330ml", price: 42000, img: "images/Lemineral-330ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
-    { name: "leMineral 600ml", price: 52000, img: "images/Lemineral-600ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
+    { name: "leMineral 330ml", price: 42000, img: "images/lemineral-330ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
+    { name: "leMineral 600ml", price: 52000, img: "images/lemineral-600ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
     { name: "Beras 14", price: 14000, img: "images/beras-14.jpg", category: "BERAS", tambahanBiaya: true },
     { name: "Beras 13", price: 13000, img: "images/beras-13.jpg", category: "BERAS", tambahanBiaya: true },
     { name: "Beras 12", price: 12000, img: "images/beras-12.jpg", category: "BERAS", tambahanBiaya: true },
@@ -82,7 +82,7 @@ if (storeOpen) {
     { name: "Tissue Paseo", price: 12000, img: "images/paseo.jpg", category: "TISSUE", tambahanBiaya: true, promo: { qty: 3, price: 35000 } },
     { name: "Tissue Jolly", price: 9000, img: "images/jolly.jpg", category: "TISSUE", tambahanBiaya: true, promo: { qty: 3, price: 25000 } },
     { name: "Tissue Nice", price: 7000, img: "images/nice.jpg", category: "TISSUE", tambahanBiaya: true, promo: { qty: 3, price: 20000 } },
-    { name: "Prima", price: 40000, img: "images/prima.jpg", category: "PRIMA", tambahanBiaya: true },
+    { name: "Prima", price: 40000, img: "images/prima-600ml.jpg", category: "PRIMA", tambahanBiaya: true },
     { name: "VIT Mini", price: 21000, img: "images/vit-mini.jpg", category: "VIT", tambahanBiaya: true },
     { name: "VIT Gelas", price: 24000, img: "images/vit-gelas.jpg", category: "VIT", tambahanBiaya: true },
     { name: "Aqua Isi Ulang", price: 7000, img: "images/aqua-galon.jpg", category: "REFIL", tambahanBiaya: true },
@@ -288,5 +288,6 @@ if (storeOpen) {
   }
   updateStoreStatus();
 });
+
 
 
