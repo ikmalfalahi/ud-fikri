@@ -11,13 +11,15 @@ function updateAdminStatus() {
   }
 }
 
-function setStore(open) {
-  localStorage.setItem("storeOpen", open);
-  updateAdminStatus();
+async function setStore(open) {
+  const { error } = await supabaseClient
+    .from("store_status")
+    .update({ is_open: open, updated_at: new Date().toISOString() })
+    .eq("id", 1);
+
+  if (error) {
+    console.error("Gagal update status:", error);
+  } else {
+    updateAdminStatus();
+  }
 }
-
-// update saat pertama kali load
-updateAdminStatus();
-
-// opsional: auto sinkron kalau dibuka di beberapa tab
-window.addEventListener("storage", updateAdminStatus);
