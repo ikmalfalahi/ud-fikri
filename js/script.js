@@ -40,6 +40,28 @@ document.addEventListener("DOMContentLoaded", () => {
     )
     .subscribe();
 
+  // === UPDATE STATUS TOKO DI UI ===
+function updateStoreStatus() {
+const statusEl = document.getElementById("store-status-msg");
+const productsContainer = document.getElementById("products-container");
+
+if (storeOpen) {
+  statusEl.innerHTML = `
+    <i class="fas fa-check-circle"></i> 
+    <span><strong>Toko Sedang Buka</strong>. <br>Silakan belanja 😊</span>
+  `;
+  statusEl.className = "store-open";
+  productsContainer.style.display = "grid";
+} else {
+  statusEl.innerHTML = `
+    <i class="fas fa-exclamation-triangle"></i> 
+    <span><strong>Toko Tutup</strong>.<br>Silahkan kembali lagi nanti 🙏</span>
+  `;
+  statusEl.className = "store-closed";
+  productsContainer.style.display = "none";
+}
+}
+
   // === DAFTAR PRODUK ===
   const products = [
     { name: "Gas Elpiji 3kg", price: 22000, img: "images/gas-3kg.jpg", category: "GAS ELPIJI", tambahanBiaya: true },
@@ -260,3 +282,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   updateStoreStatus();
 });
+
