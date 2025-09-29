@@ -1,5 +1,5 @@
 function updateAdminStatus() {
-  const msg = document.getElementById("kamar-status");
+  const msg = document.getElementById("admin-status"); // ganti ke admin-status
   let storeOpen = localStorage.getItem("storeOpen") === "true";
 
   if (storeOpen) {
