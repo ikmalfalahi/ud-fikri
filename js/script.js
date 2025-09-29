@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === FETCH STATUS TOKO dari Supabase ===
   async function fetchStoreStatus() {
-    const { data, error } = await supabaseClient
+    const { data, error } = await supabase
       .from("store_status")
       .select("is_open")
       .eq("id", 1)
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchStoreStatus();
 
   // subscribe realtime
-  supabaseClient
+  supabase
     .channel("status-channel")
     .on(
       "postgres_changes",
