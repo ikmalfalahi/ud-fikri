@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === FETCH STATUS TOKO dari Supabase ===
   async function fetchStoreStatus() {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from("store_status")
       .select("is_open")
       .eq("id", 1)
@@ -23,13 +23,17 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchStoreStatus();
 
   // subscribe realtime
-  supabase
+  supabaseClient
     .channel("status-channel")
-    .on("postgres_changes", { event: "*", schema: "public", table: "store_status" }, payload => {
-      console.log("Status toko berubah:", payload.new);
-      storeOpen = payload.new.is_open;
-      updateStoreStatus();
-    })
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "store_status" },
+      payload => {
+        console.log("Status toko berubah:", payload.new);
+        storeOpen = payload.new.is_open;
+        updateStoreStatus();
+      }
+    )
     .subscribe();
 
   // === DAFTAR PRODUK ===
@@ -96,7 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cart.forEach((item, index) => {
       let subtotal = hitungSubtotal(item);
-
       total += subtotal;
 
       let li = document.createElement("li");
