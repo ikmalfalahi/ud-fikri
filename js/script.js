@@ -69,6 +69,7 @@ if (storeOpen) {
     { name: "Aqua Galon", price: 22000, img: "images/aqua-galon.jpg", category: "AQUA", tambahanBiaya: true },
     { name: "Aqua 600ml", price: 52000, img: "images/aqua-600ml.jpg", category: "AQUA", tambahanBiaya: true },
     { name: "Aqua 330ml", price: 42000, img: "images/aqua-330ml.jpg", category: "AQUA", tambahanBiaya: true },
+    { name: "Aqua Cube", price: 40000, img: "images/aqua-cube.jpg", category: "AQUA", tambahanBiaya: true },
     { name: "Aqua Gelas", price: 35000, img: "images/aqua-gelas.jpg", category: "AQUA", tambahanBiaya: true },
     { name: "leMineral Galon", price: 20000, img: "images/lemineral-galon.jpg", category: "LEMINERAL", tambahanBiaya: true },
     { name: "leMineral 330ml", price: 42000, img: "images/lemineral-330ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
@@ -288,6 +289,7 @@ if (storeOpen) {
   }
   updateStoreStatus();
 });
+
 
 
 
