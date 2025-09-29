@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .from("store_status")
       .select("is_open")
       .eq("id", 1)
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error("Gagal ambil status toko:", error);
@@ -256,5 +256,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   updateStoreStatus();
 });
+
 
 
