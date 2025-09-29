@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let cart = [];
   let storeOpen = false; // default
 
-  // === FETCH STATUS TOKO dari Supabase ===
+  // === FETCH STATUS TOKO dari supabaseClient ===
   async function fetchStoreStatus() {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from("store_status")
       .select("is_open")
       .eq("id", 1)
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchStoreStatus();
 
   // subscribe realtime
-  supabase
+  supabaseClient
     .channel("status-channel")
     .on(
       "postgres_changes",
@@ -254,3 +254,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   updateStoreStatus();
 });
+
