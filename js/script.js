@@ -43,10 +43,12 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Aqua Galon", price: 22000, img: "images/aqua-galon.jpg", category: "AQUA", tambahanBiaya: true },
     { name: "Aqua 600ml", price: 52000, img: "images/aqua-600ml.jpg", category: "AQUA", tambahanBiaya: true },
     { name: "Aqua 330ml", price: 42000, img: "images/aqua-330ml.jpg", category: "AQUA", tambahanBiaya: true },
-    { name: "Le Mineral Galon", price: 20000, img: "images/lemineral-galon.jpg", category: "LEMINERAL", tambahanBiaya: true },
-    { name: "Le Mineral 330ml", price: 42000, img: "images/Lemineral-330ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
-    { name: "Le Mineral 600ml", price: 52000, img: "images/Lemineral-600ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
-    { name: "Beras 14", price: 14000, img: "images/beras-12.jpg", category: "BERAS", tambahanBiaya: true },
+    { name: "le Mineral Galon", price: 20000, img: "images/lemineral-galon.jpg", category: "LEMINERAL", tambahanBiaya: true },
+    { name: "le Mineral 330ml", price: 42000, img: "images/Lemineral-330ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
+    { name: "le Mineral 600ml", price: 52000, img: "images/Lemineral-600ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
+    { name: "Beras 14", price: 14000, img: "images/beras-14.jpg", category: "BERAS", tambahanBiaya: true },
+    { name: "Beras 13", price: 13000, img: "images/beras-13.jpg", category: "BERAS", tambahanBiaya: true },
+    { name: "Beras 14", price: 12000, img: "images/beras-12.jpg", category: "BERAS", tambahanBiaya: true },
     { name: "Telur 1kg", price: 29000, img: "images/telur.jpg", category: "TELUR", tambahanBiaya: true },
     { name: "Prima 600ml", price: 40000, img: "images/prima-600ml.jpg", category: "PRIMA", tambahanBiaya: true },
     { name: "Tissue Paseo", price: 12000, img: "images/paseo.jpg", category: "TISSUE", tambahanBiaya: true, promo: { qty: 3, price: 35000 } },
@@ -254,4 +256,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   updateStoreStatus();
 });
+
 
