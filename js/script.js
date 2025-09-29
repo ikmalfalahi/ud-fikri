@@ -4,20 +4,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === FETCH STATUS TOKO dari supabaseClient ===
   async function fetchStoreStatus() {
-    const { data, error } = await supabaseClient
-      .from("store_status")
-      .select("is_open")
-      .eq("id", 1)
-      .single();
+  const { data, error } = await supabaseClient
+    .from("store_status")
+    .select("is_open")
+    .eq("id", 1)
+    .maybeSingle(); // aman kalau kosong
 
-    if (error) {
-      console.error("Gagal ambil status toko:", error);
-      return;
-    }
+  if (error) {
+    console.error("Gagal ambil status toko:", error);
+    return;
+  }
 
+  if (data) {
     storeOpen = data.is_open;
     updateStoreStatus();
+  } else {
+    console.warn("Row dengan id=1 tidak ditemukan.");
   }
+}
 
   // cek pertama kali
   fetchStoreStatus();
@@ -256,7 +260,3 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   updateStoreStatus();
 });
-
-
-
-
