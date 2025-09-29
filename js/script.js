@@ -1,5 +1,34 @@
 let cart = [];
-let storeOpen = localStorage.getItem("storeOpen") === "true";
+let storeOpen = false; // default
+
+async function fetchStoreStatus() {
+  const { data, error } = await supabase
+    .from("store_status")
+    .select("is_open")
+    .eq("id", 1)
+    .single();
+
+  if (error) {
+    console.error("Gagal ambil status toko:", error);
+    return;
+  }
+
+  storeOpen = data.is_open;
+  updateStoreStatus();
+}
+
+// cek pertama kali
+fetchStoreStatus();
+
+// subscribe realtime
+supabase
+  .channel("status-channel")
+  .on("postgres_changes", { event: "*", schema: "public", table: "store_status" }, payload => {
+    console.log("Status toko berubah:", payload.new);
+    storeOpen = payload.new.is_open;
+    updateStoreStatus();
+  })
+  .subscribe();
 
 // Daftar produk (30 item)
 const products = [
@@ -272,3 +301,4 @@ function renderProducts(list = products) {
     container.appendChild(div);
   });
 }
+
