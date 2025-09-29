@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usaha Dagang Fikri</title>
+  <link rel="icon" href="images/faveicon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<header>
+  <div id="logo-container">
+    <img src="images/logo.png" alt="Logo" width="50">
+    <h1>USAHA DAGANG FIKRI</h1>
+  </div>
+  <div class="search-filter">
+    <input type="text" id="search-input" placeholder="Cari produk...">
+    <select id="filter-category">
+      <option value="">Semua Kategori</option>
+    </select>
+  </div>
+</header>
+
+<div id="welcome">
+  <i class="fa-solid fa-handshake handshake-icon"></i>
+  Selamat datang di <strong>Usaha Dagang Fikri!</strong>
+</div>
+
+ <section id="store-status">
+  <div id="store-status-msg" class="store-status"></div>
+</section>
+
+<!-- Info & Deskripsi Toko -->
+ <div id="store-info"> 
+  <div id="store-status-msg"></div> 
+ <div id="store-description"> 
+  <div class="desc-text"> 
+    <p><li> Menjual GAS ELPIJI 12Kg & 3Kg, AQUA, LEMINERAL, PRIMA, VIT dan bahan pokok sehari-hari seperti BERAS, MINYAK, TELUR, dan TISSUE.</li>
+      <br><li>Kami siap antar pesanan sampai depan rumah. Standar operasional untuk GRATIS ONGKOS KIRIM hanya sampai depan rumah. </li>  
+       <br><li>Jika ingin diantar hingga kedalam rumah/dapur, dikenakan biaya tambahan Rp1.000 per item (hanya untuk produk tertentu) silahkan ceklist di keranjang!!!.</li> 
+    </p> 
+      <div class="desc-image"> <img src="images/deskripsi.jpg" alt="Gambar Toko"> 
+      </div> 
+    </div> 
+  </div>
+
+  <!-- Section Baru: Detail Toko -->
+<section id="store-details"> 
+  <h3>Informasi Toko</h3> 
+  <div id="store-details-content">
+    <ul> 
+     <li><i class="fa-regular fa-clock"></i> Jam Buka: </li>
+     <strong> Setiap Hari Pukul 06:00 - 18:00 WIB </strong>
+      <br><li><i class="fa-solid fa-phone"></i> Kontak WhatsApp Opsional:</li></i>  <strong> 0852-8106-6230 </strong>
+       <br><li> <i class="fa-solid fa-location-dot"></i> Alamat Toko: </li><strong> UD. FIKRI RT.6/RW.2, Ragunan, Ps. Minggu, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12560 </strong>
+      </ul>
+      <div class="map-container"> 
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.8118961438554!2d106.81596807478407!3d-6.288438361550301!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f375ec5af3a1%3A0xeaaa81162b77c181!2sUD.%20FIKRI!5e0!3m2!1sid!2sid!4v1759140315801!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+  </div> 
+  </div>
+</section>
+
+<section id="cart">
+  <h2><i class="fas fa-shopping-cart"></i> Keranjang</h2>
+  <ul id="cart-items"></ul>
+  <div id="cart-total">Total: Rp 0</div>
+
+  <label for="customer-name"><i class="fas fa-user"></i> Nama Pemesan</label>
+  <input type="text" id="customer-name" placeholder="Masukkan nama anda">
+
+  <label for="customer-address"><i class="fas fa-map-marker-alt"></i> Alamat</label>
+  <input type="text" id="customer-address" placeholder="Contoh: Jl. Melati No. 10">
+
+  <div id="payment-section">
+    <!-- Select metode pembayaran -->
+<label for="payment-method">Metode Pembayaran:</label>
+<select id="payment-method">
+  <option value="">-- Pilih --</option>
+  <option value="Transfer">Transfer Bank</option>
+  <option value="QRIS">QRIS</option>
+  <option value="CASH">Tunai</option>
+</select>
+
+<!-- Modal pembayaran -->
+<div id="payment-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closePaymentModal()">&times;</span>
+    <div id="payment-info"></div>
+  </div>
+</div>
+
+  <!-- Tempat info pembayaran -->
+<div id="payment-info" class="payment-info"></div>
+
+  <button id="checkout">Pesan Sekarang</button>
+</section>
+
+<section id="products-container" class="products-grid">
+  <!-- Produk akan digenerate otomatis oleh script.js -->
+</section>
+
+<footer>&copy; 2025 Ikmal Falahi. All Reserve.</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
