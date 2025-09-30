@@ -119,8 +119,8 @@ footer { margin-top:20px; padding:10px; background:#1e90ff; color:white; text-al
 }
 
 #store-status-msg {
-  padding: 8px;
-  margin-bottom: 8px;
+  padding: 6px;
+  margin-bottom: 6px;
   font-weight: bold;
   text-align: center;
   border-radius: 6px;
@@ -361,3 +361,4 @@ label[for="customer-address"] {
   display: flex;
   gap: 6px;   /* jarak antar tombol */
 }
+
