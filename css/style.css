@@ -394,7 +394,7 @@ label[for="customer-address"] {
 
 .panel.open {
   padding: 12px;
-  max-height: none; /* ✅ biar tinggi menyesuaikan isi */
+  max-height: 100%; /* ✅ biar tinggi menyesuaikan isi */
 }
 
 .panel ul {
@@ -412,4 +412,5 @@ label[for="customer-address"] {
   max-width: 100%;
   border-radius: 8px;
 }
+
 
