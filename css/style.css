@@ -390,11 +390,11 @@ label[for="customer-address"] {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   transition: max-height 0.4s ease;
   padding: 0 12px;
-  margin-bottom: 10px; /* ✅ jarak antar panel & elemen bawahnya */
+  margin-bottom: 15px; /* ✅ jarak antar panel & elemen bawahnya */
 }
 
 .panel.open {
-  padding: 10px;
+  padding: 12px; /* ✅ isi padding baru muncul hanya saat panel terbuka */
 }
 
 .panel ul {
@@ -412,4 +412,3 @@ label[for="customer-address"] {
   max-width: 100%;
   border-radius: 8px;
 }
-
