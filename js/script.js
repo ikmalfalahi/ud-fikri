@@ -208,6 +208,11 @@ if (storeOpen) {
         No. Rekening: <span style="font-size:18px;color:#2a9d8f;">1270012190490</span><br>
         a.n <em>Fikriatur Rizky</em>
       `;
+    } else if (method === "Tunai/Cash") {
+      paymentInfo.innerHTML = `
+        <h3>Tunai/Cash</h3>
+        <p>Bayar setelah diantar (Tunai/Cash)</p>
+      `;
     }
   });
 
@@ -291,6 +296,7 @@ if (storeOpen) {
   }
   updateStoreStatus();
 });
+
 
 
 
