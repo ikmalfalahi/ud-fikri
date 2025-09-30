@@ -108,7 +108,7 @@ if (storeOpen) {
         <h3>${p.name}</h3>
         <p>Rp ${p.price.toLocaleString()}</p>
         ${promoNote}
-        <button onclick="addToCart(${idx})">Tambah</button>
+        <button onclick="addToCart(${idx})"><i class="fas fa-shopping-cart"></i> Tambah </button>
       `;
       container.appendChild(div);
     });
@@ -289,6 +289,7 @@ if (storeOpen) {
   }
   updateStoreStatus();
 });
+
 
 
 
