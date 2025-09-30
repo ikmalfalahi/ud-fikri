@@ -13,7 +13,7 @@ if (open) {
 async function setStore(open) {
   const { error } = await supabaseClient
     .from("store_status")
-    .upsert({
+    .update({
     id: 1,
     is_open: open,
     updated_at: new Date().toISOString(),
@@ -40,3 +40,4 @@ if (!error && data) {
   console.warn("Belum ada data, silakan klik Buka/Tutup dulu.");
 }
 })();
+
