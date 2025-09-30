@@ -236,15 +236,30 @@ if (storeOpen) {
       return;
     }
 
-    let msg = `Hello UD Fikri, saya ingin pesan:\n\n`;
-    msg += `Nama: ${name}\nAlamat: ${addr}\n\n`;
-    msg += `Pesanan:\n`;
-    cart.forEach(item => {
-      let extra = (item.tambahanBiaya && item.antarDalamRumah) ? " + antar dalam rumah" : "";
-      msg += `- ${item.name} x${item.qty}${extra}\n`;
-    });
-    msg += `\n${document.getElementById("cart-total").innerText}\n`;
-    msg += `Metode Pembayaran: ${pay}`;
+   let msg = `*🛒 PESANAN UD FIKRI 🛒*\n`;
+msg += `=====================\n`;
+msg += `*Nama:* ${name}\n`;
+msg += `*Alamat:* ${addr}\n`;
+msg += `=====================\n`;
+msg += `*Pesanan:*\n`;
+
+let totalItem = 0;
+
+cart.forEach(item => {
+  let extra = (item.tambahanBiaya && item.antarDalamRumah) ? " + antar dalam rumah" : "";
+  let subtotal = hitungSubtotal(item); // ✅ pakai fungsi subtotal biar sama dengan tampilan
+  totalItem += item.qty;
+
+  msg += `- ${item.name} x${item.qty}${extra}\n   = Rp ${subtotal.toLocaleString()}\n`;
+});
+
+msg += `=====================\n`;
+msg += `*Total Item:* ${totalItem}\n`;
+msg += `*${document.getElementById("cart-total").innerText}*\n`;
+msg += `*Metode Pembayaran:* ${pay}\n`;
+msg += `=====================\n`;
+msg += `_Terima kasih sudah berbelanja 🙏_`;
+
 
     window.open(`https://wa.me/6281287505090?text=${encodeURIComponent(msg)}`, "_blank");
 
@@ -296,6 +311,7 @@ if (storeOpen) {
   }
   updateStoreStatus();
 });
+
 
 
 
