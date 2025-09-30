@@ -237,11 +237,11 @@ if (storeOpen) {
     }
 
    let msg = `*🛒 PESANAN UD FIKRI 🛒*\n`;
-msg += `=====================\n`;
-msg += `*Nama:* ${name}\n`;
-msg += `*Alamat:* ${addr}\n`;
-msg += `=====================\n`;
-msg += `*Pesanan:*\n`;
+    msg += `=====================\n`;
+    msg += `*Nama:* ${name}\n`;
+    msg += `*Alamat:* ${addr}\n`;
+    msg += `=====================\n`;
+    msg += `*Pesanan:*\n`;
 
 let totalItem = 0;
 
@@ -253,13 +253,12 @@ cart.forEach(item => {
   msg += `- ${item.name} x${item.qty}${extra}\n   = Rp ${subtotal.toLocaleString()}\n`;
 });
 
-msg += `=====================\n`;
-msg += `*Total Item:* ${totalItem}\n`;
-msg += `*${document.getElementById("cart-total").innerText}*\n`;
-msg += `*Metode Pembayaran:* ${pay}\n`;
-msg += `=====================\n`;
-msg += `_Terima kasih sudah berbelanja 🙏_`;
-
+    msg += `=====================\n`;
+    msg += `*Total Item:* ${totalItem}\n`;
+    msg += `*${document.getElementById("cart-total").innerText}*\n`;
+    msg += `*Metode Pembayaran:* ${pay}\n`;
+    msg += `=====================\n`;
+    msg += `_Terima kasih sudah berbelanja 🙏_`;
 
     window.open(`https://wa.me/6281287505090?text=${encodeURIComponent(msg)}`, "_blank");
 
@@ -311,11 +310,3 @@ msg += `_Terima kasih sudah berbelanja 🙏_`;
   }
   updateStoreStatus();
 });
-
-
-
-
-
-
-
-
