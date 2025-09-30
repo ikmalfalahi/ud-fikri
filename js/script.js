@@ -140,9 +140,11 @@ if (storeOpen) {
       let li = document.createElement("li");
       li.innerHTML = `
         ${item.name} x${item.qty} - Rp ${subtotal.toLocaleString()}
+        <div class="cart-actions">
         <button class="btn-qty plus" onclick="increaseQty(${index})"><i class="fas fa-plus"></i></button>
         <button class="btn-qty minus" onclick="decreaseQty(${index})"><i class="fas fa-minus"></i></button>
         <button class="btn-remove" onclick="removeItem(${index})"><i class="fas fa-trash"></i></button>
+        </div>
         ${item.tambahanBiaya ? `
           <label style="margin-left:5px;font-size:12px;">
             <input type="checkbox" ${item.antarDalamRumah ? "checked" : ""}
@@ -289,6 +291,7 @@ if (storeOpen) {
   }
   updateStoreStatus();
 });
+
 
 
 
