@@ -14,16 +14,15 @@ async function setStore(open) {
   const { error } = await supabaseClient
     .from("store_status")
     .update({
-    id: 1,
-    is_open: open,
-    updated_at: new Date().toISOString(),
-});
-   .eq("id", 1);
+      is_open: open,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", 1); // ✅ langsung chaining tanpa titik-nyasar
 
-if (error) {
-  console.error("Gagal update status:", error);
-} else {
-  updateAdminStatus(open);
+  if (error) {
+    console.error("Gagal update status:", error);
+  } else {
+    updateAdminStatus(open);
   }
 }
 
@@ -41,5 +40,3 @@ if (!error && data) {
   console.warn("Belum ada data, silakan klik Buka/Tutup dulu.");
 }
 })();
-
-
