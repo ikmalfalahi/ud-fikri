@@ -396,7 +396,7 @@ label[for="customer-address"] {
 }
 .panel ul {
   padding-left: 20px;
-  margin: 0;
+  margin: 10;
 }
 .panel .desc-image {
   margin-top: 12px;
@@ -407,4 +407,5 @@ label[for="customer-address"] {
   max-width: 100%;
   border-radius: 8px;
 }
+
 
