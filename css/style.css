@@ -375,6 +375,7 @@ label[for="customer-address"] {
   font-weight: bold;
   border-radius: 8px;
   transition: 0.3s;
+  margin-bottom: 12px; /* ✅ jarak antar accordion */
 }
 
 .accordion:hover {
@@ -389,23 +390,25 @@ label[for="customer-address"] {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   transition: max-height 0.4s ease;
   padding: 0 12px;
+  margin-bottom: 15px; /* ✅ jarak antar panel & elemen bawahnya */
 }
 
 .panel.open {
   padding: 12px;
 }
+
 .panel ul {
   padding-left: 20px;
-  margin: 10;
+  margin: 0; /* 🔧 betulkan margin agar rapih */
 }
+
 .panel .desc-image {
   margin-top: 12px;
   display: flex;
   justify-content: center;
 }
+
 .panel .desc-image img {
   max-width: 100%;
   border-radius: 8px;
 }
-
-
