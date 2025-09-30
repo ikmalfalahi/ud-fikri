@@ -18,6 +18,7 @@ async function setStore(open) {
     is_open: open,
     updated_at: new Date().toISOString(),
 });
+   .eq("id", 1);
 
 if (error) {
   console.error("Gagal update status:", error);
@@ -40,4 +41,5 @@ if (!error && data) {
   console.warn("Belum ada data, silakan klik Buka/Tutup dulu.");
 }
 })();
+
 
