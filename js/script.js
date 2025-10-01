@@ -219,65 +219,64 @@ if (storeOpen) {
   });
 
   // === CHECKOUT ===
-  document.getElementById("checkout").addEventListener("click", () => {
-    if (!storeOpen) {
-      alert("Toko sedang tutup, checkout tidak bisa dilakukan.");
-      return;
-    }
-    if (cart.length === 0) {
-      alert("Keranjang kosong!");
-      return;
-    }
+document.getElementById("checkout").addEventListener("click", () => {
+  if (!storeOpen) {
+    alert("Toko sedang tutup, checkout tidak bisa dilakukan.");
+    return;
+  }
+  if (cart.length === 0) {
+    alert("Keranjang kosong!");
+    return;
+  }
 
-    let name = document.getElementById("customer-name").value.trim();
-    let addr = document.getElementById("customer-address").value.trim();
-    let pay = paymentSelect.value;
+  let name = document.getElementById("customer-name").value.trim();
+  let addr = document.getElementById("customer-address").value.trim();
+  let pay = paymentSelect.value;
+  let lokasi = document.getElementById("lokasi").value.trim(); // ✅ lokasi ambil di awal
 
-    if (!name || !addr || !pay) {
-      alert("Mohon isi nama, alamat, dan metode pembayaran.");
-      return;
-    }
+  // 🔹 Validasi semua wajib diisi
+  if (!name || !addr || !pay || !lokasi) {
+    alert("Mohon isi nama, alamat, metode pembayaran, dan titik lokasi (share lokasi).");
+    return;
+  }
 
-   let msg = `*🛒 PESANAN UD FIKRI 🛒*\n`;
-    msg += `=====================\n`;
-    msg += `*Nama:* ${name}\n`;
-    msg += `*Alamat:* ${addr}\n`;
-    msg += `=====================\n`;
-    msg += `*Pesanan:*\n`;
+  let msg = `*🛒 PESANAN UD FIKRI 🛒*\n`;
+  msg += `=====================\n`;
+  msg += `*Nama:* ${name}\n`;
+  msg += `*Alamat:* ${addr}\n`;
+  msg += `📍 *Lokasi:* ${lokasi}\n`;
+  msg += `=====================\n`;
+  msg += `*Pesanan:*\n`;
 
-let totalItem = 0;
+  let totalItem = 0;
+  cart.forEach(item => {
+    let extra = (item.tambahanBiaya && item.antarDalamRumah) ? " + antar dalam rumah" : "";
+    let subtotal = hitungSubtotal(item);
+    totalItem += item.qty;
 
-cart.forEach(item => {
-  let extra = (item.tambahanBiaya && item.antarDalamRumah) ? " + antar dalam rumah" : "";
-  let subtotal = hitungSubtotal(item); // ✅ pakai fungsi subtotal biar sama dengan tampilan
-  totalItem += item.qty;
+    msg += `- ${item.name} x${item.qty}${extra}\n   = Rp ${subtotal.toLocaleString()}\n`;
+  });
 
-  msg += `- ${item.name} x${item.qty}${extra}\n   = Rp ${subtotal.toLocaleString()}\n`;
-});
+  msg += `=====================\n`;
+  msg += `*Total Item:* ${totalItem}\n`;
+  msg += `*${document.getElementById("cart-total").innerText}*\n`;
+  msg += `*Metode Pembayaran:* ${pay}\n`;
+  msg += `=====================\n`;
 
-    msg += `=====================\n`;
-    msg += `*Total Item:* ${totalItem}\n`;
-    msg += `*${document.getElementById("cart-total").innerText}*\n`;
-    msg += `*Metode Pembayaran:* ${pay}\n`;
-    msg += `=====================\n`;
-     // 🔹 Tambahkan bagian saran produk (opsional)
+  // 🔹 Saran produk opsional
   const saran = document.getElementById("saran-produk").value.trim();
   if (saran) {
-    msg += `\nSaran/Masukan: ${saran}\n`;
+    msg += `\n💡 Saran/Masukan: ${saran}\n`;
   }
-    msg += `=====================\n`;
-    msg += `_Terima kasih sudah berbelanja 🙏_`;
-    msg += `---------------------\n`;
-    let lokasi = document.getElementById("lokasi").value.trim();
-    if (lokasi) { 
-    msg += `\n📍 Titik Lokasi: ${lokasi}\n`;
-    }
 
-    window.open(`https://wa.me/6281287505090?text=${encodeURIComponent(msg)}`, "_blank");
+  msg += `=====================\n`;
+  msg += `_Terima kasih sudah berbelanja 🙏_`;
 
-    cart = [];
-    renderCart();
-  });
+  window.open(`https://wa.me/6281287505090?text=${encodeURIComponent(msg)}`, "_blank");
+
+  cart = [];
+  renderCart();
+});
 
   // === SEARCH & FILTER ===
   document.getElementById("search-input").addEventListener("input", (e) => {
@@ -358,3 +357,4 @@ function ambilLokasi() {
     alert("Browser tidak mendukung GPS.");
   }
 }
+
