@@ -267,6 +267,11 @@ cart.forEach(item => {
   }
     msg += `=====================\n`;
     msg += `_Terima kasih sudah berbelanja 🙏_`;
+    msg += `---------------------\n`;
+    let lokasi = document.getElementById("lokasi").value.trim();
+    if (lokasi) { 
+    msg += `\n📍 Titik Lokasi: ${lokasi}\n`;
+    }
 
     window.open(`https://wa.me/6281287505090?text=${encodeURIComponent(msg)}`, "_blank");
 
@@ -334,3 +339,22 @@ document.querySelectorAll(".accordion").forEach(acc => {
     }
   });
 });
+
+function ambilLokasi() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        let lat = pos.coords.latitude;
+        let lng = pos.coords.longitude;
+        let mapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
+        document.getElementById("lokasi").value = mapsLink;
+      },
+      (err) => {
+        alert("Gagal ambil lokasi. Aktifkan GPS & izin lokasi di browser.");
+        console.error(err);
+      }
+    );
+  } else {
+    alert("Browser tidak mendukung GPS.");
+  }
+}
