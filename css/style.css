@@ -375,7 +375,7 @@ label[for="customer-address"] {
   font-weight: bold;
   border-radius: 8px;
   transition: 0.3s;
-  margin-bottom: 0; /* ✅ jarak antar accordion */
+  margin-bottom: 10px; /* ✅ jarak antar accordion */
 }
 
 .accordion:hover {
@@ -388,15 +388,15 @@ label[for="customer-address"] {
   background: #fff;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: max-height 0.4s e ase;
+  transition: max-height 0.4s ease;
   padding: 0 12px;
   box-sizing: border-box; /* ✅ biar padding masuk hitungan */
-  margin-bottom: 10px ;
 }
 
 .panel.open {
   padding: 12px;
-  max-height: none; /* 🔥 biar tinggi otomatis sesuai isi */
+  max-height: 100%; /* 🔥 biar tinggi otomatis sesuai isi */
+  margin-bottom: 8px;
 }
 
 .panel textarea {
