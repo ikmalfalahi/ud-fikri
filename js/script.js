@@ -260,6 +260,12 @@ cart.forEach(item => {
     msg += `*${document.getElementById("cart-total").innerText}*\n`;
     msg += `*Metode Pembayaran:* ${pay}\n`;
     msg += `=====================\n`;
+     // 🔹 Tambahkan bagian saran produk (opsional)
+  const saran = document.getElementById("saran-produk").value.trim();
+  if (saran) {
+    msg += `\nSaran/Masukan: ${saran}\n`;
+  }
+    msg += `=====================\n`;
     msg += `_Terima kasih sudah berbelanja 🙏_`;
 
     window.open(`https://wa.me/6281287505090?text=${encodeURIComponent(msg)}`, "_blank");
@@ -326,3 +332,4 @@ document.querySelectorAll(".accordion").forEach((btn) => {
     }
   });
 });
+
