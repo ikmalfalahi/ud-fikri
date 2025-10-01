@@ -81,6 +81,17 @@
     <textarea id="saran-produk" rows="3" placeholder="Contoh: Tambahkan Gula, Kopi, dll." style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;"></textarea>
     <br> <br>
   </div>
+  
+  <label for="lokasi"><i class="fa-solid fa-location-dot"></i>
+ Titik Lokasi (Opsional)</label>
+  <input type="text" id="lokasi" placeholder="Tempel link share lokasi Google Maps" 
+  style="width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:6px;">
+
+<button type="button" onclick="ambilLokasi()" 
+  style="margin-top:6px;padding:6px 12px;border:none;border-radius:6px;background:#1e90ff;color:#fff;cursor:pointer;">
+  <i class="fa-solid fa-bullseye"></i>
+  Ambil Lokasi Saya
+</button>
 
   <!-- Map tetap di luar accordion -->
   <div class="map-container" style="margin-top:15px;">
@@ -139,6 +150,7 @@
 
 </body>
 </html>
+
 
 
 
