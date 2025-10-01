@@ -320,16 +320,17 @@ cart.forEach(item => {
 });
 
 // Accordion toggle with animation
-document.querySelectorAll(".accordion").forEach((btn) => {
-  btn.addEventListener("click", function () {
+document.querySelectorAll(".accordion").forEach(acc => {
+  acc.addEventListener("click", function() {
     this.classList.toggle("active");
-    const panel = this.nextElementSibling;
+    let panel = this.nextElementSibling;
 
     if (panel.style.maxHeight) {
-      panel.style.maxHeight = null; // tutup
+      panel.style.maxHeight = null;
+      panel.classList.remove("open");
     } else {
-      panel.style.maxHeight = panel.scrollHeight + "px"; // buka sesuai isi
+      panel.style.maxHeight = panel.scrollHeight + "px";
+      panel.classList.add("open");
     }
   });
 });
-
