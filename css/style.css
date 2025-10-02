@@ -212,7 +212,7 @@ label[for="customer-address"] {
 }
 
 .map-container {
-  margin-top: 15px;
+  margin-top: 8px;
   margin-bottom: 15px;
   padding: 12px;
   background: #f9f9f9;
@@ -427,4 +427,5 @@ label[for="customer-address"] {
   max-width: 100%;
   border-radius: 8px;
 }
+
 
