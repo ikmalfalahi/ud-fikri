@@ -151,7 +151,7 @@ if (storeOpen) {
           <label style="margin-left:5px;font-size:12px;">
             <input type="checkbox" ${item.antarDalamRumah ? "checked" : ""}
               onchange="toggleExtra(${index}, this.checked)">
-            Antar ke Dalam (+Rp1.000/item)
+            Antar ke Dalam Rumah (+Rp1.000/item)
           </label>
         ` : ""}
       `;
@@ -357,4 +357,5 @@ function ambilLokasi() {
     alert("Browser tidak mendukung GPS.");
   }
 }
+
 
