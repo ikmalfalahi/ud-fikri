@@ -163,28 +163,13 @@ function renderCart() {
   let grandTotal = totalBelanja + biayaOngkir;
 
   const cartTotal = document.getElementById("cart-total");
-  if (jarak > 0) {
-    if (jarak <= 1) {
-      cartTotal.innerHTML = `
-        Belanja: Rp ${totalBelanja.toLocaleString()}<br>
-        Ongkir (${jarak.toFixed(1)} km): Gratis (≤ 1 km)<br>
-        <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b>
-      `;
-    } else {
-      const kmLebih = Math.ceil(jarak - 1);
-      const biayaKm = kmLebih * 3000;
-      const biayaPerItem = totalItem * 500;
 
-      cartTotal.innerHTML = `
-        Belanja: Rp ${totalBelanja.toLocaleString()}<br>
-        Ongkir (${jarak.toFixed(1)} km):<br>
-        • Rp 3.000 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}<br>
-        • Rp 500 x ${totalItem} item = Rp ${biayaPerItem.toLocaleString()}<br>
-        <b>Total Ongkir = Rp ${biayaOngkir.toLocaleString()}</b><br>
-        <hr>
-        <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b>
-      `;
-    }
+  if (jarak > 0) {
+    cartTotal.innerHTML = `
+      Belanja: Rp ${totalBelanja.toLocaleString()}<br>
+      Ongkir (${jarak.toFixed(1)} km): Rp ${biayaOngkir.toLocaleString()}<br>
+      <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b>
+    `;
   } else {
     cartTotal.innerHTML = `
       Belanja: Rp ${totalBelanja.toLocaleString()}<br>
@@ -474,4 +459,5 @@ function detailOngkir(totalItem) {
            `Total Ongkir = Rp ${total.toLocaleString()}`;
   }
 }
+
 
