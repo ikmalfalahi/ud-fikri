@@ -160,7 +160,18 @@ if (storeOpen) {
 
     document.getElementById("cart-total").innerText = "Total: Rp " + total.toLocaleString();
   }
-
+// === HAPUS SEMUA KERANJANG ===
+document.getElementById("clear-cart").addEventListener("click", () => {
+  if (cart.length === 0) {
+    alert("Keranjang sudah kosong.");
+    return;
+  }
+  if (confirm("Yakin ingin menghapus semua isi keranjang?")) {
+    cart = [];
+    renderCart();
+  }
+});
+  
   // === HITUNG SUBTOTAL DENGAN PROMO ===
   function hitungSubtotal(item) {
     let subtotal = item.price * item.qty;
@@ -357,6 +368,7 @@ function ambilLokasi() {
     alert("Browser tidak mendukung GPS.");
   }
 }
+
 
 
 
