@@ -394,7 +394,7 @@ document.querySelectorAll(".accordion").forEach(acc => {
   });
 });
 
-// Ambil Lokasi Jarak
+// === Ambil Lokasi Jarak (pakai haversine) ===
 const tokoLat = -6.288438; 
 const tokoLng = 106.815968;
 
@@ -407,7 +407,7 @@ function haversine(lat1, lon1, lat2, lon2) {
     Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
     Math.sin(dLon/2) * Math.sin(dLon/2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return R * c; // hasil dalam km
+  return R * c; // hasil km
 }
 
 let ongkir = 0;
@@ -425,7 +425,7 @@ function ambilLokasi() {
         // hitung jarak ke toko
         jarak = haversine(lat, lng, tokoLat, tokoLng);
 
-        // langsung render keranjang walaupun kosong
+        // update keranjang
         renderCart();
       },
       (err) => {
@@ -438,28 +438,30 @@ function ambilLokasi() {
   }
 }
 
+// === Hitung Ongkir: 1 km gratis, selebihnya Rp 3.000/km + Rp 500/item ===
 function hitungOngkir(totalItem = 0) {
-  if (jarak > 2) {
-    let baseOngkir = Math.ceil((jarak - 2) * 2500);
-    let tambahanItem = totalItem * 500;
-    return baseOngkir + tambahanItem;
+  if (jarak > 1) {
+    let kmLebih = Math.ceil(jarak - 1);  // setelah 1 km
+    let biayaKm = kmLebih * 3000;
+    let biayaPerItem = totalItem * 500;
+    return biayaKm + biayaPerItem;
   }
-  return (jarak > 0 ? 0 : 0); // kalau jarak belum dihitung, ongkir tetap 0
+  return 0;
 }
 
 function detailOngkir(totalItem) {
   if (jarak <= 0) return "Belum dihitung";
 
-  if (jarak <= 2) {
-    return `Gratis (≤ 2 km)`;
+  if (jarak <= 1) {
+    return `Gratis (≤ 1 km)`;
   } else {
-    let kmLebih = Math.ceil(jarak - 2); // bulatkan ke atas
-    let biayaKm = kmLebih * 2500;
+    let kmLebih = Math.ceil(jarak - 1);
+    let biayaKm = kmLebih * 3000;
     let biayaPerItem = totalItem * 500;
     let total = biayaKm + biayaPerItem;
 
     return `Jarak: ${jarak.toFixed(1)} km\n` +
-           `• Rp 2.500 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}\n` +
+           `• Rp 3.000 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}\n` +
            `• Rp 500 x ${totalItem} item = Rp ${biayaPerItem.toLocaleString()}\n` +
            `Total Ongkir = Rp ${total.toLocaleString()}`;
   }
