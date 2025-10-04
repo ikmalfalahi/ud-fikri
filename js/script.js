@@ -413,40 +413,85 @@ function haversine(lat1, lon1, lat2, lon2) {
 let ongkir = 0;
 let jarak = 0;
 
+/* === Parse koordinat dari Google Maps URL / input lokasi === */
+function parseLatLngFromMapsUrl(url) {
+  if (!url) return null;
+  // coba format: @lat,lng
+  let m = url.match(/@(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)/);
+  if (m) return { lat: parseFloat(m[1]), lng: parseFloat(m[3]) };
+
+  // coba format: ?q=lat,lng atau &q=lat,lng
+  m = url.match(/[?&]q=(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)/);
+  if (m) return { lat: parseFloat(m[1]), lng: parseFloat(m[3]) };
+
+  // coba pola sederhana: "lat,lng" (mis. user paste " -6.28,106.83 ")
+  m = url.match(/(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)/);
+  if (m) return { lat: parseFloat(m[1]), lng: parseFloat(m[3]) };
+
+  return null;
+}
+
+/* === Hitung jarak dari input 'lokasi' (jika user paste link) === */
+function computeDistanceFromLokasiInput() {
+  const val = document.getElementById("lokasi").value.trim();
+  if (!val) return; // kosong -> nothing to do
+
+  const coords = parseLatLngFromMapsUrl(val);
+  if (coords) {
+    // gunakan haversine (straight-line)
+    jarak = haversine(coords.lat, coords.lng, tokoLat, tokoLng);
+    // render agar UI & WA detail ter-update
+    renderCart();
+    return;
+  }
+
+  // Kalau tidak ter-parse -> beri tahu user (atau bisa otomatis panggil geolocation)
+  alert("Tidak dapat mengekstrak koordinat dari input lokasi. Paste link share Google Maps (mengandung @lat,lng atau ?q=lat,lng) atau klik 'Ambil Lokasi Anda' agar browser ambil koordinatmu.");
+}
+
+/* sambungkan event supaya ketika user paste/ubah input lokasi, jarak dihitung otomatis */
+const lokasiInputEl = document.getElementById("lokasi");
+if (lokasiInputEl) {
+  lokasiInputEl.addEventListener("change", computeDistanceFromLokasiInput);
+  lokasiInputEl.addEventListener("blur", computeDistanceFromLokasiInput);
+}
+
+/* === ambilLokasi tetap ada (geolocation) — sedikit perbaikan supaya konsisten === */
 function ambilLokasi() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        let lat = pos.coords.latitude;
-        let lng = pos.coords.longitude;
-        let mapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        const mapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
         document.getElementById("lokasi").value = mapsLink;
 
-        // hitung jarak ke toko
+        // hitung jarak (haversine)
         jarak = haversine(lat, lng, tokoLat, tokoLng);
 
-        // langsung render keranjang walaupun kosong
+        // render keranjang supaya terlihat perubahan
         renderCart();
       },
       (err) => {
         alert("Gagal ambil lokasi. Aktifkan GPS & izin lokasi di browser.");
         console.error(err);
-      }
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
     );
   } else {
     alert("Browser tidak mendukung GPS.");
   }
 }
 
-/* hitung ongkir & detail ongkir di whatsapp */
+/* === Fungsi ongkir sesuai aturan: 2 km pertama gratis, >2km = Rp 3.000/km (dibulatkan ke atas) + Rp 500/item === */
 function hitungOngkir(totalItem = 0) {
   if (jarak > 2) {
-    let kmLebih = Math.ceil(jarak - 2);   // bulatkan ke atas
-    let baseOngkir = kmLebih * 3000;      // Rp 3000 per km
-    let tambahanItem = totalItem * 500;   // Rp 500 per item
-    return baseOngkir + tambahanItem;
+    const kmLebih = Math.max(0, Math.ceil(jarak - 2)); // bulatkan ke atas bagian yang dikenakan
+    const biayaKm = kmLebih * 3000;
+    const biayaPerItem = totalItem * 500;
+    return biayaKm + biayaPerItem;
   }
-  return (jarak > 0 ? 0 : 0); // ≤ 2 km gratis
+  return 0; // <= 2 km gratis
 }
 
 function detailOngkir(totalItem) {
@@ -455,12 +500,12 @@ function detailOngkir(totalItem) {
   if (jarak <= 2) {
     return `Gratis (≤ 2 km)`;
   } else {
-    let kmLebih = Math.ceil(jarak - 2);   // bulatkan ke atas
-    let biayaKm = kmLebih * 3000;
-    let biayaPerItem = totalItem * 500;
-    let total = biayaKm + biayaPerItem;
+    const kmLebih = Math.max(0, Math.ceil(jarak - 2));
+    const biayaKm = kmLebih * 3000;
+    const biayaPerItem = totalItem * 500;
+    const total = biayaKm + biayaPerItem;
 
-    return `Jarak: ${jarak.toFixed(1)} km\n` + 
+    return `Jarak: ${jarak.toFixed(1)} km\n` +
            `• Rp 3.000 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}\n` +
            `• Rp 500 x ${totalItem} item = Rp ${biayaPerItem.toLocaleString()}\n` +
            `Total Ongkir = Rp ${total.toLocaleString()}`;
