@@ -130,36 +130,62 @@ if (storeOpen) {
   };
 
   // === RENDER KERANJANG ===
-  function renderCart() {
-    const list = document.getElementById("cart-items");
-    list.innerHTML = "";
-    let total = 0;
+ function renderCart() {
+  const cartItems = document.getElementById("cart-items");
+  cartItems.innerHTML = "";
 
-    cart.forEach((item, index) => {
-      let subtotal = hitungSubtotal(item);
-      total += subtotal;
+  let totalBelanja = 0;
+  let totalItem = 0;
 
-      let li = document.createElement("li");
-      li.innerHTML = `
-        ${item.name} x${item.qty} - Rp ${subtotal.toLocaleString()}
-        <div class="cart-actions">
-        <button class="btn-qty plus" onclick="increaseQty(${index})"><i class="fas fa-plus"></i></button>
-        <button class="btn-qty minus" onclick="decreaseQty(${index})"><i class="fas fa-minus"></i></button>
-        <button class="btn-remove" onclick="removeItem(${index})"><i class="fas fa-trash"></i></button>
-        </div>
-        ${item.tambahanBiaya ? `
-          <label style="margin-left:5px;font-size:12px;">
-            <input type="checkbox" ${item.antarDalamRumah ? "checked" : ""}
-              onchange="toggleExtra(${index}, this.checked)">
-            Antar ke Dalam (+Rp1.000/item)
-          </label>
-        ` : ""}
+  cart.forEach((item, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
+    <span>${item.name} x${item.qty} - Rp ${(hitungSubtotal(item)).toLocaleString()}</span>
+    <div style="display:flex; gap:6px;">
+      <button style="padding:4px 10px; border:none; background:#f0f0f0; border-radius:6px; font-size:12px;" onclick="decreaseQty(${index})">−</button>
+      <button style="padding:4px 10px; border:none; background:#4caf50; color:white; border-radius:6px; font-size:12px;" onclick="increaseQty(${index})">+</button>
+      <button style="padding:4px 10px; border:none; background:#f44336; color:white; border-radius:6px; font-size:16px;" onclick="removeItem(${index})">🗑</button>
+    </div>
+  </div>
+  <label style="display:block; margin-top:4px; font-size:0.9em;">
+    <input type="checkbox" onchange="toggleAntarDalamRumah(${index})" ${item.antarDalamRumah ? "checked" : ""}>
+    Antar dalam rumah (+Rp 1.000)
+  </label>
+`;
+    cartItems.appendChild(li);
+
+    totalBelanja += hitungSubtotal(item);
+    totalItem += item.qty;
+  });
+
+  let biayaOngkir = hitungOngkir(totalItem);
+  let grandTotal = totalBelanja + biayaOngkir;
+
+  const cartTotal = document.getElementById("cart-total");
+  if (jarak > 0) {
+    if (jarak <= 2) {
+      cartTotal.innerHTML = `
+        Belanja: Rp ${totalBelanja.toLocaleString()}<br>
+        Ongkir (${jarak.toFixed(1)} km): Gratis<br>
+        <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b>
       `;
-      list.appendChild(li);
-    });
-
-    document.getElementById("cart-total").innerText = "Total: Rp " + total.toLocaleString();
+    } else {
+      cartTotal.innerHTML = `
+        Belanja: Rp ${totalBelanja.toLocaleString()}<br>
+        Ongkir (${jarak.toFixed(1)} km): Rp ${biayaOngkir.toLocaleString()}<br>
+        <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b>
+      `;
+    }
+  } else {
+    cartTotal.innerHTML = `
+      Belanja: Rp ${totalBelanja.toLocaleString()}<br>
+      Ongkir: Belum dihitung<br>
+      <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b>
+    `;
   }
+}
+
 // === HAPUS SEMUA KERANJANG ===
 document.getElementById("clear-cart").addEventListener("click", () => {
   if (cart.length === 0) {
@@ -171,8 +197,8 @@ document.getElementById("clear-cart").addEventListener("click", () => {
     renderCart();
   }
 });
-  
-  // === HITUNG SUBTOTAL DENGAN PROMO ===
+
+   // === HITUNG SUBTOTAL DENGAN PROMO & ANTAR DALAM RUMAH ===
   function hitungSubtotal(item) {
     let subtotal = item.price * item.qty;
 
@@ -183,7 +209,7 @@ document.getElementById("clear-cart").addEventListener("click", () => {
       subtotal = paket * item.promo.price + sisa * item.price;
     }
 
-    // tambahan biaya
+    // tambahan biaya antar dalam rumah (per item)
     if (item.tambahanBiaya && item.antarDalamRumah) {
       subtotal += 1000 * item.qty;
     }
@@ -191,10 +217,12 @@ document.getElementById("clear-cart").addEventListener("click", () => {
     return subtotal;
   }
 
-  window.toggleExtra = function(i, checked) {
-    cart[i].antarDalamRumah = checked;
-    renderCart();
-  };
+
+ window.toggleAntarDalamRumah = function(index) {
+  cart[index].antarDalamRumah = !cart[index].antarDalamRumah;
+  renderCart();
+};
+
   window.increaseQty = function(i) { cart[i].qty++; renderCart(); };
   window.decreaseQty = function(i) { if (cart[i].qty > 1) cart[i].qty--; renderCart(); };
   window.removeItem = function(i) { cart.splice(i, 1); renderCart(); };
@@ -243,9 +271,9 @@ document.getElementById("checkout").addEventListener("click", () => {
   let name = document.getElementById("customer-name").value.trim();
   let addr = document.getElementById("customer-address").value.trim();
   let pay = paymentSelect.value;
-  let lokasi = document.getElementById("lokasi").value.trim(); // ✅ lokasi ambil di awal
+  let lokasi = document.getElementById("lokasi").value.trim();
 
-  // 🔹 Validasi semua wajib diisi
+  // 🔹 Validasi wajib
   if (!name || !addr || !pay || !lokasi) {
     alert("Mohon isi nama, alamat, metode pembayaran, dan titik lokasi (share lokasi).");
     return;
@@ -260,17 +288,32 @@ document.getElementById("checkout").addEventListener("click", () => {
   msg += `*Pesanan:*\n`;
 
   let totalItem = 0;
+  let totalBelanja = 0;
   cart.forEach(item => {
     let extra = (item.tambahanBiaya && item.antarDalamRumah) ? " + antar dalam rumah" : "";
     let subtotal = hitungSubtotal(item);
     totalItem += item.qty;
+    totalBelanja += subtotal;
 
     msg += `- ${item.name} x${item.qty}${extra}\n   = Rp ${subtotal.toLocaleString()}\n`;
   });
+  
+  // 🔹 Hitung ongkir & total bayar
+  let biayaOngkir = hitungOngkir(totalItem);
+  let grandTotal = totalBelanja + biayaOngkir;
+
+  // Tambahkan ongkir detail
+  msg += `---------------------\n`;
+  msg += `*Ongkir:*\n${detailOngkir(totalItem)}\n`;
+  msg += `*Total Bayar:* Rp ${grandTotal.toLocaleString()}\n`;
 
   msg += `=====================\n`;
   msg += `*Total Item:* ${totalItem}\n`;
-  msg += `*${document.getElementById("cart-total").innerText}*\n`;
+  if (jarak > 0) {
+    msg += `*Ongkir:* Rp ${biayaOngkir.toLocaleString()} (jarak ${jarak.toFixed(1)} km)\n`;
+  } else {
+    msg += `*Ongkir:* Belum dihitung\n`;
+  }
   msg += `*Metode Pembayaran:* ${pay}\n`;
   msg += `=====================\n`;
 
@@ -283,8 +326,10 @@ document.getElementById("checkout").addEventListener("click", () => {
   msg += `=====================\n`;
   msg += `_Terima kasih sudah berbelanja 🙏_`;
 
+  // Kirim ke WA
   window.open(`https://wa.me/6281287505090?text=${encodeURIComponent(msg)}`, "_blank");
 
+  // reset keranjang
   cart = [];
   renderCart();
 });
@@ -350,6 +395,25 @@ document.querySelectorAll(".accordion").forEach(acc => {
   });
 });
 
+// Ambil Lokasi Jarak
+const tokoLat = -6.288438; 
+const tokoLng = 106.815968;
+
+function haversine(lat1, lon1, lat2, lon2) {
+  const R = 6371; // radius bumi (km)
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c; // hasil dalam km
+}
+
+let ongkir = 0;
+let jarak = 0;
+
 function ambilLokasi() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
@@ -358,6 +422,12 @@ function ambilLokasi() {
         let lng = pos.coords.longitude;
         let mapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
         document.getElementById("lokasi").value = mapsLink;
+
+        // hitung jarak ke toko
+        jarak = haversine(lat, lng, tokoLat, tokoLng);
+
+        // langsung render keranjang walaupun kosong
+        renderCart();
       },
       (err) => {
         alert("Gagal ambil lokasi. Aktifkan GPS & izin lokasi di browser.");
@@ -369,6 +439,30 @@ function ambilLokasi() {
   }
 }
 
+function hitungOngkir(totalItem = 0) {
+  if (jarak > 2) {
+    let baseOngkir = Math.ceil((jarak - 2) * 2500);
+    let tambahanItem = totalItem * 500;
+    return baseOngkir + tambahanItem;
+  }
+  return (jarak > 0 ? 0 : 0); // kalau jarak belum dihitung, ongkir tetap 0
+}
 
+function detailOngkir(totalItem) {
+  if (jarak <= 0) return "Belum dihitung";
 
+  if (jarak <= 2) {
+    return `Gratis (≤ 2 km)`;
+  } else {
+    let kmLebih = Math.ceil(jarak - 2); // bulatkan ke atas
+    let biayaKm = kmLebih * 2500;
+    let biayaPerItem = totalItem * 500;
+    let total = biayaKm + biayaPerItem;
+
+    return `Jarak: ${jarak.toFixed(1)} km\n` +
+           `• Rp 2.500 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}\n` +
+           `• Rp 500 x ${totalItem} item = Rp ${biayaPerItem.toLocaleString()}\n` +
+           `Total Ongkir = Rp ${total.toLocaleString()}`;
+  }
+}
 
