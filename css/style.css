@@ -283,12 +283,6 @@ label[for="customer-address"] {
   border: none;
 }
 
-#cart {
-  position: sticky;
-  top: 20px; /* jarak dari atas */
-  max-height: 80vh; /* biar ga kepanjangan */
-  overflow-y: auto; /* bisa discroll kalau penuh */
-}
 .item-actions {
   display: flex;
   gap: 6px;
@@ -444,5 +438,6 @@ label[for="customer-address"] {
 .btn-clear:hover {
   background: #c1121f;
 }
+
 
 
