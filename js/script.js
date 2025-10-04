@@ -130,7 +130,7 @@ if (storeOpen) {
   };
 
   // === RENDER KERANJANG ===
- function renderCart() {
+function renderCart() {
   const cartItems = document.getElementById("cart-items");
   cartItems.innerHTML = "";
 
@@ -140,19 +140,19 @@ if (storeOpen) {
   cart.forEach((item, index) => {
     const li = document.createElement("li");
     li.innerHTML = `
-  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
-    <span>${item.name} x${item.qty} - Rp ${(hitungSubtotal(item)).toLocaleString()}</span>
-    <div style="display:flex; gap:6px;">
-      <button style="padding:4px 10px; border:none; background:#f0f0f0; border-radius:6px; font-size:12px;" onclick="decreaseQty(${index})">−</button>
-      <button style="padding:4px 10px; border:none; background:#4caf50; color:white; border-radius:6px; font-size:12px;" onclick="increaseQty(${index})">+</button>
-      <button style="padding:4px 10px; border:none; background:#f44336; color:white; border-radius:6px; font-size:16px;" onclick="removeItem(${index})">🗑</button>
-    </div>
-  </div>
-  <label style="display:block; margin-top:4px; font-size:0.9em;">
-    <input type="checkbox" onchange="toggleAntarDalamRumah(${index})" ${item.antarDalamRumah ? "checked" : ""}>
-    Antar dalam rumah (+Rp 1.000)
-  </label>
-`;
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
+        <span>${item.name} x${item.qty} - Rp ${(hitungSubtotal(item)).toLocaleString()}</span>
+        <div style="display:flex; gap:6px;">
+          <button style="padding:4px 10px; border:none; background:#f0f0f0; border-radius:6px; font-size:12px;" onclick="decreaseQty(${index})">−</button>
+          <button style="padding:4px 10px; border:none; background:#4caf50; color:white; border-radius:6px; font-size:12px;" onclick="increaseQty(${index})">+</button>
+          <button style="padding:4px 10px; border:none; background:#f44336; color:white; border-radius:6px; font-size:16px;" onclick="removeItem(${index})">🗑</button>
+        </div>
+      </div>
+      <label style="display:block; margin-top:4px; font-size:0.9em;">
+        <input type="checkbox" onchange="toggleAntarDalamRumah(${index})" ${item.antarDalamRumah ? "checked" : ""}>
+        Antar dalam rumah (+Rp 1.000)
+      </label>
+    `;
     cartItems.appendChild(li);
 
     totalBelanja += hitungSubtotal(item);
@@ -164,16 +164,24 @@ if (storeOpen) {
 
   const cartTotal = document.getElementById("cart-total");
   if (jarak > 0) {
-    if (jarak <= 2) {
+    if (jarak <= 1) {
       cartTotal.innerHTML = `
         Belanja: Rp ${totalBelanja.toLocaleString()}<br>
-        Ongkir (${jarak.toFixed(1)} km): Gratis<br>
+        Ongkir (${jarak.toFixed(1)} km): Gratis (≤ 1 km)<br>
         <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b>
       `;
     } else {
+      const kmLebih = Math.ceil(jarak - 1);
+      const biayaKm = kmLebih * 3000;
+      const biayaPerItem = totalItem * 500;
+
       cartTotal.innerHTML = `
         Belanja: Rp ${totalBelanja.toLocaleString()}<br>
-        Ongkir (${jarak.toFixed(1)} km): Rp ${biayaOngkir.toLocaleString()}<br>
+        Ongkir (${jarak.toFixed(1)} km):<br>
+        • Rp 3.000 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}<br>
+        • Rp 500 x ${totalItem} item = Rp ${biayaPerItem.toLocaleString()}<br>
+        <b>Total Ongkir = Rp ${biayaOngkir.toLocaleString()}</b><br>
+        <hr>
         <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b>
       `;
     }
@@ -466,3 +474,4 @@ function detailOngkir(totalItem) {
            `Total Ongkir = Rp ${total.toLocaleString()}`;
   }
 }
+
