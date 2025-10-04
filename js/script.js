@@ -394,21 +394,9 @@ document.querySelectorAll(".accordion").forEach(acc => {
   });
 });
 
-// Ambil Lokasi Jarak
-const tokoLat = -6.288438; 
+// === Ambil Lokasi Jarak ===
+const tokoLat = -6.288438;
 const tokoLng = 106.815968;
-
-function haversine(lat1, lon1, lat2, lon2) {
-  const R = 6371; // radius bumi (km)
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a =
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return R * c; // hasil dalam km
-}
 
 let ongkir = 0;
 let jarak = 0;
@@ -416,61 +404,71 @@ let jarak = 0;
 /* === Parse koordinat dari Google Maps URL / input lokasi === */
 function parseLatLngFromMapsUrl(url) {
   if (!url) return null;
-  // coba format: @lat,lng
   let m = url.match(/@(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)/);
   if (m) return { lat: parseFloat(m[1]), lng: parseFloat(m[3]) };
 
-  // coba format: ?q=lat,lng atau &q=lat,lng
   m = url.match(/[?&]q=(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)/);
   if (m) return { lat: parseFloat(m[1]), lng: parseFloat(m[3]) };
 
-  // coba pola sederhana: "lat,lng" (mis. user paste " -6.28,106.83 ")
   m = url.match(/(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)/);
   if (m) return { lat: parseFloat(m[1]), lng: parseFloat(m[3]) };
 
   return null;
 }
 
-/* === Hitung jarak dari input 'lokasi' (jika user paste link) === */
+/* === Hitung jarak via Google Distance Matrix (driving distance) === */
+async function computeDrivingDistanceUsingGoogle(lat, lng) {
+  const API_KEY = "GANTI_DENGAN_API_KEY_GOOGLE"; // isi API key-mu
+  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${lat},${lng}&destinations=${tokoLat},${tokoLng}&mode=driving&key=${API_KEY}`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.rows?.[0]?.elements?.[0]?.distance) {
+      const meters = data.rows[0].elements[0].distance.value;
+      jarak = meters / 1000; // km
+      renderCart(); // update tampilan keranjang
+    } else {
+      console.error("Gagal ambil jarak dari Google:", data);
+      alert("Gagal ambil jarak tempuh. Coba ulangi.");
+    }
+  } catch (err) {
+    console.error("Error fetch:", err);
+    alert("Tidak bisa hitung jarak via Google API.");
+  }
+}
+
+/* === Hitung jarak dari input lokasi (user paste link Google Maps) === */
 function computeDistanceFromLokasiInput() {
   const val = document.getElementById("lokasi").value.trim();
-  if (!val) return; // kosong -> nothing to do
+  if (!val) return;
 
   const coords = parseLatLngFromMapsUrl(val);
   if (coords) {
-    // gunakan haversine (straight-line)
-    jarak = haversine(coords.lat, coords.lng, tokoLat, tokoLng);
-    // render agar UI & WA detail ter-update
-    renderCart();
+    computeDrivingDistanceUsingGoogle(coords.lat, coords.lng); // pakai API Google
     return;
   }
 
-  // Kalau tidak ter-parse -> beri tahu user (atau bisa otomatis panggil geolocation)
-  alert("Tidak dapat mengekstrak koordinat dari input lokasi. Paste link share Google Maps (mengandung @lat,lng atau ?q=lat,lng) atau klik 'Ambil Lokasi Anda' agar browser ambil koordinatmu.");
+  alert("Tidak bisa ekstrak koordinat dari input. Gunakan link share Google Maps atau klik 'Ambil Lokasi'.");
 }
 
-/* sambungkan event supaya ketika user paste/ubah input lokasi, jarak dihitung otomatis */
+/* === Event listener untuk input lokasi manual === */
 const lokasiInputEl = document.getElementById("lokasi");
 if (lokasiInputEl) {
   lokasiInputEl.addEventListener("change", computeDistanceFromLokasiInput);
   lokasiInputEl.addEventListener("blur", computeDistanceFromLokasiInput);
 }
 
-/* === ambilLokasi tetap ada (geolocation) — sedikit perbaikan supaya konsisten === */
+/* === Ambil lokasi user via browser GPS === */
 function ambilLokasi() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
-        const mapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
-        document.getElementById("lokasi").value = mapsLink;
+        document.getElementById("lokasi").value = `https://www.google.com/maps?q=${lat},${lng}`;
 
-        // hitung jarak (haversine)
-        jarak = haversine(lat, lng, tokoLat, tokoLng);
-
-        // render keranjang supaya terlihat perubahan
-        renderCart();
+        computeDrivingDistanceUsingGoogle(lat, lng); // pakai Google Maps API
       },
       (err) => {
         alert("Gagal ambil lokasi. Aktifkan GPS & izin lokasi di browser.");
@@ -483,15 +481,15 @@ function ambilLokasi() {
   }
 }
 
-/* === Fungsi ongkir sesuai aturan: 2 km pertama gratis, >2km = Rp 3.000/km (dibulatkan ke atas) + Rp 500/item === */
+/* === Ongkir (2 km gratis, setelah itu Rp 3.000/km + Rp 500/item) === */
 function hitungOngkir(totalItem = 0) {
   if (jarak > 2) {
-    const kmLebih = Math.max(0, Math.ceil(jarak - 2)); // bulatkan ke atas bagian yang dikenakan
+    const kmLebih = Math.ceil(jarak - 2);
     const biayaKm = kmLebih * 3000;
     const biayaPerItem = totalItem * 500;
     return biayaKm + biayaPerItem;
   }
-  return 0; // <= 2 km gratis
+  return 0;
 }
 
 function detailOngkir(totalItem) {
@@ -500,7 +498,7 @@ function detailOngkir(totalItem) {
   if (jarak <= 2) {
     return `Gratis (≤ 2 km)`;
   } else {
-    const kmLebih = Math.max(0, Math.ceil(jarak - 2));
+    const kmLebih = Math.ceil(jarak - 2);
     const biayaKm = kmLebih * 3000;
     const biayaPerItem = totalItem * 500;
     const total = biayaKm + biayaPerItem;
