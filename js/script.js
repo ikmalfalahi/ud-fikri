@@ -217,7 +217,6 @@ document.getElementById("clear-cart").addEventListener("click", () => {
     return subtotal;
   }
 
-
  window.toggleAntarDalamRumah = function(index) {
   cart[index].antarDalamRumah = !cart[index].antarDalamRumah;
   renderCart();
@@ -299,33 +298,9 @@ document.getElementById("checkout").addEventListener("click", () => {
   });
   
   // 🔹 Hitung ongkir & total bayar
-  function hitungOngkir(totalItem = 0) {
-  if (jarak > 2) {
-    let kmLebih = Math.ceil(jarak - 2);   // bulatkan ke atas
-    let baseOngkir = kmLebih * 3000;      // Rp 3000 per km
-    let tambahanItem = totalItem * 500;   // Rp 500 per item
-    return baseOngkir + tambahanItem;
-  }
-  return (jarak > 0 ? 0 : 0); // ≤ 2 km gratis
-}
+  let biayaOngkir = hitungOngkir(totalItem);
+  let grandTotal = totalBelanja + biayaOngkir;
 
-function detailOngkir(totalItem) {
-  if (jarak <= 0) return "Belum dihitung";
-
-  if (jarak <= 2) {
-    return `Gratis (≤ 2 km)`;
-  } else {
-    let kmLebih = Math.ceil(jarak - 2);
-    let biayaKm = kmLebih * 3000;
-    let biayaPerItem = totalItem * 500;
-    let total = biayaKm + biayaPerItem;
-
-    return `Jarak: ${jarak.toFixed(1)} km\n` +
-           `• Rp 3.000 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}\n` +
-           `• Rp 500 x ${totalItem} item = Rp ${biayaPerItem.toLocaleString()}\n` +
-           `Total Ongkir = Rp ${total.toLocaleString()}`;
-  }
-}
   // Tambahkan ongkir detail
   msg += `---------------------\n`;
   msg += `*Ongkir:*\n${detailOngkir(totalItem)}\n`;
