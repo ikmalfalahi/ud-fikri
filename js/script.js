@@ -416,26 +416,34 @@ function parseLatLngFromMapsUrl(url) {
   return null;
 }
 
-/* === Hitung jarak via Google Distance Matrix (driving distance) === */
-async function computeDrivingDistanceUsingGoogle(lat, lng) {
-  const API_KEY = "GANTI_DENGAN_API_KEY_GOOGLE"; // isi API key-mu
-  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${lat},${lng}&destinations=${tokoLat},${tokoLng}&mode=driving&key=${API_KEY}`;
+/* === Hitung jarak via Google Distance Matrix (frontend-safe) === */
+function computeDrivingDistanceUsingGoogle(lat, lng) {
+  const service = new google.maps.DistanceMatrixService();
 
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    if (data.rows?.[0]?.elements?.[0]?.distance) {
-      const meters = data.rows[0].elements[0].distance.value;
-      jarak = meters / 1000; // km
-      renderCart(); // update tampilan keranjang
-    } else {
-      console.error("Gagal ambil jarak dari Google:", data);
-      alert("Gagal ambil jarak tempuh. Coba ulangi.");
+  service.getDistanceMatrix(
+    {
+      origins: [{ lat: lat, lng: lng }],
+      destinations: [{ lat: tokoLat, lng: tokoLng }],
+      travelMode: 'DRIVING',
+      unitSystem: google.maps.UnitSystem.METRIC
+    },
+    (response, status) => {
+      if (status === "OK") {
+        const element = response.rows[0].elements[0];
+        if (element.status === "OK") {
+          const meters = element.distance.value;
+          jarak = meters / 1000; // km
+          renderCart(); // update tampilan keranjang
+        } else {
+          console.error("Gagal ambil jarak:", element.status);
+          alert("Gagal ambil jarak tempuh.");
+        }
+      } else {
+        console.error("Error API:", status);
+        alert("Tidak bisa hitung jarak via Google API.");
+      }
     }
-  } catch (err) {
-    console.error("Error fetch:", err);
-    alert("Tidak bisa hitung jarak via Google API.");
-  }
+  );
 }
 
 /* === Hitung jarak dari input lokasi (user paste link Google Maps) === */
