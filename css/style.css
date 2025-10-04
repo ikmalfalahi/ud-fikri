@@ -428,4 +428,21 @@ label[for="customer-address"] {
   border-radius: 8px;
 }
 
+/* hapus semua keranjang */
+.btn-clear {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #e63946;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.btn-clear:hover {
+  background: #c1121f;
+}
+
 
