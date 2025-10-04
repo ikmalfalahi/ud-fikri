@@ -418,7 +418,7 @@ function parseLatLngFromMapsUrl(url) {
 
 /* === Hitung jarak via OpenRouteService (driving-car) === */
 async function computeDrivingDistanceUsingORS(lat, lng) {
-  const API_KEY = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjE4YzdlNDgxOTgxNTRhN2M4YTU4N2RhZDkwZDRlM2VlIiwiaCI6Im11cm11cjY0In0="; // ganti dengan API key ORS
+  const API_KEY = "K3Qs3vlNQAUz0GxBYthhxindXjTBJOCaHmBgB8wc0+Y="; // ganti dengan API key ORS
 
   const url = "https://api.openrouteservice.org/v2/directions/driving-car";
   const body = {
@@ -525,5 +525,6 @@ function detailOngkir(totalItem) {
            `Total Ongkir = Rp ${total.toLocaleString()}`;
   }
 }
+
 
 
