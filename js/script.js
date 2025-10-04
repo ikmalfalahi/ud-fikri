@@ -441,15 +441,6 @@ function ambilLokasi() {
 /* hitung ongkir & detail ongkir di whatsapp */
 function hitungOngkir(totalItem = 0) {
   if (jarak > 2) {
-    let baseOngkir = Math.ceil((jarak - 2) * 2500);
-    let tambahanItem = totalItem * 500;
-    return baseOngkir + tambahanItem;
-  }
-  return (jarak > 0 ? 0 : 0); // kalau jarak belum dihitung, ongkir tetap 0
-}
-
-function hitungOngkir(totalItem = 0) {
-  if (jarak > 2) {
     let kmLebih = Math.ceil(jarak - 2);   // bulatkan ke atas
     let baseOngkir = kmLebih * 3000;      // Rp 3000 per km
     let tambahanItem = totalItem * 500;   // Rp 500 per item
@@ -464,15 +455,14 @@ function detailOngkir(totalItem) {
   if (jarak <= 2) {
     return `Gratis (≤ 2 km)`;
   } else {
-    let kmLebih = Math.ceil(jarak - 2);
+    let kmLebih = Math.ceil(jarak - 2);   // bulatkan ke atas
     let biayaKm = kmLebih * 3000;
     let biayaPerItem = totalItem * 500;
     let total = biayaKm + biayaPerItem;
 
-    return `Jarak: ${jarak.toFixed(1)} km\n` +
+    return `Jarak: ${jarak.toFixed(1)} km\n` + 
            `• Rp 3.000 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}\n` +
            `• Rp 500 x ${totalItem} item = Rp ${biayaPerItem.toLocaleString()}\n` +
            `Total Ongkir = Rp ${total.toLocaleString()}`;
   }
 }
-
