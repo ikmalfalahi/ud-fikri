@@ -416,34 +416,42 @@ function parseLatLngFromMapsUrl(url) {
   return null;
 }
 
-/* === Hitung jarak via Google Distance Matrix (frontend-safe) === */
-function computeDrivingDistanceUsingGoogle(lat, lng) {
-  const service = new google.maps.DistanceMatrixService();
+/* === Hitung jarak via OpenRouteService (driving-car) === */
+async function computeDrivingDistanceUsingORS(lat, lng) {
+  const API_KEY = "MASUKKAN_API_KEY_ORS_MU_DI_SINI"; // ganti dengan API key ORS
 
-  service.getDistanceMatrix(
-    {
-      origins: [{ lat: lat, lng: lng }],
-      destinations: [{ lat: tokoLat, lng: tokoLng }],
-      travelMode: 'DRIVING',
-      unitSystem: google.maps.UnitSystem.METRIC
-    },
-    (response, status) => {
-      if (status === "OK") {
-        const element = response.rows[0].elements[0];
-        if (element.status === "OK") {
-          const meters = element.distance.value;
-          jarak = meters / 1000; // km
-          renderCart(); // update tampilan keranjang
-        } else {
-          console.error("Gagal ambil jarak:", element.status);
-          alert("Gagal ambil jarak tempuh.");
-        }
-      } else {
-        console.error("Error API:", status);
-        alert("Tidak bisa hitung jarak via Google API.");
-      }
+  const url = "https://api.openrouteservice.org/v2/directions/driving-car";
+  const body = {
+    coordinates: [
+      [lng, lat],       // [lon, lat] asal
+      [tokoLng, tokoLat] // [lon, lat] tujuan (toko)
+    ]
+  };
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Authorization": API_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+
+    const data = await res.json();
+
+    if (data.routes && data.routes[0]) {
+      const meters = data.routes[0].summary.distance;
+      jarak = meters / 1000; // km
+      renderCart(); // update tampilan keranjang
+    } else {
+      console.error("ORS error:", data);
+      alert("Gagal ambil jarak tempuh (ORS).");
     }
-  );
+  } catch (err) {
+    console.error("Fetch error:", err);
+    alert("Tidak bisa hitung jarak via ORS API.");
+  }
 }
 
 /* === Hitung jarak dari input lokasi (user paste link Google Maps) === */
@@ -453,7 +461,7 @@ function computeDistanceFromLokasiInput() {
 
   const coords = parseLatLngFromMapsUrl(val);
   if (coords) {
-    computeDrivingDistanceUsingGoogle(coords.lat, coords.lng); // pakai API Google
+    computeDrivingDistanceUsingORS(coords.lat, coords.lng); // pakai ORS API
     return;
   }
 
@@ -476,7 +484,7 @@ function ambilLokasi() {
         const lng = pos.coords.longitude;
         document.getElementById("lokasi").value = `https://www.google.com/maps?q=${lat},${lng}`;
 
-        computeDrivingDistanceUsingGoogle(lat, lng); // pakai Google Maps API
+        computeDrivingDistanceUsingORS(lat, lng); // pakai ORS API
       },
       (err) => {
         alert("Gagal ambil lokasi. Aktifkan GPS & izin lokasi di browser.");
