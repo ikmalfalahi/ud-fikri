@@ -1,4 +1,7 @@
 // === /api/chatbot.js ===
+export const config = {
+  runtime: "nodejs",
+};
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -28,14 +31,6 @@ export default async function handler(req, res) {
             Tambahan Rp1.000 per item jika diantar sampai dalam rumah.
   - Produk: Gas Elpiji 3Kg dan 12 Kg, Beras, minyak goreng, telur, aqua, lemiral, teh botol, dll.
   - Motto: “Murah, cepat, dan ramah.”
-
-  Aturan menjawab:
-  1. Jawablah sopan, singkat, dan mudah dimengerti.
-  2. Jika pertanyaan tidak berkaitan dengan toko, jawab:
-     "Maaf, saya hanya bisa membantu seputar toko UD Fikri."
-  3. Jangan menciptakan data baru di luar informasi di atas.
-  4. Jika ditanya harga produk, beri contoh umum atau sarankan cek langsung di toko.
-  5. Gunakan gaya bahasa ramah dan profesional.
   `;
 
   try {
@@ -46,7 +41,7 @@ export default async function handler(req, res) {
         Authorization: `Bearer ${OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo",
+        model: "gpt-3.5-turbo-0125",
         messages: [
           { role: "system", content: tokoContext },
           { role: "user", content: message },
@@ -55,13 +50,15 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content;
+    console.log("🔍 OpenAI response:", data);
 
-    res.status(200).json({
+    const reply = data.choices?.[0]?.message?.content?.trim();
+
+    return res.status(200).json({
       reply: reply || "Maaf, saya belum bisa menjawab pertanyaan itu 😅",
     });
   } catch (error) {
     console.error("Error ChatGPT:", error);
-    res.status(500).json({ error: "Terjadi kesalahan server." });
+    return res.status(500).json({ error: "Terjadi kesalahan server." });
   }
 }
