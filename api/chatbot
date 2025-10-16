@@ -8,10 +8,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Pesan kosong" });
   }
 
-  const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-  if (!GEMINI_API_KEY) {
-    return res.status(500).json({ error: "GEMINI_API_KEY belum diatur di environment." });
-  }
+  // === API key langsung dimasukkan di sini ===
+  const GEMINI_API_KEY = "AIzaSyD91R_YGu8YH-hqHcqktVJpRvtpOt_O5r4";
 
   const tokoContext = `
   Kamu adalah asisten virtual untuk *Toko Sembako UD Fikri*.
