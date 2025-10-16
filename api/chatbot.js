@@ -14,6 +14,8 @@ export default async function handler(req, res) {
   }
 
   const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+  console.log("🔑 OPENAI_API_KEY ada?", !!OPENAI_API_KEY);
+
   if (!OPENAI_API_KEY) {
     return res.status(500).json({ error: "OPENAI_API_KEY belum diatur di environment." });
   }
@@ -50,7 +52,7 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
-    console.log("🔍 OpenAI response:", data);
+    console.log("🔍 OpenAI API response:", data);
 
     const reply = data.choices?.[0]?.message?.content?.trim();
 
