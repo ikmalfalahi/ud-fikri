@@ -1,4 +1,3 @@
-// === /api/chatbot.js ===
 export const config = {
   runtime: "nodejs",
 };
@@ -14,7 +13,7 @@ export default async function handler(req, res) {
   }
 
   const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-  console.log("🔑 OPENAI_API_KEY ada?", !!OPENAI_API_KEY);
+  console.log("🔑 API KEY TERDETEKSI:", !!OPENAI_API_KEY);
 
   if (!OPENAI_API_KEY) {
     return res.status(500).json({ error: "OPENAI_API_KEY belum diatur di environment." });
@@ -40,7 +39,7 @@ export default async function handler(req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        "Authorization": `Bearer ${OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo-0125",
@@ -48,19 +47,20 @@ export default async function handler(req, res) {
           { role: "system", content: tokoContext },
           { role: "user", content: message },
         ],
+        temperature: 0.7,
       }),
     });
 
     const data = await response.json();
-    console.log("🔍 OpenAI API response:", data);
+    console.log("🧩 DATA DARI OPENAI:", JSON.stringify(data, null, 2));
 
     const reply = data.choices?.[0]?.message?.content?.trim();
 
-    return res.status(200).json({
+    res.status(200).json({
       reply: reply || "Maaf, saya belum bisa menjawab pertanyaan itu 😅",
     });
   } catch (error) {
-    console.error("Error ChatGPT:", error);
-    return res.status(500).json({ error: "Terjadi kesalahan server." });
+    console.error("🚨 Error ChatGPT:", error);
+    res.status(500).json({ error: "Terjadi kesalahan server." });
   }
 }
