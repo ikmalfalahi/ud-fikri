@@ -71,23 +71,33 @@ document.addEventListener("DOMContentLoaded", () => {
     chatContent.scrollTop = chatContent.scrollHeight;
   }
 
-  // === Preset jawaban offline pintar ===
-  const presetAnswers = [
+  // === Preset offline terbatas ===
+  const presetOffline = [
     { pattern: /jam buka/i, answer: "Toko buka setiap hari pukul 06.00–18.00 WIB." },
-    { pattern: /alamat|lokasi/i, answer: "Lokasi toko: Jl Ampera Raya, RT.6/RW.2, Ragunan, Ps. Minggu, Jakarta Selatan." },
+    { pattern: /alamat|lokasi/i, answer: "Lokasi: Jl Ampera Raya, RT.6/RW.2, Ragunan, Ps. Minggu, Jakarta Selatan." },
     { pattern: /kontak|whatsapp/i, answer: "Kontak: 0852-8106-6230 (WhatsApp)." },
-    { pattern: /ongkir/i, answer: "Gratis antar sampai depan rumah. Tambahan Rp1.000 per item jika diantar sampai dalam rumah." },
-    { pattern: /produk|barang/i, answer: "Produk: Gas Elpiji 3Kg & 12Kg, Beras, Minyak goreng, Telur, Aqua, Lemiral, Teh botol, dll." },
-    { pattern: /motto/i, answer: "Motto: “Murah, cepat, dan ramah.”" }
+    { pattern: /ongkir/i, answer: "Gratis antar sampai depan rumah. Tambahan Rp1.000 per item jika diantar dalam rumah." }
   ];
 
-  function getPresetAnswer(message) {
+  function getPreset(message) {
     const m = message.toLowerCase();
-    for (let p of presetAnswers) {
-      if (p.pattern.test(m)) return p.answer;
-    }
+    for (let p of presetOffline) if (p.pattern.test(m)) return p.answer;
     return null;
   }
+
+  // === Konteks toko untuk Puter.js ===
+  const tokoContext = `
+Kamu adalah asisten virtual untuk UD Fikri.
+Jawabanmu harus berdasarkan info berikut:
+- Nama toko: UD Fikri
+- Jenis usaha: Sembako & kebutuhan harian
+- Lokasi: Jl Ampera Raya, Ragunan, Ps. Minggu, Jakarta Selatan
+- Jam buka: 06.00–18.00 WIB
+- Kontak: 0852-8106-6230 (WhatsApp)
+- Ongkir: Gratis antar depan rumah, tambahan Rp1.000 per item jika diantar dalam rumah
+- Produk: Gas Elpiji 3Kg & 12Kg, Beras, Minyak goreng, Telur, Aqua, Lemiral, Teh botol, dll
+- Motto: “Murah, cepat, dan ramah.”
+`;
 
   // === Fungsi kirim pesan ===
   async function sendMessage() {
@@ -99,30 +109,31 @@ document.addEventListener("DOMContentLoaded", () => {
     appendMessage("Bot", "⏳ Sedang mengetik...", "left", true);
 
     try {
-      let lastTyping = document.querySelector(".typing");
+      const lastTyping = document.querySelector(".typing");
 
-      // === Cek preset offline dulu ===
-      const preset = getPresetAnswer(message);
+      // fallback offline untuk pertanyaan kritis
+      const preset = getPreset(message);
       if (preset) {
         if (lastTyping) lastTyping.remove();
         appendMessage("Bot", preset, "left");
         return;
       }
 
-      // === Panggil GPT mini terbaru via Puter.js ===
+      // === Panggil Puter.js GPT mini/nano terbaru ===
       if (!window.puter || !puter.ai) throw new Error("Puter.js belum dimuat.");
-
-      const response = await puter.ai.chat(message, { model: "gpt-4.1-nano" }); // model valid terbaru
+      const response = await puter.ai.chat({
+        model: "gpt-4.1-nano", // model valid terbaru
+        input_text: message,
+        context: tokoContext
+      });
 
       if (lastTyping) lastTyping.remove();
       appendMessage("Bot", response?.output_text || "Maaf, saya belum bisa menjawab itu 😅", "left");
+
     } catch (e) {
       console.error("Error Puter.js:", e);
-
       const lastTyping = document.querySelector(".typing");
       if (lastTyping) lastTyping.remove();
-
-      // fallback offline
       appendMessage("Bot", "Maaf, saya sedang mengalami gangguan. Coba lagi sebentar ya 😊", "left");
     }
   }
