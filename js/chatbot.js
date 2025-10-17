@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // === Kotak Chat ===
   const chatBox = document.createElement("div");
   chatBox.style.cssText = `
-    position: fixed; bottom: 90px; right: 20px; width: 350px; height: 450px;
+    position: fixed; bottom: 90px; right: 20px; width: 320px; height: 420px;
     background: #fff; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     display: none; flex-direction: column; overflow: hidden; z-index: 10000;
     font-family: 'Segoe UI', sans-serif;
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     chatContent.scrollTop = chatContent.scrollHeight;
   }
 
-  // === Preset fallback offline ===
+  // === Preset offline ===
   const presetOffline = [
     { pattern: /(jam buka|buka jam)/i, answer: "Toko buka setiap hari pukul 06.00–18.00 WIB." },
     { pattern: /(alamat|lokasi|dimana)/i, answer: "Lokasi: Jl Ampera Raya, RT.6/RW.2, Ragunan, Ps. Minggu, Jakarta Selatan." },
@@ -85,7 +85,21 @@ document.addEventListener("DOMContentLoaded", () => {
     return null;
   }
 
-  // === Fungsi kirim pesan ke AI (OpenAI GPT) ===
+  // === Konteks toko untuk AI Puter.js ===
+  const tokoContext = `
+Kamu adalah asisten virtual UD Fikri.
+Jawabanmu harus berdasarkan info berikut:
+- Nama toko: UD Fikri
+- Jenis usaha: Sembako & kebutuhan harian
+- Lokasi: Jl Ampera Raya, Ragunan, Ps. Minggu, Jakarta Selatan
+- Jam buka: 06.00–18.00 WIB
+- Kontak: 0852-8106-6230 (WhatsApp)
+- Ongkir: Gratis antar depan rumah, tambahan Rp1.000 per item jika diantar dalam rumah
+- Produk: Gas Elpiji 3Kg & 12Kg, Beras, Minyak goreng, Telur, Aqua, Lemiral, Teh botol, dll
+- Motto: “Murah, cepat, dan ramah.”
+`;
+
+  // === Fungsi kirim pesan ===
   async function sendMessage() {
     const message = chatInput.value.trim();
     if (!message) return;
@@ -94,52 +108,33 @@ document.addEventListener("DOMContentLoaded", () => {
     chatInput.value = "";
     appendMessage("Bot", "⏳ Sedang mengetik...", "left", true);
 
-    const lastTyping = document.querySelector(".typing");
-
-    // fallback offline
-    const preset = getPreset(message);
-    if (preset) {
-      if (lastTyping) lastTyping.remove();
-      appendMessage("Bot", preset, "left");
-      return;
-    }
-
     try {
-      // === Panggil API OpenAI GPT (via fetch) ===
-      const apiKey = "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"; // <-- ganti dengan key kamu
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-          model: "gpt-4",
-          messages: [
-            {
-              role: "system",
-              content: `
-Kamu adalah asisten virtual UD Fikri.
-Jawabanmu harus realistis dan ramah.
-Berikan informasi tentang jam buka, alamat, produk, harga, ongkir, dan saran pelanggan.
-          `
-            },
-            { role: "user", content: message }
-          ],
-          temperature: 0.7,
-          max_tokens: 500
-        })
+      const lastTyping = document.querySelector(".typing");
+
+      // fallback offline untuk pertanyaan kritis
+      const preset = getPreset(message);
+      if (preset) {
+        if (lastTyping) lastTyping.remove();
+        appendMessage("Bot", preset, "left");
+        return;
+      }
+
+      // === Panggil Puter.js GPT mini/nano terbaru ===
+      if (!window.puter || !puter.ai) throw new Error("Puter.js belum dimuat.");
+      const response = await puter.ai.chat({
+        model: "gpt-5-nano",
+        input_text: message,
+        context: tokoContext
       });
 
-      const data = await response.json();
-      const text = data?.choices?.[0]?.message?.content || "Maaf, saya belum bisa menjawab itu 😅";
+      if (lastTyping) lastTyping.remove();
+      appendMessage("Bot", response?.output_text || "Maaf, saya belum bisa menjawab itu 😅", "left");
 
+    } catch (e) {
+      console.error("Error Puter.js:", e);
+      const lastTyping = document.querySelector(".typing");
       if (lastTyping) lastTyping.remove();
-      appendMessage("Bot", text, "left");
-    } catch (err) {
-      console.error(err);
-      if (lastTyping) lastTyping.remove();
-      appendMessage("Bot", "Maaf, sedang ada gangguan. Coba lagi ya 😊", "left");
+      appendMessage("Bot", "Maaf, saya sedang mengalami gangguan. Coba lagi sebentar ya 😊", "left");
     }
   }
 
@@ -150,5 +145,5 @@ Berikan informasi tentang jam buka, alamat, produk, harga, ongkir, dan saran pel
   });
 
   // === Pesan awal ===
-  appendMessage("Bot", "Halo! 👋 Saya asisten UD Fikri. Bisa bantu info produk, harga, atau pengiriman.", "left");
+  appendMessage("Bot", "Halo! 👋 Saya asisten UD Fikri. Ada yang bisa saya bantu hari ini?", "left");
 });
