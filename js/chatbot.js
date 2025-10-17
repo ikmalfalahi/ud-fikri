@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // === Tombol Bubble Chat ===
   const chatButton = document.createElement("div");
-  chatButton.innerHTML = `<i class="fa-solid fa-comments"></i>`; // Ikon Font Awesome
+  chatButton.innerHTML = `<i class="fa-solid fa-comments"></i>`;
   chatButton.style.cssText = `
     position: fixed; bottom: 20px; right: 20px;
     background: linear-gradient(90deg,#00bfff,#1e90ff);
@@ -39,57 +39,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Event tombol chat ===
   const closeBtn = chatBox.querySelector("#chat-close");
-
   chatButton.addEventListener("click", () => {
     chatBox.style.display = "flex";
-    chatButton.style.display = "none"; // 🔹 HILANGKAN bubble saat chat dibuka
+    chatButton.style.display = "none";
   });
-
   closeBtn.addEventListener("click", () => {
     chatBox.style.display = "none";
-    chatButton.style.display = "flex"; // 🔹 MUNCULKAN kembali bubble saat chat ditutup
+    chatButton.style.display = "flex";
   });
 
   const chatContent = document.getElementById("chat-content");
   const chatInput = document.getElementById("chat-input");
   const chatSend = document.getElementById("chat-send");
 
-  // === Fungsi kirim pesan ===
-  async function sendMessage() {
-    const message = chatInput.value.trim();
-    if (!message) return;
-    appendMessage("Anda", message, "right");
-    chatInput.value = "";
-
-    appendMessage("Bot", "⏳ Sedang mengetik...", "left", true);
-
-    try {
-      const res = await fetch("/api/chatbot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),
-      });
-      const data = await res.json();
-
-      // Hapus "sedang mengetik"
-      const lastTyping = document.querySelector(".typing");
-      if (lastTyping) lastTyping.remove();
-
-      appendMessage("Bot", data.reply, "left");
-    } catch (e) {
-      const lastTyping = document.querySelector(".typing");
-      if (lastTyping) lastTyping.remove();
-      appendMessage("Bot", "⚠️ Terjadi kesalahan, coba lagi ya.", "left");
-    }
-  }
-
   // === Fungsi tampil pesan ===
   function appendMessage(sender, text, side = "left", isTyping = false) {
     const msg = document.createElement("div");
     msg.className = isTyping ? "typing" : "";
-    msg.style.cssText = `
-      margin: 6px 0; display: flex; justify-content: ${side === "right" ? "flex-end" : "flex-start"};
-    `;
+    msg.style.cssText = `margin: 6px 0; display: flex; justify-content: ${side === "right" ? "flex-end" : "flex-start"};`;
     msg.innerHTML = `
       <div style="
         background:${side === "right" ? "#1e90ff" : "#e9ecef"};
@@ -102,6 +69,35 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     chatContent.appendChild(msg);
     chatContent.scrollTop = chatContent.scrollHeight;
+  }
+
+  // === Fungsi kirim pesan dengan Puter.js ===
+  async function sendMessage() {
+    const message = chatInput.value.trim();
+    if (!message) return;
+
+    appendMessage("Anda", message, "right");
+    chatInput.value = "";
+    appendMessage("Bot", "⏳ Sedang mengetik...", "left", true);
+
+    try {
+      if (!window.puter || !puter.ai) {
+        throw new Error("Puter.js belum dimuat. Pastikan <script src='https://js.puter.com/v2/'> ada di HTML.");
+      }
+
+      const response = await puter.ai.chat(message, { model: "gpt-4.1-nano" });
+
+      // Hapus "sedang mengetik"
+      const lastTyping = document.querySelector(".typing");
+      if (lastTyping) lastTyping.remove();
+
+      appendMessage("Bot", response?.output_text || "Maaf, saya belum bisa menjawab itu 😅", "left");
+    } catch (e) {
+      console.error("Error Puter.js:", e);
+      const lastTyping = document.querySelector(".typing");
+      if (lastTyping) lastTyping.remove();
+      appendMessage("Bot", "Terjadi kesalahan, silakan coba lagi ya.", "left");
+    }
   }
 
   // === Event input ===
