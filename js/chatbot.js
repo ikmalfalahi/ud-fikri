@@ -92,6 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ongkir: window.jarak <= 1 ? "Gratis (≤1 km)" : "Tambahan Rp2.500 per km"
   };
 
+  // === Simpan saran user ===
+  const saranTextarea = document.getElementById("saran-produk");
+  const saranList = [];
+
   // === Preset offline lebih lengkap ===
   const presetOffline = [
     { pattern: /(jam buka|buka jam)/i, answer: () => `Toko buka setiap hari pukul ${tokoInfo.jamBuka}.` },
@@ -101,7 +105,12 @@ document.addEventListener("DOMContentLoaded", () => {
     { pattern: /(produk|barang|apa saja dijual)/i, answer: () => `Produk tersedia: ${tokoInfo.produk.join(", ")}.` },
     { pattern: /(status toko|toko buka tutup)/i, answer: () => `Status saat ini: ${tokoInfo.status}.` },
     { pattern: /(deskripsi|cerita toko|tentang toko)/i, answer: () => tokoInfo.deskripsi || "Deskripsi toko tidak tersedia." },
-    { pattern: /(motto|slogan)/i, answer: () => `Motto toko: "${tokoInfo.motto}".` }
+    { pattern: /(motto|slogan)/i, answer: () => `Motto toko: "${tokoInfo.motto}".` },
+    { pattern: /(saran produk|masukan produk)/i, answer: () => {
+        if (saranList.length === 0) return "Belum ada saran produk masuk.";
+        return "Berikut saran produk dari pengguna:\n- " + saranList.join("\n- ");
+      } 
+    }
   ];
 
   function getPreset(message) {
@@ -132,6 +141,19 @@ Jawabanmu harus berdasarkan info berikut:
   async function sendMessage() {
     const message = chatInput.value.trim();
     if (!message) return;
+
+    // Simpan saran jika user mengetik “saran:” atau dari textarea
+    if (/^saran[:]?/i.test(message)) {
+      const saranText = message.replace(/^saran[:]?/i, "").trim() || saranTextarea.value.trim();
+      if (saranText) {
+        saranList.push(saranText);
+        appendMessage("Anda", message, "right");
+        appendMessage("Bot", `Terima kasih! Saranmu sudah kami catat 😊`, "left");
+        chatInput.value = "";
+        saranTextarea.value = "";
+        return;
+      }
+    }
 
     appendMessage("Anda", message, "right");
     chatInput.value = "";
@@ -174,5 +196,5 @@ Jawabanmu harus berdasarkan info berikut:
   });
 
   // === Pesan awal ===
-  appendMessage("Bot", "Halo! 👋 Saya asisten UD Fikri. Ada yang bisa saya bantu hari ini?", "left");
+  appendMessage("Bot", "Halo! 👋 Saya asisten UD Fikri. Ada yang bisa saya bantu hari ini? Kamu bisa memberikan saran produk dengan menulis 'Saran: ...'", "left");
 });
