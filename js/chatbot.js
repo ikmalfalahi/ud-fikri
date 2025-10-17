@@ -71,7 +71,25 @@ document.addEventListener("DOMContentLoaded", () => {
     chatContent.scrollTop = chatContent.scrollHeight;
   }
 
-  // === Fungsi kirim pesan dengan Puter.js ===
+  // === Preset jawaban offline pintar ===
+  const presetAnswers = [
+    { pattern: /jam buka/i, answer: "Toko buka setiap hari pukul 06.00–18.00 WIB." },
+    { pattern: /alamat|lokasi/i, answer: "Lokasi toko: Jl Ampera Raya, RT.6/RW.2, Ragunan, Ps. Minggu, Jakarta Selatan." },
+    { pattern: /kontak|whatsapp/i, answer: "Kontak: 0852-8106-6230 (WhatsApp)." },
+    { pattern: /ongkir/i, answer: "Gratis antar sampai depan rumah. Tambahan Rp1.000 per item jika diantar sampai dalam rumah." },
+    { pattern: /produk|barang/i, answer: "Produk: Gas Elpiji 3Kg & 12Kg, Beras, Minyak goreng, Telur, Aqua, Lemiral, Teh botol, dll." },
+    { pattern: /motto/i, answer: "Motto: “Murah, cepat, dan ramah.”" }
+  ];
+
+  function getPresetAnswer(message) {
+    const m = message.toLowerCase();
+    for (let p of presetAnswers) {
+      if (p.pattern.test(m)) return p.answer;
+    }
+    return null;
+  }
+
+  // === Fungsi kirim pesan ===
   async function sendMessage() {
     const message = chatInput.value.trim();
     if (!message) return;
@@ -81,16 +99,22 @@ document.addEventListener("DOMContentLoaded", () => {
     appendMessage("Bot", "⏳ Sedang mengetik...", "left", true);
 
     try {
-      if (!window.puter || !puter.ai) {
-        throw new Error("Puter.js belum dimuat. Pastikan <script src='https://js.puter.com/v2/'> ada di HTML.");
+      let lastTyping = document.querySelector(".typing");
+
+      // === Cek preset offline dulu ===
+      const preset = getPresetAnswer(message);
+      if (preset) {
+        if (lastTyping) lastTyping.remove();
+        appendMessage("Bot", preset, "left");
+        return;
       }
 
-      // Gunakan model gratis "gpt-3.5-mini" untuk keamanan
+      // === Panggil GPT mini via Puter.js jika tersedia ===
+      if (!window.puter || !puter.ai) throw new Error("Puter.js belum dimuat.");
+
       const response = await puter.ai.chat(message, { model: "gpt-3.5-mini" });
 
-      const lastTyping = document.querySelector(".typing");
       if (lastTyping) lastTyping.remove();
-
       appendMessage("Bot", response?.output_text || "Maaf, saya belum bisa menjawab itu 😅", "left");
     } catch (e) {
       console.error("Error Puter.js:", e);
@@ -98,14 +122,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const lastTyping = document.querySelector(".typing");
       if (lastTyping) lastTyping.remove();
 
-      // Fallback sederhana: preset jawaban jika Puter.js gagal
-      const fallback = [
-        "Maaf, saya sedang mengalami gangguan. Coba lagi sebentar ya 😊",
-        "Ups, saya tidak bisa merespons sekarang. Silakan tulis pertanyaan lain.",
-        "Maaf, chatbot sedang offline. Bisa coba beberapa saat lagi."
-      ];
-      const randomFallback = fallback[Math.floor(Math.random() * fallback.length)];
-      appendMessage("Bot", randomFallback, "left");
+      // fallback offline
+      appendMessage("Bot", "Maaf, saya sedang mengalami gangguan. Coba lagi sebentar ya 😊", "left");
     }
   }
 
