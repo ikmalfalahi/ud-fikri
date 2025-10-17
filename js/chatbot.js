@@ -85,9 +85,9 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("Puter.js belum dimuat. Pastikan <script src='https://js.puter.com/v2/'> ada di HTML.");
       }
 
-      const response = await puter.ai.chat(message, { model: "gpt-4.1-nano" });
+      // Gunakan model gratis "gpt-3.5-nano" agar bebas 401/500
+      const response = await puter.ai.chat(message, { model: "gpt-3.5-nano" });
 
-      // Hapus "sedang mengetik"
       const lastTyping = document.querySelector(".typing");
       if (lastTyping) lastTyping.remove();
 
