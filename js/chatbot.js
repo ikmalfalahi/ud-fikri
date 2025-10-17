@@ -111,7 +111,7 @@ Jawabanmu harus berdasarkan info berikut:
     try {
       const lastTyping = document.querySelector(".typing");
 
-      // fallback offline untuk pertanyaan kritis
+      // fallback offline
       const preset = getPreset(message);
       if (preset) {
         if (lastTyping) lastTyping.remove();
@@ -119,12 +119,14 @@ Jawabanmu harus berdasarkan info berikut:
         return;
       }
 
-      // === Panggil Puter.js GPT mini/nano terbaru ===
+      // === Panggil Puter.js dengan format messages terbaru ===
       if (!window.puter || !puter.ai) throw new Error("Puter.js belum dimuat.");
       const response = await puter.ai.chat({
         model: "gpt-5-nano",
-        input_text: message,
-        context: tokoContext
+        messages: [
+          { role: "system", content: tokoContext },
+          { role: "user", content: message }
+        ]
       });
 
       if (lastTyping) lastTyping.remove();
