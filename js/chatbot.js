@@ -1,41 +1,106 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // === Tombol Bubble Chat ===
+  const chatButton = document.createElement("div");
+  chatButton.innerHTML = `<i class="fa-solid fa-comments"></i>`;
+  chatButton.style.cssText = `
+    position: fixed; bottom: 20px; right: 20px;
+    background: linear-gradient(90deg,#00bfff,#1e90ff);
+    color: white; width: 55px; height: 55px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 26px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 9999; transition: transform 0.2s;
+  `;
+  chatButton.addEventListener("mouseenter", () => chatButton.style.transform = "scale(1.1)");
+  chatButton.addEventListener("mouseleave", () => chatButton.style.transform = "scale(1)");
+  document.body.appendChild(chatButton);
 
-  // Ambil konten info dari index.html
+  // === Kotak Chat ===
+  const chatBox = document.createElement("div");
+  chatBox.style.cssText = `
+    position: fixed; bottom: 90px; right: 20px; width: 320px; height: 420px;
+    background: #fff; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: none; flex-direction: column; overflow: hidden; z-index: 10000;
+    font-family: 'Segoe UI', sans-serif;
+  `;
+  chatBox.innerHTML = `
+    <div style="background: linear-gradient(90deg,#00bfff,#1e90ff); color:white; padding:10px; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
+      <span><i class="fa-solid fa-robot"></i> Asisten UD Fikri</span>
+      <button id="chat-close" style="background:none; border:none; color:white; font-size:18px; cursor:pointer;">✕</button>
+    </div>
+    <div id="chat-content" style="flex:1; padding:10px; overflow-y:auto; font-size:14px; background:#f9f9f9;"></div>
+    <div style="display:flex; border-top:1px solid #ddd; background:white;">
+      <input id="chat-input" type="text" placeholder="Tulis pesan..." style="flex:1; border:none; padding:10px; outline:none; font-size:14px;">
+      <button id="chat-send" style="background:#00bfff; color:white; border:none; padding:10px 15px; cursor:pointer;">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+  `;
+  document.body.appendChild(chatBox);
+
+  // === Event tombol chat ===
+  const closeBtn = chatBox.querySelector("#chat-close");
+  chatButton.addEventListener("click", () => {
+    chatBox.style.display = "flex";
+    chatButton.style.display = "none";
+  });
+  closeBtn.addEventListener("click", () => {
+    chatBox.style.display = "none";
+    chatButton.style.display = "flex";
+  });
+
+  const chatContent = document.getElementById("chat-content");
+  const chatInput = document.getElementById("chat-input");
+  const chatSend = document.getElementById("chat-send");
+
+  // === Fungsi tampil pesan ===
+  function appendMessage(sender, text, side = "left", isTyping = false) {
+    const msg = document.createElement("div");
+    msg.className = isTyping ? "typing" : "";
+    msg.style.cssText = `margin: 6px 0; display: flex; justify-content: ${side === "right" ? "flex-end" : "flex-start"};`;
+    msg.innerHTML = `
+      <div style="
+        background:${side === "right" ? "#1e90ff" : "#e9ecef"};
+        color:${side === "right" ? "white" : "black"};
+        padding:8px 10px; border-radius:10px;
+        max-width:80%; word-wrap:break-word;
+      ">
+        ${isTyping ? text : text.replace(/\n/g, "<br>")}
+      </div>
+    `;
+    chatContent.appendChild(msg);
+    chatContent.scrollTop = chatContent.scrollHeight;
+  }
+
+  // === Ambil info dari index.html & script.js ===
   const htmlInfo = {
     deskripsiToko: document.querySelector("#store-info .desc-text ul")?.innerText || "",
-    jamOperasional: document.querySelector("#store-info .panel strong")?.innerText || "",
-    kontak: document.querySelector("#store-info .panel li i.fa-phone")?.nextSibling?.textContent?.trim() || "",
-    alamat: document.querySelector("#store-info .panel li i.fa-location-dot")?.nextSibling?.textContent?.trim() || "",
-    saranProdukPlaceholder: document.getElementById("saran-produk")?.placeholder || ""
+    jamOperasional: document.querySelector("#store-info .panel strong")?.innerText || "06.00–18.00 WIB",
+    kontak: document.querySelector("#store-info .panel li i.fa-phone")?.nextSibling?.textContent?.trim() || "0852-8106-6230 (WhatsApp)",
+    alamat: document.querySelector("#store-info .panel li i.fa-location-dot")?.nextSibling?.textContent?.trim() || "Jl Ampera Raya, Ragunan, Ps. Minggu, Jakarta Selatan",
+    produk: window.products?.map(p => p.name) || ["Gas Elpiji 3Kg", "Beras", "Minyak goreng", "Telur", "Aqua", "Lemiral", "Teh botol"]
   };
 
-  // Ambil info dari script.js
   const tokoInfo = {
     nama: "UD Fikri",
-    jamBuka: htmlInfo.jamOperasional || "06.00–18.00 WIB",
-    alamat: htmlInfo.alamat || "Jl Ampera Raya, RT.6/RW.2, Ragunan, Ps. Minggu, Jakarta Selatan",
-    kontak: htmlInfo.kontak || "0852-8106-6230 (WhatsApp)",
+    jamBuka: htmlInfo.jamOperasional,
+    alamat: htmlInfo.alamat,
+    kontak: htmlInfo.kontak,
     deskripsi: htmlInfo.deskripsiToko,
-    produk: window.products?.map(p => p.name) || [],
+    produk: htmlInfo.produk,
     motto: "Murah, cepat, dan ramah.",
     status: window.storeOpen ? "Toko Sedang Buka" : "Toko Tutup",
-    ongkir: window.jarak <= 1 ? "Gratis (≤ 1 km)" : window.detailOngkir?.(window.cart.length) || "Belum dihitung"
+    ongkir: window.jarak <= 1 ? "Gratis (≤1 km)" : "Tambahan Rp2.500 per km"
   };
 
-  // Preset jawaban offline
+  // === Preset offline lebih lengkap ===
   const presetOffline = [
-    { pattern: /(jam buka|buka jam|toko buka)/i, answer: () => `Toko buka setiap hari pukul ${tokoInfo.jamBuka}.` },
+    { pattern: /(jam buka|buka jam)/i, answer: () => `Toko buka setiap hari pukul ${tokoInfo.jamBuka}.` },
     { pattern: /(alamat|lokasi|dimana)/i, answer: () => `Lokasi: ${tokoInfo.alamat}.` },
     { pattern: /(kontak|whatsapp)/i, answer: () => `Kontak: ${tokoInfo.kontak}.` },
     { pattern: /(ongkir|antar)/i, answer: () => `${tokoInfo.ongkir}.` },
     { pattern: /(produk|barang|apa saja dijual)/i, answer: () => `Produk tersedia: ${tokoInfo.produk.join(", ")}.` },
     { pattern: /(status toko|toko buka tutup)/i, answer: () => `Status saat ini: ${tokoInfo.status}.` },
     { pattern: /(deskripsi|cerita toko|tentang toko)/i, answer: () => tokoInfo.deskripsi || "Deskripsi toko tidak tersedia." },
-    { pattern: /(promo|diskon|harga)/i, answer: () => {
-        const promoList = window.products?.filter(p => p.promo).map(p => `${p.name}: Beli ${p.promo.qty} Rp ${p.promo.price.toLocaleString()}`) || [];
-        return promoList.length ? `Promo saat ini:\n${promoList.join("\n")}` : "Tidak ada promo saat ini.";
-      }
-    },
     { pattern: /(motto|slogan)/i, answer: () => `Motto toko: "${tokoInfo.motto}".` }
   ];
 
@@ -48,19 +113,22 @@ document.addEventListener("DOMContentLoaded", () => {
     return null;
   }
 
-  // Chatbot input & output
-  const chatInput = document.getElementById("chat-input");
-  const chatContainer = document.getElementById("chat-container");
+  // === Konteks toko untuk Puter.js ===
+  const tokoContext = `
+Kamu adalah asisten virtual ${tokoInfo.nama}.
+Jawabanmu harus berdasarkan info berikut:
+- Nama toko: ${tokoInfo.nama}
+- Jenis usaha: Sembako & kebutuhan harian
+- Lokasi: ${tokoInfo.alamat}
+- Jam buka: ${tokoInfo.jamBuka}
+- Kontak: ${tokoInfo.kontak}
+- Ongkir: ${tokoInfo.ongkir}
+- Produk: ${tokoInfo.produk.join(", ")}
+- Motto: ${tokoInfo.motto}
+- Deskripsi: ${tokoInfo.deskripsi}
+`;
 
-  function appendMessage(sender, text, align = "left", isTyping = false) {
-    if (!chatContainer) return;
-    const div = document.createElement("div");
-    div.className = `chat-message ${align}${isTyping ? " typing" : ""}`;
-    div.textContent = text;
-    chatContainer.appendChild(div);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-  }
-
+  // === Fungsi kirim pesan ===
   async function sendMessage() {
     const message = chatInput.value.trim();
     if (!message) return;
@@ -85,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await puter.ai.chat({
         model: "gpt-mini",
         input_text: message,
-        context: `Kamu adalah asisten virtual ${tokoInfo.nama}. Info toko: jam buka ${tokoInfo.jamBuka}, alamat ${tokoInfo.alamat}, kontak ${tokoInfo.kontak}, produk: ${tokoInfo.produk.join(", ")}, motto: ${tokoInfo.motto}, deskripsi: ${tokoInfo.deskripsi}`
+        context: tokoContext
       });
 
       if (lastTyping) lastTyping.remove();
@@ -99,15 +167,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Event enter
-  if (chatInput) {
-    chatInput.addEventListener("keypress", e => {
-      if (e.key === "Enter") sendMessage();
-    });
-  }
+  // === Event input ===
+  chatSend.addEventListener("click", sendMessage);
+  chatInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") sendMessage();
+  });
 
-  // Tombol kirim
-  const chatSendBtn = document.getElementById("chat-send");
-  if (chatSendBtn) chatSendBtn.addEventListener("click", sendMessage);
-
+  // === Pesan awal ===
+  appendMessage("Bot", "Halo! 👋 Saya asisten UD Fikri. Ada yang bisa saya bantu hari ini?", "left");
 });
