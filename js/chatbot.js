@@ -109,10 +109,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // === Panggil GPT mini via Puter.js jika tersedia ===
+      // === Panggil GPT mini terbaru via Puter.js ===
       if (!window.puter || !puter.ai) throw new Error("Puter.js belum dimuat.");
 
-      const response = await puter.ai.chat(message, { model: "gpt-3.5-mini" });
+      const response = await puter.ai.chat(message, { model: "gpt-4.1-nano" }); // model valid terbaru
 
       if (lastTyping) lastTyping.remove();
       appendMessage("Bot", response?.output_text || "Maaf, saya belum bisa menjawab itu 😅", "left");
