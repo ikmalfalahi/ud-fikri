@@ -85,8 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("Puter.js belum dimuat. Pastikan <script src='https://js.puter.com/v2/'> ada di HTML.");
       }
 
-      // Gunakan model gratis "gpt-3.5-nano" agar bebas 401/500
-      const response = await puter.ai.chat(message, { model: "gpt-3.5-nano" });
+      // Gunakan model gratis "gpt-3.5-mini" untuk keamanan
+      const response = await puter.ai.chat(message, { model: "gpt-3.5-mini" });
 
       const lastTyping = document.querySelector(".typing");
       if (lastTyping) lastTyping.remove();
@@ -94,9 +94,18 @@ document.addEventListener("DOMContentLoaded", () => {
       appendMessage("Bot", response?.output_text || "Maaf, saya belum bisa menjawab itu 😅", "left");
     } catch (e) {
       console.error("Error Puter.js:", e);
+
       const lastTyping = document.querySelector(".typing");
       if (lastTyping) lastTyping.remove();
-      appendMessage("Bot", "Terjadi kesalahan, silakan coba lagi ya.", "left");
+
+      // Fallback sederhana: preset jawaban jika Puter.js gagal
+      const fallback = [
+        "Maaf, saya sedang mengalami gangguan. Coba lagi sebentar ya 😊",
+        "Ups, saya tidak bisa merespons sekarang. Silakan tulis pertanyaan lain.",
+        "Maaf, chatbot sedang offline. Bisa coba beberapa saat lagi."
+      ];
+      const randomFallback = fallback[Math.floor(Math.random() * fallback.length)];
+      appendMessage("Bot", randomFallback, "left");
     }
   }
 
