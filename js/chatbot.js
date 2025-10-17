@@ -71,11 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
     chatContent.scrollTop = chatContent.scrollHeight;
   }
 
-  // === Preset offline terbatas ===
+  // === Preset offline terbatas (regex lebih fleksibel) ===
   const presetOffline = [
-    { pattern: /jam buka/i, answer: "Toko buka setiap hari pukul 06.00–18.00 WIB." },
-    { pattern: /alamat|lokasi/i, answer: "Lokasi: Jl Ampera Raya, RT.6/RW.2, Ragunan, Ps. Minggu, Jakarta Selatan." },
-    { pattern: /kontak|whatsapp/i, answer: "Kontak: 0852-8106-6230 (WhatsApp)." },
+    { pattern: /(jam buka|buka jam)/i, answer: "Toko buka setiap hari pukul 06.00–18.00 WIB." },
+    { pattern: /(alamat|lokasi|dimana)/i, answer: "Lokasi: Jl Ampera Raya, RT.6/RW.2, Ragunan, Ps. Minggu, Jakarta Selatan." },
+    { pattern: /(kontak|whatsapp)/i, answer: "Kontak: 0852-8106-6230 (WhatsApp)." },
     { pattern: /ongkir/i, answer: "Gratis antar sampai depan rumah. Tambahan Rp1.000 per item jika diantar dalam rumah." }
   ];
 
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Konteks toko untuk Puter.js ===
   const tokoContext = `
-Kamu adalah asisten virtual untuk UD Fikri.
+Kamu adalah asisten virtual UD Fikri.
 Jawabanmu harus berdasarkan info berikut:
 - Nama toko: UD Fikri
 - Jenis usaha: Sembako & kebutuhan harian
@@ -122,7 +122,7 @@ Jawabanmu harus berdasarkan info berikut:
       // === Panggil Puter.js GPT mini/nano terbaru ===
       if (!window.puter || !puter.ai) throw new Error("Puter.js belum dimuat.");
       const response = await puter.ai.chat({
-        model: "gpt-4.1-nano", // model valid terbaru
+        model: "gpt-mini",
         input_text: message,
         context: tokoContext
       });
