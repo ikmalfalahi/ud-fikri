@@ -387,9 +387,16 @@ document.querySelectorAll(".accordion").forEach(acc => {
   });
 });
   
-// === Koordinat Toko (UD Fikri) ===
+// === KONFIGURASI LOKASI TOKO ===
 const tokoLat = -6.288438;
 const tokoLng = 106.815968;
+
+// === VARIABEL GLOBAL UNTUK LOKASI USER & ONGKIR ===
+let jarak = 0;
+let ongkir = 0;
+let userMarker = null;
+let userLat = null;
+let userLng = null;
 
 // === Fungsi Haversine untuk hitung jarak (km) ===
 function haversine(lat1, lon1, lat2, lon2) {
@@ -537,5 +544,6 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
+
 
 
