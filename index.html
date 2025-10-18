@@ -127,7 +127,10 @@
 <section data-aos="fade-up" id="cart">
   <h2><i class="fas fa-shopping-cart"></i> Keranjang</h2>
   <ul id="cart-items"></ul>
+
   <div id="cart-total">Total: Rp 0</div>
+  <p id="status-pesanan" style="font-weight:bold; margin-top:6px;"></p>
+
   <button id="clear-cart" class="btn-clear">🗑 Hapus Semua Keranjang</button>
 
   <label for="customer-name"><i class="fas fa-user"></i> Nama Pemesan</label>
@@ -137,7 +140,6 @@
   <input type="text" id="customer-address" placeholder="Contoh: Jl. Melati No. 10">
 
   <div id="payment-section">
-    <!-- Select metode pembayaran -->
     <label for="payment-method">Metode Pembayaran:</label>
     <select id="payment-method">
       <option value="">-- Pilih --</option>
@@ -146,7 +148,6 @@
       <option value="Tunai/Cash">Tunai/Cash</option>
     </select>
 
-    <!-- Tempat info pembayaran (Hanya 1 sekarang) -->
     <div id="payment-info" class="payment-info"></div>
   </div>
 
@@ -185,6 +186,7 @@
 
 </body>
 </html>
+
 
 
 
