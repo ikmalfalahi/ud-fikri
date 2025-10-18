@@ -164,17 +164,27 @@ function renderCart() {
 
   const cartTotal = document.getElementById("cart-total");
 
+  // 🔹 TAMBAHAN STATUS OTOMATIS
+  let statusPesanan = "";
+  if (totalBelanja >= 50000) {
+    statusPesanan = `<b style="color:green;">Pesan siap diantar 🚚</b>`;
+  } else {
+    statusPesanan = `<b style="color:orange;">Pesan ambil di toko 🏪</b>`;
+  }
+
   if (jarak > 0) {
     cartTotal.innerHTML = `
       Belanja: Rp ${totalBelanja.toLocaleString()}<br>
       Ongkir (${jarak.toFixed(1)} km): Rp ${biayaOngkir.toLocaleString()}<br>
-      <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b>
+      <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b><br>
+      ${statusPesanan}
     `;
   } else {
     cartTotal.innerHTML = `
       Belanja: Rp ${totalBelanja.toLocaleString()}<br>
       Ongkir: Belum dihitung<br>
-      <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b>
+      <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b><br>
+      ${statusPesanan}
     `;
   }
 }
@@ -301,6 +311,11 @@ document.getElementById("checkout").addEventListener("click", () => {
 
   msg += `=====================\n`;
   msg += `*Total Item:* ${totalItem}\n`;
+  if (totalBelanja >= 50000) {
+  msg += `*Status Pesanan:* Siap diantar 🚚\n`;
+  } else {
+  msg += `*Status Pesanan:* Ambil di toko 🏪\n`;
+  }
   if (jarak > 0) {
     msg += `*Ongkir:* Rp ${biayaOngkir.toLocaleString()} (jarak ${jarak.toFixed(1)} km)\n`;
   } else {
@@ -517,5 +532,6 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
+
 
 
