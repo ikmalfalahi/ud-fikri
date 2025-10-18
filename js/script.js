@@ -440,60 +440,71 @@ function detailOngkir(totalItem = 0) {
 }
 
 // === PETA & AMBIL LOKASI USER ===
-document.addEventListener("DOMContentLoaded", () => {
-  const ambilBtn = document.getElementById("ambil-lokasi");
-  const lokasiInput = document.getElementById("lokasi");
-  const mapContainer = document.getElementById("user-map");
-  const koordinatEl = document.getElementById("koordinat");
+// (Kode ini TIDAK membungkus lagi dengan DOMContentLoaded dan tidak ada tag <script>)
 
-  let map, marker;
+const tokoLat = -6.288438;
+const tokoLng = 106.815968;
 
-  function updateCartOngkir() {
-    if (typeof renderCart === "function") renderCart();
-  }
+// pastikan variabel global jarak ada (dipakai di renderCart)
+let jarak = 0;
 
-  // Buat & tampilkan peta
-  function initMap(lat, lng) {
-    if (map) map.remove();
+// Ambil elemen sekali
+const ambilBtn = document.getElementById("ambil-lokasi");
+const lokasiInput = document.getElementById("lokasi");
+const koordinatEl = document.getElementById("koordinat");
+let map = null;
+let marker = null;
 
+// helper: inisialisasi peta jika belum ada
+function ensureMap(lat = tokoLat, lng = tokoLng) {
+  if (!map) {
     map = L.map("user-map").setView([lat, lng], 15);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap contributors"
+      attribution: "&copy; OpenStreetMap contributors",
+      maxZoom: 19
     }).addTo(map);
-
+  }
+  if (!marker) {
     marker = L.marker([lat, lng], { draggable: true }).addTo(map);
-
-    updateLokasiDanJarak(lat, lng);
-
-    // Saat marker digeser
-    marker.on("moveend", (e) => {
+    marker.on("dragend", function (e) {
       const pos = e.target.getLatLng();
       updateLokasiDanJarak(pos.lat, pos.lng);
     });
+  } else {
+    marker.setLatLng([lat, lng]);
+    map.setView([lat, lng], 15);
   }
+}
 
-  // Update input, koordinat, dan ongkir
-  function updateLokasiDanJarak(lat, lng) {
-    koordinatEl.textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-    lokasiInput.value = `https://www.google.com/maps?q=${lat},${lng}`;
+// update input, koordinat, jarak, dan renderCart()
+function updateLokasiDanJarak(lat, lng) {
+  // update input google maps link
+  if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${lat},${lng}`;
+  if (koordinatEl) koordinatEl.textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 
+  // hitung jarak pakai fungsi haversine yang sudah ada di file
+  if (typeof haversine === "function") {
     jarak = haversine(lat, lng, tokoLat, tokoLng);
-    window.jarakUser = jarak;
-
-    // Hitung ongkir (pakai total item dari cart)
-    let totalItem = (typeof getTotalItemCount === "function") ? getTotalItemCount() : 0;
-    window.ongkirUser = hitungOngkir(totalItem);
-
-    updateCartOngkir();
+  } else {
+    // fallback: jika haversine belum ada, set jarak=0
+    jarak = 0;
   }
 
-  // Saat klik "Ambil Lokasi Anda"
+  // jika ada fungsi hitung ongkir yang memakai jarak global, biarkan (dia memakai jarak)
+  // panggil renderCart agar total update
+  if (typeof renderCart === "function") renderCart();
+}
+
+// tombol ambil lokasi (geolocation)
+if (ambilBtn) {
   ambilBtn.addEventListener("click", () => {
     if (!navigator.geolocation) {
       alert("Browser Anda tidak mendukung fitur lokasi.");
       return;
     }
 
+    // UI kecil: disable sementara
+    const prevHtml = ambilBtn.innerHTML;
     ambilBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengambil lokasi...';
     ambilBtn.disabled = true;
 
@@ -502,22 +513,30 @@ document.addEventListener("DOMContentLoaded", () => {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
 
-        initMap(lat, lng);
+        ensureMap(lat, lng);
+        updateLokasiDanJarak(lat, lng);
 
-        ambilBtn.innerHTML = '<i class="fa-solid fa-bullseye"></i> Ambil Lokasi Anda';
+        ambilBtn.innerHTML = prevHtml;
         ambilBtn.disabled = false;
       },
       (err) => {
-        alert("Gagal mengambil lokasi. Pastikan izin GPS diaktifkan.");
-        console.error(err);
-        ambilBtn.innerHTML = '<i class="fa-solid fa-bullseye"></i> Ambil Lokasi Anda';
+        console.error("Geolocation error:", err);
+        alert("Gagal mengambil lokasi. Pastikan izin lokasi diaktifkan.");
+        ambilBtn.innerHTML = prevHtml;
         ambilBtn.disabled = false;
-      }
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
     );
   });
-});
-</script>
+}
 
-
-
+// Jika developer ingin peta muncul langsung saat halaman load (opsional):
+// jika elemen map ada, inisialisasi peta default (agar tidak kosong saat tombol belum diklik)
+if (document.getElementById("user-map")) {
+  // inisialisasi peta di lat lng toko (pengguna bisa geser marker nanti)
+  ensureMap(tokoLat, tokoLng);
+  // tampilkan koordinat toko awal di UI (atau "Belum ditentukan" jika mau)
+  if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
+  if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
+}
 
