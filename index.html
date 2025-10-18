@@ -17,6 +17,8 @@
 
   gtag('config', 'G-MLS460Q2ET');
 </script>
+  <!-- === AOS (Animate On Scroll) === -->
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 <body>
 
@@ -34,7 +36,7 @@
 </header>
 
 <div id="welcome">
-  <i class="fa-solid fa-handshake handshake-icon"></i>
+  <i data-aos="fade-in" class="fa-solid fa-handshake handshake-icon"></i>
   Selamat datang di <strong>Toko Sembako UD-Fikri!</strong>
 </div>
 
@@ -46,12 +48,12 @@
   <!-- <h3>Informasi & Deskripsi Toko</h3> -->
 
   <!-- Accordion: Deskripsi Toko -->
-  <button class="accordion"> <i class="fa-solid fa-book-open" style="margin-right:8px;"></i>
+  <button  data-aos="fade-right" class="accordion"> <i class="fa-solid fa-book-open" style="margin-right:8px;"></i>
     Deskripsi (Usaha Dagang) UD-Fikri
   </button>
   <div class="panel">
     <div class="desc-text">
-      <ul>
+      <ul> data-aos="fade-in"
         <li>Toko Sembako UD-Fikri selalu siap memenuhi kebutuhan harian Anda. Dengan harga yang terjangkau, belanja jadi lebih mudah dan menyenangkan.</li>
         <li>Kami siap antar pesanan anda. Standar Operasioanl pengiriman hanya sampai depan rumah <strong>GRATIS</strong>.</li>
         <li>Antar pesanan sampai dalam rumah! Tambahan biaya Rp1.000/item (khusus produk tertentu). Silakan centang di keranjang ✅.</li>
@@ -64,10 +66,10 @@
   </div>
 
   <!-- Accordion: Detail Toko -->
-  <button class="accordion"> <i class="fa-solid fa-book-open" style="margin-right:8px;"></i>
+  <button data-aos="fade-left" class="accordion"> <i class="fa-solid fa-book-open" style="margin-right:8px;"></i>
     Informasi & Jam Operasional</button>
   <div class="panel">
-    <ul>
+    <ul> data-aos="fade-in"
       <li><i class="fa-regular fa-clock"></i> Jam Buka:</li>
       <strong>Setiap Hari Pukul 06:00 - 18:00 WIB</strong>
       <br><br>
@@ -82,11 +84,11 @@
     </ul>
   </div>
   
-<button class="accordion">
-   <i class="fa-solid fa-lightbulb" style="margin-right:8px;"></i>
+<button data-aos="fade-right" class="accordion">
+   <i data-aos="fade-in" class="fa-solid fa-lightbulb" style="margin-right:8px;"></i>
   Saran & Masukan Produk
 </button>
-  <div class="panel">
+  <div data-aos="fade-in" class="panel">
     <p>Silakan tulis saran atau masukan produk yang ingin tersedia di toko kami:</p>
     <textarea id="saran-produk" rows="3" placeholder="Contoh: Tambahkan Gula, Kopi, dll." style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;"></textarea>
     <br> <br>
@@ -95,7 +97,7 @@
   <!-- Map tetap di luar accordion -->
   <label for="lokasi"><i class="fa-solid fa-location-dot"></i>
       <strong>Lokasi Toko Sembako UD-Fikri</strong></label>
-  <div class="map-container" style="margin-top:15px;">
+  <div data-aos="fade-in" class="map-container" style="margin-top:15px;">
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.8118961438554!2d106.81596807478407!3d-6.288438361550301!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f375ec5af3a1%3A0xeaaa81162b77c181!2sUD.%20FIKRI!5e0!3m2!1sid!2sid!4v1759140315801!5m2!1sid!2sid"
       width="100%" height="300" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"
       referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -142,7 +144,7 @@
   <button id="checkout">Pesan Sekarang</button>
 </section>
 
-<section id="products-container" class="products-grid">
+<section data-aos="fade-up" id="products-container" class="products-grid">
   <!-- Produk akan digenerate otomatis oleh script.js -->
 </section>
 
@@ -160,16 +162,17 @@
 
 <!-- 3. Baru setelah itu load script.js -->
 <script src="js/script.js"></script>
-<!-- 4. Chatbot sederhana -->
-<!--<script src="https://js.puter.com/v2/"></script>-->
-<!--// <script src="/js/chatbot.js"></script>-->
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true
+  });
+</script>
 
 </body>
 </html>
-
-
-
-
-
 
 
