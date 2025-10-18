@@ -19,6 +19,9 @@
 </script>
   <!-- === AOS (Animate On Scroll) === -->
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -103,15 +106,24 @@
   </div>
 
     <label data-aos="fade-in" for="lokasi"><i class="fa-solid fa-location-dot"></i>
-      <strong>Titik Lokasi Anda (Opsional)</strong></label>
-  <input type="text" id="lokasi" placeholder="Tempel link share lokasi Google Maps"
-    style="width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:6px;">
+  <strong>Titik Lokasi Anda (Opsional)</strong></label>
 
-    <button type="button" onclick="ambilLokasi()" 
-      style="margin-top:6px;padding:6px 12px;border:none;border-radius:6px;background: linear-gradient(90deg,#00bfff,#1e90ff);;color:#fff;cursor:pointer;">
-      <i class="fa-solid fa-bullseye"></i>
-      Ambil Lokasi Anda
-    </button>
+<input type="text" id="lokasi" placeholder="Tempel link share lokasi Google Maps"
+  style="width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:6px;">
+
+<button type="button" id="ambil-lokasi"
+  style="margin-top:6px;padding:6px 12px;border:none;border-radius:6px;background: linear-gradient(90deg,#00bfff,#1e90ff);color:#fff;cursor:pointer;">
+  <i class="fa-solid fa-bullseye"></i>
+  Ambil Lokasi Anda
+</button>
+
+<!-- Tambahkan MAP di bawah tombol -->
+<div id="user-map" data-aos="fade-up"
+  style="height:300px;margin-top:10px;border-radius:10px;border:1px solid #ddd;"></div>
+
+<p style="font-size:14px;color:#555;margin-top:6px;">
+  Geser pin merah untuk menyesuaikan lokasi Anda. Koordinat: <span id="koordinat">Belum ditentukan</span>
+</p>
 </section>
 
 <section data-aos="fade-up" id="cart">
@@ -173,6 +185,7 @@
 
 </body>
 </html>
+
 
 
 
