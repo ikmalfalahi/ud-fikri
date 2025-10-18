@@ -75,9 +75,9 @@ if (storeOpen) {
     { name: "leMineral 330ml", price: 42000, img: "images/lemineral-330ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
     { name: "leMineral 600ml", price: 52000, img: "images/lemineral-600ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
     { name: "Beras 14", price: 14000, img: "images/beras-14.jpg", category: "BERAS", tambahanBiaya: true },
-    { name: "Beras 13", price: 13000, img: "images/beras-13.jpg", category: "BERAS", tambahanBiaya: true },
+    { name: "Beras 13", price: 13500, img: "images/beras-13.jpg", category: "BERAS", tambahanBiaya: true },
     { name: "Beras 12", price: 12000, img: "images/beras-12.jpg", category: "BERAS", tambahanBiaya: true },
-    { name: "Telur 1kg", price: 31000, img: "images/telur.jpg", category: "TELUR", tambahanBiaya: true },
+    { name: "Telur 1kg", price: 32000, img: "images/telur.jpg", category: "TELUR", tambahanBiaya: true },
     { name: "Minyak Kita 1ltr", price: 18000, img: "images/minyak-1ltr.jpg", category: "MINYAK", tambahanBiaya: true, promo: { qty: 12, price: 205000 } },
     { name: "Minyak Kita 2ltr", price: 35000, img: "images/minyak-1ltr.jpg", category: "MINYAK", tambahanBiaya: true, promo: { qty: 6, price: 205000 } },
     { name: "S-TEE", price: 60000, img: "images/s-tee.jpg", category: "TEH BOTOL", tambahanBiaya: true },
@@ -517,4 +517,5 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
+
 
