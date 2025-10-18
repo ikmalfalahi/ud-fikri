@@ -174,44 +174,9 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="js/script.js"></script>
 
-<!-- Elemen HTML -->
-<div id="user-map" style="height: 300px; width: 100%;"></div>
-<p>Koordinat: <span id="koordinat">-6.288418, 106.818342</span></p>
-<button id="ambil-lokasi">Ambil Lokasi Anda</button>
-
-<!-- Label & input lokasi user -->
-<label data-aos="fade-in" for="lokasi"><i class="fa-solid fa-location-dot"></i>
-  <strong>Titik Lokasi Anda (Opsional)</strong>
-</label>
-
-<input data-aos="fade-in" type="text" id="lokasi" placeholder="Tempel link share lokasi Google Maps"
-  style="width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:6px;">
-
-<button data-aos="fade-right" type="button" id="ambil-lokasi"
-  style="margin-top:6px;padding:6px 12px;border:none;border-radius:6px;background: linear-gradient(90deg,#00bfff,#1e90ff);color:#fff;cursor:pointer;">
-  <i class="fa-solid fa-bullseye"></i>
-  Ambil Lokasi Anda
-</button>
-
-<!-- Map container Leaflet -->
-<div id="user-map" data-aos="fade-up"
-  style="height:300px;margin-top:10px;border-radius:10px;border:1px solid #ddd;"></div>
-
-<p data-aos="fade-up"style="font-size:14px;color:#555;margin-top:6px;">
-  Geser pin merah untuk menyesuaikan lokasi Anda. Koordinat: <span id="koordinat">Belum ditentukan</span>
-</p>
-
-<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 800,
-    easing: 'ease-in-out',
-    once: true
-  });
-</script>
-  
 </body>
 </html>
+
 
 
 
