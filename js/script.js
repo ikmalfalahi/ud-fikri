@@ -388,15 +388,13 @@ document.querySelectorAll(".accordion").forEach(acc => {
 });
   
 // === KONFIGURASI LOKASI TOKO ===
-const tokoLat = -6.288438;
-const tokoLng = 106.815968;
+if (typeof window.tokoLat === "undefined") window.tokoLat = -6.288438;
+if (typeof window.tokoLng === "undefined") window.tokoLng = 106.815968;
 
 // === VARIABEL GLOBAL UNTUK LOKASI USER & ONGKIR ===
-let jarak = 0;
-let ongkir = 0;
-let userMarker = null;
-let userLat = null;
-let userLng = null;
+if (typeof window.jarak === "undefined") window.jarak = 0;
+window.jarakUser = 0;
+window.ongkirUser = 0;
 
 // === Fungsi Haversine untuk hitung jarak (km) ===
 function haversine(lat1, lon1, lat2, lon2) {
@@ -409,34 +407,31 @@ function haversine(lat1, lon1, lat2, lon2) {
     Math.cos(lat2 * Math.PI / 180) *
     Math.sin(dLon / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c; // hasil dalam kilometer
+  return R * c;
 }
 
-// === Variabel Global ===
-let jarak = 0;
-window.jarakUser = 0; // biar bisa dipanggil renderCart
-window.ongkirUser = 0;
-
-// === Fungsi Hitung Ongkir (1 km gratis, selebihnya 3000/km + 500/item) ===
+// === Fungsi Hitung Ongkir ===
 function hitungOngkir(totalItem = 0) {
+  const jarak = window.jarak || 0;
   if (jarak > 1) {
-    let kmLebih = Math.ceil(jarak - 1);
-    let biayaKm = kmLebih * 3000;
-    let biayaPerItem = totalItem * 500;
+    const kmLebih = Math.ceil(jarak - 1);
+    const biayaKm = kmLebih * 3000;
+    const biayaPerItem = totalItem * 500;
     return biayaKm + biayaPerItem;
   }
   return 0;
 }
 
-// === Detail Ongkir (untuk teks tambahan, opsional) ===
+// === Detail Ongkir ===
 function detailOngkir(totalItem = 0) {
+  const jarak = window.jarak || 0;
   if (jarak <= 0) return "Belum dihitung";
   if (jarak <= 1) return "Gratis (≤ 1 km)";
 
-  let kmLebih = Math.ceil(jarak - 1);
-  let biayaKm = kmLebih * 3000;
-  let biayaPerItem = totalItem * 500;
-  let total = biayaKm + biayaPerItem;
+  const kmLebih = Math.ceil(jarak - 1);
+  const biayaKm = kmLebih * 3000;
+  const biayaPerItem = totalItem * 500;
+  const total = biayaKm + biayaPerItem;
 
   return `Jarak: ${jarak.toFixed(1)} km\n` +
          `• Rp 3.000 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}\n` +
@@ -445,15 +440,6 @@ function detailOngkir(totalItem = 0) {
 }
 
 // === PETA & AMBIL LOKASI USER ===
-
-// Titik toko tetap
-const tokoLat = -6.288438;
-const tokoLng = 106.815968;
-
-// Gunakan variabel jarak global yang sudah ada
-// (tidak deklarasi ulang)
-
-// Ambil elemen HTML
 const ambilBtn = document.getElementById("ambil-lokasi");
 const lokasiInput = document.getElementById("lokasi");
 const koordinatEl = document.getElementById("koordinat");
@@ -461,7 +447,6 @@ const koordinatEl = document.getElementById("koordinat");
 let map = null;
 let marker = null;
 
-// --- Inisialisasi atau tampilkan peta ---
 function ensureMap(lat = tokoLat, lng = tokoLng) {
   if (!map) {
     map = L.map("user-map").setView([lat, lng], 15);
@@ -473,7 +458,7 @@ function ensureMap(lat = tokoLat, lng = tokoLng) {
 
   if (!marker) {
     marker = L.marker([lat, lng], { draggable: true }).addTo(map);
-    marker.on("dragend", function (e) {
+    marker.on("dragend", (e) => {
       const pos = e.target.getLatLng();
       updateLokasiDanJarak(pos.lat, pos.lng);
     });
@@ -483,26 +468,17 @@ function ensureMap(lat = tokoLat, lng = tokoLng) {
   }
 }
 
-// --- Update lokasi, koordinat, jarak, dan render total ---
 function updateLokasiDanJarak(lat, lng) {
-  // Update input dan teks koordinat
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${lat},${lng}`;
   if (koordinatEl) koordinatEl.textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 
-  // Hitung jarak ke toko pakai haversine (kalau sudah ada)
-  if (typeof haversine === "function") {
-    jarak = haversine(lat, lng, tokoLat, tokoLng);
-  }
-
-  // Update variabel global agar bisa dipakai renderCart
-  window.jarakUser = jarak;
+  window.jarak = haversine(lat, lng, tokoLat, tokoLng);
+  window.jarakUser = window.jarak;
   window.ongkirUser = hitungOngkir();
 
-  // Render ulang total keranjang
   if (typeof renderCart === "function") renderCart();
 }
 
-// --- Tombol "Ambil Lokasi Anda" ---
 if (ambilBtn) {
   ambilBtn.addEventListener("click", () => {
     if (!navigator.geolocation) {
@@ -536,7 +512,6 @@ if (ambilBtn) {
   });
 }
 
-// --- Tampilkan peta default saat halaman dimuat ---
 if (document.getElementById("user-map")) {
   ensureMap(tokoLat, tokoLng);
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
