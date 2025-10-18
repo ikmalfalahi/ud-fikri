@@ -378,27 +378,26 @@ document.getElementById("checkout").addEventListener("click", () => {
 
   // === UPDATE STATUS TOKO DI HALAMAN ===
   function updateStoreStatus() {
-    const statusEl = document.getElementById("store-status-msg");
-    const productsContainer = document.getElementById("products-container");
+  const statusEl = document.getElementById("store-status-msg");
+  const productsContainer = document.getElementById("products-container");
 
-    if (storeOpen) {
-      statusEl.innerHTML = `
-        <i class="fas fa-check-circle"></i> 
-        <span><strong>Toko Sedang Buka</strong>. <br>Silakan belanja 😊</span>
-      `;
-      statusEl.className = "store-open";
-      productsContainer.style.display = "grid";
-    } else {
-      statusEl.innerHTML = `
-        <i class="fas fa-exclamation-triangle"></i> 
-        <span><strong>Toko Tutup</strong>.<br>Silahkan kembali lagi nanti 🙏</span>
-      `;
-      statusEl.className = "store-closed";
-      productsContainer.style.display = "none";
-    }
+  if (storeOpen) {
+    statusEl.innerHTML = `
+      <i class="fas fa-check-circle"></i> 
+      <span><strong>Toko Sedang Buka</strong>. <br>Silakan belanja 😊</span>
+    `;
+    statusEl.className = "store-open";
+    productsContainer.style.display = "grid";
+  } else {
+    statusEl.innerHTML = `
+      <i class="fas fa-exclamation-triangle"></i> 
+      <span><strong>Toko Tutup</strong>.<br>Silahkan kembali lagi nanti 🙏</span>
+    `;
+    statusEl.className = "store-closed";
+    productsContainer.style.display = "none";
   }
-  updateStoreStatus();
-});
+}
+updateStoreStatus();
 
 // Accordion toggle with animation
 document.querySelectorAll(".accordion").forEach(acc => {
@@ -546,13 +545,3 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
-
-
-
-
-
-
-
-
-
-
