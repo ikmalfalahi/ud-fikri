@@ -181,17 +181,15 @@ function renderCart() {
     `;
   }
 
-// 🔹 Tentukan status otomatis berdasarkan jarak dan total belanja
-let statusPesanan = "";
-if (jarak <= 1 && totalBelanja >= 40000) {
-  statusPesanan = "Siap diantar 🚚";
-} else if (jarak > 1 && totalBelanja >= 60000) {
-  statusPesanan = "Siap diantar 🚚";
-} else {
-  statusPesanan = "Ambil di toko 🏪";
+ // 🔹 Status otomatis tampil di elemen terpisah
+  if (totalBelanja >= 50000) {
+    statusPesananElem.textContent = "Pesan siap diantar 🚚";
+    statusPesananElem.style.color = "green";
+  } else {
+    statusPesananElem.textContent = "Pesan ambil di toko 🏪";
+    statusPesananElem.style.color = "orange";
+  }
 }
-
-msg += `*Status Pesanan:* ${statusPesanan}\n`;
 
 // === HAPUS SEMUA KERANJANG ===
 document.getElementById("clear-cart").addEventListener("click", () => {
@@ -536,6 +534,7 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
+
 
 
 
