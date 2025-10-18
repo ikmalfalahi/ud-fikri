@@ -387,49 +387,66 @@ document.querySelectorAll(".accordion").forEach(acc => {
   });
 });
 
-// === Ambil Lokasi Jarak (pakai haversine) ===
-const tokoLat = -6.288438; 
-const tokoLng = 106.815968;
+// === FITUR MAP UNTUK TITIK LOKASI USER ===
 
-function haversine(lat1, lon1, lat2, lon2) {
-  const R = 6371; // radius bumi (km)
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a =
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return R * c; // hasil km
+// Koordinat toko (tetap)
+const tokoLat = -6.2884383;
+const tokoLng = 106.818523;
+
+// Inisialisasi peta Leaflet
+const userMap = L.map("user-map").setView([tokoLat, tokoLng], 13);
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19,
+  attribution: "© OpenStreetMap"
+}).addTo(userMap);
+
+// Marker user (bisa digeser)
+let userMarker = L.marker([tokoLat, tokoLng], { draggable: true })
+  .addTo(userMap)
+  .bindPopup("Geser pin ini ke lokasi Anda.")
+  .openPopup();
+
+// Ambil elemen
+const lokasiInput = document.getElementById("lokasi");
+const koordinatText = document.getElementById("koordinat");
+
+// Fungsi untuk update teks dan input
+function updateLokasi(lat, lng) {
+  const mapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
+  lokasiInput.value = mapsLink;
+  koordinatText.textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+
+  // Hitung jarak otomatis (jika variabel dan fungsi tersedia)
+  if (typeof haversine === "function") {
+    jarak = haversine(lat, lng, tokoLat, tokoLng);
+    if (typeof renderCart === "function") renderCart();
+  }
 }
 
-let ongkir = 0;
-let jarak = 0;
+// Saat marker digeser manual
+userMarker.on("dragend", (e) => {
+  const { lat, lng } = e.target.getLatLng();
+  updateLokasi(lat, lng);
+});
 
-function ambilLokasi() {
+// Saat klik tombol "Ambil Lokasi Anda"
+document.getElementById("ambil-lokasi").addEventListener("click", () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        let lat = pos.coords.latitude;
-        let lng = pos.coords.longitude;
-        let mapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
-        document.getElementById("lokasi").value = mapsLink;
-
-        // hitung jarak ke toko
-        jarak = haversine(lat, lng, tokoLat, tokoLng);
-
-        // update keranjang
-        renderCart();
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        userMap.setView([lat, lng], 17);
+        userMarker.setLatLng([lat, lng]);
+        updateLokasi(lat, lng);
       },
-      (err) => {
-        alert("Gagal ambil lokasi. Aktifkan GPS & izin lokasi di browser.");
-        console.error(err);
-      }
+      () => alert("Gagal mengambil lokasi otomatis. Silakan geser pin manual.")
     );
   } else {
-    alert("Browser tidak mendukung GPS.");
+    alert("Browser tidak mendukung geolokasi.");
   }
-}
+});
 
 // === Hitung Ongkir: 1 km gratis, selebihnya Rp 3.000/km + Rp 500/item ===
 function hitungOngkir(totalItem = 0) {
@@ -459,7 +476,3 @@ function detailOngkir(totalItem) {
            `Total Ongkir = Rp ${total.toLocaleString()}`;
   }
 }
-
-
-
-
