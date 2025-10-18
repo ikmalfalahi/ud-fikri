@@ -391,28 +391,14 @@ document.querySelectorAll(".accordion").forEach(acc => {
 if (typeof window.tokoLat === "undefined") window.tokoLat = -6.288438;
 if (typeof window.tokoLng === "undefined") window.tokoLng = 106.815968;
 
-// === VARIABEL GLOBAL UNTUK LOKASI USER & ONGKIR ===
-if (typeof window.jarak === "undefined") window.jarak = 0;
-window.jarakUser = 0;
+// === 🌍 Variabel Global ===
+let jarak = 0;
+window.jarakUser = 0; // bisa diakses dari luar (renderCart)
 window.ongkirUser = 0;
 
-// === Fungsi Haversine untuk hitung jarak (km) ===
-function haversine(lat1, lon1, lat2, lon2) {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(lat1 * Math.PI / 180) *
-    Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon / 2) ** 2;
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
-}
-
-// === Fungsi Hitung Ongkir ===
+// === 📦 Fungsi Hitung Ongkir ===
+// Gratis ≤ 1 km, selebihnya Rp 3.000/km + Rp 500/item
 function hitungOngkir(totalItem = 0) {
-  const jarak = window.jarak || 0;
   if (jarak > 1) {
     const kmLebih = Math.ceil(jarak - 1);
     const biayaKm = kmLebih * 3000;
@@ -422,9 +408,8 @@ function hitungOngkir(totalItem = 0) {
   return 0;
 }
 
-// === Detail Ongkir ===
+// === 🧾 Detail Ongkir (untuk tampilan opsional) ===
 function detailOngkir(totalItem = 0) {
-  const jarak = window.jarak || 0;
   if (jarak <= 0) return "Belum dihitung";
   if (jarak <= 1) return "Gratis (≤ 1 km)";
 
@@ -433,13 +418,17 @@ function detailOngkir(totalItem = 0) {
   const biayaPerItem = totalItem * 500;
   const total = biayaKm + biayaPerItem;
 
-  return `Jarak: ${jarak.toFixed(1)} km\n` +
-         `• Rp 3.000 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}\n` +
-         `• Rp 500 x ${totalItem} item = Rp ${biayaPerItem.toLocaleString()}\n` +
-         `Total Ongkir = Rp ${total.toLocaleString()}`;
+  return `Jarak: ${jarak.toFixed(1)} km
+• Rp 3.000 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}
+• Rp 500 x ${totalItem} item = Rp ${biayaPerItem.toLocaleString()}
+Total Ongkir = Rp ${total.toLocaleString()}`;
 }
 
-// === PETA & AMBIL LOKASI USER ===
+// === 📍 Titik Toko UD Fikri ===
+const tokoLat = -6.203295;
+const tokoLng = 106.821760;
+
+// === 🗺️ Elemen HTML Peta ===
 const ambilBtn = document.getElementById("ambil-lokasi");
 const lokasiInput = document.getElementById("lokasi");
 const koordinatEl = document.getElementById("koordinat");
@@ -447,12 +436,13 @@ const koordinatEl = document.getElementById("koordinat");
 let map = null;
 let marker = null;
 
+// === 🔹 Inisialisasi atau Update Peta ===
 function ensureMap(lat = tokoLat, lng = tokoLng) {
   if (!map) {
     map = L.map("user-map").setView([lat, lng], 15);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "&copy; OpenStreetMap contributors",
-      maxZoom: 19
+      maxZoom: 19,
     }).addTo(map);
   }
 
@@ -468,17 +458,26 @@ function ensureMap(lat = tokoLat, lng = tokoLng) {
   }
 }
 
+// === 📏 Update Lokasi + Hitung Jarak + Render Ulang ===
 function updateLokasiDanJarak(lat, lng) {
+  // update input dan teks koordinat
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${lat},${lng}`;
   if (koordinatEl) koordinatEl.textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 
-  window.jarak = haversine(lat, lng, tokoLat, tokoLng);
-  window.jarakUser = window.jarak;
+  // hitung jarak ke toko
+  if (typeof haversine === "function") {
+    jarak = haversine(lat, lng, tokoLat, tokoLng);
+  }
+
+  // simpan ke variabel global
+  window.jarakUser = jarak;
   window.ongkirUser = hitungOngkir();
 
+  // render ulang total keranjang
   if (typeof renderCart === "function") renderCart();
 }
 
+// === 📡 Tombol "Ambil Lokasi Anda" ===
 if (ambilBtn) {
   ambilBtn.addEventListener("click", () => {
     if (!navigator.geolocation) {
@@ -512,6 +511,7 @@ if (ambilBtn) {
   });
 }
 
+// === 🗺️ Peta Default Saat Halaman Dibuka ===
 if (document.getElementById("user-map")) {
   ensureMap(tokoLat, tokoLng);
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
