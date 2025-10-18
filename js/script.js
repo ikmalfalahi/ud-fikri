@@ -79,7 +79,7 @@ if (storeOpen) {
     { name: "Beras 12", price: 12000, img: "images/beras-12.jpg", category: "BERAS", tambahanBiaya: true },
     { name: "Telur 1kg", price: 32000, img: "images/telur.jpg", category: "TELUR", tambahanBiaya: true },
     { name: "Minyak Kita 1ltr", price: 18000, img: "images/minyak-1ltr.jpg", category: "MINYAK", tambahanBiaya: true, promo: { qty: 12, price: 205000 } },
-    { name: "Minyak Kita 2ltr", price: 35000, img: "images/minyak-1ltr.jpg", category: "MINYAK", tambahanBiaya: true, promo: { qty: 6, price: 205000 } },
+    { name: "Minyak Kita 2ltr", price: 36000, img: "images/minyak-1ltr.jpg", category: "MINYAK", tambahanBiaya: true, promo: { qty: 6, price: 205000 } },
     { name: "S-TEE", price: 60000, img: "images/s-tee.jpg", category: "TEH BOTOL", tambahanBiaya: true },
     { name: "Teh Botol Sosro", price: 60000, img: "images/teh-botol.jpg", category: "TEH BOTOL", tambahanBiaya: true },
     { name: "Tissue Paseo", price: 12000, img: "images/paseo.jpg", category: "TISSUE", tambahanBiaya: true, promo: { qty: 3, price: 35000 } },
@@ -534,6 +534,7 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
+
 
 
 
