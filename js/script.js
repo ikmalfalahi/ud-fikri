@@ -545,3 +545,6 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
+
+});
+
