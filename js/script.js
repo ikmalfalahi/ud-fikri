@@ -387,33 +387,35 @@ document.querySelectorAll(".accordion").forEach(acc => {
   });
 });
 
-// === KOORDINAT TOKO UD FIKRI ===
+<script>
+  
+// === Koordinat Toko (UD Fikri) ===
 const tokoLat = -6.288438;
 const tokoLng = 106.815968;
 
-// === VARIABEL GLOBAL ===
-let ongkir = 0;
-let jarak = 0;
-
-// === Fungsi Haversine untuk hitung jarak antar titik ===
+// === Fungsi Haversine untuk hitung jarak (km) ===
 function haversine(lat1, lon1, lat2, lon2) {
-  const R = 6371; // radius bumi (km)
+  const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;
   const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLat / 2) ** 2 +
     Math.cos(lat1 * Math.PI / 180) *
     Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+    Math.sin(dLon / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c; // hasil km
+  return R * c; // hasil dalam kilometer
 }
 
-// === Hitung Ongkir: 1 km gratis, selebihnya Rp 3.000/km + Rp 500/item ===
+// === Variabel Global ===
+let jarak = 0;
+window.jarakUser = 0; // biar bisa dipanggil renderCart
+window.ongkirUser = 0;
+
+// === Fungsi Hitung Ongkir (1 km gratis, selebihnya 3000/km + 500/item) ===
 function hitungOngkir(totalItem = 0) {
   if (jarak > 1) {
-    let kmLebih = Math.ceil(jarak - 1); // setelah 1 km
+    let kmLebih = Math.ceil(jarak - 1);
     let biayaKm = kmLebih * 3000;
     let biayaPerItem = totalItem * 500;
     return biayaKm + biayaPerItem;
@@ -421,85 +423,101 @@ function hitungOngkir(totalItem = 0) {
   return 0;
 }
 
-function detailOngkir(totalItem) {
+// === Detail Ongkir (untuk teks tambahan, opsional) ===
+function detailOngkir(totalItem = 0) {
   if (jarak <= 0) return "Belum dihitung";
+  if (jarak <= 1) return "Gratis (≤ 1 km)";
 
-  if (jarak <= 1) {
-    return `Gratis (≤ 1 km)`;
-  } else {
-    let kmLebih = Math.ceil(jarak - 1);
-    let biayaKm = kmLebih * 3000;
-    let biayaPerItem = totalItem * 500;
-    let total = biayaKm + biayaPerItem;
+  let kmLebih = Math.ceil(jarak - 1);
+  let biayaKm = kmLebih * 3000;
+  let biayaPerItem = totalItem * 500;
+  let total = biayaKm + biayaPerItem;
 
-    return `Jarak: ${jarak.toFixed(1)} km\n` +
-           `• Rp 3.000 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}\n` +
-           `• Rp 500 x ${totalItem} item = Rp ${biayaPerItem.toLocaleString()}\n` +
-           `Total Ongkir = Rp ${total.toLocaleString()}`;
-  }
+  return `Jarak: ${jarak.toFixed(1)} km\n` +
+         `• Rp 3.000 x ${kmLebih} km = Rp ${biayaKm.toLocaleString()}\n` +
+         `• Rp 500 x ${totalItem} item = Rp ${biayaPerItem.toLocaleString()}\n` +
+         `Total Ongkir = Rp ${total.toLocaleString()}`;
 }
 
-// === Ambil Lokasi Otomatis (via GPS) ===
-function ambilLokasi() {
-  if (navigator.geolocation) {
+// === PETA & AMBIL LOKASI USER ===
+document.addEventListener("DOMContentLoaded", () => {
+  const ambilBtn = document.getElementById("ambil-lokasi");
+  const lokasiInput = document.getElementById("lokasi");
+  const mapContainer = document.getElementById("user-map");
+  const koordinatEl = document.getElementById("koordinat");
+
+  let map, marker;
+
+  function updateCartOngkir() {
+    if (typeof renderCart === "function") renderCart();
+  }
+
+  // Buat & tampilkan peta
+  function initMap(lat, lng) {
+    if (map) map.remove();
+
+    map = L.map("user-map").setView([lat, lng], 15);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
+
+    marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+
+    updateLokasiDanJarak(lat, lng);
+
+    // Saat marker digeser
+    marker.on("moveend", (e) => {
+      const pos = e.target.getLatLng();
+      updateLokasiDanJarak(pos.lat, pos.lng);
+    });
+  }
+
+  // Update input, koordinat, dan ongkir
+  function updateLokasiDanJarak(lat, lng) {
+    koordinatEl.textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+    lokasiInput.value = `https://www.google.com/maps?q=${lat},${lng}`;
+
+    jarak = haversine(lat, lng, tokoLat, tokoLng);
+    window.jarakUser = jarak;
+
+    // Hitung ongkir (pakai total item dari cart)
+    let totalItem = (typeof getTotalItemCount === "function") ? getTotalItemCount() : 0;
+    window.ongkirUser = hitungOngkir(totalItem);
+
+    updateCartOngkir();
+  }
+
+  // Saat klik "Ambil Lokasi Anda"
+  ambilBtn.addEventListener("click", () => {
+    if (!navigator.geolocation) {
+      alert("Browser Anda tidak mendukung fitur lokasi.");
+      return;
+    }
+
+    ambilBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengambil lokasi...';
+    ambilBtn.disabled = true;
+
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        let lat = pos.coords.latitude;
-        let lng = pos.coords.longitude;
-        let mapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
-        document.getElementById("lokasi").value = mapsLink;
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
 
-        // hitung jarak ke toko
-        jarak = haversine(lat, lng, tokoLat, tokoLng);
+        initMap(lat, lng);
 
-        // update keranjang
-        renderCart();
-
-        // update marker user di map
-        if (typeof userMarker !== "undefined") {
-          userMarker.setLatLng([lat, lng]);
-          mapUser.panTo([lat, lng]);
-        }
+        ambilBtn.innerHTML = '<i class="fa-solid fa-bullseye"></i> Ambil Lokasi Anda';
+        ambilBtn.disabled = false;
       },
       (err) => {
-        alert("Gagal ambil lokasi. Aktifkan GPS & izin lokasi di browser.");
+        alert("Gagal mengambil lokasi. Pastikan izin GPS diaktifkan.");
         console.error(err);
+        ambilBtn.innerHTML = '<i class="fa-solid fa-bullseye"></i> Ambil Lokasi Anda';
+        ambilBtn.disabled = false;
       }
     );
-  } else {
-    alert("Browser tidak mendukung GPS.");
-  }
-}
-
-// === FITUR MAP UNTUK TITIK LOKASI USER ===
-const mapUser = L.map('map-user', {
-  center: [tokoLat, tokoLng],
-  zoom: 14,
-  scrollWheelZoom: true
+  });
 });
+</script>
 
-// Tambahkan tile layer OpenStreetMap
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19,
-  attribution: '&copy; OpenStreetMap contributors'
-}).addTo(mapUser);
 
-// Marker lokasi toko
-const tokoMarker = L.marker([tokoLat, tokoLng]).addTo(mapUser);
-tokoMarker.bindPopup("<b>Toko UD Fikri</b>").openPopup();
-
-// Marker lokasi user (bisa digeser)
-let userMarker = L.marker([tokoLat, tokoLng], { draggable: true }).addTo(mapUser);
-userMarker.bindPopup("Geser pin ini untuk menentukan lokasi Anda.");
-
-// Update jarak dan total saat marker user digeser
-userMarker.on("dragend", function (e) {
-  const { lat, lng } = e.target.getLatLng();
-  let mapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
-  document.getElementById("lokasi").value = mapsLink;
-
-  jarak = haversine(lat, lng, tokoLat, tokoLng);
-  renderCart();
-});
 
 
