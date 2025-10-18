@@ -388,8 +388,8 @@ document.querySelectorAll(".accordion").forEach(acc => {
 });
   
 // === KONFIGURASI LOKASI TOKO ===
-if (typeof window.tokoLat === "undefined") window.tokoLat = -6.288438;
-if (typeof window.tokoLng === "undefined") window.tokoLng = 106.815968;
+if (typeof window.tokoLat === "undefined") window.tokoLat = -6.288418;
+if (typeof window.tokoLng === "undefined") window.tokoLng = 106.818342;
 
 // === VARIABEL GLOBAL UNTUK LOKASI USER & ONGKIR ===
 if (typeof window.jarak === "undefined") window.jarak = 0;
@@ -517,3 +517,4 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
+
