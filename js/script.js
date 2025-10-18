@@ -181,18 +181,16 @@ function renderCart() {
     `;
   }
 
-  // 🔹 Tentukan batas minimal antar berdasarkan jarak
-  let batasAntar = jarak <= 1 ? 40000 : 60000;
-
-  if (totalBelanja >= batasAntar) {
+ // 🔹 Status otomatis tampil di elemen terpisah
+  if (totalBelanja >= 50000) {
     statusPesananElem.textContent = "Pesan siap diantar 🚚";
     statusPesananElem.style.color = "green";
   } else {
-    statusPesananElem.textContent = `Pesan ambil di toko 🏪 (Minimal antar Rp ${batasAntar.toLocaleString()})`;
+    statusPesananElem.textContent = "Pesan ambil di toko 🏪";
     statusPesananElem.style.color = "orange";
   }
-
-
+}
+  
 // === HAPUS SEMUA KERANJANG ===
 document.getElementById("clear-cart").addEventListener("click", () => {
   if (cart.length === 0) {
@@ -315,11 +313,10 @@ document.getElementById("checkout").addEventListener("click", () => {
 
   msg += `=====================\n`;
   msg += `*Total Item:* ${totalItem}\n`;
-  let batasAntar = jarak <= 1 ? 40000 : 60000;
-  if (totalBelanja >= batasAntar) {
-    msg += `*Status Pesanan:* Siap diantar 🚚 (Minimal Rp ${batasAntar.toLocaleString()})\n`;
+  if (totalBelanja >= 50000) {
+  msg += `*Status Pesanan:* Siap diantar 🚚\n`;
   } else {
-    msg += `*Status Pesanan:* Ambil di toko 🏪 (Minimal antar Rp ${batasAntar.toLocaleString()})\n`;
+  msg += `*Status Pesanan:* Ambil di toko 🏪\n`;
   }
   if (jarak > 0) {
     msg += `*Ongkir:* Rp ${biayaOngkir.toLocaleString()} (jarak ${jarak.toFixed(1)} km)\n`;
@@ -537,6 +534,7 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
+
 
 
 
