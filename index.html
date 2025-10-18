@@ -105,6 +105,84 @@
     <br> <br>
   </div>
 
+  <label data-aos="fade-in" for="lokasi"><i class="fa-solid fa-location-dot"></i>
+  <strong>Titik Lokasi Anda (Opsional)</strong></label>
+
+<input type="text" id="lokasi" placeholder="Tempel link share lokasi Google Maps"
+  style="width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:6px;">
+
+<button type="button" id="ambil-lokasi"
+  style="margin-top:6px;padding:6px 12px;border:none;border-radius:6px;background: linear-gradient(90deg,#00bfff,#1e90ff);color:#fff;cursor:pointer;">
+  <i class="fa-solid fa-bullseye"></i>
+  Ambil Lokasi Anda
+</button>
+
+<!-- Tambahkan MAP di bawah tombol -->
+<div id="user-map" data-aos="fade-up"
+  style="height:300px;margin-top:10px;border-radius:10px;border:1px solid #ddd;"></div>
+
+<p style="font-size:14px;color:#555;margin-top:6px;">
+  Geser pin merah untuk menyesuaikan lokasi Anda. Koordinat: <span id="koordinat">Belum ditentukan</span>
+</p>
+</section>
+
+<section data-aos="fade-up" id="cart">
+  <h2><i class="fas fa-shopping-cart"></i> Keranjang</h2>
+  <ul id="cart-items"></ul>
+  <div id="cart-total">Total: Rp 0</div>
+  <button id="clear-cart" class="btn-clear">🗑 Hapus Semua Keranjang</button>
+
+  <label for="customer-name"><i class="fas fa-user"></i> Nama Pemesan</label>
+  <input type="text" id="customer-name" placeholder="Masukkan nama anda">
+
+  <label for="customer-address"><i class="fas fa-map-marker-alt"></i> Alamat</label>
+  <input type="text" id="customer-address" placeholder="Contoh: Jl. Melati No. 10">
+
+  <div id="payment-section">
+    <!-- Select metode pembayaran -->
+    <label for="payment-method">Metode Pembayaran:</label>
+    <select id="payment-method">
+      <option value="">-- Pilih --</option>
+      <option value="Transfer">Transfer Bank</option>
+      <option value="QRIS">QRIS</option>
+      <option value="Tunai/Cash">Tunai/Cash</option>
+    </select>
+
+    <!-- Tempat info pembayaran (Hanya 1 sekarang) -->
+    <div id="payment-info" class="payment-info"></div>
+  </div>
+
+  <button id="checkout">Pesan Sekarang</button>
+</section>
+
+<section data-aos="fade-up" id="products-container" class="products-grid">
+  <!-- Produk akan digenerate otomatis oleh script.js -->
+</section>
+
+<footer>&copy; 2025 Ikmal Falahi. All Rights Reserved.</footer>
+
+<!-- 1. Load library supabase dulu -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<!-- 2. Inisialisasi client -->
+<script>
+  const supabaseUrl = "https://nnohtnywmhuzueamsats.supabase.co";
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ub2h0bnl3bWh1enVlYW1zYXRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkwNjM4NDksImV4cCI6MjA3NDYzOTg0OX0.S8FeDIdXQ32WH9QPVlSsYGRjxYbLMg6HXQicZ35A1pg";
+  const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+</script>
+
+<!-- 3. Baru setelah itu load script.js -->
+<script src="js/script.js"></script>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true
+  });
+</script>
+
    <script>
 // === MAP & AMBIL LOKASI ===
 document.addEventListener("DOMContentLoaded", () => {
@@ -170,65 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
-</section>
-
-<section data-aos="fade-up" id="cart">
-  <h2><i class="fas fa-shopping-cart"></i> Keranjang</h2>
-  <ul id="cart-items"></ul>
-  <div id="cart-total">Total: Rp 0</div>
-  <button id="clear-cart" class="btn-clear">🗑 Hapus Semua Keranjang</button>
-
-  <label for="customer-name"><i class="fas fa-user"></i> Nama Pemesan</label>
-  <input type="text" id="customer-name" placeholder="Masukkan nama anda">
-
-  <label for="customer-address"><i class="fas fa-map-marker-alt"></i> Alamat</label>
-  <input type="text" id="customer-address" placeholder="Contoh: Jl. Melati No. 10">
-
-  <div id="payment-section">
-    <!-- Select metode pembayaran -->
-    <label for="payment-method">Metode Pembayaran:</label>
-    <select id="payment-method">
-      <option value="">-- Pilih --</option>
-      <option value="Transfer">Transfer Bank</option>
-      <option value="QRIS">QRIS</option>
-      <option value="Tunai/Cash">Tunai/Cash</option>
-    </select>
-
-    <!-- Tempat info pembayaran (Hanya 1 sekarang) -->
-    <div id="payment-info" class="payment-info"></div>
-  </div>
-
-  <button id="checkout">Pesan Sekarang</button>
-</section>
-
-<section data-aos="fade-up" id="products-container" class="products-grid">
-  <!-- Produk akan digenerate otomatis oleh script.js -->
-</section>
-
-<footer>&copy; 2025 Ikmal Falahi. All Rights Reserved.</footer>
-
-<!-- 1. Load library supabase dulu -->
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
-<!-- 2. Inisialisasi client -->
-<script>
-  const supabaseUrl = "https://nnohtnywmhuzueamsats.supabase.co";
-  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ub2h0bnl3bWh1enVlYW1zYXRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkwNjM4NDksImV4cCI6MjA3NDYzOTg0OX0.S8FeDIdXQ32WH9QPVlSsYGRjxYbLMg6HXQicZ35A1pg";
-  const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-</script>
-
-<!-- 3. Baru setelah itu load script.js -->
-<script src="js/script.js"></script>
-
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 800,
-    easing: 'ease-in-out',
-    once: true
-  });
-</script>
-
+  
 </body>
 </html>
 
