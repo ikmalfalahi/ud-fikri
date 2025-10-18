@@ -445,22 +445,23 @@ function detailOngkir(totalItem = 0) {
 }
 
 // === PETA & AMBIL LOKASI USER ===
-// (Kode ini TIDAK membungkus lagi dengan DOMContentLoaded dan tidak ada tag <script>)
 
+// Titik toko tetap
 const tokoLat = -6.288438;
 const tokoLng = 106.815968;
 
-// pastikan variabel global jarak ada (dipakai di renderCart)
-let jarak = 0;
+// Gunakan variabel jarak global yang sudah ada
+// (tidak deklarasi ulang)
 
-// Ambil elemen sekali
+// Ambil elemen HTML
 const ambilBtn = document.getElementById("ambil-lokasi");
 const lokasiInput = document.getElementById("lokasi");
 const koordinatEl = document.getElementById("koordinat");
+
 let map = null;
 let marker = null;
 
-// helper: inisialisasi peta jika belum ada
+// --- Inisialisasi atau tampilkan peta ---
 function ensureMap(lat = tokoLat, lng = tokoLng) {
   if (!map) {
     map = L.map("user-map").setView([lat, lng], 15);
@@ -469,6 +470,7 @@ function ensureMap(lat = tokoLat, lng = tokoLng) {
       maxZoom: 19
     }).addTo(map);
   }
+
   if (!marker) {
     marker = L.marker([lat, lng], { draggable: true }).addTo(map);
     marker.on("dragend", function (e) {
@@ -481,26 +483,26 @@ function ensureMap(lat = tokoLat, lng = tokoLng) {
   }
 }
 
-// update input, koordinat, jarak, dan renderCart()
+// --- Update lokasi, koordinat, jarak, dan render total ---
 function updateLokasiDanJarak(lat, lng) {
-  // update input google maps link
+  // Update input dan teks koordinat
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${lat},${lng}`;
   if (koordinatEl) koordinatEl.textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 
-  // hitung jarak pakai fungsi haversine yang sudah ada di file
+  // Hitung jarak ke toko pakai haversine (kalau sudah ada)
   if (typeof haversine === "function") {
     jarak = haversine(lat, lng, tokoLat, tokoLng);
-  } else {
-    // fallback: jika haversine belum ada, set jarak=0
-    jarak = 0;
   }
 
-  // jika ada fungsi hitung ongkir yang memakai jarak global, biarkan (dia memakai jarak)
-  // panggil renderCart agar total update
+  // Update variabel global agar bisa dipakai renderCart
+  window.jarakUser = jarak;
+  window.ongkirUser = hitungOngkir();
+
+  // Render ulang total keranjang
   if (typeof renderCart === "function") renderCart();
 }
 
-// tombol ambil lokasi (geolocation)
+// --- Tombol "Ambil Lokasi Anda" ---
 if (ambilBtn) {
   ambilBtn.addEventListener("click", () => {
     if (!navigator.geolocation) {
@@ -508,7 +510,6 @@ if (ambilBtn) {
       return;
     }
 
-    // UI kecil: disable sementara
     const prevHtml = ambilBtn.innerHTML;
     ambilBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengambil lokasi...';
     ambilBtn.disabled = true;
@@ -526,7 +527,7 @@ if (ambilBtn) {
       },
       (err) => {
         console.error("Geolocation error:", err);
-        alert("Gagal mengambil lokasi. Pastikan izin lokasi diaktifkan.");
+        alert("Gagal mengambil lokasi. Pastikan izin lokasi aktif.");
         ambilBtn.innerHTML = prevHtml;
         ambilBtn.disabled = false;
       },
@@ -535,15 +536,9 @@ if (ambilBtn) {
   });
 }
 
-// Jika developer ingin peta muncul langsung saat halaman load (opsional):
-// jika elemen map ada, inisialisasi peta default (agar tidak kosong saat tombol belum diklik)
+// --- Tampilkan peta default saat halaman dimuat ---
 if (document.getElementById("user-map")) {
-  // inisialisasi peta di lat lng toko (pengguna bisa geser marker nanti)
   ensureMap(tokoLat, tokoLng);
-  // tampilkan koordinat toko awal di UI (atau "Belum ditentukan" jika mau)
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
-
-
-
