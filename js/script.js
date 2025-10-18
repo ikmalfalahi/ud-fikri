@@ -182,7 +182,7 @@ function renderCart() {
   }
 
  // 🔹 Status otomatis tampil di elemen terpisah
-  if (totalBelanja >= 50000) {
+  if (totalBelanja >= 40000) {
     statusPesananElem.textContent = "Pesan siap diantar 🚚";
     statusPesananElem.style.color = "green";
   } else {
@@ -534,6 +534,7 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
+
 
 
 
