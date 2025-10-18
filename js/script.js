@@ -183,10 +183,10 @@ function renderCart() {
 
   // 🔹 Status otomatis tampil di elemen terpisah
   if (totalBelanja >= 50000) {
-    statusPesananElem.textContent = "Pesan siap diantar 🚚";
+    statusPesananElem.textContent = "Pesanan siap diantar 🚚";
     statusPesananElem.style.color = "green";
   } else {
-    statusPesananElem.textContent = "Pesan ambil di toko 🏪";
+    statusPesananElem.textContent = "Pesanan ambil di toko 🏪";
     statusPesananElem.style.color = "orange";
   }
 }
@@ -534,5 +534,6 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
+
 
 
