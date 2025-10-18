@@ -165,30 +165,30 @@ function renderCart() {
   const cartTotal = document.getElementById("cart-total");
 
   // 🔹 TAMBAHAN STATUS OTOMATIS
-  const statusPesananElem = document.getElementById("status-pesanan");
-  if (totalBelanja >= 50000) {
-  statusPesananElem.innerHTML = "Pesan siap diantar 🚚";
-  statusPesananElem.style.color = "green";
-  } else {
-  statusPesananElem.innerHTML = "Pesan ambil di toko 🏪";
-  statusPesananElem.style.color = "orange";
-  }
+const cartTotal = document.getElementById("cart-total");
+const statusPesananElem = document.getElementById("status-pesanan"); // ✅ pastikan elemen ini ada di HTML
 
-  if (jarak > 0) {
-    cartTotal.innerHTML = `
-      Belanja: Rp ${totalBelanja.toLocaleString()}<br>
-      Ongkir (${jarak.toFixed(1)} km): Rp ${biayaOngkir.toLocaleString()}<br>
-      <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b><br>
-      ${statusPesanan}
-    `;
-  } else {
-    cartTotal.innerHTML = `
-      Belanja: Rp ${totalBelanja.toLocaleString()}<br>
-      Ongkir: Belum dihitung<br>
-      <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b><br>
-      ${statusPesanan}
-    `;
-  }
+if (jarak > 0) {
+  cartTotal.innerHTML = `
+    Belanja: Rp ${totalBelanja.toLocaleString()}<br>
+    Ongkir (${jarak.toFixed(1)} km): Rp ${biayaOngkir.toLocaleString()}<br>
+    <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b>
+  `;
+} else {
+  cartTotal.innerHTML = `
+    Belanja: Rp ${totalBelanja.toLocaleString()}<br>
+    Ongkir: Belum dihitung<br>
+    <b>Total Bayar: Rp ${grandTotal.toLocaleString()}</b>
+  `;
+}
+
+// 🔹 Status otomatis tampil di elemen terpisah
+if (totalBelanja >= 50000) {
+  statusPesananElem.textContent = "Pesan siap diantar 🚚";
+  statusPesananElem.style.color = "green";
+} else {
+  statusPesananElem.textContent = "Pesan ambil di toko 🏪";
+  statusPesananElem.style.color = "orange";
 }
 
 // === HAPUS SEMUA KERANJANG ===
@@ -534,3 +534,4 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
+
