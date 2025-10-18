@@ -129,7 +129,7 @@ if (storeOpen) {
     renderCart();
   };
 
-  // === RENDER KERANJANG ===
+ // === RENDER KERANJANG ===
 function renderCart() {
   const cartItems = document.getElementById("cart-items");
   cartItems.innerHTML = "";
@@ -162,7 +162,6 @@ function renderCart() {
   let biayaOngkir = hitungOngkir(totalItem);
   let grandTotal = totalBelanja + biayaOngkir;
 
-  // ✅ DEKLARASI VARIABEL HANYA SEKALI
   const cartTotal = document.getElementById("cart-total");
   const statusPesananElem = document.getElementById("status-pesanan");
 
@@ -181,26 +180,44 @@ function renderCart() {
     `;
   }
 
-// 🔹 Status otomatis tampil di elemen terpisah (berdasarkan jarak)
-let minimalAntar = 0;
-if (jarak <= 1) {
-  minimalAntar = 40000;
-} else if (jarak > 1) {
-  minimalAntar = 60000;
+  // 🔹 Status otomatis tampil di elemen terpisah (berdasarkan jarak)
+  let minimalAntar = jarak <= 1 ? 40000 : 60000;
+
+  if (totalBelanja === 0) {
+    statusPesananElem.textContent = "Keranjang kosong 🛒";
+    statusPesananElem.style.color = "gray";
+  } else if (totalBelanja < minimalAntar) {
+    statusPesananElem.textContent = `Ambil di toko 🏪 (minimal antar Rp ${minimalAntar.toLocaleString()})`;
+    statusPesananElem.style.color = "orange";
+  } else {
+    statusPesananElem.textContent = "Pesan siap diantar 🚚";
+    statusPesananElem.style.color = "green";
+  }
 }
 
-if (totalBelanja === 0) {
-  statusPesananElem.textContent = "Keranjang kosong 🛒";
-  statusPesananElem.style.color = "gray";
-} else if (totalBelanja < minimalAntar) {
-  statusPesananElem.textContent = `Ambil di toko 🏪 (minimal antar Rp ${minimalAntar.toLocaleString()})`;
-  statusPesananElem.style.color = "orange";
-} else {
-  statusPesananElem.textContent = "Pesan siap diantar 🚚";
-  statusPesananElem.style.color = "green";
+// === FUNGSI PENDUKUNG KERANJANG (di luar renderCart)
+function hitungSubtotal(item) {
+  let subtotal = item.price * item.qty;
+  if (item.promo && item.qty >= item.promo.qty) {
+    let paket = Math.floor(item.qty / item.promo.qty);
+    let sisa = item.qty % item.promo.qty;
+    subtotal = paket * item.promo.price + sisa * item.price;
+  }
+  if (item.tambahanBiaya && item.antarDalamRumah) {
+    subtotal += 1000 * item.qty;
+  }
+  return subtotal;
 }
-  
-// === HAPUS SEMUA KERANJANG ===
+
+window.toggleAntarDalamRumah = function(index) {
+  cart[index].antarDalamRumah = !cart[index].antarDalamRumah;
+  renderCart();
+};
+
+window.increaseQty = function(i) { cart[i].qty++; renderCart(); };
+window.decreaseQty = function(i) { if (cart[i].qty > 1) cart[i].qty--; renderCart(); };
+window.removeItem = function(i) { cart.splice(i, 1); renderCart(); };
+
 document.getElementById("clear-cart").addEventListener("click", () => {
   if (cart.length === 0) {
     alert("Keranjang sudah kosong.");
@@ -547,4 +564,5 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
