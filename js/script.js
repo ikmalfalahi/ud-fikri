@@ -165,11 +165,13 @@ function renderCart() {
   const cartTotal = document.getElementById("cart-total");
 
   // 🔹 TAMBAHAN STATUS OTOMATIS
-  let statusPesanan = "";
+  const statusPesananElem = document.getElementById("status-pesanan");
   if (totalBelanja >= 50000) {
-    statusPesanan = `<b style="color:green;">Pesan siap diantar 🚚</b>`;
+  statusPesananElem.innerHTML = "Pesan siap diantar 🚚";
+  statusPesananElem.style.color = "green";
   } else {
-    statusPesanan = `<b style="color:orange;">Pesan ambil di toko 🏪</b>`;
+  statusPesananElem.innerHTML = "Pesan ambil di toko 🏪";
+  statusPesananElem.style.color = "orange";
   }
 
   if (jarak > 0) {
@@ -532,6 +534,3 @@ if (document.getElementById("user-map")) {
   if (koordinatEl) koordinatEl.textContent = `${tokoLat.toFixed(6)}, ${tokoLng.toFixed(6)}`;
   if (lokasiInput) lokasiInput.value = `https://www.google.com/maps?q=${tokoLat},${tokoLng}`;
 }
-
-
-
