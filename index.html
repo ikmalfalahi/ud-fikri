@@ -36,13 +36,13 @@
   </div>
 </header>
 
-<div id="welcome">
-  <i data-aos="fade-in" class="fa-solid fa-handshake handshake-icon"></i>
+<div id="welcome" data-aos="fade-in">
+  <i class="fa-solid fa-handshake handshake-icon"></i>
   Selamat datang di <strong>Toko Sembako UD-Fikri!</strong>
 </div>
 
 <section id="store-status">
-  <div data-aos="fade-down" id="store-status-msg" class="store-status"></div>
+  <div id="store-status-msg" class="store-status"></div>
 </section>
 
 <section id="store-info">
@@ -106,10 +106,10 @@
   <label data-aos="fade-in" for="lokasi"><i class="fa-solid fa-location-dot"></i>
   <strong>Titik Lokasi Anda (Opsional)</strong></label>
 
-<input type="text" id="lokasi" placeholder="Tempel link share lokasi Google Maps"
+<input data-aos="fade-in" type="text" id="lokasi" placeholder="Tempel link share lokasi Google Maps"
   style="width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:6px;">
 
-<button type="button" id="ambil-lokasi"
+<button data-aos="fade-right type="button" id="ambil-lokasi"
   style="margin-top:6px;padding:6px 12px;border:none;border-radius:6px;background: linear-gradient(90deg,#00bfff,#1e90ff);color:#fff;cursor:pointer;">
   <i class="fa-solid fa-bullseye"></i>
   Ambil Lokasi Anda
@@ -119,7 +119,7 @@
 <div id="user-map" data-aos="fade-up"
   style="height:300px;margin-top:10px;border-radius:10px;border:1px solid #ddd;"></div>
 
-<p style="font-size:14px;color:#555;margin-top:6px;">
+<p data-aos="fade-up" style="font-size:14px;color:#555;margin-top:6px;">
   Geser pin merah untuk menyesuaikan lokasi Anda. Koordinat: <span id="koordinat">Belum ditentukan</span>
 </p>
 </section>
@@ -212,6 +212,7 @@
   
 </body>
 </html>
+
 
 
 
