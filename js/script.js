@@ -187,10 +187,10 @@ function renderCart() {
     statusPesananElem.textContent = "Keranjang kosong 🛒";
     statusPesananElem.style.cssText = "color: gray; font-weight: bold; font-size: 0.9em;";
   } else if (totalBelanja < minimalAntar) {
-    statusPesananElem.textContent = `Ambil di toko 🏪 (minimal antar Rp ${minimalAntar.toLocaleString()})`;
+    statusPesananElem.textContent = `Pesanan ambil di toko 🏪 (minimal antar Rp ${minimalAntar.toLocaleString()})`;
     statusPesananElem.style.cssText = "color: orange; font-weight: bold; font-size: 0.9em;";
   } else {
-    statusPesananElem.textContent = "Pesan siap diantar 🚚";
+    statusPesananElem.textContent = "Pesanan siap diantar 🚚";
     statusPesananElem.style.cssText = "color: green; font-weight: bold; font-size: 0.9em;";
   }
 }
@@ -564,6 +564,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
