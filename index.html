@@ -179,99 +179,27 @@
 <p>Koordinat: <span id="koordinat">-6.288, 106.816</span></p>
 <button id="ambil-lokasi">Ambil Lokasi Anda</button>
 
-<!-- Leaflet CSS & JS -->
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Label & input lokasi user -->
+<label data-aos="fade-in" for="lokasi"><i class="fa-solid fa-location-dot"></i>
+  <strong>Titik Lokasi Anda (Opsional)</strong>
+</label>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Lokasi toko
-  const tokoLat = -6.288;
-  const tokoLng = 106.816;
-  let jarak = 0;
-  let map; // global map variable
+<input type="text" id="lokasi" placeholder="Tempel link share lokasi Google Maps"
+  style="width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:6px;">
 
-  // Fungsi Haversine
-  function haversine(lat1, lon1, lat2, lon2) {
-    const R = 6371; // km
-    const dLat = ((lat2 - lat1) * Math.PI) / 180;
-    const dLon = ((lon2 - lon1) * Math.PI) / 180;
-    const a =
-      Math.sin(dLat / 2) ** 2 +
-      Math.cos((lat1 * Math.PI) / 180) *
-        Math.cos((lat2 * Math.PI) / 180) *
-        Math.sin(dLon / 2) ** 2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
-  }
+<button type="button" id="ambil-lokasi"
+  style="margin-top:6px;padding:6px 12px;border:none;border-radius:6px;background: linear-gradient(90deg,#00bfff,#1e90ff);color:#fff;cursor:pointer;">
+  <i class="fa-solid fa-bullseye"></i>
+  Ambil Lokasi Anda
+</button>
 
-  // Dummy renderCart
-  function renderCart() {
-    console.log("Jarak ke toko (km):", jarak.toFixed(2));
-    // Update total & ongkir di cart
-  }
+<!-- Map container Leaflet -->
+<div id="user-map" data-aos="fade-up"
+  style="height:300px;margin-top:10px;border-radius:10px;border:1px solid #ddd;"></div>
 
-  // Fungsi initMap() aman dijalankan berulang kali
-  function initMap() {
-    // Hapus map lama jika ada
-    if (map) {
-      map.remove();
-    }
-
-    // Inisialisasi map
-    map = L.map("user-map").setView([tokoLat, tokoLng], 15);
-
-    // Tile layer
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: "&copy; OpenStreetMap",
-    }).addTo(map);
-
-    // Marker draggable
-    const marker = L.marker([tokoLat, tokoLng], { draggable: true }).addTo(map);
-
-    // Event drag marker
-    marker.on("dragend", () => {
-      const pos = marker.getLatLng();
-      document.getElementById("koordinat").textContent =
-        pos.lat.toFixed(6) + ", " + pos.lng.toFixed(6);
-      jarak = haversine(tokoLat, tokoLng, pos.lat, pos.lng);
-      renderCart();
-    });
-
-    // Tombol ambil lokasi
-    const btn = document.getElementById("ambil-lokasi");
-    btn.onclick = () => {
-      if (!navigator.geolocation) {
-        alert("Browser tidak mendukung geolokasi.");
-        return;
-      }
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const lat = pos.coords.latitude;
-          const lng = pos.coords.longitude;
-          marker.setLatLng([lat, lng]);
-          map.setView([lat, lng], 16);
-          document.getElementById("koordinat").textContent =
-            lat.toFixed(6) + ", " + lng.toFixed(6);
-          jarak = haversine(tokoLat, tokoLng, lat, lng);
-          renderCart();
-        },
-        () => alert("Tidak bisa mengambil lokasi Anda.")
-      );
-    };
-  }
-
-  // Jalankan pertama kali
-  initMap();
-
-  // Jika suatu saat ingin re-initialize map:
-  // initMap();  <-- aman dipanggil berkali-kali
-});
-</script>
+<p style="font-size:14px;color:#555;margin-top:6px;">
+  Geser pin merah untuk menyesuaikan lokasi Anda. Koordinat: <span id="koordinat">Belum ditentukan</span>
+</p>
 
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>
@@ -284,3 +212,4 @@ document.addEventListener("DOMContentLoaded", () => {
   
 </body>
 </html>
+
