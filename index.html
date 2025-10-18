@@ -174,49 +174,88 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="js/script.js"></script>
 
-<!-- === Tambahan Map User (Leaflet + Geser Pin) === -->
+<!-- Pastikan elemen ini ada di HTML -->
+<div id="user-map" style="height: 300px; width: 100%;"></div>
+<p>Koordinat: <span id="koordinat">-6.288, 106.816</span></p>
+<button id="ambil-lokasi">Ambil Lokasi Anda</button>
+
+<!-- Leaflet CSS & JS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
-let map = L.map("user-map").setView([-6.288, 106.816], 15);
+document.addEventListener("DOMContentLoaded", () => {
+  // Lokasi toko
+  const tokoLat = -6.288;
+  const tokoLng = 106.816;
+  let jarak = 0;
 
-// Tambah tile layer dasar
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  maxZoom: 19,
-  attribution: "&copy; OpenStreetMap"
-}).addTo(map);
-
-// Tambah marker (bisa digeser)
-let marker = L.marker([-6.288, 106.816], { draggable: true }).addTo(map);
-
-// Saat marker digeser → update koordinat & ongkir
-marker.on("dragend", function (e) {
-  const pos = marker.getLatLng();
-  document.getElementById("koordinat").textContent =
-    pos.lat.toFixed(6) + ", " + pos.lng.toFixed(6);
-  jarak = haversine(tokoLat, tokoLng, pos.lat, pos.lng);
-  renderCart(); // update total & ongkir
-});
-
-// Tombol Ambil Lokasi Anda
-document.getElementById("ambil-lokasi").addEventListener("click", () => {
-  if (!navigator.geolocation) {
-    alert("Browser tidak mendukung geolokasi.");
-    return;
+  // Fungsi Haversine untuk jarak (km)
+  function haversine(lat1, lon1, lat2, lon2) {
+    const R = 6371; // km
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
   }
 
-  navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      const lat = pos.coords.latitude;
-      const lng = pos.coords.longitude;
+  // Render Cart dummy (ganti sesuai implementasi kamu)
+  function renderCart() {
+    console.log("Jarak ke toko (km):", jarak.toFixed(2));
+    // Update total & ongkir di cart
+  }
 
-      marker.setLatLng([lat, lng]);
-      map.setView([lat, lng], 16);
-      document.getElementById("koordinat").textContent =
-        lat.toFixed(6) + ", " + lng.toFixed(6);
-      jarak = haversine(tokoLat, tokoLng, lat, lng);
-      renderCart();
-    },
-    () => alert("Tidak bisa mengambil lokasi Anda.")
-  );
+  // Inisialisasi map
+  const map = L.map("user-map").setView([tokoLat, tokoLng], 15);
+
+  // Tile layer OpenStreetMap
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap",
+  }).addTo(map);
+
+  // Marker draggable
+  const marker = L.marker([tokoLat, tokoLng], { draggable: true }).addTo(map);
+
+  // Event drag marker
+  marker.on("dragend", () => {
+    const pos = marker.getLatLng();
+    document.getElementById("koordinat").textContent =
+      pos.lat.toFixed(6) + ", " + pos.lng.toFixed(6);
+    jarak = haversine(tokoLat, tokoLng, pos.lat, pos.lng);
+    renderCart();
+  });
+
+  // Tombol ambil lokasi user
+  document.getElementById("ambil-lokasi").addEventListener("click", () => {
+    if (!navigator.geolocation) {
+      alert("Browser tidak mendukung geolokasi.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        marker.setLatLng([lat, lng]);
+        map.setView([lat, lng], 16);
+        document.getElementById("koordinat").textContent =
+          lat.toFixed(6) + ", " + lng.toFixed(6);
+        jarak = haversine(tokoLat, tokoLng, lat, lng);
+        renderCart();
+      },
+      () => alert("Tidak bisa mengambil lokasi Anda.")
+    );
+  });
 });
 </script>
 
@@ -231,4 +270,5 @@ document.getElementById("ambil-lokasi").addEventListener("click", () => {
   
 </body>
 </html>
+
 
