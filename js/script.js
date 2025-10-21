@@ -509,7 +509,7 @@ function ensureMap(lat = tokoLat, lng = tokoLng) {
     });
   } else {
     marker.setLatLng([lat, lng]);
-    map.setView([lat, lng], 15);
+    map.flyTo([lat, lng], 15, { animate: true, duration: 1.2 }); // smooth animation
   }
 }
 
@@ -540,8 +540,8 @@ if (ambilBtn) {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
 
-        ensureMap(lat, lng);
-        updateLokasiDanJarak(lat, lng);
+        ensureMap(lat, lng);          // pindahkan marker ke lokasi user
+        updateLokasiDanJarak(lat, lng); // isi input dan koordinat
 
         ambilBtn.innerHTML = prevHtml;
         ambilBtn.disabled = false;
@@ -559,12 +559,10 @@ if (ambilBtn) {
 
 // === Saat halaman pertama kali dimuat ===
 if (document.getElementById("user-map")) {
-  // Peta tetap tampil, tapi tanpa pin & data user
-  initMap(tokoLat, tokoLng);
+  // Tampilkan peta langsung, dengan marker default (misal di lokasi toko)
+  ensureMap(tokoLat, tokoLng);
 
+  // Tapi teks lokasi & koordinat dikosongkan dulu
   if (lokasiInput) lokasiInput.value = "";
   if (koordinatEl) koordinatEl.textContent = "";
 }
-  
-});
-
