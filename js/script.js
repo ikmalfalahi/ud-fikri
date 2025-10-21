@@ -557,20 +557,14 @@ if (ambilBtn) {
   });
 }
 
+// === Saat halaman pertama kali dimuat ===
 if (document.getElementById("user-map")) {
-  // 1️⃣ Inisialisasi peta hanya sekali di posisi toko (tanpa marker user)
-  map = L.map("user-map").setView([tokoLat, tokoLng], 15);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "&copy; OpenStreetMap contributors",
-    maxZoom: 19
-  }).addTo(map);
+  // Peta tetap tampil, tapi tanpa pin & data user
+  initMap(tokoLat, tokoLng);
 
-  // 2️⃣ Kosongkan input & koordinat
   if (lokasiInput) lokasiInput.value = "";
   if (koordinatEl) koordinatEl.textContent = "";
-
-  // ❌ Jangan tambahkan marker di awal
 }
-
+  
 });
 
