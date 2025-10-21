@@ -558,11 +558,19 @@ if (ambilBtn) {
 }
 
 if (document.getElementById("user-map")) {
-  // Awalnya kosong — belum ada peta & titik
+  // 1️⃣ Inisialisasi peta hanya sekali di posisi toko (tanpa marker user)
+  map = L.map("user-map").setView([tokoLat, tokoLng], 15);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap contributors",
+    maxZoom: 19
+  }).addTo(map);
+
+  // 2️⃣ Kosongkan input & koordinat
   if (lokasiInput) lokasiInput.value = "";
   if (koordinatEl) koordinatEl.textContent = "";
-  // Map baru dibuat hanya setelah klik "Ambil Lokasi Anda"
-  // Jadi jangan panggil ensureMap() di sini
+
+  // ❌ Jangan tambahkan marker di awal
 }
 
 });
+
