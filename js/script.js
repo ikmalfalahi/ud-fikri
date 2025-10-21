@@ -566,3 +566,5 @@ if (document.getElementById("user-map")) {
   if (lokasiInput) lokasiInput.value = "";
   if (koordinatEl) koordinatEl.textContent = "";
 }
+
+});
