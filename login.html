@@ -3,29 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Admin - UD Fikri</title>
+  <title>Login Admin | UD Fikri</title>
   <link rel="stylesheet" href="css/login.css" />
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <link rel="icon" type="image/png" href="images/logo.png" />
 </head>
 <body>
   <div class="login-container">
-    <div class="login-card">
-      <h2>Selamat Datang Kembali</h2>
-      <p>Masuk ke akun admin Anda</p>
+    <div class="login-box">
+      <h2>Selamat Datang 👋</h2>
+      <p>Masuk ke akun admin UD Fikri</p>
 
       <form id="loginForm">
-        <input type="email" id="email" placeholder="Email Address" required />
-        <div class="password-field">
-          <input type="password" id="password" placeholder="Password" required />
-          <span id="togglePassword">👁️</span>
+        <div class="form-group">
+          <input type="email" id="email" placeholder="Email" required />
         </div>
-        <button type="submit">Masuk</button>
-      </form>
+        <div class="form-group">
+          <input type="password" id="password" placeholder="Password" required />
+        </div>
 
-      <p id="errorMsg"></p>
+        <button type="submit" class="btn-login">Masuk</button>
+
+        <p class="note">Hanya untuk admin UD Fikri</p>
+      </form>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/login.js"></script>
 </body>
 </html>
