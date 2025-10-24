@@ -44,11 +44,15 @@ document.addEventListener("DOMContentLoaded", async () => {
           .from("admin_users")
           .select("*")
           .eq("email", email)
-          .eq("password", password)
           .single();
-
+        
         if (error || !data) {
-          alert("Email atau password salah!");
+          alert("Email tidak ditemukan!");
+          return;
+        }
+        
+        if (data.password !== password) {
+          alert("Password salah!");
           return;
         }
 
