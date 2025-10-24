@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Admin - UD Fikri</title>
+  <link rel="stylesheet" href="css/login.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <h2>Selamat Datang Kembali</h2>
+      <p>Masuk ke akun admin Anda</p>
+
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="Email Address" required />
+        <div class="password-field">
+          <input type="password" id="password" placeholder="Password" required />
+          <span id="togglePassword">👁️</span>
+        </div>
+        <button type="submit">Masuk</button>
+      </form>
+
+      <p id="errorMsg"></p>
+    </div>
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+</html>
