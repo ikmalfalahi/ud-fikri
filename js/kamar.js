@@ -40,3 +40,11 @@ if (!error && data) {
   console.warn("Belum ada data, silakan klik Buka/Tutup dulu.");
 }
 })();
+
+//logout
+function logoutAdmin() {
+  localStorage.removeItem("admin_logged_in");
+  sessionStorage.removeItem("admin_logged_in");
+  alert("Anda telah keluar.");
+  window.location.replace("login.html");
+}
