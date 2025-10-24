@@ -206,3 +206,18 @@ input::placeholder {
     font-size: 20px;
   }
 }
+
+.btn-logout {
+  background: #ff4b4b;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  margin-top: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.btn-logout:hover {
+  background: #ff2e2e;
+}
