@@ -1,68 +1,115 @@
+/* ==== Global ==== */
 body {
-  margin: 0;
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #007bff, #00bfff);
-  height: 100vh;
+  background: linear-gradient(135deg, #0099cc, #00cc99);
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
+/* ==== Container ==== */
 .login-container {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
 }
 
-.login-box {
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.login-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
   padding: 40px 30px;
-  width: 100%;
-  max-width: 400px;
+  width: 90%;
+  max-width: 380px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
+  color: #fff;
 }
 
+/* ==== Text ==== */
 h2 {
-  color: #007bff;
+  font-size: 22px;
   margin-bottom: 10px;
 }
 
 p {
-  color: #555;
-  margin-bottom: 25px;
+  color: #e0f7fa;
   font-size: 14px;
+  margin-bottom: 25px;
 }
 
+/* ==== Form ==== */
 .form-group {
+  position: relative;
   margin-bottom: 20px;
 }
 
 input[type="email"],
 input[type="password"] {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
   font-size: 14px;
 }
 
-input:focus {
-  outline: none;
-  border-color: #00bfff;
-  box-shadow: 0 0 4px #00bfff;
+input::placeholder {
+  color: #cce;
 }
 
+/* ==== Toggle Password ==== */
+.password-field {
+  position: relative;
+}
+
+.toggle-pass {
+  position: absolute;
+  right: 15px;
+  top: 11px;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* ==== Options ==== */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.form-options label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.forgot-link {
+  color: #b2ebf2;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* ==== Button ==== */
 .btn-login {
   width: 100%;
   background: linear-gradient(135deg, #007bff, #00bfff);
   color: #fff;
-  border: none;
   padding: 12px;
-  border-radius: 8px;
+  border: none;
+  border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
@@ -72,15 +119,76 @@ input:focus {
   background: linear-gradient(135deg, #006ae0, #00a5e0);
 }
 
-.note {
-  margin-top: 20px;
-  font-size: 12px;
-  color: #777;
+/* ==== Divider ==== */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #d9fdf7;
+  margin: 20px 0;
+  font-size: 13px;
 }
 
-/* Responsive */
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 0 10px;
+}
+
+/* ==== Social Buttons ==== */
+.social-login {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.social-login button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.social-login button:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.social-login img {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==== Sign up ==== */
+.signup-text {
+  font-size: 13px;
+  color: #d9fdf7;
+}
+
+.signup-text a {
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
+
+/* ==== Responsive ==== */
 @media (max-width: 480px) {
-  .login-box {
+  .login-card {
     padding: 30px 20px;
   }
 
