@@ -56,12 +56,13 @@ document.addEventListener("DOMContentLoaded", async () => {
           return;
         }
 
-        // === Simpan sesi login ===
+       // === Simpan sesi login ===
         if (remember) {
           localStorage.setItem("admin_logged_in", "true");
         } else {
           sessionStorage.setItem("admin_logged_in", "true");
         }
+
 
         alert("Login berhasil! Mengarahkan ke halaman admin...");
         window.location.href = "kamar.html";
