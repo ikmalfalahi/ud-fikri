@@ -7,6 +7,16 @@
   <link rel="stylesheet" href="css/kamar.css">
 </head>
 <body>
+   <!-- 🔒 Cek apakah admin sudah login -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const adminLogin = localStorage.getItem("admin_login");
+      if (!adminLogin) {
+        window.location.href = "login.html"; // arahkan ke halaman login
+      }
+    });
+  </script>
+  
   <div class="container">
     <h1>KAMAR UD-FIKRI</h1>
     <div id="admin-status" class="store-status">Silahkan Pilih</div>
@@ -27,5 +37,6 @@
   <script src="js/kamar.js"></script>
 </body>
 </html>
+
 
 
