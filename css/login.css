@@ -19,20 +19,29 @@ body {
 
 .login-card {
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(20px);
   border-radius: 16px;
   padding: 40px 30px;
   width: 90%;
   max-width: 380px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
   text-align: center;
   color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: fadeIn 0.8s ease;
+}
+
+/* ==== Animasi lembut ==== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ==== Text ==== */
 h2 {
   font-size: 22px;
   margin-bottom: 10px;
+  color: #fff;
 }
 
 p {
@@ -54,13 +63,18 @@ input[type="password"] {
   border-radius: 10px;
   border: none;
   outline: none;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
   color: #fff;
   font-size: 14px;
+  transition: 0.3s;
+}
+
+input:focus {
+  background: rgba(255, 255, 255, 0.35);
 }
 
 input::placeholder {
-  color: #cce;
+  color: #eef;
 }
 
 /* ==== Toggle Password ==== */
@@ -75,6 +89,7 @@ input::placeholder {
   cursor: pointer;
   font-size: 14px;
   opacity: 0.8;
+  user-select: none;
 }
 
 /* ==== Options ==== */
@@ -84,13 +99,7 @@ input::placeholder {
   align-items: center;
   margin-bottom: 20px;
   font-size: 13px;
-}
-
-.form-options label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
+  color: #e0f7fa;
 }
 
 .forgot-link {
@@ -105,7 +114,7 @@ input::placeholder {
 /* ==== Button ==== */
 .btn-login {
   width: 100%;
-  background: linear-gradient(135deg, #007bff, #00bfff);
+  background: linear-gradient(135deg, #007bff, #00cc88);
   color: #fff;
   padding: 12px;
   border: none;
@@ -113,10 +122,12 @@ input::placeholder {
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .btn-login:hover {
-  background: linear-gradient(135deg, #006ae0, #00a5e0);
+  background: linear-gradient(135deg, #0066d3, #00b376);
+  transform: translateY(-1px);
 }
 
 /* ==== Divider ==== */
@@ -191,7 +202,6 @@ input::placeholder {
   .login-card {
     padding: 30px 20px;
   }
-
   h2 {
     font-size: 20px;
   }
