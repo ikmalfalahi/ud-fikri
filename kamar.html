@@ -7,15 +7,25 @@
   <link rel="stylesheet" href="css/kamar.css">
 </head>
 <body>
-   <!-- 🔒 Cek apakah admin sudah login -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const adminLogin = localStorage.getItem("admin_login");
-      if (!adminLogin) {
-        window.location.href = "login.html"; // arahkan ke halaman login
-      }
-    });
-  </script>
+   <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Cek apakah admin sudah login
+    const isLoggedIn =
+      localStorage.getItem("admin_logged_in") === "true" ||
+      sessionStorage.getItem("admin_logged_in") === "true";
+
+    console.log("Login status:", isLoggedIn); // Debug
+
+    if (!isLoggedIn) {
+      console.warn("Belum login, mengarahkan ke login.html...");
+      window.location.replace("login.html");
+      return;
+    }
+
+    console.log("Sudah login, tetap di halaman kamar.html");
+  });
+</script>
+
   
   <div class="container">
     <h1>KAMAR UD-FIKRI</h1>
@@ -37,6 +47,7 @@
   <script src="js/kamar.js"></script>
 </body>
 </html>
+
 
 
 
