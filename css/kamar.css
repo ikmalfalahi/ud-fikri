@@ -82,7 +82,7 @@ h1 {
 }
 
 .btn-logout {
-  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  background: linear-gradient(90deg,#00bfff,#1e90ff);
   color: white;
   border: none;
   padding: 12px 22px;
@@ -96,7 +96,7 @@ h1 {
 }
 
 .btn-logout:hover {
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  background: linear-gradient(90deg,#00bfff,#1e90ff);
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(255, 65, 108, 0.5);
 }
@@ -105,4 +105,5 @@ h1 {
   transform: scale(0.97);
   box-shadow: 0 2px 10px rgba(255, 65, 108, 0.3);
 }
+
 
