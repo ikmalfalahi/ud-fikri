@@ -1,10 +1,18 @@
 // Tunggu halaman & Supabase siap
 document.addEventListener("DOMContentLoaded", async () => {
 
-  // === Toggle Password Visibility ===
+ // === Toggle Password Visibility ===
   function togglePassword() {
-    const passField = document.getElementById("password");
-    passField.type = passField.type === "password" ? "text" : "password";
+    const passwordInput = document.getElementById("password");
+    const toggleText = document.querySelector(".toggle-pass");
+
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      toggleText.textContent = "Sembunyikan";
+    } else {
+      passwordInput.type = "password";
+      toggleText.textContent = "Tampilkan";
+    }
   }
   window.togglePassword = togglePassword; // supaya bisa dipakai di HTML onclick
 
