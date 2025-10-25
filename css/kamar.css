@@ -1,7 +1,7 @@
 /* ==== Global ==== */
 body {
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #0099cc, #00cc99);
+  background: linear-gradient(90deg,#00bfff,#1e90ff);
   margin: 0;
   padding: 0;
   display: flex;
@@ -109,7 +109,7 @@ p.subtitle {
 
 /* ==== Logout Button ==== */
 .btn-logout {
-  background: linear-gradient(135deg, #007bff, #00cc88);
+  background: linear-gradient(90deg,#1e90ff,#00bfff);
   color: white;
   border: none;
   padding: 12px 22px;
@@ -143,3 +143,4 @@ p.subtitle {
     font-size: 22px;
   }
 }
+
