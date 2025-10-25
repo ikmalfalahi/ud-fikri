@@ -56,14 +56,14 @@ p.subtitle {
 }
 
 .store-status.open {
-  background: rgba(40, 167, 69, 0.15);
+  background: rgba(255, 255, 255, 0.15);
   color: #00ffaf;
   border: 1px solid rgba(0, 0, 0, 0.6);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 }
 
 .store-status.closed {
-  background: rgba(255, 0, 51, 0.15);
+  background: rgba(255, 255, 255, 0.15);
   color: #ffb3b3;
   border: 1px solid rgba(0, 0, 0, 0.6);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
@@ -143,3 +143,4 @@ p.subtitle {
     font-size: 22px;
   }
 }
+
