@@ -1,19 +1,31 @@
 // Tunggu halaman & Supabase siap
 document.addEventListener("DOMContentLoaded", async () => {
 
- function togglePassword() {
+function togglePassword() {
   const passwordInput = document.getElementById("password");
   const toggleText = document.querySelector(".toggle-pass");
 
+  // Simpan posisi kursor sebelum ubah tipe
+  const start = passwordInput.selectionStart;
+  const end = passwordInput.selectionEnd;
+
+  // Ubah tipe input tanpa menyebabkan perubahan layout
   if (passwordInput.type === "password") {
-    passwordInput.type = "text";       // hanya ubah tipe
+    passwordInput.setAttribute("type", "text");
     toggleText.textContent = "Sembunyikan";
   } else {
-    passwordInput.type = "password";   // kembali ke password
+    passwordInput.setAttribute("type", "password");
     toggleText.textContent = "Tampilkan";
   }
+
+  // Kembalikan posisi kursor (mencegah teks ‘melompat’)
+  passwordInput.setSelectionRange(start, end);
+
+  // Pastikan lebar tetap (anti loncat)
+  passwordInput.style.width = getComputedStyle(passwordInput).width;
 }
-  window.togglePassword = togglePassword; // supaya bisa dipakai di HTML onclick
+
+window.togglePassword = togglePassword;
 
   // Tunggu sampai Supabase sudah dimuat
   let supabaseClientReady = false;
