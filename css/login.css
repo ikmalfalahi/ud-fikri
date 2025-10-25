@@ -76,7 +76,7 @@ p {
 
 input:focus {
   background: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
 }
 
 input::placeholder {
@@ -93,14 +93,14 @@ input::placeholder {
   border: none;
   cursor: pointer;
   font-weight: 600;
-  color: #fff;
+  color: #000;
   opacity: 0.85;
   transition: 0.3s;
 }
 
 .toggle-pass:hover {
-  color: #00e6c3;
-  text-shadow: 0 0 6px rgba(0, 255, 204, 0.8);
+  color: #000;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
 }
 
 /* ==== Options ==== */
