@@ -29,6 +29,10 @@ body {
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.2);
   animation: fadeIn 0.8s ease;
+  
+  /* Tambahan untuk mencegah isi keluar kartu */
+  box-sizing: border-box; 
+  overflow: hidden;
 }
 
 /* ==== Animasi lembut ==== */
