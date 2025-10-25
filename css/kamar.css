@@ -22,7 +22,7 @@ body {
   max-width: 400px;
   text-align: center;
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.6);
   animation: fadeIn 0.8s ease;
 }
 
@@ -59,14 +59,14 @@ p.subtitle {
   background: rgba(40, 167, 69, 0.15);
   color: #00ffaf;
   border: 1px solid rgba(0, 255, 170, 0.6);
-  box-shadow: 0 0 10px rgba(0, 255, 153, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 }
 
 .store-status.closed {
   background: rgba(255, 0, 51, 0.15);
   color: #ffb3b3;
   border: 1px solid rgba(255, 100, 100, 0.6);
-  box-shadow: 0 0 10px rgba(255, 100, 120, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 }
 
 /* ==== Buttons ==== */
@@ -143,5 +143,6 @@ p.subtitle {
     font-size: 22px;
   }
 }
+
 
 
