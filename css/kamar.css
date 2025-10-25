@@ -2,29 +2,24 @@
 body {
   font-family: "Poppins", sans-serif;
   background: linear-gradient(135deg, #0099cc, #00cc99);
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  min-height: 100vh;
 }
 
 /* ==== Container ==== */
-.dashboard-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.dashboard-card {
+.container {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
-  border-radius: 16px;
+  margin-top: 0;
   padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
   width: 90%;
   max-width: 400px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
   text-align: center;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -37,48 +32,48 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ==== Text ==== */
+/* ==== Heading ==== */
 h1 {
   font-size: 26px;
   margin-bottom: 10px;
   color: #fff;
 }
 
-.subtitle {
+p.subtitle {
   font-size: 14px;
   color: #e0f7fa;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 /* ==== Store Status ==== */
 .store-status {
-  margin: 20px 0;
+  margin: 25px 0;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 18px;
   font-weight: bold;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .store-status.open {
   background: rgba(40, 167, 69, 0.15);
   color: #00ffaf;
-  border: 1px solid rgba(0, 255, 170, 0.7);
-  box-shadow: 0 0 10px rgba(0, 255, 170, 0.4);
+  border: 1px solid rgba(0, 255, 170, 0.6);
+  box-shadow: 0 0 10px rgba(0, 255, 153, 0.3);
 }
 
 .store-status.closed {
-  background: rgba(220, 53, 69, 0.15);
-  color: #ffb2b2;
-  border: 1px solid rgba(255, 102, 102, 0.7);
-  box-shadow: 0 0 10px rgba(255, 102, 102, 0.3);
+  background: rgba(255, 0, 51, 0.15);
+  color: #ffb3b3;
+  border: 1px solid rgba(255, 100, 100, 0.6);
+  box-shadow: 0 0 10px rgba(255, 100, 120, 0.3);
 }
 
 /* ==== Buttons ==== */
 .buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 25px;
   gap: 10px;
 }
 
@@ -137,4 +132,14 @@ h1 {
 .btn-logout:active {
   transform: scale(0.97);
   box-shadow: 0 2px 10px rgba(0, 255, 153, 0.3);
+}
+
+/* ==== Responsif ==== */
+@media (max-width: 480px) {
+  .container {
+    padding: 30px 20px;
+  }
+  h1 {
+    font-size: 22px;
+  }
 }
