@@ -124,7 +124,7 @@ p.subtitle {
 }
 
 .btn-logout:hover {
-  background: linear-gradient(135deg, #0066d3, #00b376);
+  background: linear-gradient(90deg,#00bfff,#1e90ff);
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(0, 255, 153, 0.5);
 }
@@ -143,4 +143,5 @@ p.subtitle {
     font-size: 22px;
   }
 }
+
 
