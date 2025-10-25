@@ -1,19 +1,18 @@
 // Tunggu halaman & Supabase siap
 document.addEventListener("DOMContentLoaded", async () => {
 
- // === Toggle Password Visibility ===
-  function togglePassword() {
-    const passwordInput = document.getElementById("password");
-    const toggleText = document.querySelector(".toggle-pass");
+ function togglePassword() {
+  const passwordInput = document.getElementById("password");
+  const toggleText = document.querySelector(".toggle-pass");
 
-    if (passwordInput.type === "password") {
-      passwordInput.type = "text";
-      toggleText.textContent = "Sembunyikan";
-    } else {
-      passwordInput.type = "password";
-      toggleText.textContent = "Tampilkan";
-    }
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";       // hanya ubah tipe
+    toggleText.textContent = "Sembunyikan";
+  } else {
+    passwordInput.type = "password";   // kembali ke password
+    toggleText.textContent = "Tampilkan";
   }
+}
   window.togglePassword = togglePassword; // supaya bisa dipakai di HTML onclick
 
   // Tunggu sampai Supabase sudah dimuat
