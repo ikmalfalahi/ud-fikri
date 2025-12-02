@@ -20,6 +20,9 @@
   <!-- === AOS (Animate On Scroll) === -->
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <!-- Leaflet -->
+  <!-- SwiperJS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 <body>
 
@@ -44,6 +47,32 @@
 <section id="store-status">
   <div id="store-status-msg" class="store-status"></div>
 </section>
+
+<!-- ===== SLIDER PROMO / INFORMASI ===== -->
+<div class="swiper mySwiper" data-aos="fade-up" style="margin-top:15px;">
+  <div class="swiper-wrapper">
+
+    <div class="swiper-slide">
+      <img src="images/slide1.jpg" alt="Slide 1"
+        style="width:100%; border-radius:12px;">
+    </div>
+
+    <div class="swiper-slide">
+      <img src="images/slide2.jpg" alt="Slide 2"
+        style="width:100%; border-radius:12px;">
+    </div>
+
+    <div class="swiper-slide">
+      <img src="images/slide3.jpg" alt="Slide 3"
+        style="width:100%; border-radius:12px;">
+    </div>
+
+  </div>
+
+  <!-- titik navigasi -->
+  <div class="swiper-pagination"></div>
+</div>
+<!-- ===== END SLIDER ===== -->
 
 <section id="store-info">
   <!-- <h3>Informasi & Deskripsi Toko</h3> -->
@@ -187,19 +216,19 @@
   });
 </script>
 
+  <!--Slider-->
+<script>
+  const swiper = new Swiper(".mySwiper", {
+    loop: true,
+    autoplay: {
+      delay: 2500,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
