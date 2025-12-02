@@ -570,13 +570,14 @@ if (document.getElementById("user-map")) {
 });
 
 // === Back To Top ===
+// === Back To Top ===
 const backToTop = document.getElementById("backToTop");
 
 window.addEventListener("scroll", () => {
   if (window.scrollY > 200) {
-    backToTop.classList.add("show");
+    backToTop.style.display = "flex";
   } else {
-    backToTop.classList.remove("show");
+    backToTop.style.display = "none";
   }
 });
 
