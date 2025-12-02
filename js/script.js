@@ -588,3 +588,39 @@ backToTop.addEventListener("click", () => {
   });
 });
 
+// ===== CART SYSTEM =====
+
+// Ambil jumlah keranjang dari localStorage
+let cartCount = parseInt(localStorage.getItem("cartCount")) || 0;
+
+// Update badge di UI
+const cartCountEl = document.getElementById("cartCount");
+cartCountEl.textContent = cartCount;
+
+// Toast element
+const toast = document.getElementById("toast");
+
+// Fungsi notifikasi toast
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
+}
+
+// Fungsi tambah produk ke keranjang
+function addToCart(productName) {
+  cartCount++;
+
+  // simpan ke localStorage
+  localStorage.setItem("cartCount", cartCount);
+
+  // update badge
+  cartCountEl.textContent = cartCount;
+
+  // tampilkan notifikasi
+  showToast(`✔ ${productName} ditambahkan ke keranjang`);
+}
+
