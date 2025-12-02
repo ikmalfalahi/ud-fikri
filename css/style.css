@@ -479,3 +479,53 @@ label[for="customer-address"] {
 }
 
 
+/* Notifikasi Chart Floating Cart */
+.cart-floating {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #008cff;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  z-index: 999;
+}
+
+/* Badge inside cart */
+#cartCount {
+  background: white;
+  color: #008cff;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 90px;
+  right: 25px;
+  background: #333;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
