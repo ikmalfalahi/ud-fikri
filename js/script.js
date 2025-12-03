@@ -121,12 +121,23 @@ if (storeOpen) {
 ========================= */
 
 // Load cart dari localStorage (dipastikan array!)
+// ====== CART GLOBAL (load + sanitasi) ======
 let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 if (!Array.isArray(cart)) cart = [];
 
-// Simpan fungsi penyimpanan
+// buang item rusak / qty <= 0
+cart = cart.filter(it => {
+  if (!it || typeof it.qty === "undefined") return false;
+  return Number(it.qty) > 0;
+});
+localStorage.setItem("cart", JSON.stringify(cart));
+
+// fungsi simpan
 function saveCart() {
   if (!Array.isArray(cart)) cart = [];
+  // pastikan qty adalah number dan >0
+  cart = cart.map(it => ({ ...it, qty: Number(it.qty) || 0 }))
+             .filter(it => it.qty > 0);
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
@@ -292,34 +303,46 @@ window.toggleAntarDalamRumah = function(index) {
 };
 
 window.increaseQty = function(i) { 
-  cart[i].qty++; 
-  renderCart(); 
-  updateCartBadge(); 
+  if (!Array.isArray(cart)) cart = [];
+  if (!cart[i]) return;
+  cart[i].qty = Number(cart[i].qty || 0) + 1;
+  saveCart();
+  renderCart();
+  updateCartBadge();
 };
 
 window.decreaseQty = function(i) { 
-  if (cart[i].qty > 1) {
-    cart[i].qty--; 
-  } else {
+  if (!Array.isArray(cart)) cart = [];
+  if (!cart[i]) return;
+
+  cart[i].qty = Number(cart[i].qty || 0) - 1;
+  if (cart[i].qty <= 0) {
+    // remove item if qty zero or below
     cart.splice(i, 1);
   }
-  renderCart(); 
-  updateCartBadge(); 
+  saveCart();
+  renderCart();
+  updateCartBadge();
 };
 
 window.removeItem = function(i) { 
-  cart.splice(i, 1); 
-  renderCart(); 
-  updateCartBadge(); 
+  if (!Array.isArray(cart)) cart = [];
+  if (!cart[i]) return;
+  cart.splice(i, 1);
+  saveCart();
+  renderCart();
+  updateCartBadge();
 };
 
 document.getElementById("clear-cart").addEventListener("click", () => {
+  if (!Array.isArray(cart)) cart = [];
   if (cart.length === 0) {
     alert("Keranjang sudah kosong.");
     return;
   }
   if (confirm("Yakin ingin menghapus semua isi keranjang?")) {
     cart = [];
+    saveCart();
     renderCart();
     updateCartBadge();
   }
@@ -348,10 +371,6 @@ document.getElementById("clear-cart").addEventListener("click", () => {
   cart[index].antarDalamRumah = !cart[index].antarDalamRumah;
   renderCart();
 };
-
-  window.increaseQty = function(i) { cart[i].qty++; renderCart(); };
-  window.decreaseQty = function(i) { if (cart[i].qty > 1) cart[i].qty--; renderCart(); };
-  window.removeItem = function(i) { cart.splice(i, 1); renderCart(); };
 
   // === METODE PEMBAYARAN ===
   const paymentSelect = document.getElementById("payment-method");
@@ -466,6 +485,8 @@ document.getElementById("checkout").addEventListener("click", () => {
   // reset keranjang
   cart = [];
   renderCart();
+  updateCartBadge();
+
 });
 
   // === SEARCH & FILTER ===
@@ -664,8 +685,4 @@ if (document.getElementById("user-map")) {
 }
 
 });
-
-
-
-
 
