@@ -568,3 +568,50 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
+/*Notifikasi produk*/
+let cart = [];
+
+/* === Tampilkan Toast === */
+function showToast(message) {
+  const container = document.getElementById("toast-container");
+
+  const toast = document.createElement("div");
+  toast.classList.add("toast");
+
+  toast.innerHTML = `
+    <div class="toast-icon">✔</div>
+    <span>${message}</span>
+  `;
+
+  // Klik notifikasi → buka keranjang
+  toast.addEventListener("click", () => goToCart());
+
+  container.appendChild(toast);
+
+  // Auto hilang
+  setTimeout(() => {
+    toast.style.animation = "slide-out 0.35s forwards";
+    setTimeout(() => toast.remove(), 350);
+  }, 3000);
+}
+
+/* === Update Badge === */
+function updateCartBadge() {
+  document.getElementById("cart-badge").textContent = cart.length;
+}
+
+/* === Tambah ke keranjang === */
+function addToCart(product) {
+  cart.push(product);
+  updateCartBadge();
+  showToast(`${product.name} ditambahkan ke keranjang`);
+}
+
+/* === Scroll ke bagian keranjang === */
+function goToCart() {
+  const cartSection = document.getElementById("cart-section");
+  if (cartSection) {
+    cartSection.scrollIntoView({ behavior: "smooth" });
+  }
+}
