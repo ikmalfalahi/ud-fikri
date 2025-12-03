@@ -117,8 +117,26 @@ if (storeOpen) {
   }
   renderProducts();
 
-  // === TAMBAH KE KERANJANG ===
-  window.addToCart = function(index) {
+ /* =========================
+      FIXED CART SYSTEM
+========================= */
+
+// Load cart dari localStorage (dipastikan array!)
+let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+if (!Array.isArray(cart)) cart = [];
+
+// Simpan fungsi penyimpanan
+function saveCart() {
+  if (!Array.isArray(cart)) cart = [];
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+/* ========= TAMBAH KE KERANJANG ========= */
+
+window.addToCart = function (index) {
+  // Pastikan cart array
+  if (!Array.isArray(cart)) cart = [];
+
   const product = products[index];
   let item = cart.find(p => p.name === product.name);
 
@@ -128,31 +146,58 @@ if (storeOpen) {
     cart.push({ ...product, qty: 1, antarDalamRumah: false });
   }
 
+  saveCart();
   renderCart();
   updateCartBadge();
   showToast(`${product.name} ditambahkan ke keranjang`);
 };
-  
- function showToast(message) {
-  const container = document.getElementById("toast-container");
 
-  // Buat elemen toast
+/* ========= TOAST NOTIFIKASI ========= */
+
+function showToast(message) {
+  const container = document.getElementById("toast-container");
   const toast = document.createElement("div");
-  toast.className = "toast";
+  toast.classList.add("toast");
 
   toast.innerHTML = `
-    <div class="toast-icon">✓</div>
+    <div class="toast-icon">✔</div>
     <span>${message}</span>
   `;
 
-  // Masukkan ke container
+  // Klik toast → langsung masuk ke keranjang
+  toast.addEventListener("click", goToCart);
+
   container.appendChild(toast);
 
-  // Auto remove setelah 2.5 detik
+  // Auto hide
   setTimeout(() => {
     toast.style.animation = "slide-out 0.35s forwards";
     setTimeout(() => toast.remove(), 350);
-  }, 2200);
+  }, 3000);
+}
+
+/* ========= BADGE KERANJANG ========= */
+
+function updateCartBadge() {
+  const badge = document.getElementById("cart-badge");
+  if (!badge) return;
+
+  // Pastikan cart array
+  if (!Array.isArray(cart)) cart = [];
+
+  const totalQty = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+
+  badge.textContent = totalQty;
+  badge.style.display = totalQty > 0 ? "flex" : "none";
+}
+
+/* ========= SCROLL KE KERANJANG ========= */
+
+function goToCart() {
+  const cartSection = document.getElementById("cart-section");
+  if (!cartSection) return;
+
+  cartSection.scrollIntoView({ behavior: "smooth" });
 }
 
  // === RENDER KERANJANG ===
@@ -594,44 +639,4 @@ if (document.getElementById("user-map")) {
 }
 
 });
-
-/* ========= NOTIFIKASI TAMBAH KERANJANG ========= */
-
-function showToast(message) {
-  const container = document.getElementById("toast-container");
-
-  const toast = document.createElement("div");
-  toast.classList.add("toast");
-
-  toast.innerHTML = `
-    <div class="toast-icon">✔</div>
-    <span>${message}</span>
-  `;
-
-  toast.addEventListener("click", () => goToCart());
-  container.appendChild(toast);
-
-  setTimeout(() => {
-    toast.style.animation = "slide-out 0.35s forwards";
-    setTimeout(() => toast.remove(), 350);
-  }, 3000);
-}
-
-function updateCartBadge() {
-  const badge = document.getElementById("cart-badge");
-  if (!badge) return;
-
-  let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-  badge.textContent = totalQty;
-
-  badge.style.display = totalQty > 0 ? "flex" : "none";
-}
-
-function goToCart() {
-  const cartSection = document.getElementById("cart-section");
-  if (cartSection) {
-    cartSection.scrollIntoView({ behavior: "smooth" });
-  }
-}
-
 
