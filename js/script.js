@@ -193,10 +193,11 @@ function updateCartBadge() {
 /* ========= SCROLL KE KERANJANG ========= */
 
 function goToCart() {
-  const cartSection = document.getElementById("cart-section");
-  if (!cartSection) return;
+  const cart = document.getElementById("cart");
+  if (!cart) return;
 
-  cartSection.scrollIntoView({ behavior: "smooth" });
+  const y = cart.getBoundingClientRect().top + window.pageYOffset - 20;
+  window.scrollTo({ top: y, behavior: "smooth" });
 }
 
  // === RENDER KERANJANG ===
@@ -638,5 +639,6 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
