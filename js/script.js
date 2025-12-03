@@ -291,9 +291,27 @@ window.toggleAntarDalamRumah = function(index) {
   renderCart();
 };
 
-window.increaseQty = function(i) { cart[i].qty++; renderCart(); };
-window.decreaseQty = function(i) { if (cart[i].qty > 1) cart[i].qty--; renderCart(); };
-window.removeItem = function(i) { cart.splice(i, 1); renderCart(); };
+window.increaseQty = function(i) { 
+  cart[i].qty++; 
+  renderCart(); 
+  updateCartBadge(); 
+};
+
+window.decreaseQty = function(i) { 
+  if (cart[i].qty > 1) {
+    cart[i].qty--; 
+  } else {
+    cart.splice(i, 1);
+  }
+  renderCart(); 
+  updateCartBadge(); 
+};
+
+window.removeItem = function(i) { 
+  cart.splice(i, 1); 
+  renderCart(); 
+  updateCartBadge(); 
+};
 
 document.getElementById("clear-cart").addEventListener("click", () => {
   if (cart.length === 0) {
@@ -303,6 +321,7 @@ document.getElementById("clear-cart").addEventListener("click", () => {
   if (confirm("Yakin ingin menghapus semua isi keranjang?")) {
     cart = [];
     renderCart();
+    updateCartBadge();
   }
 });
 
@@ -645,6 +664,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
