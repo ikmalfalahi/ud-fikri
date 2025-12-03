@@ -190,6 +190,15 @@
   <!-- Produk akan digenerate otomatis oleh script.js -->
 </section>
 
+  <!-- Floating Cart -->
+<div id="floating-cart" onclick="goToCart()">
+  <i class="cart-icon">🛒</i>
+  <span id="cart-badge">0</span>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast-container"></div>
+
 <footer>&copy; 2025 Ikmal Falahi. All Rights Reserved.</footer>
 
 <!-- 1. Load library supabase dulu -->
@@ -229,17 +238,7 @@
     },
   });
 </script>
-  
-<!-- Floating Cart -->
-<div id="floating-cart" onclick="goToCart()">
-  <i class="cart-icon">🛒</i>
-  <span id="cart-badge">0</span>
-</div>
-
-<!-- Toast Notification -->
-<div id="toast-container"></div>
 
 </body>
 </html>
-
 
