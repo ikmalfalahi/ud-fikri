@@ -133,14 +133,26 @@ if (storeOpen) {
   showToast(`${product.name} ditambahkan ke keranjang`);
 };
   
-  function showToast(msg) {
-  const toast = document.getElementById("toast");
-  toast.textContent = msg;
-  toast.classList.add("show");
+ function showToast(message) {
+  const container = document.getElementById("toast-container");
 
+  // Buat elemen toast
+  const toast = document.createElement("div");
+  toast.className = "toast";
+
+  toast.innerHTML = `
+    <div class="toast-icon">✓</div>
+    <span>${message}</span>
+  `;
+
+  // Masukkan ke container
+  container.appendChild(toast);
+
+  // Auto remove setelah 2.5 detik
   setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2500);
+    toast.style.animation = "slide-out 0.35s forwards";
+    setTimeout(() => toast.remove(), 350);
+  }, 2200);
 }
 
  // === RENDER KERANJANG ===
@@ -621,4 +633,5 @@ function goToCart() {
     cartSection.scrollIntoView({ behavior: "smooth" });
   }
 }
+
 
