@@ -119,15 +119,19 @@ if (storeOpen) {
 
   // === TAMBAH KE KERANJANG ===
   window.addToCart = function(index) {
-    const product = products[index];
-    let item = cart.find(p => p.name === product.name);
-    if (item) {
-      item.qty++;
-    } else {
-      cart.push({ ...product, qty: 1, antarDalamRumah: false });
-    }
-    renderCart();
-  };
+  const product = products[index];
+  let item = cart.find(p => p.name === product.name);
+
+  if (item) {
+    item.qty++;
+  } else {
+    cart.push({ ...product, qty: 1, antarDalamRumah: false });
+  }
+
+  renderCart();
+  updateCartBadge();
+  showToast(`${product.name} ditambahkan ke keranjang`);
+};
 
  // === RENDER KERANJANG ===
 function renderCart() {
@@ -569,10 +573,8 @@ if (document.getElementById("user-map")) {
 
 });
 
-/*Notifikasi produk*/
-let cart = [];
+/* ========= NOTIFIKASI TAMBAH KERANJANG ========= */
 
-/* === Tampilkan Toast === */
 function showToast(message) {
   const container = document.getElementById("toast-container");
 
@@ -584,31 +586,25 @@ function showToast(message) {
     <span>${message}</span>
   `;
 
-  // Klik notifikasi → buka keranjang
   toast.addEventListener("click", () => goToCart());
-
   container.appendChild(toast);
 
-  // Auto hilang
   setTimeout(() => {
     toast.style.animation = "slide-out 0.35s forwards";
     setTimeout(() => toast.remove(), 350);
   }, 3000);
 }
 
-/* === Update Badge === */
 function updateCartBadge() {
-  document.getElementById("cart-badge").textContent = cart.length;
+  const badge = document.getElementById("cart-badge");
+  if (!badge) return;
+
+  let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+  badge.textContent = totalQty;
+
+  badge.style.display = totalQty > 0 ? "flex" : "none";
 }
 
-/* === Tambah ke keranjang === */
-function addToCart(product) {
-  cart.push(product);
-  updateCartBadge();
-  showToast(`${product.name} ditambahkan ke keranjang`);
-}
-
-/* === Scroll ke bagian keranjang === */
 function goToCart() {
   const cartSection = document.getElementById("cart-section");
   if (cartSection) {
