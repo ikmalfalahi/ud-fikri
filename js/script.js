@@ -132,6 +132,16 @@ if (storeOpen) {
   updateCartBadge();
   showToast(`${product.name} ditambahkan ke keranjang`);
 };
+  
+  function showToast(msg) {
+  const toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
+}
 
  // === RENDER KERANJANG ===
 function renderCart() {
@@ -611,3 +621,4 @@ function goToCart() {
     cartSection.scrollIntoView({ behavior: "smooth" });
   }
 }
+
