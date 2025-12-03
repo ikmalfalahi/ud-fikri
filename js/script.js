@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  let cart = [];
   let storeOpen = false; // default
 
   // === FETCH STATUS TOKO dari supabaseClient ===
@@ -639,4 +638,5 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
