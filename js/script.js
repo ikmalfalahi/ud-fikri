@@ -192,13 +192,19 @@ function updateCartBadge() {
 
 /* ========= SCROLL KE KERANJANG ========= */
 
-function goToCart() {
-  const cart = document.getElementById("cart");
-  if (!cart) return;
+// pastikan ini berada di scope global (bisa di bawah semua kode atau di luar DOMContentLoaded)
+window.goToCart = function () {
+  const cartEl = document.getElementById("cart") || document.getElementById("cart-section");
+  if (!cartEl) {
+    // kalau keranjang ada di halaman lain, ubah ke window.location.href = "cart.html";
+    console.warn("Elemen keranjang tidak ditemukan (id='cart' atau id='cart-section').");
+    return;
+  }
 
-  const y = cart.getBoundingClientRect().top + window.pageYOffset - 20;
+  // scroll dengan offset 20px supaya tidak nempel ke header
+  const y = cartEl.getBoundingClientRect().top + window.pageYOffset - 20;
   window.scrollTo({ top: y, behavior: "smooth" });
-}
+};
 
  // === RENDER KERANJANG ===
 function renderCart() {
@@ -639,6 +645,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
