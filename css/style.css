@@ -507,8 +507,8 @@ label[for="customer-address"] {
 
 .toast {
   background: linear-gradient(135deg, #00bfff, #1e90ff);
-  padding: 15px 20px;
-  border-radius: 14px;
+  padding: 10px 15px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -525,7 +525,7 @@ label[for="customer-address"] {
 .toast-icon {
   background: white;
   color: #1e90ff;
-  font-size: 18px;
+  font-size: 14px;
   border-radius: 50%;
   padding: 6px;
   display: flex;
@@ -547,4 +547,5 @@ label[for="customer-address"] {
     transform: translateX(40px);
   }
 }
+
 
