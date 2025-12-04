@@ -478,6 +478,7 @@ document.getElementById("checkout").addEventListener("click", () => {
 
   msg += `=====================\n`;
   msg += `_Terima kasih sudah berbelanja 🙏_`;
+  msg += `_https://ud-fikri.vercel.app_`;
 
   // Kirim ke WA
   window.open(`https://wa.me/6281287505090?text=${encodeURIComponent(msg)}`, "_blank");
@@ -685,4 +686,5 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
