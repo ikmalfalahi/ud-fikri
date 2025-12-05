@@ -586,6 +586,24 @@ label[for="customer-address"] {
 #modal-product-price { font-size: 20px; font-weight: bold; color: #1e90ff; margin-bottom: 6px; }
 #modal-product-desc { font-size: 14px; line-height: 1.5; white-space: pre-line; margin-bottom: 10px; }
 
+/* Deskripsi produk scrollable */
+#modal-product-desc {
+  max-height: 150px;       /* default potongan deskripsi */
+  overflow: hidden;        /* sembunyikan overflow awal */
+  transition: max-height 0.3s ease;
+}
+
+/* Tombol Baca Selengkapnya */
+#modal-toggle-desc {
+  margin-bottom: 6px; 
+  background: #f0f0f0; 
+  border: none; 
+  padding: 6px 10px; 
+  border-radius: 6px; 
+  cursor: pointer;
+  font-size: 14px;
+}
+
 .btn-add {
   margin-top: 12px; padding: 12px; width: 100%;
   border-radius: 8px;
@@ -620,5 +638,6 @@ label[for="customer-address"] {
 .fly-img.blur {
   filter: blur(2px);
 }
+
 
 
