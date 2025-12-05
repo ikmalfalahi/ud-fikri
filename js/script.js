@@ -116,11 +116,11 @@ if (storeOpen) {
   }
   renderProducts();
 
-  // === MODAL DESKRIPSI PRODUK === //
+// === MODAL DESKRIPSI PRODUK === //
 let currentProductIndex = null;
 
 function showProductDetail(index) {
-  const p = products[index]; // <-- sudah aman, karena products diisi dari Supabase
+  const p = products[index]; 
   currentProductIndex = index;
 
   document.getElementById("modal-product-img").src = p.img_url;
@@ -133,6 +133,10 @@ function showProductDetail(index) {
 
   document.getElementById("product-modal").classList.remove("hidden");
 }
+
+// ⬇️⬇️ WAJIB DITAMBAHKAN AGAR HTML BISA MEMANGGIL FUNGSI
+window.showProductDetail = showProductDetail;
+// ⬆️⬆️ INI YANG BELUM ADA
 
 // tombol close
 document.getElementById("close-product-modal").onclick = () => {
@@ -724,3 +728,4 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
