@@ -593,8 +593,6 @@ label[for="customer-address"] {
   margin-bottom: 4px;
 }
 
-/* === TAMBAHAN FONT SIZE === */
-
 /* Nama produk */
 #modal-product-name {
   font-size: 22px;
@@ -618,7 +616,7 @@ label[for="customer-address"] {
   margin-bottom: 14px;
 }
 
-/* Tombol */
+/* Tombol tambah ke keranjang */
 .modal-add-cart-btn {
   margin-top: 12px;
   padding: 12px;
@@ -634,3 +632,4 @@ label[for="customer-address"] {
   from { opacity: 0; transform: scale(.9); }
   to { opacity: 1; transform: scale(1); }
 }
+
