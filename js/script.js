@@ -143,8 +143,8 @@ function showProductDetail(index) {
   document.getElementById("modal-product-price").textContent = p.price;
     "Rp " + (p.price || 0).toLocaleString();
 
-  document.getElementById("modal-product-desc").textContent =
-    p.deskripsi || "Tidak ada deskripsi.";
+  document.getElementById("modal-product-desc").innerHTML =
+  (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
 
   document.getElementById("product-modal").classList.remove("hidden");
 }
@@ -743,6 +743,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
