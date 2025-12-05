@@ -116,6 +116,44 @@ if (storeOpen) {
   }
   renderProducts();
 
+  // === MODAL DESKRIPSI PRODUK === //
+let currentProductIndex = null;
+
+function showProductDetail(index) {
+  const p = products[index]; // <-- sudah aman, karena products diisi dari Supabase
+  currentProductIndex = index;
+
+  document.getElementById("modal-product-img").src = p.img_url;
+  document.getElementById("modal-product-name").textContent = p.nama || "Tanpa Nama";
+  document.getElementById("modal-product-price").textContent =
+    "Rp " + (p.harga || 0).toLocaleString();
+
+  document.getElementById("modal-product-desc").textContent =
+    p.deskripsi || "Tidak ada deskripsi.";
+
+  document.getElementById("product-modal").classList.remove("hidden");
+}
+
+// tombol close
+document.getElementById("close-product-modal").onclick = () => {
+  document.getElementById("product-modal").classList.add("hidden");
+};
+
+// klik luar modal
+document.getElementById("product-modal").onclick = (e) => {
+  if (e.target.id === "product-modal") {
+    document.getElementById("product-modal").classList.add("hidden");
+  }
+};
+
+// tombol tambah keranjang
+document.getElementById("modal-add-cart").onclick = () => {
+  if (currentProductIndex !== null) {
+    addToCart(currentProductIndex);
+  }
+  document.getElementById("product-modal").classList.add("hidden");
+};
+
  /* =========================
       FIXED CART SYSTEM
 ========================= */
@@ -686,39 +724,3 @@ if (document.getElementById("user-map")) {
 }
 
 });
-
-// === MODAL DESKRIPSI PRODUK === //
-let currentProductIndex = null;
-
-function showProductDetail(index) {
-  const p = products[index];
-  currentProductIndex = index;
-
-  document.getElementById("modal-product-img").src = p.img;
-  document.getElementById("modal-product-name").textContent = p.name;
-  document.getElementById("modal-product-price").textContent = "Rp " + p.price.toLocaleString();
-  document.getElementById("modal-product-desc").textContent = p.desc || "Tidak ada deskripsi.";
-
-  document.getElementById("product-modal").classList.remove("hidden");
-}
-
-// tombol close
-document.getElementById("close-product-modal").onclick = () => {
-  document.getElementById("product-modal").classList.add("hidden");
-};
-
-// klik luar modal
-document.getElementById("product-modal").onclick = (e) => {
-  if (e.target.id === "product-modal") {
-    document.getElementById("product-modal").classList.add("hidden");
-  }
-};
-
-// tombol tambah keranjang di modal
-document.getElementById("modal-add-cart").onclick = () => {
-  if (currentProductIndex !== null) {
-    addToCart(currentProductIndex);
-  }
-  document.getElementById("product-modal").classList.add("hidden");
-};
-
