@@ -597,22 +597,22 @@ label[for="customer-address"] {
 
 /* Nama produk */
 #modal-product-name {
-  font-size: 18px;
-  font-weight: 400;
-  margin-bottom: 6px;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
 /* Harga */
 .modal-product-price {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   color: #1e90ff;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 /* Deskripsi */
 #modal-product-desc {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
   white-space: pre-line; /* supaya enter tetap rapi */
   margin-bottom: 14px;
@@ -634,3 +634,4 @@ label[for="customer-address"] {
   from { opacity: 0; transform: scale(.9); }
   to { opacity: 1; transform: scale(1); }
 }
+
