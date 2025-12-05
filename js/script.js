@@ -203,52 +203,40 @@ function showProductDetail(index) {
   const p = products[index];
   currentProductIndex = index;
 
-  const modal = document.getElementById("product-modal");
-  if (!modal) return;
-
+  // Set data produk
   document.getElementById("modal-product-img").src = p.img;
   document.getElementById("modal-product-name").textContent = p.name;
   document.getElementById("modal-product-price").textContent =
     "Rp " + (p.price || 0).toLocaleString("id-ID");
-
   document.getElementById("modal-product-desc").innerHTML =
     (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
 
-  modal.classList.remove("hidden");
+  // Tampilkan popup
+  const modal = document.getElementById("product-modal");
+  modal.classList.add("show");
 }
 
-// assign ke global supaya bisa dipanggil dari HTML
+// assign ke global supaya bisa dipanggil dari onclick inline
 window.showProductDetail = showProductDetail;
 
-// === PASANG EVENT LISTENER ===
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("product-modal");
   const closeBtn = document.getElementById("close-product-modal");
   const addCartBtn = document.getElementById("modal-add-cart");
 
-  if (closeBtn) {
-    closeBtn.addEventListener("click", () => {
-      modal.classList.add("hidden");
-    });
-  }
+  // Tombol close
+  closeBtn.onclick = () => modal.classList.remove("show");
 
-  if (modal) {
-    // klik area gelap
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.classList.add("hidden");
-      }
-    });
-  }
+  // Klik area gelap di luar modal
+  modal.onclick = (e) => {
+    if (!e.target.closest(".product-modal-content")) modal.classList.remove("show");
+  };
 
-  if (addCartBtn) {
-    addCartBtn.addEventListener("click", () => {
-      if (currentProductIndex !== null && typeof addToCart === "function") {
-        addToCart(currentProductIndex);
-      }
-      modal.classList.add("hidden");
-    });
-  }
+  // Tombol tambah ke keranjang
+  addCartBtn.onclick = () => {
+    if (currentProductIndex !== null) addToCart(currentProductIndex);
+    modal.classList.remove("show");
+  };
 });
 
  /* =========================
@@ -821,6 +809,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
