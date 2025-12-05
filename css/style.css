@@ -617,3 +617,7 @@ label[for="customer-address"] {
   opacity: 1;
 }
 
+.fly-img.blur {
+  filter: blur(2px);
+}
+
