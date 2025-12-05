@@ -201,22 +201,22 @@ let currentProductIndex = null;
 
 function showProductDetail(index) {
   const p = products[index];
+  if (!p) return;
   currentProductIndex = index;
 
   // Set data produk
-  document.getElementById("modal-product-img").src = p.img;
-  document.getElementById("modal-product-name").textContent = p.name;
+  document.getElementById("modal-product-img").src = p.img || "";
+  document.getElementById("modal-product-name").textContent = p.name || "";
   document.getElementById("modal-product-price").textContent =
-    "Rp " + (p.price || 0).toLocaleString("id-ID");
+    "Rp " + ((p.price || 0).toLocaleString("id-ID"));
   document.getElementById("modal-product-desc").innerHTML =
     (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
 
-  // Tampilkan popup
+  // Tampilkan modal
   const modal = document.getElementById("product-modal");
-  modal.classList.add("show");
+  modal.classList.remove("hidden");
 }
 
-// assign ke global supaya bisa dipanggil dari onclick inline
 window.showProductDetail = showProductDetail;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -225,17 +225,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const addCartBtn = document.getElementById("modal-add-cart");
 
   // Tombol close
-  closeBtn.onclick = () => modal.classList.remove("show");
+  closeBtn.onclick = () => modal.classList.add("hidden");
 
   // Klik area gelap di luar modal
   modal.onclick = (e) => {
-    if (!e.target.closest(".product-modal-content")) modal.classList.remove("show");
+    if (!e.target.closest(".product-modal-content")) modal.classList.add("hidden");
   };
 
   // Tombol tambah ke keranjang
   addCartBtn.onclick = () => {
     if (currentProductIndex !== null) addToCart(currentProductIndex);
-    modal.classList.remove("show");
+    modal.classList.add("hidden");
   };
 });
 
@@ -809,6 +809,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
