@@ -123,7 +123,7 @@ function showProductDetail(index) {
   const p = products[index]; 
   currentProductIndex = index;
 
-  document.getElementById("modal-product-img").src = p.img_url;
+  document.getElementById("modal-product-img").src = p.img;
   document.getElementById("modal-product-name").textContent = p.nama || "Tanpa Nama";
   document.getElementById("modal-product-price").textContent =
     "Rp " + (p.harga || 0).toLocaleString();
@@ -728,4 +728,5 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
