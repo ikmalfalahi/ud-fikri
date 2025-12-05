@@ -201,7 +201,13 @@ let currentProductIndex = null;
 
 function showProductDetail(index) {
   const p = products[index];
-  currentProductIndex = index;
+  // ... kode modal popup
+  const modal = document.getElementById("product-modal");
+  modal.classList.add("show");
+}
+
+// assign ke global
+window.showProductDetail = showProductDetail;
 
   document.getElementById("modal-product-img").src = p.img;
   document.getElementById("modal-product-name").textContent = p.name;
@@ -804,6 +810,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
