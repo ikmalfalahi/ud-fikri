@@ -105,7 +105,7 @@ if (storeOpen) {
       }
 
       div.innerHTML = `
-        <img src="${p.img}" alt="${p.name}">
+        <img src="${p.img}" alt="${p.name}" class="product-image" onclick="showProductDetail(${idx})">
         <h3>${p.name}</h3>
         <p>Rp ${p.price.toLocaleString()}</p>
         ${promoNote}
@@ -721,6 +721,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
