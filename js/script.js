@@ -196,49 +196,60 @@ Jaminan Keaslian & Kebersihan:
   }
   renderProducts();
 
-// === MODAL DESKRIPSI PRODUK === //
+// === MODAL DESKRIPSI PRODUK ===
 let currentProductIndex = null;
 
 function showProductDetail(index) {
   const p = products[index];
-  // ... kode modal popup
-  const modal = document.getElementById("product-modal");
-  modal.classList.add("show");
-}
+  currentProductIndex = index;
 
-// assign ke global
-window.showProductDetail = showProductDetail;
+  const modal = document.getElementById("product-modal");
+  if (!modal) return;
 
   document.getElementById("modal-product-img").src = p.img;
   document.getElementById("modal-product-name").textContent = p.name;
   document.getElementById("modal-product-price").textContent =
-  "Rp " + (p.price || 0).toLocaleString("id-ID");
+    "Rp " + (p.price || 0).toLocaleString("id-ID");
 
   document.getElementById("modal-product-desc").innerHTML =
-  (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
+    (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
 
-  document.getElementById("product-modal").classList.remove("hidden");
+  modal.classList.remove("hidden");
 }
 
-// tombol close
-document.getElementById("close-product-modal").onclick = () => {
-  document.getElementById("product-modal").classList.add("hidden");
-};
+// assign ke global supaya bisa dipanggil dari HTML
+window.showProductDetail = showProductDetail;
 
-// klik luar modal
-document.getElementById("product-modal").onclick = (e) => {
-  if (e.target.id === "product-modal") {
-    document.getElementById("product-modal").classList.add("hidden");
-  }
-};
+// === PASANG EVENT LISTENER ===
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("product-modal");
+  const closeBtn = document.getElementById("close-product-modal");
+  const addCartBtn = document.getElementById("modal-add-cart");
 
-// tombol tambah keranjang
-document.getElementById("modal-add-cart").onclick = () => {
-  if (currentProductIndex !== null) {
-    addToCart(currentProductIndex);
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
   }
-  document.getElementById("product-modal").classList.add("hidden");
-};
+
+  if (modal) {
+    // klik area gelap
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.add("hidden");
+      }
+    });
+  }
+
+  if (addCartBtn) {
+    addCartBtn.addEventListener("click", () => {
+      if (currentProductIndex !== null && typeof addToCart === "function") {
+        addToCart(currentProductIndex);
+      }
+      modal.classList.add("hidden");
+    });
+  }
+});
 
  /* =========================
       FIXED CART SYSTEM
@@ -810,6 +821,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
