@@ -243,50 +243,55 @@ modal.addEventListener("click", e => {
 // Tombol Tambah ke Keranjang
 addCartBtn.addEventListener("click", () => {
   if (currentProductIndex !== null && typeof addToCart === "function") {
-    // Ambil gambar produk di modal
-    const imgEl = document.getElementById("modal-product-img");
-    flyToCart(imgEl.src); // animasi terbang ke cart
+    const imgEl = document.getElementById("modal-product-img"); // elemen gambar
+    flyToCartFancy(imgEl); // animasi fancy
 
-    addToCart(currentProductIndex);
+    addToCart(currentProductIndex); // tambahkan ke keranjang
     hideModal();
-  } else {
-    console.warn("addToCart tidak tersedia atau index produk null!");
   }
 });
 
 // Animasi Terbang ke Keranjang //
-  function flyToCart(productImg) {
+  function flyToCartFancy(imgEl) {
   const cartIcon = document.getElementById("cart-icon");
-  if (!cartIcon) return;
+  if (!cartIcon || !imgEl) return;
+
+  const rect = imgEl.getBoundingClientRect();
+  const cartRect = cartIcon.getBoundingClientRect();
 
   // Buat elemen gambar terbang
-  const flyImg = document.createElement("img");
-  flyImg.src = productImg;
-  flyImg.className = "fly-img";
+  const flyImg = imgEl.cloneNode(true);
+  flyImg.className = "fly-img blur";
   document.body.appendChild(flyImg);
 
-  // Dapatkan posisi awal (produk di modal)
-  const rect = productImg.getBoundingClientRect();
+  // Posisi awal
   flyImg.style.left = rect.left + "px";
   flyImg.style.top = rect.top + "px";
   flyImg.style.width = rect.width + "px";
   flyImg.style.height = rect.height + "px";
 
-  // Dapatkan posisi target (ikon cart)
-  const cartRect = cartIcon.getBoundingClientRect();
-
-  // Pakai requestAnimationFrame agar animasi tertrigger
+  // Trigger animasi
   requestAnimationFrame(() => {
-    flyImg.style.transform = `translate(${cartRect.left - rect.left}px, ${cartRect.top - rect.top}px) scale(0.2)`;
-    flyImg.style.opacity = 0.5;
+    flyImg.style.transform = `translate(${cartRect.left - rect.left}px, ${cartRect.top - rect.top}px) scale(0.2) rotate(720deg)`;
+    flyImg.style.opacity = 0;
+    flyImg.style.filter = "blur(0px)";
   });
 
-  // Hapus gambar setelah animasi selesai
+  // Hapus elemen setelah animasi selesai
   flyImg.addEventListener("transitionend", () => {
     flyImg.remove();
+
+    // Efek “pop” badge keranjang
+    const badge = document.getElementById("cart-badge");
+    if (badge) {
+      badge.style.transform = "scale(1.4)";
+      badge.style.transition = "transform 0.2s";
+      setTimeout(() => {
+        badge.style.transform = "scale(1)";
+      }, 200);
+    }
   });
 }
-
 
  /* =========================
       FIXED CART SYSTEM
@@ -858,6 +863,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
