@@ -78,7 +78,7 @@ Jaminan Kualitas:
 ✔ Tabung lolos pengecekan keamanan
   `
 },
-  { 
+{ 
     name: "Gas Elpiji 12kg", 
     price: 220000, 
     img: "images/gas-12kg.jpg", 
@@ -94,9 +94,60 @@ Jaminan Kualitas:
 ✔ Tabung sudah lulus uji keamanan
   `
 },
-    { name: "Aqua Galon", price: 22000, img: "images/aqua-galon.jpg", category: "AQUA", tambahanBiaya: true },
-    { name: "Aqua 600ml", price: 52000, img: "images/aqua-600ml.jpg", category: "AQUA", tambahanBiaya: true },
-    { name: "Aqua 330ml", price: 42000, img: "images/aqua-330ml.jpg", category: "AQUA", tambahanBiaya: true },
+{ 
+    name: "Aqua Galon", 
+    price: 22000, 
+    img: "images/aqua-galon.jpg", 
+    category: "AQUA", 
+    tambahanBiaya: true,
+    deskripsi: `
+💧 AQUA Galon Asli – Segar, Bersih, dan Terpercaya! 💧
+Di luar sana banyak beredar galon yang diisi ulang manual tanpa standar kebersihan. 
+Tapi di sini, Anda mendapatkan AQUA yang langsung dari pabrik, dengan kualitas air pegunungan yang terjaga.
+Jaminan Kualitas:
+Jaminan Keaslian Produk:
+✔ Segel resmi AQUA masih utuh
+✔ Bukan galon isi ulang atau oplosan
+✔ Rasa tetap segar, murni, dan standar pabrik
+✔ Galon higienis dan terawat
+  `
+},
+{ 
+    name: "Aqua 600ml", 
+    price: 52000, 
+    img: "images/aqua-600ml.jpg", 
+    category: "AQUA", 
+    tambahanBiaya: true, 
+    deskripsi: `
+💧 AQUA 600 ml Original – Segar, Murni, dan Terpercaya! 💧
+AQUA 600 ml yang kami jual 100% asli pabrik, dengan segel utuh, label resmi, dan bukan air isi ulang atau repacking.
+Jadi Anda tidak perlu khawatir soal kualitas atau kebersihan.
+Jaminan Keaslian & Kebersihan:
+✔ Botol original AQUA, bukan tiruan
+✔ Segel tutup rapat dan tidak pernah dibuka
+✔ Air murni dari sumber pegunungan
+✔ Standar pabrik terjaga — aman dan higienis
+✔ 1 Karton isi 24 Botol
+  `
+},
+{ 
+  name: "Aqua 330ml",
+  price: 42000, 
+  mg: "images/aqua-330ml.jpg", 
+  category: "AQUA", 
+  tambahanBiaya: true, `
+  deskripsi: 
+💧 AQUA 330 ml Original – Segar, Murni, dan Terpercaya! 💧
+AQUA 330 ml yang kami jual 100% asli pabrik, dengan segel utuh, label resmi, dan bukan air isi ulang atau repacking.
+Jadi Anda tidak perlu khawatir soal kualitas atau kebersihan.
+Jaminan Keaslian & Kebersihan:
+✔ Botol original AQUA, bukan tiruan
+✔ Segel tutup rapat dan tidak pernah dibuka
+✔ Air murni dari sumber pegunungan
+✔ Standar pabrik terjaga — aman dan higienis
+✔ 1 Karton isi 24 Botol
+  `
+},
     { name: "Aqua Cube", price: 40000, img: "images/aqua-cube.jpg", category: "AQUA", tambahanBiaya: true },
     { name: "Aqua Gelas", price: 35000, img: "images/aqua-gelas.jpg", category: "AQUA", tambahanBiaya: true },
     { name: "leMineral Galon", price: 20000, img: "images/lemineral-galon.jpg", category: "LEMINERAL", tambahanBiaya: true },
@@ -154,8 +205,8 @@ function showProductDetail(index) {
 
   document.getElementById("modal-product-img").src = p.img;
   document.getElementById("modal-product-name").textContent = p.name;
-  document.getElementById("modal-product-price").textContent = p.price;
-    "Rp " + (p.price || 0).toLocaleString();
+  document.getElementById("modal-product-price").textContent =
+  "Rp " + (p.price || 0).toLocaleString("id-ID");
 
   document.getElementById("modal-product-desc").innerHTML =
   (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
@@ -757,6 +808,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
