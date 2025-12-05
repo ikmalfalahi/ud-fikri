@@ -190,6 +190,22 @@
   <!-- Produk akan digenerate otomatis oleh script.js -->
 </section>
 
+  <!-- PRODUCT DETAIL MODAL -->
+<div id="product-modal" class="product-modal hidden">
+  <div class="product-modal-content">
+    <span id="close-product-modal" class="close-product-modal">&times;</span>
+
+    <img id="modal-product-img" src="" alt="" class="modal-product-img">
+    <h2 id="modal-product-name"></h2>
+    <p id="modal-product-price" class="modal-product-price"></p>
+    <p id="modal-product-desc" class="modal-product-desc"></p>
+
+    <button id="modal-add-cart" class="modal-add-cart-btn">
+      <i class="fas fa-shopping-cart"></i> Tambah ke Keranjang
+    </button>
+  </div>
+</div>
+
   <!-- Floating Cart -->
 <div id="floating-cart" onclick="goToCart()">
   <i class="fa-solid fa-cart-shopping" style="color:white; font-size:20px;"></i>
@@ -241,4 +257,5 @@
 
 </body>
 </html>
+
 
