@@ -206,10 +206,10 @@ function showProductDetail(index) {
   document.getElementById("modal-product-img").src = p.img;
   document.getElementById("modal-product-name").textContent = p.name;
   document.getElementById("modal-product-price").textContent =
-    "Rp " + p.price.toLocaleString();
+  "Rp " + (p.price || 0).toLocaleString("id-ID");
 
-  document.getElementById("modal-product-desc").textContent =
-    p.deskripsi || "Tidak ada deskripsi produk.";
+  document.getElementById("modal-product-desc").innerHTML =
+  (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
 
   document.getElementById("product-modal").classList.remove("hidden");
 }
@@ -804,6 +804,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
