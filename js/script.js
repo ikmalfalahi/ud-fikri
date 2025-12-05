@@ -199,74 +199,70 @@ Jaminan Keaslian & Kebersihan:
 // === MODAL PRODUK === //
 let currentProductIndex = null;
 
+// === FUNGSI UTAMA HARUS DI LUAR DOMContentLoaded === //
+function showProductDetail(index) {
+  const p = products[index];
+  currentProductIndex = index;
+
+  const fullDesc = (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
+  const shortDesc = fullDesc.length > 200 ? fullDesc.substring(0, 200) + "..." : fullDesc;
+
+  const descEl = document.getElementById("modal-product-desc");
+  const toggleBtn = document.getElementById("toggle-desc");
+
+  // Set data
+  document.getElementById("modal-product-img").src = p.img;
+  document.getElementById("modal-product-name").textContent = p.name;
+  document.getElementById("modal-product-price").textContent =
+    "Rp " + (p.price || 0).toLocaleString("id-ID");
+
+  descEl.innerHTML = shortDesc;
+
+  if (fullDesc.length > 200) {
+    toggleBtn.style.display = "inline-block";
+    setupToggle(fullDesc, shortDesc);
+  } else {
+    toggleBtn.style.display = "none";
+  }
+
+  document.getElementById("product-modal").classList.remove("hidden");
+}
+
+// EXPOSE ke window supaya HTML bisa akses
+window.showProductDetail = showProductDetail;
+
+
+// === FUNGSI TOGGLE DESKRIPSI === //
+function setupToggle(fullDesc, shortDesc) {
+  const descEl = document.getElementById("modal-product-desc");
+  const toggle = document.getElementById("toggle-desc");
+
+  toggle.onclick = () => {
+    const isShort = descEl.innerHTML === shortDesc;
+
+    if (isShort) {
+      descEl.innerHTML = fullDesc;
+      toggle.textContent = "Sembunyikan";
+    } else {
+      descEl.innerHTML = shortDesc;
+      toggle.textContent = "Selengkapnya";
+    }
+  };
+}
+
+// === SEMUA EVENT LISTENER DI DALAM DOMContentLoaded === //
 document.addEventListener("DOMContentLoaded", () => {
 
-  // === SETUP FUNGSI === //
-  function showProductDetail(index) {
-    const p = products[index];
-    currentProductIndex = index;
-
-    const fullDesc = (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
-    const shortDesc = fullDesc.length > 200 ? fullDesc.substring(0, 200) + "..." : fullDesc;
-
-    const descEl = document.getElementById("modal-product-desc");
-    const toggleBtn = document.getElementById("toggle-desc"); // ✔️ DIBENERIN ID
-
-    // Set informasi
-    document.getElementById("modal-product-img").src = p.img;
-    document.getElementById("modal-product-name").textContent = p.name;
-    document.getElementById("modal-product-price").textContent =
-      "Rp " + (p.price || 0).toLocaleString("id-ID");
-
-    // Deskripsi pendek dulu
-    descEl.innerHTML = shortDesc;
-
-    // Tampilkan tombol selengkapnya kalau panjang
-    if (fullDesc.length > 200) {
-      toggleBtn.style.display = "inline-block";
-      setupToggle(fullDesc, shortDesc);
-    } else {
-      toggleBtn.style.display = "none";
-    }
-
-    // Tampilkan modal
-    document.getElementById("product-modal").classList.remove("hidden");
-  }
-
-  // EXPOSE ke window (agar HTML onclick bisa panggil)
-  window.showProductDetail = showProductDetail;
-
-  // === FUNGSI TOGGLE "SELENGKAPNYA" === //
-  function setupToggle(fullDesc, shortDesc) {
-    const descEl = document.getElementById("modal-product-desc");
-    const toggle = document.getElementById("toggle-desc");
-
-    toggle.onclick = () => {
-      const isShort = descEl.innerHTML === shortDesc;
-
-      if (isShort) {
-        descEl.innerHTML = fullDesc;
-        toggle.textContent = "Sembunyikan";
-      } else {
-        descEl.innerHTML = shortDesc;
-        toggle.textContent = "Selengkapnya";
-      }
-    };
-  }
-
-  // === TOMBOL CLOSE === //
   document.getElementById("close-product-modal").onclick = () => {
     document.getElementById("product-modal").classList.add("hidden");
   };
 
-  // Klik luar modal
   document.getElementById("product-modal").onclick = (e) => {
     if (e.target.id === "product-modal") {
       document.getElementById("product-modal").classList.add("hidden");
     }
   };
 
-  // Tambah ke keranjang
   document.getElementById("modal-add-cart").onclick = () => {
     if (currentProductIndex !== null) {
       addToCart(currentProductIndex);
@@ -846,6 +842,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
