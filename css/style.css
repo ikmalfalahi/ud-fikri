@@ -575,16 +575,16 @@ label[for="customer-address"] {
 .btn-close {
   position: absolute;
   top: 8px; right: 12px;
-  font-size: 24px; cursor: pointer; color: #333;
+  font-size: 28px; cursor: pointer; color: #333;
 }
 
 .modal-img {
-  width: 100%; border-radius: 10px; margin-bottom: 8px;
+  width: 100%; border-radius: 10px; margin-bottom: 4px;
 }
 
 #modal-product-name { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-#modal-product-price { font-size: 20px; font-weight: bold; color: #1e90ff; margin-bottom: 10px; }
-#modal-product-desc { font-size: 16px; line-height: 1.5; white-space: pre-line; margin-bottom: 14px; }
+#modal-product-price { font-size: 20px; font-weight: bold; color: #1e90ff; margin-bottom: 6px; }
+#modal-product-desc { font-size: 14px; line-height: 1.5; white-space: pre-line; margin-bottom: 10px; }
 
 .btn-add {
   margin-top: 12px; padding: 12px; width: 100%;
@@ -620,4 +620,5 @@ label[for="customer-address"] {
 .fly-img.blur {
   filter: blur(2px);
 }
+
 
