@@ -224,20 +224,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.getElementById("close-product-modal");
   const addCartBtn = document.getElementById("modal-add-cart");
 
-  function hideModal() {
-    modal.classList.add("fadeOut");
-    setTimeout(() => modal.classList.add("hidden"), 200);
-    modal.classList.remove("fadeOut");
+  // Pastikan semua element tersedia
+  if (!modal || !modalContent || !closeBtn || !addCartBtn) {
+    console.error("Element modal belum tersedia!");
+    return;
   }
 
+  function hideModal() {
+    modal.classList.add("fadeOut");
+    modal.addEventListener("animationend", () => {
+      modal.classList.add("hidden");
+      modal.classList.remove("fadeOut");
+    }, { once: true });
+  }
+
+  // Close modal dengan tombol ×
   closeBtn.addEventListener("click", hideModal);
-  modal.addEventListener("click", (e) => {
+
+  // Close modal dengan klik di luar konten
+  modal.addEventListener("click", e => {
     if (!modalContent.contains(e.target)) hideModal();
   });
 
+  // Tombol Tambah ke Keranjang
   addCartBtn.addEventListener("click", () => {
-    if (currentProductIndex !== null && typeof addToCart === "function") {
-      addToCart(currentProductIndex);
+    if (currentProductIndex !== null) {
+      if (typeof addToCart === "function") {
+        addToCart(currentProductIndex);
+      } else {
+        console.warn("Fungsi addToCart belum didefinisikan!");
+      }
       hideModal();
     }
   });
@@ -813,6 +829,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
