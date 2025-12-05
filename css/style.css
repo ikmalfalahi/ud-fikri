@@ -593,19 +593,40 @@ label[for="customer-address"] {
   margin-bottom: 4px;
 }
 
-.modal-product-price {
-  font-weight: bold;
-  color: #1e90ff;
-  margin-bottom: 4px;
+/* === TAMBAHAN FONT SIZE === */
+
+/* Nama produk */
+#modal-product-name {
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 6px;
 }
 
+/* Harga */
+.modal-product-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1e90ff;
+  margin-bottom: 10px;
+}
+
+/* Deskripsi */
+#modal-product-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-line; /* supaya enter tetap rapi */
+  margin-bottom: 14px;
+}
+
+/* Tombol */
 .modal-add-cart-btn {
   margin-top: 12px;
-  padding: 10px;
+  padding: 12px;
   width: 100%;
   border-radius: 8px;
   background: linear-gradient(to right,#1e90ff,#00bfff);
   font-weight: bold;
+  font-size: 16px;
   cursor: pointer;
 }
 
@@ -613,6 +634,3 @@ label[for="customer-address"] {
   from { opacity: 0; transform: scale(.9); }
   to { opacity: 1; transform: scale(1); }
 }
-
-
-
