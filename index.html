@@ -190,16 +190,23 @@
   <!-- Produk akan digenerate otomatis oleh script.js -->
 </section>
 
-<!-- PRODUCT MODAL -->
-<div id="product-modal" class="product-modal">
+<!-- PRODUCT DETAIL MODAL -->
+<div id="product-modal" class="product-modal hidden">
   <div class="product-modal-content">
-    <span id="close-product-modal" class="close">&times;</span>
-    <img id="modal-product-img" src="" alt="Produk">
-    <h3 id="modal-product-name"></h3>
-    <p id="modal-product-price"></p>
-    <p id="modal-product-desc" style="max-height:150px; overflow:hidden;"></p>
-    <button id="toggle-desc">Selengkapnya</button>
-    <button id="modal-add-cart">Tambah ke Keranjang</button>
+    <span id="close-product-modal" class="close-product-modal">&times;</span>
+    <img id="modal-product-img" src="" class="modal-product-img">
+    <h2 id="modal-product-name"></h2>
+    <p id="modal-product-price" class="modal-product-price"></p>
+    <p id="modal-product-desc" class="modal-product-desc"></p>
+    <button id="toggle-desc"
+      style="display:none; background:none; border:none; color:#1e90ff; cursor:pointer; font-size:14px;">
+      Selengkapnya
+    </button>
+
+    <button id="modal-add-cart" class="modal-add-cart-btn">
+      Tambah ke Keranjang
+    </button>
+
   </div>
 </div>
 
@@ -254,6 +261,7 @@
 
 </body>
 </html>
+
 
 
 
