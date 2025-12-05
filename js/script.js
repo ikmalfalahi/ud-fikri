@@ -255,9 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addCartBtn = document.getElementById("modal-add-cart");
 
   // Tombol close
-  closeBtn.addEventListener("click", () => {
-    modal.classList.remove("show");
-  });
+  closeBtn.addEventListener("click", () => modal.classList.remove("show"));
 
   // Klik overlay
   modal.addEventListener("click", (e) => {
@@ -848,6 +846,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
