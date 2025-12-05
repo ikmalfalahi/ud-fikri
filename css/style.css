@@ -584,7 +584,6 @@ label[for="customer-address"] {
 
 .product-modal.show .product-modal-content {
   transform: scale(1);
-  transition: transform 0.25s ease;
 }
 
 .close-product-modal {
@@ -601,19 +600,8 @@ label[for="customer-address"] {
   margin-bottom: 8px;
 }
 
-#modal-product-name {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.modal-product-price {
-  font-size: 20px;
-  font-weight: bold;
-  color: #1e90ff;
-  margin-bottom: 6px;
-}
-
+#modal-product-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.modal-product-price { font-size: 20px; font-weight: bold; color: #1e90ff; margin-bottom: 6px; }
 #modal-product-desc {
   font-size: 14px;
   line-height: 1.5;
@@ -621,9 +609,8 @@ label[for="customer-address"] {
   max-height: 150px;
   overflow-y: auto;
   margin-bottom: 6px;
-  padding-right: 4px; /* supaya scroll tidak menutupi teks */
+  padding-right: 4px;
 }
-
 #toggle-desc {
   display: none;
   background: none;
@@ -633,7 +620,6 @@ label[for="customer-address"] {
   font-size: 14px;
   margin-bottom: 6px;
 }
-
 .modal-add-cart-btn {
   margin-top: 12px;
   padding: 12px;
