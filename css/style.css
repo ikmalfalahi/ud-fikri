@@ -583,7 +583,7 @@ label[for="customer-address"] {
   position: absolute;
   top: 6px;
   right: 12px;
-  font-size: 28px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -596,7 +596,7 @@ label[for="customer-address"] {
 .modal-product-price {
   font-weight: bold;
   color: #1e90ff;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .modal-add-cart-btn {
@@ -613,4 +613,5 @@ label[for="customer-address"] {
   from { opacity: 0; transform: scale(.9); }
   to { opacity: 1; transform: scale(1); }
 }
+
 
