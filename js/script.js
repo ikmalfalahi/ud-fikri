@@ -199,6 +199,7 @@ Jaminan Keaslian & Kebersihan:
 // === MODAL DESKRIPSI PRODUK ===
 let currentProductIndex = null;
 
+// Fungsi menampilkan modal
 function showProductDetail(index) {
   const p = products[index];
   if (!p) return;
@@ -214,36 +215,29 @@ function showProductDetail(index) {
   document.getElementById("product-modal").classList.remove("hidden");
 }
 
+// Assign global agar bisa dipanggil dari onclick inline
 window.showProductDetail = showProductDetail;
 
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("product-modal");
-  const modalContent = modal.querySelector(".product-modal-content");
+  const modalContent = modal.querySelector(".modal-content");
   const closeBtn = document.getElementById("close-product-modal");
   const addCartBtn = document.getElementById("modal-add-cart");
 
   // Tombol close
-  closeBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
+  closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
 
   // Klik area gelap
   modal.addEventListener("click", (e) => {
-    if (!modalContent.contains(e.target)) {
-      modal.classList.add("hidden");
-    }
+    if (!modalContent.contains(e.target)) modal.classList.add("hidden");
   });
 
   // Tombol tambah ke keranjang
   addCartBtn.addEventListener("click", () => {
     if (currentProductIndex !== null) {
-      if (typeof addToCart === "function") {
-        addToCart(currentProductIndex);
-      } else {
-        console.warn("Fungsi addToCart() belum tersedia!");
-      }
+      if (typeof addToCart === "function") addToCart(currentProductIndex);
+      modal.classList.add("hidden");
     }
-    modal.classList.add("hidden");
   });
 });
 
@@ -817,3 +811,4 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
