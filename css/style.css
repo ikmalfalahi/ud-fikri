@@ -599,7 +599,7 @@ label[for="customer-address"] {
 #modal-product-name {
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 /* Harga */
@@ -607,7 +607,7 @@ label[for="customer-address"] {
   font-size: 20px;
   font-weight: bold;
   color: #1e90ff;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 /* Deskripsi */
@@ -615,7 +615,7 @@ label[for="customer-address"] {
   font-size: 14px;
   line-height: 1.5;
   white-space: pre-line; /* supaya enter tetap rapi */
-  margin-bottom: 14px;
+  margin-bottom: 4px;
 }
 
 /* Tombol */
@@ -626,7 +626,7 @@ label[for="customer-address"] {
   border-radius: 8px;
   background: linear-gradient(to right,#1e90ff,#00bfff);
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -634,4 +634,5 @@ label[for="customer-address"] {
   from { opacity: 0; transform: scale(.9); }
   to { opacity: 1; transform: scale(1); }
 }
+
 
