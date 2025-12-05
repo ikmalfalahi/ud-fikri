@@ -78,7 +78,7 @@ Gas Elpiji 3 Kg resmi Pertamina — aman & berkualitas.
 ✔ Tidak diisi ulang ilegal  
 ✔ Tabung lolos pengecekan keamanan
   `
-}
+},
     { name: "Gas Elpiji 12kg", price: 220000, img: "images/gas-12kg.jpg", category: "GAS ELPIJI", tambahanBiaya: true },
     { name: "Aqua Galon", price: 22000, img: "images/aqua-galon.jpg", category: "AQUA", tambahanBiaya: true },
     { name: "Aqua 600ml", price: 52000, img: "images/aqua-600ml.jpg", category: "AQUA", tambahanBiaya: true },
@@ -743,6 +743,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
