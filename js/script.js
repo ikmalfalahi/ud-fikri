@@ -243,12 +243,50 @@ modal.addEventListener("click", e => {
 // Tombol Tambah ke Keranjang
 addCartBtn.addEventListener("click", () => {
   if (currentProductIndex !== null && typeof addToCart === "function") {
+    // Ambil gambar produk di modal
+    const imgEl = document.getElementById("modal-product-img");
+    flyToCart(imgEl.src); // animasi terbang ke cart
+
     addToCart(currentProductIndex);
     hideModal();
   } else {
     console.warn("addToCart tidak tersedia atau index produk null!");
   }
 });
+
+// Animasi Terbang ke Keranjang //
+  function flyToCart(productImg) {
+  const cartIcon = document.getElementById("cart-icon");
+  if (!cartIcon) return;
+
+  // Buat elemen gambar terbang
+  const flyImg = document.createElement("img");
+  flyImg.src = productImg;
+  flyImg.className = "fly-img";
+  document.body.appendChild(flyImg);
+
+  // Dapatkan posisi awal (produk di modal)
+  const rect = productImg.getBoundingClientRect();
+  flyImg.style.left = rect.left + "px";
+  flyImg.style.top = rect.top + "px";
+  flyImg.style.width = rect.width + "px";
+  flyImg.style.height = rect.height + "px";
+
+  // Dapatkan posisi target (ikon cart)
+  const cartRect = cartIcon.getBoundingClientRect();
+
+  // Pakai requestAnimationFrame agar animasi tertrigger
+  requestAnimationFrame(() => {
+    flyImg.style.transform = `translate(${cartRect.left - rect.left}px, ${cartRect.top - rect.top}px) scale(0.2)`;
+    flyImg.style.opacity = 0.5;
+  });
+
+  // Hapus gambar setelah animasi selesai
+  flyImg.addEventListener("transitionend", () => {
+    flyImg.remove();
+  });
+}
+
 
  /* =========================
       FIXED CART SYSTEM
@@ -820,6 +858,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
