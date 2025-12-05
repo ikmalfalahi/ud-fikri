@@ -196,10 +196,10 @@ Jaminan Keaslian & Kebersihan:
   }
   renderProducts();
 
-// == MODAL POPUP PRODUK == //
-  let currentProductIndex = null;
+// === VARIABEL GLOBAL ===
+let currentProductIndex = null;
 
-// Fungsi untuk menampilkan popup
+// === Fungsi menampilkan popup produk ===
 function showProductDetail(index) {
   const p = products[index];
   currentProductIndex = index;
@@ -207,11 +207,14 @@ function showProductDetail(index) {
   const fullDesc = (p.deskripsi || "Tidak ada deskripsi.");
   const shortDesc = fullDesc.length > 200 ? fullDesc.substring(0, 200) + "..." : fullDesc;
 
+  // Set data produk
   document.getElementById("modal-product-img").src = p.img;
   document.getElementById("modal-product-name").textContent = p.name;
-  document.getElementById("modal-product-price").textContent = "Rp " + (p.price || 0).toLocaleString("id-ID");
+  document.getElementById("modal-product-price").textContent =
+    "Rp " + (p.price || 0).toLocaleString("id-ID");
   document.getElementById("modal-product-desc").textContent = shortDesc;
 
+  // Toggle deskripsi
   const toggleBtn = document.getElementById("toggle-desc");
   if(fullDesc.length > 200){
     toggleBtn.style.display = "inline-block";
@@ -221,7 +224,6 @@ function showProductDetail(index) {
     toggleBtn.style.display = "none";
   }
 
-  // Setup toggle deskripsi aman
   toggleBtn.onclick = () => {
     const descEl = document.getElementById("modal-product-desc");
     if(toggleBtn.dataset.state === "short"){
@@ -246,14 +248,16 @@ function showProductDetail(index) {
 
 window.showProductDetail = showProductDetail;
 
-// Semua event listener
+// === Event Listener ===
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("product-modal");
   const closeBtn = document.getElementById("close-product-modal");
   const addCartBtn = document.getElementById("modal-add-cart");
 
   // Tombol close
-  closeBtn.addEventListener("click", () => modal.classList.remove("show"));
+  closeBtn.addEventListener("click", () => {
+    modal.classList.remove("show");
+  });
 
   // Klik overlay
   modal.addEventListener("click", (e) => {
@@ -844,6 +848,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
