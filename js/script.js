@@ -215,7 +215,7 @@ function showProductDetail(index) {
   document.getElementById("product-modal").classList.remove("hidden");
 }
 
-// Assign global agar bisa dipanggil dari onclick inline
+// Pastikan bisa dipanggil dari inline onclick
 window.showProductDetail = showProductDetail;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.getElementById("close-product-modal");
   const addCartBtn = document.getElementById("modal-add-cart");
 
-  // Tombol close
+  // Tombol close (×)
   closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
 
   // Klik area gelap
@@ -811,4 +811,5 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
