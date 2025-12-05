@@ -583,20 +583,20 @@ label[for="customer-address"] {
   position: absolute;
   top: 6px;
   right: 12px;
-  font-size: 14px;
+  font-size: 28px;
   cursor: pointer;
 }
 
 .modal-product-img {
   width: 100%;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 .modal-product-price {
   font-weight: bold;
   color: #1e90ff;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 .modal-add-cart-btn {
@@ -613,5 +613,6 @@ label[for="customer-address"] {
   from { opacity: 0; transform: scale(.9); }
   to { opacity: 1; transform: scale(1); }
 }
+
 
 
