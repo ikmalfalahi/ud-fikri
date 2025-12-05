@@ -219,24 +219,25 @@ function showProductDetail(index) {
 
 window.showProductDetail = showProductDetail;
 
-document.addEventListener("DOMContentLoaded", () => {
+ddocument.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("product-modal");
+  const modalContent = modal.querySelector(".product-modal-content");
   const closeBtn = document.getElementById("close-product-modal");
   const addCartBtn = document.getElementById("modal-add-cart");
 
   // Tombol close
-  closeBtn.onclick = () => modal.classList.add("hidden");
+  closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
 
   // Klik area gelap di luar modal
-  modal.onclick = (e) => {
-    if (!e.target.closest(".product-modal-content")) modal.classList.add("hidden");
-  };
+  modal.addEventListener("click", (e) => {
+    if (!modalContent.contains(e.target)) modal.classList.add("hidden");
+  });
 
   // Tombol tambah ke keranjang
-  addCartBtn.onclick = () => {
+  addCartBtn.addEventListener("click", () => {
     if (currentProductIndex !== null) addToCart(currentProductIndex);
     modal.classList.add("hidden");
-  };
+  });
 });
 
  /* =========================
@@ -809,6 +810,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
