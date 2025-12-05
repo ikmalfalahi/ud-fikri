@@ -133,7 +133,7 @@ Jaminan Keaslian & Kebersihan:
 { 
   name: "Aqua 330ml",
   price: 42000, 
-  mg: "images/aqua-330ml.jpg", 
+  img: "images/aqua-330ml.jpg", 
   category: "AQUA", 
   tambahanBiaya: true,
   deskripsi: `
@@ -200,16 +200,31 @@ Jaminan Keaslian & Kebersihan:
 let currentProductIndex = null;
 
 function showProductDetail(index) {
-  const p = products[index]; 
+  const p = products[index];
   currentProductIndex = index;
 
+  const fullDesc = (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
+  const shortDesc = fullDesc.length > 200 ? fullDesc.substring(0, 200) + "..." : fullDesc;
+
+  const descEl = document.getElementById("modal-product-desc");
+  const toggleBtn = document.getElementById("toggle-desc-btn");
+
+  // set gambar & info lain
   document.getElementById("modal-product-img").src = p.img;
   document.getElementById("modal-product-name").textContent = p.name;
   document.getElementById("modal-product-price").textContent =
-  "Rp " + (p.price || 0).toLocaleString("id-ID");
+    "Rp " + (p.price || 0).toLocaleString("id-ID");
 
-  document.getElementById("modal-product-desc").innerHTML =
-  (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
+  // tampilkan deskripsi pendek dulu
+  descEl.innerHTML = shortDesc;
+
+  // kalau deskripsi panjang → tampilkan tombol selengkapnya
+  if (fullDesc.length > 200) {
+    toggleBtn.classList.remove("hidden");
+    toggleBtnonclick(fullDesc, shortDesc);
+  } else {
+    toggleBtn.classList.add("hidden");
+  }
 
   document.getElementById("product-modal").classList.remove("hidden");
 }
@@ -217,6 +232,23 @@ function showProductDetail(index) {
 // ⬇️⬇️ WAJIB DITAMBAHKAN AGAR HTML BISA MEMANGGIL FUNGSI
 window.showProductDetail = showProductDetail;
 // ⬆️⬆️ INI YANG BELUM ADA
+
+  function toggleBtnonclick(fullDesc, shortDesc) {
+  const descEl = document.getElementById("modal-product-desc");
+  const toggle = document.getElementById("toggle-desc-btn");
+
+  toggle.onclick = () => {
+    const isShort = descEl.innerHTML === shortDesc;
+
+    if (isShort) {
+      descEl.innerHTML = fullDesc;
+      toggle.textContent = "Sembunyikan";
+    } else {
+      descEl.innerHTML = shortDesc;
+      toggle.textContent = "Selengkapnya";
+    }
+  };
+}
 
 // tombol close
 document.getElementById("close-product-modal").onclick = () => {
@@ -808,6 +840,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
