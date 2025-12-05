@@ -196,74 +196,79 @@ Jaminan Keaslian & Kebersihan:
   }
   renderProducts();
 
-// ===== GLOBAL VAR =====
+// === MODAL PRODUK === //
 let currentProductIndex = null;
 
-// Fungsi tampilkan modal
+// === FUNGSI UTAMA HARUS DI LUAR DOMContentLoaded === //
 function showProductDetail(index) {
   const p = products[index];
-  if (!p) return;
   currentProductIndex = index;
 
-  const fullDesc = p.deskripsi || "Tidak ada deskripsi.";
+  const fullDesc = (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
   const shortDesc = fullDesc.length > 200 ? fullDesc.substring(0, 200) + "..." : fullDesc;
 
-  // isi data modal
+  const descEl = document.getElementById("modal-product-desc");
+  const toggleBtn = document.getElementById("toggle-desc");
+
+  // Set data
   document.getElementById("modal-product-img").src = p.img;
   document.getElementById("modal-product-name").textContent = p.name;
-  document.getElementById("modal-product-price").textContent = "Rp " + (p.price || 0).toLocaleString("id-ID");
-  document.getElementById("modal-product-desc").textContent = shortDesc;
+  document.getElementById("modal-product-price").textContent =
+    "Rp " + (p.price || 0).toLocaleString("id-ID");
 
-  const toggleBtn = document.getElementById("toggle-desc");
-  if(fullDesc.length > 200){
+  descEl.innerHTML = shortDesc;
+
+  if (fullDesc.length > 200) {
     toggleBtn.style.display = "inline-block";
-    toggleBtn.textContent = "Selengkapnya";
-    toggleBtn.dataset.state = "short";
+    setupToggle(fullDesc, shortDesc);
   } else {
     toggleBtn.style.display = "none";
   }
 
-  toggleBtn.onclick = () => {
-    const descEl = document.getElementById("modal-product-desc");
-    if(toggleBtn.dataset.state === "short"){
-      descEl.textContent = fullDesc;
-      toggleBtn.textContent = "Sembunyikan";
-      descEl.style.maxHeight = "300px";
-      toggleBtn.dataset.state = "full";
+  document.getElementById("product-modal").classList.remove("hidden");
+}
+
+// EXPOSE ke window supaya HTML bisa akses
+window.showProductDetail = showProductDetail;
+
+// === FUNGSI TOGGLE DESKRIPSI === //
+function setupToggle(fullDesc, shortDesc) {
+  const descEl = document.getElementById("modal-product-desc");
+  const toggle = document.getElementById("toggle-desc");
+
+  toggle.onclick = () => {
+    const isShort = descEl.innerHTML === shortDesc;
+
+    if (isShort) {
+      descEl.innerHTML = fullDesc;
+      toggle.textContent = "Sembunyikan";
     } else {
-      descEl.textContent = shortDesc;
-      toggleBtn.textContent = "Selengkapnya";
-      descEl.style.maxHeight = "150px";
-      toggleBtn.dataset.state = "short";
+      descEl.innerHTML = shortDesc;
+      toggle.textContent = "Selengkapnya";
+    }
+  };
+}
+
+// === SEMUA EVENT LISTENER DI DALAM DOMContentLoaded === //
+document.addEventListener("DOMContentLoaded", () => {
+
+  document.getElementById("close-product-modal").onclick = () => {
+    document.getElementById("product-modal").classList.add("hidden");
+  };
+
+  document.getElementById("product-modal").onclick = (e) => {
+    if (e.target.id === "product-modal") {
+      document.getElementById("product-modal").classList.add("hidden");
     }
   };
 
-  document.getElementById("product-modal").classList.add("show");
-}
-window.showProductDetail = showProductDetail;
-
-// ===== EVENT LISTENER MODAL =====
-document.addEventListener("DOMContentLoaded", () => {
-  const modal = document.getElementById("product-modal");
-  const closeBtn = document.getElementById("close-product-modal");
-  const addCartBtn = document.getElementById("modal-add-cart");
-
-  // close button
-  closeBtn.addEventListener("click", () => modal.classList.remove("show"));
-
-  // klik overlay
-  modal.addEventListener("click", (e) => {
-    if(!e.target.closest(".product-modal-content")) modal.classList.remove("show");
-  });
-
-  // tombol tambah ke keranjang
-  addCartBtn.addEventListener("click", () => {
-    if(currentProductIndex !== null && typeof addToCart === "function"){
+  document.getElementById("modal-add-cart").onclick = () => {
+    if (currentProductIndex !== null) {
       addToCart(currentProductIndex);
-      alert(`${products[currentProductIndex].name} ditambahkan ke keranjang!`);
-      modal.classList.remove("show");
     }
-  });
+    document.getElementById("product-modal").classList.add("hidden");
+  };
+
 });
 
  /* =========================
@@ -836,5 +841,6 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
