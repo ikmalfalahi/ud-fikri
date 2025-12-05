@@ -196,10 +196,9 @@ Jaminan Keaslian & Kebersihan:
   }
   renderProducts();
 
-// === MODAL DESKRIPSI PRODUK ===
+// === MODAL PRODUK =========
 let currentProductIndex = null;
 
-// Fungsi menampilkan modal
 function showProductDetail(index) {
   const p = products[index];
   if (!p) return;
@@ -217,7 +216,6 @@ function showProductDetail(index) {
   document.getElementById("product-modal").classList.remove("hidden");
 }
 
-// Agar bisa dipanggil dari inline onclick
 window.showProductDetail = showProductDetail;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -226,19 +224,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.getElementById("close-product-modal");
   const addCartBtn = document.getElementById("modal-add-cart");
 
-  // Tombol close (×)
-  closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+  function hideModal() {
+    modal.classList.add("fadeOut");
+    setTimeout(() => modal.classList.add("hidden"), 200);
+    modal.classList.remove("fadeOut");
+  }
 
-  // Klik di luar modal-content
+  closeBtn.addEventListener("click", hideModal);
   modal.addEventListener("click", (e) => {
-    if (!modalContent.contains(e.target)) modal.classList.add("hidden");
+    if (!modalContent.contains(e.target)) hideModal();
   });
 
-  // Tombol tambah ke keranjang
   addCartBtn.addEventListener("click", () => {
     if (currentProductIndex !== null && typeof addToCart === "function") {
       addToCart(currentProductIndex);
-      modal.classList.add("hidden");
+      hideModal();
     }
   });
 });
@@ -813,6 +813,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
