@@ -261,14 +261,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Klik di overlay
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.classList.add("hidden");
-    }
-  });
+ modal.addEventListener("click", (e) => {
+  if (!e.target.closest(".product-modal-content")) {
+    modal.classList.add("hidden");
+  }
+});
 
   // Tombol tambah ke keranjang
   addCartBtn.addEventListener("click", () => {
+    console.log("Klik tombol add to cart"); // cek apakah event terpicu
     if (currentProductIndex !== null) {
       if (typeof addToCart === "function") {
         addToCart(currentProductIndex);
@@ -851,6 +852,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
