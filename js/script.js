@@ -71,6 +71,7 @@ if (storeOpen) {
   tambahanBiaya: true,
   deskripsi: `
 Gas Elpiji 3 Kg resmi Pertamina - aman & berkualitas.
+Jaminan Kualitas:
 ✔ Segel resmi Pertamina utuh  
 ✔ Berat & tekanan gas sesuai standar  
 ✔ Tidak diisi ulang ilegal  
@@ -82,13 +83,15 @@ Gas Elpiji 3 Kg resmi Pertamina - aman & berkualitas.
     price: 220000, 
     img: "images/gas-12kg.jpg", 
     category: "GAS ELPIJI", 
-    tambahanBiaya: true 
+    tambahanBiaya: true, 
     deskripsi: `
-Gas Elpiji 3 Kg resmi Pertamina - aman & berkualitas.
-✔ Segel resmi Pertamina utuh  
-✔ Berat & tekanan gas sesuai standar  
-✔ Tidak diisi ulang ilegal  
-✔ Tabung lolos pengecekan keamanan
+Gas Elpiji 12 Kg asli, segel resmi, dan tanpa pengurangan isi.
+Jaminan Kualitas:
+✔ Segel asli Pertamina masih utuh
+✔ Bukan isi ulang ilegal
+✔ Berat sesuai standar 12 Kg
+✔ Tekanan gas stabil dan optimal
+✔ Tabung sudah lulus uji keamanan
   `
 },
     { name: "Aqua Galon", price: 22000, img: "images/aqua-galon.jpg", category: "AQUA", tambahanBiaya: true },
@@ -754,6 +757,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
