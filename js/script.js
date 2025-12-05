@@ -218,45 +218,36 @@ function showProductDetail(index) {
 
 window.showProductDetail = showProductDetail;
 
-document.addEventListener("DOMContentLoaded", () => {
-  const modal = document.getElementById("product-modal");
-  const modalContent = modal.querySelector(".modal-content");
-  const closeBtn = document.getElementById("close-product-modal");
-  const addCartBtn = document.getElementById("modal-add-cart");
+// === MODAL ELEMENTS ===
+const modal = document.getElementById("product-modal");
+const modalContent = modal.querySelector(".modal-content");
+const closeBtn = document.getElementById("close-product-modal");
+const addCartBtn = document.getElementById("modal-add-cart");
 
-  // Pastikan semua element tersedia
-  if (!modal || !modalContent || !closeBtn || !addCartBtn) {
-    console.error("Element modal belum tersedia!");
-    return;
+function hideModal() {
+  modal.classList.add("fadeOut");
+  modal.addEventListener("animationend", () => {
+    modal.classList.add("hidden");
+    modal.classList.remove("fadeOut");
+  }, { once: true });
+}
+
+// Close modal dengan tombol ×
+closeBtn.addEventListener("click", hideModal);
+
+// Close modal dengan klik di luar konten
+modal.addEventListener("click", e => {
+  if (!modalContent.contains(e.target)) hideModal();
+});
+
+// Tombol Tambah ke Keranjang
+addCartBtn.addEventListener("click", () => {
+  if (currentProductIndex !== null && typeof addToCart === "function") {
+    addToCart(currentProductIndex);
+    hideModal();
+  } else {
+    console.warn("addToCart tidak tersedia atau index produk null!");
   }
-
-  function hideModal() {
-    modal.classList.add("fadeOut");
-    modal.addEventListener("animationend", () => {
-      modal.classList.add("hidden");
-      modal.classList.remove("fadeOut");
-    }, { once: true });
-  }
-
-  // Close modal dengan tombol ×
-  closeBtn.addEventListener("click", hideModal);
-
-  // Close modal dengan klik di luar konten
-  modal.addEventListener("click", e => {
-    if (!modalContent.contains(e.target)) hideModal();
-  });
-
-  // Tombol Tambah ke Keranjang
-  addCartBtn.addEventListener("click", () => {
-    if (currentProductIndex !== null) {
-      if (typeof addToCart === "function") {
-        addToCart(currentProductIndex);
-      } else {
-        console.warn("Fungsi addToCart belum didefinisikan!");
-      }
-      hideModal();
-    }
-  });
 });
 
  /* =========================
@@ -829,6 +820,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
