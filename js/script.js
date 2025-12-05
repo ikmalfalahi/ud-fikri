@@ -204,7 +204,6 @@ function showProductDetail(index) {
   if (!p) return;
   currentProductIndex = index;
 
-  // Set data produk
   document.getElementById("modal-product-img").src = p.img || "";
   document.getElementById("modal-product-name").textContent = p.name || "";
   document.getElementById("modal-product-price").textContent =
@@ -212,9 +211,7 @@ function showProductDetail(index) {
   document.getElementById("modal-product-desc").innerHTML =
     (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
 
-  // Tampilkan modal
-  const modal = document.getElementById("product-modal");
-  modal.classList.remove("hidden");
+  document.getElementById("product-modal").classList.remove("hidden");
 }
 
 window.showProductDetail = showProductDetail;
@@ -226,16 +223,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const addCartBtn = document.getElementById("modal-add-cart");
 
   // Tombol close
-  closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+  closeBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
 
-  // Klik area gelap di luar modal
+  // Klik area gelap
   modal.addEventListener("click", (e) => {
-    if (!modalContent.contains(e.target)) modal.classList.add("hidden");
+    if (!modalContent.contains(e.target)) {
+      modal.classList.add("hidden");
+    }
   });
 
   // Tombol tambah ke keranjang
   addCartBtn.addEventListener("click", () => {
-    if (currentProductIndex !== null) addToCart(currentProductIndex);
+    if (currentProductIndex !== null) {
+      if (typeof addToCart === "function") {
+        addToCart(currentProductIndex);
+      } else {
+        console.warn("Fungsi addToCart() belum tersedia!");
+      }
+    }
     modal.classList.add("hidden");
   });
 });
@@ -810,14 +817,3 @@ if (document.getElementById("user-map")) {
 }
 
 });
-
-
-
-
-
-
-
-
-
-
-
