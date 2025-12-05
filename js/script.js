@@ -231,7 +231,6 @@ function showProductDetail(index) {
 // EXPOSE ke window supaya HTML bisa akses
 window.showProductDetail = showProductDetail;
 
-
 // === FUNGSI TOGGLE DESKRIPSI === //
 function setupToggle(fullDesc, shortDesc) {
   const descEl = document.getElementById("modal-product-desc");
@@ -252,24 +251,34 @@ function setupToggle(fullDesc, shortDesc) {
 
 // === SEMUA EVENT LISTENER DI DALAM DOMContentLoaded === //
 document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("product-modal");
+  const closeBtn = document.getElementById("close-product-modal");
+  const addCartBtn = document.getElementById("modal-add-cart");
 
-  document.getElementById("close-product-modal").onclick = () => {
-    document.getElementById("product-modal").classList.add("hidden");
-  };
+  // Close tombol X
+  closeBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
 
-  document.getElementById("product-modal").onclick = (e) => {
-    if (e.target.id === "product-modal") {
-      document.getElementById("product-modal").classList.add("hidden");
+  // Klik di overlay
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.classList.add("hidden");
     }
-  };
+  });
 
-  document.getElementById("modal-add-cart").onclick = () => {
+  // Tombol tambah ke keranjang
+  addCartBtn.addEventListener("click", () => {
     if (currentProductIndex !== null) {
-      addToCart(currentProductIndex);
+      if (typeof addToCart === "function") {
+        addToCart(currentProductIndex);
+        alert(`${products[currentProductIndex].name} ditambahkan ke keranjang!`);
+      } else {
+        console.error("Fungsi addToCart belum didefinisikan!");
+      }
     }
-    document.getElementById("product-modal").classList.add("hidden");
-  };
-
+    modal.classList.add("hidden");
+  });
 });
 
  /* =========================
@@ -842,6 +851,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
