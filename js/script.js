@@ -196,10 +196,9 @@ Jaminan Keaslian & Kebersihan:
   }
   renderProducts();
 
-// === MODAL PRODUK === //
 let currentProductIndex = null;
 
-// === FUNGSI UTAMA HARUS DI LUAR DOMContentLoaded === //
+// Fungsi menampilkan popup
 function showProductDetail(index) {
   const p = products[index];
   currentProductIndex = index;
@@ -207,49 +206,39 @@ function showProductDetail(index) {
   const fullDesc = (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
   const shortDesc = fullDesc.length > 200 ? fullDesc.substring(0, 200) + "..." : fullDesc;
 
-  const descEl = document.getElementById("modal-product-desc");
-  const toggleBtn = document.getElementById("toggle-desc");
-
-  // Set data
   document.getElementById("modal-product-img").src = p.img;
   document.getElementById("modal-product-name").textContent = p.name;
-  document.getElementById("modal-product-price").textContent =
-    "Rp " + (p.price || 0).toLocaleString("id-ID");
+  document.getElementById("modal-product-price").textContent = "Rp " + (p.price || 0).toLocaleString("id-ID");
+  document.getElementById("modal-product-desc").innerHTML = shortDesc;
 
-  descEl.innerHTML = shortDesc;
-
-  if (fullDesc.length > 200) {
+  const toggleBtn = document.getElementById("toggle-desc");
+  if(fullDesc.length > 200){
     toggleBtn.style.display = "inline-block";
-    setupToggle(fullDesc, shortDesc);
+    toggleBtn.textContent = "Selengkapnya";
   } else {
     toggleBtn.style.display = "none";
   }
 
-  document.getElementById("product-modal").classList.remove("hidden");
-}
+  const modal = document.getElementById("product-modal");
+  modal.classList.add("show");
 
-// EXPOSE ke window supaya HTML bisa akses
-window.showProductDetail = showProductDetail;
-
-// === FUNGSI TOGGLE DESKRIPSI === //
-function setupToggle(fullDesc, shortDesc) {
-  const descEl = document.getElementById("modal-product-desc");
-  const toggle = document.getElementById("toggle-desc");
-
-  toggle.onclick = () => {
-    const isShort = descEl.innerHTML === shortDesc;
-
-    if (isShort) {
+  // Toggle deskripsi
+  toggleBtn.onclick = () => {
+    const descEl = document.getElementById("modal-product-desc");
+    if(descEl.innerHTML === shortDesc){
       descEl.innerHTML = fullDesc;
-      toggle.textContent = "Sembunyikan";
+      toggleBtn.textContent = "Sembunyikan";
+      descEl.style.maxHeight = "300px"; // biar scroll muncul jika panjang
     } else {
       descEl.innerHTML = shortDesc;
-      toggle.textContent = "Selengkapnya";
+      toggleBtn.textContent = "Selengkapnya";
+      descEl.style.maxHeight = "150px";
     }
   };
 }
 
-// === SEMUA EVENT LISTENER DI DALAM DOMContentLoaded === //
+window.showProductDetail = showProductDetail;
+
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("product-modal");
   const closeBtn = document.getElementById("close-product-modal");
@@ -257,28 +246,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Close tombol X
   closeBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
+    modal.classList.remove("show");
   });
 
-  // Klik di overlay
- modal.addEventListener("click", (e) => {
-  if (!e.target.closest(".product-modal-content")) {
-    modal.classList.add("hidden");
-  }
-});
+  // Klik overlay
+  modal.addEventListener("click", (e) => {
+    if(!e.target.closest(".product-modal-content")) {
+      modal.classList.remove("show");
+    }
+  });
 
   // Tombol tambah ke keranjang
   addCartBtn.addEventListener("click", () => {
-    console.log("Klik tombol add to cart"); // cek apakah event terpicu
-    if (currentProductIndex !== null) {
-      if (typeof addToCart === "function") {
+    if(currentProductIndex !== null){
+      if(typeof addToCart === "function"){
         addToCart(currentProductIndex);
         alert(`${products[currentProductIndex].name} ditambahkan ke keranjang!`);
       } else {
         console.error("Fungsi addToCart belum didefinisikan!");
       }
+      modal.classList.remove("show");
     }
-    modal.classList.add("hidden");
   });
 });
 
@@ -852,6 +840,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
