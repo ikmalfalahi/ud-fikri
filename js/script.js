@@ -219,7 +219,7 @@ function showProductDetail(index) {
 
 window.showProductDetail = showProductDetail;
 
-ddocument.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("product-modal");
   const modalContent = modal.querySelector(".product-modal-content");
   const closeBtn = document.getElementById("close-product-modal");
@@ -810,6 +810,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
