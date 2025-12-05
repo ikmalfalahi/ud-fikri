@@ -549,7 +549,7 @@ label[for="customer-address"] {
 }
 
 /* === PRODUCT MODAL === */
-.product-modal {
+.modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -563,11 +563,11 @@ label[for="customer-address"] {
   padding: 20px;
 }
 
-.product-modal.hidden {
+.modal.hidden {
   display: none;
 }
 
-.product-modal-content {
+.modal-content {
   background: white;
   width: 90%;
   max-width: 380px;
@@ -579,19 +579,54 @@ label[for="customer-address"] {
   animation: fadeIn .25s ease;
 }
 
-.close-product-modal {
+.btn-close {
   position: absolute;
   top: 6px;
   right: 12px;
-  font-size: 28px;
+  font-size: 20px;
   cursor: pointer;
 }
 
-.modal-product-img { width: 100%; border-radius: 10px; margin-bottom: 4px; }
-#modal-product-name { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-.modal-product-price { font-size: 20px; font-weight: bold; color: #1e90ff; margin-bottom: 10px; }
-#modal-product-desc { font-size: 16px; line-height: 1.5; white-space: pre-line; margin-bottom: 14px; }
-.modal-add-cart-btn { margin-top: 12px; padding: 12px; width: 100%; border-radius: 8px; background: linear-gradient(to right,#1e90ff,#00bfff); font-weight: bold; font-size: 16px; cursor: pointer; }
+.modal-img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 4px;
+}
+
+/* Nama produk */
+#modal-product-name {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+/* Harga */
+#modal-product-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1e90ff;
+  margin-bottom: 10px;
+}
+
+/* Deskripsi */
+#modal-product-desc {
+  font-size: 16px;
+  line-height: 1.5;
+  white-space: pre-line;
+  margin-bottom: 14px;
+}
+
+/* Tombol tambah ke keranjang */
+.btn-add {
+  margin-top: 12px;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  background: linear-gradient(to right,#1e90ff,#00bfff);
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(.9); }
