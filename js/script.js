@@ -213,6 +213,10 @@ function showProductDetail(index) {
   document.getElementById("modal-product-desc").innerHTML =
     (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
 
+    // === RESET DESKRIPSI DAN TOMBOL ===
+  modalDesc.style.maxHeight = "150px";
+  toggleDescBtn.textContent = "Selengkapnya";
+  
   document.getElementById("product-modal").classList.remove("hidden");
 }
 
@@ -223,6 +227,8 @@ const modal = document.getElementById("product-modal");
 const modalContent = modal.querySelector(".modal-content");
 const closeBtn = document.getElementById("close-product-modal");
 const addCartBtn = document.getElementById("modal-add-cart");
+const toggleDescBtn = document.getElementById("modal-toggle-desc");
+const modalDesc = document.getElementById("modal-product-desc");
 
 function hideModal() {
   modal.classList.add("fadeOut");
@@ -248,6 +254,17 @@ addCartBtn.addEventListener("click", () => {
 
     addToCart(currentProductIndex); // tambahkan ke keranjang
     hideModal();
+  }
+});
+
+  // Selengkapnya //
+toggleDescBtn.addEventListener("click", () => {
+  if (modalDesc.style.maxHeight === "none") {
+    modalDesc.style.maxHeight = "150px";
+    toggleDescBtn.textContent = "Selengkapnya";
+  } else {
+    modalDesc.style.maxHeight = "none";
+    toggleDescBtn.textContent = "Sembunyikan";
   }
 });
 
@@ -863,6 +880,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
