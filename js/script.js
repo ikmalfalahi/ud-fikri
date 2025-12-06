@@ -70,64 +70,63 @@ if (storeOpen) {
   category: "GAS ELPIJI",
   tambahanBiaya: true,
   deskripsi: `
-Gas Elpiji 3 Kg resmi Pertamina - aman & berkualitas.
-Jaminan Kualitas:
-✔ Segel resmi Pertamina utuh  
-✔ Berat & tekanan gas sesuai standar  
-✔ Tidak diisi ulang ilegal  
-✔ Tabung lolos pengecekan keamanan
+  Gas Elpiji 3 Kg resmi Pertamina - aman & berkualitas.
+  Jaminan Kualitas:
+  ✔ Segel resmi Pertamina utuh  
+  ✔ Berat & tekanan gas sesuai standar  
+  ✔ Tidak diisi ulang ilegal  
+  ✔ Tabung lolos pengecekan keamanan
   `
 },
 { 
-    name: "Gas Elpiji 12kg", 
-    price: 220000, 
-    img: "images/gas-12kg.jpg", 
-    category: "GAS ELPIJI", 
-    tambahanBiaya: true, 
-    deskripsi: `
-Gas Elpiji 12 Kg asli, segel resmi, dan tanpa pengurangan isi.
-Jaminan Kualitas:
-✔ Segel asli Pertamina masih utuh
-✔ Bukan isi ulang ilegal
-✔ Berat sesuai standar 12 Kg
-✔ Tekanan gas stabil dan optimal
-✔ Tabung sudah lulus uji keamanan
+  name: "Gas Elpiji 12kg", 
+  price: 220000, 
+  img: "images/gas-12kg.jpg", 
+  category: "GAS ELPIJI", 
+  tambahanBiaya: true, 
+  deskripsi: `
+  Gas Elpiji 12 Kg asli, segel resmi, dan tanpa pengurangan isi.
+  Jaminan Kualitas:
+  ✔ Segel asli Pertamina masih utuh
+  ✔ Bukan isi ulang ilegal
+  ✔ Berat sesuai standar 12 Kg
+  ✔ Tekanan gas stabil dan optimal
+  ✔ Tabung sudah lulus uji keamanan
   `
 },
 { 
-    name: "Aqua Galon", 
-    price: 22000, 
-    img: "images/aqua-galon.jpg", 
-    category: "AQUA", 
-    tambahanBiaya: true,
-    deskripsi: `
-💧 AQUA Galon Asli – Segar, Bersih, dan Terpercaya! 💧
-Di luar sana banyak beredar galon yang diisi ulang manual tanpa standar kebersihan. 
-Tapi di sini, Anda mendapatkan AQUA yang langsung dari pabrik, dengan kualitas air pegunungan yang terjaga.
-Jaminan Kualitas:
-Jaminan Keaslian Produk:
-✔ Segel resmi AQUA masih utuh
-✔ Bukan galon isi ulang atau oplosan
-✔ Rasa tetap segar, murni, dan standar pabrik
-✔ Galon higienis dan terawat
+  name: "Aqua Galon", 
+  price: 22000, 
+  img: "images/aqua-galon.jpg", 
+  category: "AQUA", 
+  tambahanBiaya: true,
+  deskripsi: `
+  💧 AQUA Galon Asli – Segar, Bersih, dan Terpercaya!
+  Di luar sana banyak beredar galon yang diisi ulang manual tanpa standar kebersihan. 
+  Tapi di sini, Anda mendapatkan AQUA yang langsung dari pabrik, dengan kualitas air pegunungan yang terjaga.
+  Jaminan Kualitas:
+  ✔ Segel resmi AQUA masih utuh
+  ✔ Bukan galon isi ulang atau oplosan
+  ✔ Rasa tetap segar, murni, dan standar pabrik
+  ✔ Galon higienis dan terawat
   `
 },
 { 
-    name: "Aqua 600ml", 
-    price: 52000, 
-    img: "images/aqua-600ml.jpg", 
-    category: "AQUA", 
-    tambahanBiaya: true, 
-    deskripsi: `
-💧 AQUA 600 ml Original – Segar, Murni, dan Terpercaya! 💧
-AQUA 600 ml yang kami jual 100% asli pabrik, dengan segel utuh, label resmi, dan bukan air isi ulang atau repacking.
-Jadi Anda tidak perlu khawatir soal kualitas atau kebersihan.
-Jaminan Keaslian & Kebersihan:
-✔ Botol original AQUA, bukan tiruan
-✔ Segel tutup rapat dan tidak pernah dibuka
-✔ Air murni dari sumber pegunungan
-✔ Standar pabrik terjaga — aman dan higienis
-✔ 1 Karton isi 24 Botol
+  name: "Aqua 600ml", 
+  price: 52000, 
+  img: "images/aqua-600ml.jpg", 
+  category: "AQUA", 
+  tambahanBiaya: true, 
+  deskripsi: `
+  💧 AQUA 600 ml Original – Segar, Murni, dan Terpercaya!
+  AQUA 600 ml yang kami jual 100% asli pabrik, dengan segel utuh, label resmi, dan bukan air isi ulang atau repacking.
+  Jadi Anda tidak perlu khawatir soal kualitas atau kebersihan.
+  Jaminan Keaslian & Kebersihan:
+  ✔ Botol original AQUA, bukan tiruan
+  ✔ Segel tutup rapat dan tidak pernah dibuka
+  ✔ Air murni dari sumber pegunungan
+  ✔ Standar pabrik terjaga — aman dan higienis
+  ✔ 1 Karton isi 24 Botol
   `
 },
 { 
@@ -137,25 +136,163 @@ Jaminan Keaslian & Kebersihan:
   category: "AQUA", 
   tambahanBiaya: true,
   deskripsi: `
-💧 AQUA 330 ml Original – Segar, Murni, dan Terpercaya! 💧
-AQUA 330 ml yang kami jual 100% asli pabrik, dengan segel utuh, label resmi, dan bukan air isi ulang atau repacking.
-Jadi Anda tidak perlu khawatir soal kualitas atau kebersihan.
-Jaminan Keaslian & Kebersihan:
-✔ Botol original AQUA, bukan tiruan
-✔ Segel tutup rapat dan tidak pernah dibuka
-✔ Air murni dari sumber pegunungan
-✔ Standar pabrik terjaga — aman dan higienis
-✔ 1 Karton isi 24 Botol
+  💧 AQUA 330 ml Original – Segar, Murni, dan Terpercaya!
+  AQUA 330 ml yang kami jual 100% asli pabrik, dengan segel utuh, label resmi, dan bukan air isi ulang atau repacking.
+  Jadi Anda tidak perlu khawatir soal kualitas atau kebersihan.
+  Jaminan Keaslian & Kebersihan:
+  ✔ Botol original AQUA, bukan tiruan
+  ✔ Segel tutup rapat dan tidak pernah dibuka
+  ✔ Air murni dari sumber pegunungan
+  ✔ Standar pabrik terjaga — aman dan higienis
+  ✔ 1 Karton isi 24 Botol
   `
 },
-    { name: "Aqua Cube", price: 40000, img: "images/aqua-cube.jpg", category: "AQUA", tambahanBiaya: true },
-    { name: "Aqua Gelas", price: 35000, img: "images/aqua-gelas.jpg", category: "AQUA", tambahanBiaya: true },
-    { name: "leMineral Galon", price: 20000, img: "images/lemineral-galon.jpg", category: "LEMINERAL", tambahanBiaya: true },
-    { name: "leMineral 330ml", price: 42000, img: "images/lemineral-330ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
-    { name: "leMineral 600ml", price: 52000, img: "images/lemineral-600ml.jpg", category: "LEMINERAL", tambahanBiaya: true },
-    { name: "Beras 14", price: 14000, img: "images/beras-14.jpg", category: "BERAS", tambahanBiaya: true },
-    { name: "Beras 13", price: 13000, img: "images/beras-13.jpg", category: "BERAS", tambahanBiaya: true },
-    { name: "Beras 12", price: 12000, img: "images/beras-12.jpg", category: "BERAS", tambahanBiaya: true },
+{ 
+  name: "Aqua Cube", 
+  price: 40000, 
+  img: "images/aqua-cube.jpg", 
+  category: "AQUA", 
+  tambahanBiaya: true,
+  deskripsi: `
+  💧 AQUA Cube Original – Praktis, Segar, dan Higienis!
+  Produk ini 100% original dari AQUA, dengan segel utuh, kemasan Food Grade, dan bukan repacking atau isi ulang
+  Jaminan Keaslian & Kualitas:
+  ✔ Segel pabrik masih utuh
+  ✔ Bukan isi ulang atau kemasan ulang
+  ✔ Air murni dari sumber pegunungan AQUA
+  ✔ Dijamin aman, higienis, dan fresh
+  ✔ 1 Karton isi 24 Botol
+    `
+  },
+  { 
+    name: "Aqua Gelas", 
+    price: 35000, 
+    img: "images/aqua-gelas.jpg", 
+    category: "AQUA", 
+    tambahanBiaya: true,
+    deskripsi: `
+    💧 AQUA Gelas Original – Segar, Higienis, dan Terpercaya!
+    AQUA Gelas adalah pilihan terbaik untuk kebutuhan minuman praktis di rumah, kantor, sekolah, acara, hingga usaha kuliner.
+    Produk yang kami jual 100% asli pabrik, dengan segel plastik utuh dan bukan isi ulang atau kemasan ulang.
+    Jaminan Keaslian Produk:
+    ✔ Segel plastik pabrik masih utuh
+    ✔ Tidak pernah dibuka atau dipindah isi
+    ✔ Logo dan label asli AQUA
+    ✔ Diproduksi dengan standar kualitas nasional & internasional
+    ✔ 1 Karton isi 48 Cup/Gelas
+    `
+  },
+  { 
+    name: "leMineral Galon", 
+    price: 20000, 
+    img: "images/lemineral-galon.jpg", 
+    category: "LEMINERAL", 
+    tambahanBiaya: true,
+    deskripsi: `
+    💧 Tentang Le Minerale – Air Mineral dari Mayora Group
+    Air mineral Le Minerale berasal dari sumber mata air pegunungan yang kaya mineral alami.
+    Dibuat oleh PT Tirta Fresindo Jaya (Mayora Group).
+    Untuk menjaga kualitasnya, Le Minerale menggunakan kemasan segel khusus yang melindungi kesegaran dan kandungan mineral tetap utuh sampai ke tangan konsumen.
+    Kenapa Le Minerale?
+    ✔ Sumber air pegunungan asli
+    ✔ Mengandung mineral alami penting
+    ✔ Rasa lebih segar dan tidak hambar
+    ✔ Dikemas menggunakan teknologi modern
+    ✔ Diproduksi oleh perusahaan besar dan terpercaya
+    `
+  },
+  { 
+    name: "leMineral 330ml", 
+    price: 42000, 
+    img: "images/lemineral-330ml.jpg", 
+    category: "LEMINERAL", 
+    tambahanBiaya: true,
+    deskripsi: `
+    💧 Le Minerale 330 ml Original – Segar, Praktis, dan Kaya Mineral Alami!
+    Setiap botol Le Minerale 330 ml yang kami jual 100% original, Dibuat oleh PT Tirta Fresindo Jaya (Mayora Group).
+    Segel pabrik masih utuh, dan bukan isi ulang atau repacking.
+    sehingga kualitas rasa dan mineralnya tetap terjaga.
+    aminan Keaslian Produk:
+    ✔ Botol original Le Minerale, bukan tiruan
+    ✔ Tutup segel pabrik masih rapat
+    ✔ Tidak pernah dibuka atau diisi ulang
+    ✔ Diproduksi dengan standar higienis modern
+    ✔ 1 Karton isi 24 Botol
+    `
+  },
+  { 
+    name: "leMineral 600ml", 
+    price: 52000, 
+    img: "images/lemineral-600ml.jpg", 
+    category: "LEMINERAL", 
+    tambahanBiaya: true,
+    deskripsi: `
+    💧 Le Minerale 600 ml – Segar, Murni, dan Kaya Mineral Alami!
+    Le Minerale 600 ml adalah pilihan air minum yang pas untuk aktivitas harian, olahraga, sekolah, kantor, dan perjalanan. 
+    Dibuat oleh PT Tirta Fresindo Jaya (Mayora Group), Le Minerale berasal dari sumber mata air pegunungan yang mengandung mineral alami penting bagi tubuh.
+    Produk ini 100% asli, segel botol masih utuh, dan bukan isi ulang, sehingga rasa, kebersihan, dan kandungan mineralnya tetap terjaga.
+    Jaminan Keaslian & Kebersihan:
+    ✔ Segel tutup rapat dan original
+    ✔ Botol bukan repacking atau isi ulang
+    ✔ Diproduksi dengan standar higienis modern
+    ✔ Kualitas terkontrol langsung dari pabrik
+    ✔ 1 Karton isi 24 Botol
+    `
+  },
+  { 
+    name: "Beras 14", 
+    price: 14000, 
+    img: "images/beras-14.jpg", 
+    category: "BERAS", 
+    tambahanBiaya: true,
+    deskripsi:`
+    🌾 Beras Petruk Premium — Pulen, Wangi, dan Berkualitas Tinggi!
+    Beras Petruk dikenal sebagai salah satu beras terbaik pilihan keluarga Indonesia.
+    Teksturnya yang pulen, lembut, tidak mudah basi, dan harum alami membuatnya cocok untuk hidangan sehari-hari, restoran, katering, hingga usaha kuliner.
+    Beras Petruk yang kami jual 100% murni, bukan oplosan, dan bukan dicampur beras lain. Jadi Anda bisa memasak nasi yang enak, pulen, dan konsisten setiap kali.
+    Jaminan Kualitas Produk:
+    ✔ Bersih dan sudah diseleksi
+    ✔ Bukan beras oplosan atau campuran
+    ✔ Tidak mengandung bahan pengawet atau pemutih
+    ✔ Hasil nasi pulen, lembut, dan wangi
+    `
+  },
+  { 
+    name: "Beras 13", 
+    price: 13000, 
+    img: "images/beras-13.jpg", 
+    category: "BERAS", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🌾 Beras Cap 3 Kelapa Solo – Pulen, Bersih, dan Rasa Lebih Nikmat!
+    Beras Cap 3 Kelapa Solo dikenal sebagai beras pilihan keluarga yang memiliki kualitas premium dengan rasa yang khas.
+    Beras ini menghasilkan nasi yang pulen, lembut, wangi alami, dan tidak mudah basi, membuatnya sangat cocok untuk konsumsi harian maupun kebutuhan usaha kuliner.
+    Produk yang kami jual 100% asli, fresh dari karung asli pabrik, dan bukan oplosan atau campuran jenis beras lain.
+    Jaminan Kualitas & Keaslian:
+    ✔ Beras murni Cap 3 Kelapa Solo
+    ✔ Bukan beras oplosan atau dicampur
+    ✔ Bersih, alami tanpa pengawet & pemutih
+    ✔ Hasil nasi pulen, fluffy, dan konsisten
+    `
+  },
+  { 
+    name: "Beras 12", 
+    price: 12000, 
+    img: "images/beras-12.jpg", 
+    category: "BERAS", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🌾 Beras Batik Solo – Pulen, Bersih, dan Kualitas Premium Untuk Keluarga!
+    Beras Batik Solo adalah pilihan tepat bagi Anda yang menginginkan nasi dengan kualitas terbaik.
+    Cocok untuk konsumsi harian, kebutuhan keluarga, restoran, katering, hingga usaha kuliner.
+    Produk ini 100% asli, bukan oplosan, dan diproses dengan standar kebersihan tinggi, sehingga kualitas beras tetap terjaga mulai dari petani,.
+    Jaminan Kualitas & Keaslian:
+    ✔ Beras murni Batik Solo, bukan campuran
+    ✔ Bersih, tanpa batu & kotoran
+    ✔ Tidak memakai pemutih, pewangi, atau bahan kimia
+    ✔ Dipilih dari butiran beras premium
+    `
+  },
     { name: "Telur 1kg", price: 31000, img: "images/telur.jpg", category: "TELUR", tambahanBiaya: true },
     { name: "Minyak Kita 1ltr", price: 20000, img: "images/minyak-1ltr.jpg", category: "MINYAK", tambahanBiaya: true, promo: { qty: 12, price: 217000 } },
     { name: "Minyak Kita 2ltr", price: 40000, img: "images/minyak-1ltr.jpg", category: "MINYAK", tambahanBiaya: true, promo: { qty: 6, price: 217000 } },
@@ -167,7 +304,7 @@ Jaminan Keaslian & Kebersihan:
     { name: "Prima", price: 40000, img: "images/prima-600ml.jpg", category: "PRIMA", tambahanBiaya: true },
     { name: "VIT Mini", price: 21000, img: "images/vit-mini.jpg", category: "VIT", tambahanBiaya: true },
     { name: "VIT Gelas", price: 24000, img: "images/vit-gelas.jpg", category: "VIT", tambahanBiaya: true },
-    { name: "Aqua Isi Ulang", price: 7000, img: "images/aqua-galon.jpg", category: "REFIL", tambahanBiaya: true },
+    { name: "Air Isi Ulang", price: 7000, img: "images/aqua-galon.jpg", category: "REFIL", tambahanBiaya: true },
   ];
 
   // === RENDER PRODUK ===
@@ -880,6 +1017,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
