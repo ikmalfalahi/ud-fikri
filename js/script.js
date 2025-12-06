@@ -351,7 +351,7 @@ if (storeOpen) {
     category: "TEH BOTOL", 
     tambahanBiaya: true,
     deskripsi: `
-    🍹S-TEE Teh Manis – Segar, Nikmat, dan Pas di Kantong! ✨🍹
+    🍹S-TEE Teh Manis – Segar, Nikmat, dan Pas di Kantong!
     S-TEE adalah minuman teh siap minum yang terkenal dengan rasa manisnya yang pas dan kesegarannya yang bikin nagih. 
     Dibuat dari ekstrak teh berkualitas dan diproses dengan standar higienis modern, S-TEE menjadi pilihan favorit untuk menemani aktivitas harian — baik di rumah, sekolah, kantor, maupun perjalanan.
     Produk yang kami jual 100% original, segel pabrik masih rapat.
@@ -362,14 +362,130 @@ if (storeOpen) {
     ✔ Dikemas langsung dengan standar food grade
     `
   },
-    { name: "Teh Botol Sosro", price: 60000, img: "images/teh-botol.jpg", category: "TEH BOTOL", tambahanBiaya: true },
-    { name: "Tissue Paseo", price: 12000, img: "images/paseo.jpg", category: "TISSUE", tambahanBiaya: true, promo: { qty: 3, price: 35000 } },
-    { name: "Tissue Jolly", price: 9000, img: "images/jolly.jpg", category: "TISSUE", tambahanBiaya: true, promo: { qty: 3, price: 25000 } },
-    { name: "Tissue Nice", price: 7000, img: "images/nice.jpg", category: "TISSUE", tambahanBiaya: true, promo: { qty: 3, price: 20000 } },
-    { name: "Prima", price: 40000, img: "images/prima-600ml.jpg", category: "PRIMA", tambahanBiaya: true },
-    { name: "VIT Mini", price: 21000, img: "images/vit-mini.jpg", category: "VIT", tambahanBiaya: true },
-    { name: "VIT Gelas", price: 24000, img: "images/vit-gelas.jpg", category: "VIT", tambahanBiaya: true },
-    { name: "Air Isi Ulang", price: 7000, img: "images/aqua-galon.jpg", category: "REFIL", tambahanBiaya: true },
+  { 
+    name: "Teh Botol Sosro", 
+    price: 60000, 
+    img: "images/teh-botol.jpg", 
+    category: "TEH BOTOL", 
+    tambahanBiaya: true,
+    deskripsi: `
+    "Ahlinya Teh Sejak 1940"
+    Teh Botol Sosro adalah minuman teh siap minum yang dibuat dari daun teh berkualitas tinggi dan gula asli tanpa pemanis buatan. 
+    Dengan cita rasa khas teh Jawa yang segar dan harum, Teh Botol Sosro menjadi pilihan favorit banyak orang sebagai minuman pendamping makan atau pelepas dahaga kapan saja.
+    Teh Botol Sosro tetap menjadi minuman teh nomor satu yang menjaga rasa dan kualitasnya sejak dulu.
+    `
+  },
+  { 
+    name: "Tissue Paseo", 
+    price: 12000, 
+    img: "images/paseo.jpg", 
+    category: "TISSUE", 
+    tambahanBiaya: true, 
+    promo: { qty: 3, price: 35000 },
+    deskripsi: `
+    "Lembut, Higienis, dan Aman untuk Semua Jenis Kulit"
+    Paseo merupakan tisu premium yang dibuat dari 100% serat alami, tanpa bahan pemutih berbahaya, sehingga aman digunakan untuk kulit sensitif, bayi, maupun penggunaan sehari-hari. 
+    Teksturnya lembut, tidak mudah sobek, dan memiliki daya serap tinggi sehingga nyaman digunakan untuk keperluan wajah, tangan, maupun kebutuhan rumah tangga.
+    Passeo 500 Extra 40 adalah pilihan tepat untuk Anda yang menginginkan tisu berkualitas premium dengan isi lebih banyak dan daya tahan lebih kuat.
+    Dengan 3 lapisan (3 Ply), tisu ini terasa lebih tebal namun tetap lembut di kulit, tidak mudah robek, dan memiliki daya serap yang sangat baik.
+    `
+  },
+  { 
+    name: "Tissue Jolly", 
+    price: 9000, 
+    img: "images/jolly.jpg", 
+    category: "TISSUE", 
+    tambahanBiaya: true, 
+    promo: { qty: 3, price: 25000 },
+    deskripsi: `
+    "Lembut, Hemat, dan Serbaguna untuk Kebutuhan Harian"
+    Tissue Jolly 250 Sheet hadir sebagai pilihan tisu yang praktis, lembut, dan ekonomis untuk penggunaan sehari-hari.
+    Dibuat dari bahan yang higienis dan memiliki daya serap baik, Jolly cocok digunakan untuk membersihkan tangan, wajah, dapur, makan, maupun kebutuhan rumah tangga lainnya.
+    Dengan jumlah 250 lembar, tisu ini menawarkan penggunaan lebih lama dan tetap terjangkau. 
+    Teksturnya tidak mudah robek, halus di kulit, dan aman digunakan oleh seluruh anggota keluarga.
+    Cocok digunakan di rumah, mobil, kantor, maupun untuk dibawa bepergian.
+    `
+  },
+  { 
+    name: "Tissue Nice", 
+    price: 7000, 
+    img: "images/nice.jpg", 
+    category: "TISSUE", 
+    tambahanBiaya: true, 
+    promo: { qty: 3, price: 20000 },
+    deskripsi: `
+
+    `
+  },
+  { 
+    name: "Prima", 
+    price: 40000, 
+    img: "images/prima-600ml.jpg", 
+    category: "PRIMA", 
+    tambahanBiaya: true,
+    deskripsi: `
+    "Lembut, Kuat, dan Hemat untuk Penggunaan Sehari-hari"
+    Tissue Nice 360 helai dengan ketebalan 2 ply hadir dengan kualitas lembut dan daya serap yang baik, sehingga nyaman digunakan untuk wajah, tangan, maupun kebutuhan rumah tangga lainnya.
+    Dengan teknologi higienis dan bahan pilihan berkualitas, Nice aman digunakan untuk seluruh anggota keluarga.
+    Isi 360 helai membuatnya lebih awet dan ekonomis, cocok untuk digunakan di rumah, kantor, mobil, atau dibawa bepergian. 
+    Tisu ini tidak mudah sobek saat digunakan, namun tetap menjaga kelembutan sehingga nyaman dan aman untuk kulit sensitif sekalipun.
+    `
+  },
+  { 
+    name: "VIT Mini", 
+    price: 21000, 
+    img: "images/vit-mini.jpg", 
+    category: "VIT", 
+    tambahanBiaya: true,
+    deskripsi: `
+    "Segar, Praktis, dan Terjamin Keasliannya"
+    VIT Mini 220 ml adalah air mineral murni yang berasal dari sumber mata air pegunungan dan diproses menggunakan teknologi penyaringan modern berstandar tinggi.
+    Setiap botol diproduksi sesuai standar BPOM, SNI, dan Halal MUI, sehingga kualitas dan kebersihannya selalu terjaga.
+    Ukuran mini ini sangat praktis untuk kebutuhan sekali minum, cocok untuk anak sekolah, acara hajatan, meeting, perjalanan, ataupun stok di rumah.
+    Jaminan Keaslian & Keamanan Produk:
+    ✔ Segel botol utuh dan resmi pabrik
+    ✔ Bukan oplosan / refill / repack
+    ✔ Tanggal kedaluwarsa jelas & terbaru
+    ✔ Dikemas langsung dengan standar food grade dan higienis
+    ✔ 1 Karton isi 24 Botol\
+    `
+  },
+  { 
+    name: "VIT Gelas", 
+    price: 24000, 
+    img: "images/vit-gelas.jpg", 
+    category: "VIT", 
+    tambahanBiaya: true,
+    deskripsi: `
+    "Praktis, Higienis, dan Siap Saji"
+    VIT Gelas 200 ml adalah air mineral murni yang diproses dengan standar kualitas tinggi untuk memastikan rasa yang segar serta aman dikonsumsi.
+    Dengan ukuran gelas yang praktis, VIT cocok untuk kebutuhan acara, tamu di rumah, kantoran, katering, hingga stok harian.
+    Dikemas menggunakan plastik food grade dan penutup pelindung segel, VIT gelas menawarkan kenyamanan minum tanpa repot membuka botol—tinggal buka segel dan minum.
+    Jaminan Keaslian & Kualitas Produk:
+    ✔ Segel cup utuh & resmi pabrik
+    ✔ Bukan repack / isi ulang
+    ✔ Tanggal kedaluwarsa jelas & terbaru
+    ✔ Diproduksi dengan standar higienis dan food grade
+    ✔ 1 Karton isi 48 Cup/Gelas
+    `
+  },
+  { 
+    name: "Air Isi Ulang", 
+    price: 7000, 
+    img: "images/aqua-galon.jpg", 
+    category: "REFIL", 
+    tambahanBiaya: true,
+    deskripsi: `
+    "Harga Terjangkau, Kualitas Tetap Terjamin"
+    Air isi ulang kami diproses menggunakan sistem filtrasi modern yang terdiri dari penyaringan berlapis, reverse osmosis (RO).
+    Proses ini memastikan air yang dihasilkan jernih, bebas bau, bebas bakteri, dan aman untuk dikonsumsi setiap hari.
+    Cocok untuk kebutuhan rumah tangga, usaha makan/minum, kantor, maupun keperluan harian lainnya — dengan harga ekonomis namun tetap mengutamakan kualitas dan standar kebersihan.
+    Jaminan Kebersihan & Kualitas:
+    ✔ Galon dicuci & disterilkan sebelum diisi
+    ✔ Higienis, aman, dan terjaga dari kontaminasi
+    ✔ Diambil langsung saat pesanan, bukan stok lama
+    `
+  },
   ];
 
   // === RENDER PRODUK ===
@@ -1082,4 +1198,5 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
