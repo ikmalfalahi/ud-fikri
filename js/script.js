@@ -189,9 +189,8 @@ if (storeOpen) {
     category: "LEMINERAL", 
     tambahanBiaya: true,
     deskripsi: `
-    💧 Tentang Le Minerale – Air Mineral dari Mayora Group
+    💧 Le Minerale – Air Mineral dari Mayora Group
     Air mineral Le Minerale berasal dari sumber mata air pegunungan yang kaya mineral alami.
-    Dibuat oleh PT Tirta Fresindo Jaya (Mayora Group).
     Untuk menjaga kualitasnya, Le Minerale menggunakan kemasan segel khusus yang melindungi kesegaran dan kandungan mineral tetap utuh sampai ke tangan konsumen.
     Kenapa Le Minerale?
     ✔ Sumber air pegunungan asli
@@ -228,7 +227,6 @@ if (storeOpen) {
     tambahanBiaya: true,
     deskripsi: `
     💧 Le Minerale 600 ml – Segar, Murni, dan Kaya Mineral Alami!
-    Le Minerale 600 ml adalah pilihan air minum yang pas untuk aktivitas harian, olahraga, sekolah, kantor, dan perjalanan. 
     Dibuat oleh PT Tirta Fresindo Jaya (Mayora Group), Le Minerale berasal dari sumber mata air pegunungan yang mengandung mineral alami penting bagi tubuh.
     Produk ini 100% asli, segel botol masih utuh, dan bukan isi ulang, sehingga rasa, kebersihan, dan kandungan mineralnya tetap terjaga.
     Jaminan Keaslian & Kebersihan:
@@ -248,8 +246,7 @@ if (storeOpen) {
     deskripsi:`
     🌾 Beras Petruk Premium — Pulen, Wangi, dan Berkualitas Tinggi!
     Beras Petruk dikenal sebagai salah satu beras terbaik pilihan keluarga Indonesia.
-    Teksturnya yang pulen, lembut, tidak mudah basi, dan harum alami membuatnya cocok untuk hidangan sehari-hari, restoran, katering, hingga usaha kuliner.
-    Beras Petruk yang kami jual 100% murni, bukan oplosan, dan bukan dicampur beras lain. Jadi Anda bisa memasak nasi yang enak, pulen, dan konsisten setiap kali.
+    Beras Petruk yang kami jual 100% murni, bukan oplosan, dan bukan dicampur beras lain.
     Jaminan Kualitas Produk:
     ✔ Bersih dan sudah diseleksi
     ✔ Bukan beras oplosan atau campuran
@@ -266,7 +263,6 @@ if (storeOpen) {
     deskripsi: `
     🌾 Beras Cap 3 Kelapa Solo – Pulen, Bersih, dan Rasa Lebih Nikmat!
     Beras Cap 3 Kelapa Solo dikenal sebagai beras pilihan keluarga yang memiliki kualitas premium dengan rasa yang khas.
-    Beras ini menghasilkan nasi yang pulen, lembut, wangi alami, dan tidak mudah basi, membuatnya sangat cocok untuk konsumsi harian maupun kebutuhan usaha kuliner.
     Produk yang kami jual 100% asli, fresh dari karung asli pabrik, dan bukan oplosan atau campuran jenis beras lain.
     Jaminan Kualitas & Keaslian:
     ✔ Beras murni Cap 3 Kelapa Solo
@@ -284,8 +280,7 @@ if (storeOpen) {
     deskripsi: `
     🌾 Beras Batik Solo – Pulen, Bersih, dan Kualitas Premium Untuk Keluarga!
     Beras Batik Solo adalah pilihan tepat bagi Anda yang menginginkan nasi dengan kualitas terbaik.
-    Cocok untuk konsumsi harian, kebutuhan keluarga, restoran, katering, hingga usaha kuliner.
-    Produk ini 100% asli, bukan oplosan, dan diproses dengan standar kebersihan tinggi, sehingga kualitas beras tetap terjaga mulai dari petani,.
+    Produk ini 100% asli, bukan oplosan, dan diproses dengan standar kebersihan tinggi, sehingga kualitas beras tetap terjaga mulai dari petani.
     Jaminan Kualitas & Keaslian:
     ✔ Beras murni Batik Solo, bukan campuran
     ✔ Bersih, tanpa batu & kotoran
@@ -315,7 +310,7 @@ if (storeOpen) {
     category: "MINYAK", 
     tambahanBiaya: true, 
     promo: { qty: 12, price: 217000 },
-    desksripsi: `
+    deskripsi: `
     🛢️ Minyak Kita Original – Minyak Goreng Higienis & Lebih Terjamin!
     Minyak Kita merupakan minyak goreng pilihan masyarakat yang diproduksi dengan standar pemerintah dan proses yang higienis.
     Dibuat dari minyak sawit berkualitas dan telah melalui proses penyaringan sehingga menghasilkan minyak yang jernih, tidak mudah hitam, dan hemat digunakan.
@@ -353,7 +348,7 @@ if (storeOpen) {
     deskripsi: `
     🍹S-TEE Teh Manis – Segar, Nikmat, dan Pas di Kantong!
     S-TEE adalah minuman teh siap minum yang terkenal dengan rasa manisnya yang pas dan kesegarannya yang bikin nagih. 
-    Dibuat dari ekstrak teh berkualitas dan diproses dengan standar higienis modern, S-TEE menjadi pilihan favorit untuk menemani aktivitas harian — baik di rumah, sekolah, kantor, maupun perjalanan.
+    Dibuat dari ekstrak teh berkualitas dan diproses dengan standar higienis modern, S-TEE menjadi pilihan favorit untuk menemani aktivitas harian.
     Produk yang kami jual 100% original, segel pabrik masih rapat.
     Jaminan Keaslian:
     ✔ Segel utuh & resmi pabrik
@@ -384,10 +379,10 @@ if (storeOpen) {
     promo: { qty: 3, price: 35000 },
     deskripsi: `
     "Lembut, Higienis, dan Aman untuk Semua Jenis Kulit"
-    Paseo merupakan tisu premium yang dibuat dari 100% serat alami, tanpa bahan pemutih berbahaya, sehingga aman digunakan untuk kulit sensitif, bayi, maupun penggunaan sehari-hari. 
-    Teksturnya lembut, tidak mudah sobek, dan memiliki daya serap tinggi sehingga nyaman digunakan untuk keperluan wajah, tangan, maupun kebutuhan rumah tangga.
-    Passeo 500 Extra 40 adalah pilihan tepat untuk Anda yang menginginkan tisu berkualitas premium dengan isi lebih banyak dan daya tahan lebih kuat.
-    Dengan 3 lapisan (3 Ply), tisu ini terasa lebih tebal namun tetap lembut di kulit, tidak mudah robek, dan memiliki daya serap yang sangat baik.
+    Paseo merupakan tisu premium yang dibuat dari 100% serat alami, tanpa bahan pemutih berbahaya.
+    Teksturnya lembut, tidak mudah sobek, dan memiliki daya serap tinggi sehingga nyaman digunakan untuk keperluan wajah, tangan, dan area sensitif lainya.
+    Passeo 500 Extra 40 sheet adalah pilihan tepat untuk Anda yang menginginkan tisu berkualitas premium dengan isi lebih banyak dan daya tahan lebih kuat.
+    Dengan 3 lapisan (3 Ply), tisu ini terasa lebih tebal namun tetap lembut di kulit.
     `
   },
   { 
@@ -400,10 +395,9 @@ if (storeOpen) {
     deskripsi: `
     "Lembut, Hemat, dan Serbaguna untuk Kebutuhan Harian"
     Tissue Jolly 250 Sheet hadir sebagai pilihan tisu yang praktis, lembut, dan ekonomis untuk penggunaan sehari-hari.
-    Dibuat dari bahan yang higienis dan memiliki daya serap baik, Jolly cocok digunakan untuk membersihkan tangan, wajah, dapur, makan, maupun kebutuhan rumah tangga lainnya.
+    Dibuat dari bahan yang higienis dan memiliki daya serap baik.
     Dengan jumlah 250 lembar, tisu ini menawarkan penggunaan lebih lama dan tetap terjangkau. 
     Teksturnya tidak mudah robek, halus di kulit, dan aman digunakan oleh seluruh anggota keluarga.
-    Cocok digunakan di rumah, mobil, kantor, maupun untuk dibawa bepergian.
     `
   },
   { 
@@ -414,7 +408,11 @@ if (storeOpen) {
     tambahanBiaya: true, 
     promo: { qty: 3, price: 20000 },
     deskripsi: `
-
+    "Lembut, Kuat, dan Hemat untuk Penggunaan Sehari-hari"
+    Tissue Nice 360 helai dengan ketebalan 2 ply hadir dengan kualitas lembut dan daya serap yang baik.
+    Dengan teknologi higienis dan bahan pilihan berkualitas, Nice aman digunakan untuk seluruh anggota keluarga.
+    Isi 360 helai membuatnya lebih awet dan ekonomis, cocok untuk digunakan di rumah, kantor, mobil, atau dibawa bepergian. 
+    Tisu ini tidak mudah sobek saat digunakan, namun tetap menjaga kelembutan sehingga nyaman dan aman untuk kulit sensitif sekalipun.
     `
   },
   { 
@@ -424,11 +422,14 @@ if (storeOpen) {
     category: "PRIMA", 
     tambahanBiaya: true,
     deskripsi: `
-    "Lembut, Kuat, dan Hemat untuk Penggunaan Sehari-hari"
-    Tissue Nice 360 helai dengan ketebalan 2 ply hadir dengan kualitas lembut dan daya serap yang baik, sehingga nyaman digunakan untuk wajah, tangan, maupun kebutuhan rumah tangga lainnya.
-    Dengan teknologi higienis dan bahan pilihan berkualitas, Nice aman digunakan untuk seluruh anggota keluarga.
-    Isi 360 helai membuatnya lebih awet dan ekonomis, cocok untuk digunakan di rumah, kantor, mobil, atau dibawa bepergian. 
-    Tisu ini tidak mudah sobek saat digunakan, namun tetap menjaga kelembutan sehingga nyaman dan aman untuk kulit sensitif sekalipun.
+    "Segar, Terjangkau, dan Aman Dikonsumsi Setiap Hari"
+    Air Mineral Prima 600 ml merupakan pilihan air minum praktis untuk menemani aktivitas harian Anda.
+    Diproses melalui sistem penyaringan modern hingga menghasilkan air yang jernih.
+    Jaminan Keaslian & Kualitas Produk:
+    ✔ Segel botol resmi dan utuh
+    ✔ Tanggal kedaluwarsa jelas & terbaru
+    ✔ Dikemas langsung oleh pabrik dengan standar food grade & higienis
+    ✔ 1 Karton isi 24 Botol
     `
   },
   { 
@@ -440,14 +441,12 @@ if (storeOpen) {
     deskripsi: `
     "Segar, Praktis, dan Terjamin Keasliannya"
     VIT Mini 220 ml adalah air mineral murni yang berasal dari sumber mata air pegunungan dan diproses menggunakan teknologi penyaringan modern berstandar tinggi.
-    Setiap botol diproduksi sesuai standar BPOM, SNI, dan Halal MUI, sehingga kualitas dan kebersihannya selalu terjaga.
     Ukuran mini ini sangat praktis untuk kebutuhan sekali minum, cocok untuk anak sekolah, acara hajatan, meeting, perjalanan, ataupun stok di rumah.
     Jaminan Keaslian & Keamanan Produk:
     ✔ Segel botol utuh dan resmi pabrik
-    ✔ Bukan oplosan / refill / repack
     ✔ Tanggal kedaluwarsa jelas & terbaru
     ✔ Dikemas langsung dengan standar food grade dan higienis
-    ✔ 1 Karton isi 24 Botol\
+    ✔ 1 Karton isi 24 Botol
     `
   },
   { 
@@ -459,11 +458,9 @@ if (storeOpen) {
     deskripsi: `
     "Praktis, Higienis, dan Siap Saji"
     VIT Gelas 200 ml adalah air mineral murni yang diproses dengan standar kualitas tinggi untuk memastikan rasa yang segar serta aman dikonsumsi.
-    Dengan ukuran gelas yang praktis, VIT cocok untuk kebutuhan acara, tamu di rumah, kantoran, katering, hingga stok harian.
     Dikemas menggunakan plastik food grade dan penutup pelindung segel, VIT gelas menawarkan kenyamanan minum tanpa repot membuka botol—tinggal buka segel dan minum.
     Jaminan Keaslian & Kualitas Produk:
     ✔ Segel cup utuh & resmi pabrik
-    ✔ Bukan repack / isi ulang
     ✔ Tanggal kedaluwarsa jelas & terbaru
     ✔ Diproduksi dengan standar higienis dan food grade
     ✔ 1 Karton isi 48 Cup/Gelas
@@ -479,7 +476,7 @@ if (storeOpen) {
     "Harga Terjangkau, Kualitas Tetap Terjamin"
     Air isi ulang kami diproses menggunakan sistem filtrasi modern yang terdiri dari penyaringan berlapis, reverse osmosis (RO).
     Proses ini memastikan air yang dihasilkan jernih, bebas bau, bebas bakteri, dan aman untuk dikonsumsi setiap hari.
-    Cocok untuk kebutuhan rumah tangga, usaha makan/minum, kantor, maupun keperluan harian lainnya — dengan harga ekonomis namun tetap mengutamakan kualitas dan standar kebersihan.
+    Dengan harga ekonomis namun tetap mengutamakan kualitas dan standar kebersihan.
     Jaminan Kebersihan & Kualitas:
     ✔ Galon dicuci & disterilkan sebelum diisi
     ✔ Higienis, aman, dan terjaga dari kontaminasi
@@ -1198,6 +1195,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
