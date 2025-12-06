@@ -238,7 +238,7 @@ if (storeOpen) {
     `
   },
   { 
-    name: "Beras 14", 
+    name: "Beras 14 Petruk", 
     price: 14000, 
     img: "images/beras-14.jpg", 
     category: "BERAS", 
@@ -255,7 +255,7 @@ if (storeOpen) {
     `
   },
   { 
-    name: "Beras 13", 
+    name: "Beras 13 Cap 3 Kelapa Solo", 
     price: 13000, 
     img: "images/beras-13.jpg", 
     category: "BERAS", 
@@ -272,7 +272,7 @@ if (storeOpen) {
     `
   },
   { 
-    name: "Beras 12", 
+    name: "Beras 12 Batik Solo", 
     price: 12000, 
     img: "images/beras-12.jpg", 
     category: "BERAS", 
@@ -1196,5 +1196,6 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
