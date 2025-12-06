@@ -293,10 +293,75 @@ if (storeOpen) {
     ✔ Dipilih dari butiran beras premium
     `
   },
-    { name: "Telur 1kg", price: 31000, img: "images/telur.jpg", category: "TELUR", tambahanBiaya: true },
-    { name: "Minyak Kita 1ltr", price: 20000, img: "images/minyak-1ltr.jpg", category: "MINYAK", tambahanBiaya: true, promo: { qty: 12, price: 217000 } },
-    { name: "Minyak Kita 2ltr", price: 40000, img: "images/minyak-1ltr.jpg", category: "MINYAK", tambahanBiaya: true, promo: { qty: 6, price: 217000 } },
-    { name: "S-TEE", price: 60000, img: "images/s-tee.jpg", category: "TEH BOTOL", tambahanBiaya: true },
+  { 
+    name: "Telur 1kg", 
+    price: 31000, 
+    img: "images/telur.jpg", 
+    category: "TELUR", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🥚 Telur Ayam Segar – Besar, Bersih, & Kualitas Terjamin!
+    Telur ayam adalah bahan pangan serbaguna yang cocok untuk kebutuhan dapur harian, usaha kuliner, bakery, warung makan, hingga stok rumah tangga.
+    Telur yang kami jual 100% fresh, kami hanya menyediakan telur pilihan dari peternak terpercaya, sehingga kualitas, ukuran, dan kesegarannya lebih terjamin.
+    Jaminan Mutu & Keamanan:
+    ✔ Telur selalu fresh, bukan stok lama
+    ✔ Kualitas terjaga dari peternak sampai ke pelanggan
+    `
+  },
+  { 
+    name: "Minyak Kita 1ltr", 
+    price: 20000, 
+    img: "images/minyak-1ltr.jpg", 
+    category: "MINYAK", 
+    tambahanBiaya: true, 
+    promo: { qty: 12, price: 217000 },
+    desksripsi: `
+    🛢️ Minyak Kita Original – Minyak Goreng Higienis & Lebih Terjamin!
+    Minyak Kita merupakan minyak goreng pilihan masyarakat yang diproduksi dengan standar pemerintah dan proses yang higienis.
+    Dibuat dari minyak sawit berkualitas dan telah melalui proses penyaringan sehingga menghasilkan minyak yang jernih, tidak mudah hitam, dan hemat digunakan.
+    Produk yang kami jual 100% resmi dan original.
+    Jaminan Keaslian & Kualitas:
+    ✔ Produk resmi Minyak Kita
+    ✔ Aman, bersih, dan siap pakai
+    ✔ 1 Karton ini 12 pcs = 12 Liter
+    `
+  },
+  { 
+    name: "Minyak Kita 2ltr", 
+    price: 40000, 
+    img: "images/minyak-1ltr.jpg", 
+    category: "MINYAK", 
+    tambahanBiaya: true, 
+    promo: { qty: 6, price: 217000 },
+    deskripsi: `
+    🛢️ Minyak Kita Original – Minyak Goreng Higienis & Lebih Terjamin!
+    Minyak Kita merupakan minyak goreng pilihan masyarakat yang diproduksi dengan standar pemerintah dan proses yang higienis.
+    Dibuat dari minyak sawit berkualitas dan telah melalui proses penyaringan sehingga menghasilkan minyak yang jernih, tidak mudah hitam, dan hemat digunakan.
+    Produk yang kami jual 100% resmi dan original.
+    Jaminan Keaslian & Kualitas:
+    ✔ Produk resmi Minyak Kita
+    ✔ Aman, bersih, dan siap pakai
+    ✔ 1 Karton ini 6 pcs = 12 Liter
+    `
+  },
+  { 
+    name: "S-TEE", 
+    price: 60000, 
+    img: "images/s-tee.jpg", 
+    category: "TEH BOTOL", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🍹S-TEE Teh Manis – Segar, Nikmat, dan Pas di Kantong! ✨🍹
+    S-TEE adalah minuman teh siap minum yang terkenal dengan rasa manisnya yang pas dan kesegarannya yang bikin nagih. 
+    Dibuat dari ekstrak teh berkualitas dan diproses dengan standar higienis modern, S-TEE menjadi pilihan favorit untuk menemani aktivitas harian — baik di rumah, sekolah, kantor, maupun perjalanan.
+    Produk yang kami jual 100% original, segel pabrik masih rapat.
+    Jaminan Keaslian:
+    ✔ Segel utuh & resmi pabrik
+    ✔ Bukan oplosan / repack
+    ✔ Tanggal kedaluwarsa jelas & aman dikonsumsi
+    ✔ Dikemas langsung dengan standar food grade
+    `
+  },
     { name: "Teh Botol Sosro", price: 60000, img: "images/teh-botol.jpg", category: "TEH BOTOL", tambahanBiaya: true },
     { name: "Tissue Paseo", price: 12000, img: "images/paseo.jpg", category: "TISSUE", tambahanBiaya: true, promo: { qty: 3, price: 35000 } },
     { name: "Tissue Jolly", price: 9000, img: "images/jolly.jpg", category: "TISSUE", tambahanBiaya: true, promo: { qty: 3, price: 25000 } },
@@ -1017,13 +1082,4 @@ if (document.getElementById("user-map")) {
 }
 
 });
-
-
-
-
-
-
-
-
-
 
