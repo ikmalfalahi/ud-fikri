@@ -490,6 +490,7 @@ if (storeOpen) {
     const container = document.getElementById("products-container");
     container.innerHTML = "";
     list.forEach((p, idx) => {
+      const realIndex = products.indexOf(p);
       const div = document.createElement("div");
       div.className = "product-card";
 
@@ -500,7 +501,7 @@ if (storeOpen) {
       }
 
       div.innerHTML = `
-        <img src="${p.img}" alt="${p.name}" class="product-image" onclick="showProductDetail(${idx})">
+        <img src="${p.img}" alt="${p.name}" class="product-image" onclick="showProductDetail(${realIndex})">
         <h3>${p.name}</h3>
         <p>Rp ${p.price.toLocaleString()}</p>
         ${promoNote}
@@ -1195,4 +1196,5 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
