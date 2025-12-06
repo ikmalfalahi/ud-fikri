@@ -255,7 +255,7 @@ if (storeOpen) {
     `
   },
   { 
-    name: "Beras 13 Cap 3 Kelapa Solo", 
+    name: "Beras 13 Cap Kelapa 3", 
     price: 13000, 
     img: "images/beras-13.jpg", 
     category: "BERAS", 
@@ -1196,6 +1196,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
