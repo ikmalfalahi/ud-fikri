@@ -70,7 +70,7 @@ if (storeOpen) {
   category: "GAS ELPIJI",
   tambahanBiaya: true,
   deskripsi: `
-  Gas Elpiji 3 Kg resmi Pertamina - aman & berkualitas.
+  🔥 Gas Elpiji 3 Kg resmi Pertamina asli - aman & berkualitas.
   Jaminan Kualitas:
   ✔ Segel resmi Pertamina utuh  
   ✔ Berat & tekanan gas sesuai standar  
@@ -85,7 +85,7 @@ if (storeOpen) {
   category: "GAS ELPIJI", 
   tambahanBiaya: true, 
   deskripsi: `
-  Gas Elpiji 12 Kg asli, segel resmi, dan tanpa pengurangan isi.
+  🔥 Gas Elpiji 12 Kg resmi pertamina asli, segel resmi, dan tanpa pengurangan isi.
   Jaminan Kualitas:
   ✔ Segel asli Pertamina masih utuh
   ✔ Bukan isi ulang ilegal
@@ -1198,5 +1198,6 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
