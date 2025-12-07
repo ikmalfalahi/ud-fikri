@@ -890,19 +890,11 @@ const paymentInfo = document.getElementById("payment-info");
 function showPaymentToast(text) {
   const t = document.getElementById("payment-toast");
 
-  // pastikan benar-benar OFF sebelum dipakai
   t.classList.remove("show");
-
-  // restart animasi
-  void t.offsetWidth;
-
-  // isi teks baru
+  void t.offsetWidth; // restart animasi
   t.innerText = text;
-
-  // tampilkan toast
   t.classList.add("show");
 
-  // auto hilang
   setTimeout(() => {
     t.classList.remove("show");
   }, 2500);
@@ -928,54 +920,68 @@ function downloadQRIS() {
   showPaymentToast("QRIS berhasil di-download");
 }
 
-// expose ke global
 window.copyRekening = copyRekening;
 window.downloadQRIS = downloadQRIS;
 
 // === EVENT PEMILIHAN METODE PEMBAYARAN ===
 paymentSelect.addEventListener("change", () => {
   const method = paymentSelect.value;
-  paymentInfo.innerHTML = "";
 
-  if (method === "QRIS") {
-    paymentInfo.innerHTML = `
-      <h3>QRIS</h3>
-      <p>Silakan scan atau download QR Code berikut:</p>
-      <div style="text-align:center;">
-      <img src="images/qris.png" alt="QRIS" 
-           style="max-width:200px;display:block;margin:10px auto;">
-      <button onclick="downloadQRIS()" 
-              style="margin-top:10px;padding:8px 12px;border:none;background:#f0f0f0;color:#000;border-radius:6px;cursor:pointer;">
-        Download
-      </button>
-    `;
-  }
+  // === TAMBAHAN: reset animasi ===
+  paymentInfo.classList.remove("slide-show");
+  paymentInfo.classList.add("slide-anim");
 
-  else if (method === "Transfer") {
-    const rekening = "1270012190490";
-    paymentInfo.innerHTML = `
-      <h3>Transfer Bank</h3>
-      <p>Silakan transfer ke rekening berikut:</p>
-      <strong>Bank Mandiri</strong><br>
-      No. Rekening: 
-      <span style="font-size:16px;color:#000;font-weight:bold;">
-        ${rekening}
-      </span>
-      <button onclick="copyRekening('${rekening}')" 
-              style="margin-left:10px;padding:5px 10px;border:none;background:#f0f0f0;color:#000;border-radius:6px;cursor:pointer;">
-        Salin
-      </button>
-      <br>
-      a.n <em>Fikriatur Rizky</em>
-    `;
-  }
+  setTimeout(() => {
+    paymentInfo.innerHTML = "";
 
-  else if (method === "Tunai/Cash") {
-    paymentInfo.innerHTML = `
-      <h3>Tunai/Cash</h3>
-      <p>Bayar setelah diantar (Tunai/Cash)</p>
-    `;
-  }
+    if (method === "QRIS") {
+      paymentInfo.innerHTML = `
+        <h3>QRIS</h3>
+        <p>Silakan scan atau download QR Code berikut:</p>
+        <div style="text-align:center;">
+          <img src="images/qris.png" alt="QRIS" 
+            style="max-width:200px;display:block;margin:10px auto;">
+
+          <button onclick="downloadQRIS()" 
+            style="margin-top:10px;padding:8px 12px;border:none;background:#f0f0f0;color:#000;border-radius:6px;cursor:pointer;">
+            Download
+          </button>
+        </div>
+      `;
+    }
+
+    else if (method === "Transfer") {
+      const rekening = "1270012190490";
+      paymentInfo.innerHTML = `
+        <h3>Transfer Bank</h3>
+        <p>Silakan transfer ke rekening berikut:</p>
+        <strong>Bank Mandiri</strong><br>
+        No. Rekening: 
+        <span style="font-size:16px;color:#000;font-weight:bold;">
+          ${rekening}
+        </span>
+        <button onclick="copyRekening('${rekening}')" 
+          style="margin-left:10px;padding:5px 10px;border:none;background:#f0f0f0;color:#000;border-radius:6px;cursor:pointer;">
+          Salin
+        </button>
+        <br>
+        a.n <em>Fikriatur Rizky</em>
+      `;
+    }
+
+    else if (method === "Tunai/Cash") {
+      paymentInfo.innerHTML = `
+        <h3>Tunai/Cash</h3>
+        <p>Bayar setelah diantar (Tunai/Cash)</p>
+      `;
+    }
+
+    // === TAMBAHAN: jalankan animasi slide ===
+    setTimeout(() => {
+      paymentInfo.classList.add("slide-show");
+    }, 15);
+
+  }, 5);
 });
 
   // === CHECKOUT ===
@@ -1262,7 +1268,3 @@ if (document.getElementById("user-map")) {
 }
 
 });
-
-
-
-
