@@ -941,6 +941,7 @@ paymentSelect.addEventListener("change", () => {
     paymentInfo.innerHTML = `
       <h3>QRIS</h3>
       <p>Silakan scan atau download QR Code berikut:</p>
+      <div style="text-align:center;">
       <img src="images/qris.png" alt="QRIS" 
            style="max-width:200px;display:block;margin:10px auto;">
       <button onclick="downloadQRIS()" 
@@ -1261,6 +1262,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
