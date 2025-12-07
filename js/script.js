@@ -883,34 +883,79 @@ document.getElementById("clear-cart").addEventListener("click", () => {
 };
 
   // === METODE PEMBAYARAN ===
-  const paymentSelect = document.getElementById("payment-method");
-  const paymentInfo = document.getElementById("payment-info");
+const paymentSelect = document.getElementById("payment-method");
+const paymentInfo = document.getElementById("payment-info");
 
-  paymentSelect.addEventListener("change", () => {
-    let method = paymentSelect.value;
-    paymentInfo.innerHTML = "";
+// === TOAST ===
+function showToast(text) {
+  const t = document.getElementById("toast");
+  t.innerText = text;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2000);
+}
 
-    if (method === "QRIS") {
-      paymentInfo.innerHTML = `
-        <h3>QRIS</h3>
-        <p>Silakan scan QR Code berikut:</p>
-        <img src="images/qris.png" alt="QRIS" style="max-width:200px;display:block;margin:10px auto;">
-      `;
-    } else if (method === "Transfer") {
-      paymentInfo.innerHTML = `
-        <h3>Transfer Bank</h3>
-        <p>Silakan transfer ke rekening berikut:</p>
-        <strong>Bank Mandiri</strong><br>
-        No. Rekening: <span style="font-size:18px;color:#2a9d8f;">1270012190490</span><br>
-        a.n <em>Fikriatur Rizky</em>
-      `;
-    } else if (method === "Tunai/Cash") {
-      paymentInfo.innerHTML = `
-        <h3>Tunai/Cash</h3>
-        <p>Bayar setelah diantar (Tunai/Cash)</p>
-      `;
-    }
-  });
+// === COPY REKENING ===
+function copyRekening(num) {
+  navigator.clipboard.writeText(num)
+    .then(() => showToast("Nomor rekening disalin"))
+    .catch(() => showToast("Gagal menyalin"));
+}
+
+// === DOWNLOAD QRIS ===
+function downloadQRIS() {
+  const imgSrc = "images/qris.png";
+  const link = document.createElement("a");
+  link.href = imgSrc;
+  link.download = "QRIS-UD-Fikri.png";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  showToast("QRIS berhasil di-download");
+}
+
+paymentSelect.addEventListener("change", () => {
+  let method = paymentSelect.value;
+  paymentInfo.innerHTML = "";
+
+  if (method === "QRIS") {
+    paymentInfo.innerHTML = `
+      <h3>QRIS</h3>
+      <p>Silakan scan atau download QR Code berikut:</p>
+      <img src="images/qris.png" alt="QRIS" 
+           style="max-width:200px;display:block;margin:10px auto;">
+      <button onclick="downloadQRIS()" 
+              style="margin-top:10px;padding:8px 12px;border:none;background:#2a9d8f;color:#fff;border-radius:6px;cursor:pointer;">
+        Download QRIS
+      </button>
+    `;
+  } 
+  
+  else if (method === "Transfer") {
+    const rekening = "1270012190490";
+    paymentInfo.innerHTML = `
+      <h3>Transfer Bank</h3>
+      <p>Silakan transfer ke rekening berikut:</p>
+      <strong>Bank Mandiri</strong><br>
+      No. Rekening: 
+      <span style="font-size:18px;color:#2a9d8f;font-weight:bold;">
+        ${rekening}
+      </span>
+      <button onclick="copyRekening('${rekening}')" 
+              style="margin-left:10px;padding:5px 10px;border:none;background:#2196f3;color:#fff;border-radius:6px;cursor:pointer;">
+        Salin
+      </button>
+      <br>
+      a.n <em>Fikriatur Rizky</em>
+    `;
+  } 
+  
+  else if (method === "Tunai/Cash") {
+    paymentInfo.innerHTML = `
+      <h3>Tunai/Cash</h3>
+      <p>Bayar setelah diantar (Tunai/Cash)</p>
+    `;
+  }
+});
 
   // === CHECKOUT ===
 document.getElementById("checkout").addEventListener("click", () => {
@@ -1196,6 +1241,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
