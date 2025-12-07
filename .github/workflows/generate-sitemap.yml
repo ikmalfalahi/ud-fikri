@@ -1,0 +1,61 @@
+name: Generate Sitemap
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install sitemap-generator
+        run: npm install -g sitemap-generator-cli
+
+      - name: Generate sitemap
+        run: |
+          sitemap-generator https://ikmalfalahi.github.io/tokosembakoUD-FIKRI/ \
+          --exclude-images \
+          --max-depth 0 \
+          --filepath sitemap.xml \
+          --change-frequency weekly \
+          --priority-map '{"*": 0.8}'
+
+      - name: Upload sitemap artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sitemap
+          path: sitemap.xml
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download generated sitemap
+        uses: actions/download-artifact@v4
+        with:
+          name: sitemap
+
+      - name: Move sitemap to root
+        run: mv sitemap.xml ./sitemap.xml
+
+      - name: Commit & push updated sitemap
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add sitemap.xml
+          git commit -m "Update sitemap"
+          git push
