@@ -944,8 +944,8 @@ paymentSelect.addEventListener("change", () => {
       <img src="images/qris.png" alt="QRIS" 
            style="max-width:200px;display:block;margin:10px auto;">
       <button onclick="downloadQRIS()" 
-              style="margin-top:10px;padding:8px 12px;border:none;background:#2a9d8f;color:#fff;border-radius:6px;cursor:pointer;">
-        Download QRIS
+              style="margin-top:10px;padding:8px 12px;border:none;background:#f0f0f0;color:#000;border-radius:6px;cursor:pointer;">
+        Download
       </button>
     `;
   }
@@ -957,11 +957,11 @@ paymentSelect.addEventListener("change", () => {
       <p>Silakan transfer ke rekening berikut:</p>
       <strong>Bank Mandiri</strong><br>
       No. Rekening: 
-      <span style="font-size:18px;color:#2a9d8f;font-weight:bold;">
+      <span style="font-size:16px;color:#000;font-weight:bold;">
         ${rekening}
       </span>
       <button onclick="copyRekening('${rekening}')" 
-              style="margin-left:10px;padding:5px 10px;border:none;background:#2196f3;color:#fff;border-radius:6px;cursor:pointer;">
+              style="margin-left:10px;padding:5px 10px;border:none;background:#f0f0f0;color:#000;border-radius:6px;cursor:pointer;">
         Salin
       </button>
       <br>
@@ -1261,5 +1261,6 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
