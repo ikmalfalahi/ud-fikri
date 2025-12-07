@@ -651,10 +651,12 @@ label[for="customer-address"] {
   font-size: 14px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transform: translateY(-20px);   /* tambahkan ini agar toast tersembunyi */
+  transition: opacity 0.4s ease, transform 0.4s ease;
   z-index: 9999;
 }
 
 .toast.show {
   opacity: 1;
+  transform: translateY(0);       /* animasi masuk */
 }
