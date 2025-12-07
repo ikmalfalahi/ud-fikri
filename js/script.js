@@ -1262,10 +1262,3 @@ if (document.getElementById("user-map")) {
 
 });
 
-
-
-
-
-
-
-
