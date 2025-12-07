@@ -230,11 +230,13 @@
     <option value="Tunai/Cash">Tunai/Cash</option>
   </select>
 
-  <div id="payment-info" class="payment-info"></div>
+  <!-- Tempat konten metode (JS akan isi dan beri animasi slide) -->
+  <div id="payment-info" class="payment-info" aria-live="polite"></div>
 </div>
 
-<!-- Toast notif -->
-<div id="payment-toast" class="payment-toast"></div>
+<!-- Toast notifikasi payment (di kanan atas) -->
+<!-- Pastikan ini di body, tapi di luar payment-section -->
+<div id="payment-toast" class="payment-toast" role="status" aria-hidden="true"></div>
 
   <button id="checkout">Pesan Sekarang</button>
 </section>
@@ -307,6 +309,7 @@
 
 </body>
 </html>
+
 
 
 
