@@ -644,7 +644,7 @@ label[for="customer-address"] {
   position: fixed;
   top: 20px;
   right: 20px;
-  background: #333;
+  background: linear-gradient(135deg, #00bfff, #1e90ff);
   color: #fff;
   padding: 12px 20px;
   border-radius: 8px;
@@ -661,3 +661,4 @@ label[for="customer-address"] {
   transform: translateY(0);
   pointer-events: auto;
 }
+
