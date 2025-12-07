@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ud-fikri.vercel.app/sitemap.xml
