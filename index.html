@@ -222,16 +222,19 @@
   <input type="text" id="customer-address" placeholder="Contoh: Jl. Melati No. 10">
 
   <div id="payment-section">
-    <label for="payment-method">Metode Pembayaran:</label>
-    <select id="payment-method">
-      <option value="">-- Pilih --</option>
-      <option value="Transfer">Transfer Bank</option>
-      <option value="QRIS">QRIS</option>
-      <option value="Tunai/Cash">Tunai/Cash</option>
-    </select>
+  <label for="payment-method">Metode Pembayaran:</label>
+  <select id="payment-method">
+    <option value="">-- Pilih --</option>
+    <option value="Transfer">Transfer Bank</option>
+    <option value="QRIS">QRIS</option>
+    <option value="Tunai/Cash">Tunai/Cash</option>
+  </select>
 
-    <div id="payment-info" class="payment-info"></div>
-  </div>
+  <div id="payment-info" class="payment-info"></div>
+</div>
+
+<!-- Toast notif -->
+<div id="toast" class="toast"></div>
 
   <button id="checkout">Pesan Sekarang</button>
 </section>
@@ -304,5 +307,6 @@
 
 </body>
 </html>
+
 
 
