@@ -886,20 +886,20 @@ document.getElementById("clear-cart").addEventListener("click", () => {
 const paymentSelect = document.getElementById("payment-method");
 const paymentInfo = document.getElementById("payment-info");
 
-// === TOAST (kanan atas, auto hilang) ===
-function showToast(text) {
-  const t = document.getElementById("toast");
+// === PAYMENT TOAST (kanan atas, auto hilang) ===
+function showPaymentToast(text) {
+  const t = document.getElementById("payment-toast");
 
-  // pastikan toast benar-benar OFF sebelum dipakai
+  // pastikan benar-benar OFF sebelum dipakai
   t.classList.remove("show");
 
-  // reset animasi
+  // restart animasi
   void t.offsetWidth;
 
-  // isi teks
+  // isi teks baru
   t.innerText = text;
 
-  // tampil
+  // tampilkan toast
   t.classList.add("show");
 
   // auto hilang
@@ -911,8 +911,8 @@ function showToast(text) {
 // === COPY REKENING ===
 function copyRekening(num) {
   navigator.clipboard.writeText(num)
-    .then(() => showToast("Nomor rekening disalin"))
-    .catch(() => showToast("Gagal menyalin"));
+    .then(() => showPaymentToast("Nomor rekening disalin"))
+    .catch(() => showPaymentToast("Gagal menyalin"));
 }
 
 // === DOWNLOAD QRIS ===
@@ -925,7 +925,7 @@ function downloadQRIS() {
   link.click();
   document.body.removeChild(link);
 
-  showToast("QRIS berhasil di-download");
+  showPaymentToast("QRIS berhasil di-download");
 }
 
 // expose ke global
@@ -934,7 +934,7 @@ window.downloadQRIS = downloadQRIS;
 
 // === EVENT PEMILIHAN METODE PEMBAYARAN ===
 paymentSelect.addEventListener("change", () => {
-  let method = paymentSelect.value;
+  const method = paymentSelect.value;
   paymentInfo.innerHTML = "";
 
   if (method === "QRIS") {
@@ -1261,4 +1261,5 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
