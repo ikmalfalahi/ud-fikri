@@ -221,7 +221,7 @@
   <label for="customer-address"><i class="fas fa-map-marker-alt"></i> Alamat</label>
   <input type="text" id="customer-address" placeholder="Contoh: Jl. Melati No. 10">
 
-  <div id="payment-section">
+ <div id="payment-section">
   <label for="payment-method">Metode Pembayaran:</label>
   <select id="payment-method">
     <option value="">-- Pilih --</option>
@@ -230,13 +230,11 @@
     <option value="Tunai/Cash">Tunai/Cash</option>
   </select>
 
-  <!-- Tempat konten metode (JS akan isi dan beri animasi slide) -->
-  <div id="payment-info" class="payment-info" aria-live="polite"></div>
+  <div id="payment-info" class="payment-info"></div>
 </div>
 
-<!-- Toast notifikasi payment (di kanan atas) -->
-<!-- Pastikan ini di body, tapi di luar payment-section -->
-<div id="payment-toast" class="payment-toast" role="status" aria-hidden="true"></div>
+<!-- Toast notif -->
+<div id="payment-toast" class="payment-toast"></div>
 
   <button id="checkout">Pesan Sekarang</button>
 </section>
@@ -309,6 +307,7 @@
 
 </body>
 </html>
+
 
 
 
