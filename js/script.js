@@ -882,16 +882,24 @@ document.getElementById("clear-cart").addEventListener("click", () => {
   renderCart();
 };
 
-  // === METODE PEMBAYARAN ===
+// === METODE PEMBAYARAN ===
 const paymentSelect = document.getElementById("payment-method");
 const paymentInfo = document.getElementById("payment-info");
 
-// === TOAST ===
+// === TOAST (kanan atas, auto hilang) ===
 function showToast(text) {
   const t = document.getElementById("toast");
   t.innerText = text;
+
+  // reset dulu biar animasi bisa dipakai berulang
+  t.classList.remove("show");
+  void t.offsetWidth; // trick untuk restart animation
+
   t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 2000);
+
+  setTimeout(() => {
+    t.classList.remove("show");
+  }, 2500);
 }
 
 // === COPY REKENING ===
@@ -910,6 +918,7 @@ function downloadQRIS() {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+
   showToast("QRIS berhasil di-download");
 }
 
@@ -917,6 +926,7 @@ function downloadQRIS() {
 window.copyRekening = copyRekening;
 window.downloadQRIS = downloadQRIS;
 
+// === EVENT PEMILIHAN METODE PEMBAYARAN ===
 paymentSelect.addEventListener("change", () => {
   let method = paymentSelect.value;
   paymentInfo.innerHTML = "";
@@ -932,8 +942,8 @@ paymentSelect.addEventListener("change", () => {
         Download QRIS
       </button>
     `;
-  } 
-  
+  }
+
   else if (method === "Transfer") {
     const rekening = "1270012190490";
     paymentInfo.innerHTML = `
@@ -951,8 +961,8 @@ paymentSelect.addEventListener("change", () => {
       <br>
       a.n <em>Fikriatur Rizky</em>
     `;
-  } 
-  
+  }
+
   else if (method === "Tunai/Cash") {
     paymentInfo.innerHTML = `
       <h3>Tunai/Cash</h3>
@@ -1245,6 +1255,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
