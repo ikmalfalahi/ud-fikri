@@ -913,6 +913,10 @@ function downloadQRIS() {
   showToast("QRIS berhasil di-download");
 }
 
+// ❗ WAJIB: expose ke global supaya onclick di HTML bisa memanggilnya
+window.copyRekening = copyRekening;
+window.downloadQRIS = downloadQRIS;
+
 paymentSelect.addEventListener("change", () => {
   let method = paymentSelect.value;
   paymentInfo.innerHTML = "";
@@ -1241,6 +1245,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
