@@ -889,14 +889,20 @@ const paymentInfo = document.getElementById("payment-info");
 // === TOAST (kanan atas, auto hilang) ===
 function showToast(text) {
   const t = document.getElementById("toast");
+
+  // pastikan toast benar-benar OFF sebelum dipakai
+  t.classList.remove("show");
+
+  // reset animasi
+  void t.offsetWidth;
+
+  // isi teks
   t.innerText = text;
 
-  // reset dulu biar animasi bisa dipakai berulang
-  t.classList.remove("show");
-  void t.offsetWidth; // trick untuk restart animation
-
+  // tampil
   t.classList.add("show");
 
+  // auto hilang
   setTimeout(() => {
     t.classList.remove("show");
   }, 2500);
@@ -922,7 +928,7 @@ function downloadQRIS() {
   showToast("QRIS berhasil di-download");
 }
 
-// ❗ WAJIB: expose ke global supaya onclick di HTML bisa memanggilnya
+// expose ke global
 window.copyRekening = copyRekening;
 window.downloadQRIS = downloadQRIS;
 
@@ -1255,6 +1261,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
