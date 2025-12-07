@@ -639,8 +639,8 @@ label[for="customer-address"] {
   filter: blur(2px);
 }
 
-/* Toast Notifikasi Payment */
-.toast {
+/* Payment Toast (khusus copy rekening & download QRIS) */
+.payment-toast {
   position: fixed;
   top: 20px;
   right: 20px;
@@ -651,12 +651,13 @@ label[for="customer-address"] {
   font-size: 14px;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-20px);   /* tambahkan ini agar toast tersembunyi */
+  transform: translateY(-20px);
   transition: opacity 0.4s ease, transform 0.4s ease;
   z-index: 9999;
 }
 
-.toast.show {
+.payment-toast.show {
   opacity: 1;
-  transform: translateY(0);       /* animasi masuk */
+  transform: translateY(0);
+  pointer-events: auto;
 }
