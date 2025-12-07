@@ -639,89 +639,25 @@ label[for="customer-address"] {
   filter: blur(2px);
 }
 
-/* PAYMENT PANEL ANIM (slide down) */
-.payment-info .payment-panel {
-  background: white;
-  padding: 12px;
-  border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  overflow: hidden;
-  transform-origin: top;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 320ms ease, transform 320ms ease;
-}
-
-/* kelas aktif saat masuk */
-.payment-info .payment-panel.enter {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* kelas saat keluar (bisa dipakai kalau ingin) */
-.payment-info .payment-panel.exit {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-/* khusus layout QRIS: gambar terpusat, tombol di tengah bawah */
-.payment-info .qris-wrap {
-  text-align: center;
-}
-.payment-info .qris-wrap img {
-  max-width: 200px;
-  display: block;
-  margin: 10px auto 6px;
-}
-.payment-info .qris-wrap .download-btn {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  background: linear-gradient(90deg,#1e90ff,#00bfff);
-  color: white;
-}
-
-/* gaya tombol salin agar konsisten */
-.payment-info .copy-btn {
-  display: inline-block;
-  margin-left: 10px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  background: #1f2937; /* gelap */
-  color: #fff;
-  font-weight: 600;
-}
-
-/* PAYMENT TOAST (kanan atas) */
-#payment-toast.payment-toast {
+/* Payment Toast (khusus copy rekening & download QRIS) */
+.payment-toast {
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 12000;
-  min-width: 180px;
-  max-width: 320px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  background: linear-gradient(90deg,#111827,#1e293b);
+  background: linear-gradient(135deg, #00bfff, #1e90ff);
   color: #fff;
-  box-shadow: 0 10px 30px rgba(2,6,23,0.35);
+  padding: 12px 20px;
+  border-radius: 8px;
   font-size: 14px;
-  font-weight: 600;
   opacity: 0;
-  transform: translateY(-6px) scale(0.995);
-  transition: opacity 260ms ease, transform 260ms ease;
   pointer-events: none;
+  transform: translateY(-20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 9999;
 }
 
-/* tampil */
-#payment-toast.payment-toast.show {
+.payment-toast.show {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
   pointer-events: auto;
 }
