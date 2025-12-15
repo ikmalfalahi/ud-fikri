@@ -290,7 +290,7 @@ if (storeOpen) {
   },
   { 
     name: "Telur 1kg", 
-    price: 31000, 
+    price: 32000, 
     img: "images/telur.jpg", 
     category: "TELUR", 
     tambahanBiaya: true,
@@ -1260,5 +1260,6 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
