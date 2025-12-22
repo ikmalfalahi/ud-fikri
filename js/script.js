@@ -288,6 +288,40 @@ if (storeOpen) {
     ✔ Dipilih dari butiran beras premium
     `
   },
+    { 
+    name: "Tepung Terigu (Lencana Merah)", 
+    price: 10000, 
+    img: "images/tepung-terigu.jpg", 
+    category: "TEPUNG", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🌾 Tepung Terigu Lencana Merah – Hasil Adonan Lebih Lembut & Mengembang Sempurna!
+    Tepung Terigu Lencana Merah dari Bogasari adalah pilihan tepat untuk kebutuhan dapur dan usaha Anda.
+    Terbuat dari gandum pilihan berkualitas tinggi, tepung ini menghasilkan adonan yang lembut, elastis, dan mudah diolah untuk berbagai jenis makanan.
+    Jaminan Kualitas & Keaslian:
+    ✔ Produk asli Bogasari
+    ✔ Terbuat dari gandum pilihan berkualitas
+    ✔ Tekstur halus & bersih
+    ✔ Aman & higienis, diproses dengan standar pabrik modern
+    `
+  },
+     { 
+    name: "Gula Pasir (Kristal) GMP", 
+    price: 19000, 
+    img: "images/gula-pasir.jpg", 
+    category: "GULA", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🍬 Gula Pasir Kristal GMP – Manis Alami, Bersih, dan Berkualitas!
+    Gula Pasir Kristal GMP merupakan pilihan tepat untuk kebutuhan rumah tangga maupun usaha.
+    Dihasilkan dari tebu pilihan dan diproses dengan teknologi modern, menghasilkan kristal gula yang putih, bersih, dan manis alami.
+    Jaminan Kualitas & Keaslian:
+    ✔ Gula pasir kristal GMP asli
+    ✔ Manis alami, mudah larut
+    ✔ Tanpa campuran & aman dikonsumsi
+    ✔ Diproses sesuai standar mutu pangan
+    `
+  },
   { 
     name: "Telur 1kg", 
     price: 32000, 
@@ -1260,6 +1294,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
