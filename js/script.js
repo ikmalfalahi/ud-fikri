@@ -519,23 +519,23 @@ if (storeOpen) {
     ✔ 1 Karton isi 24 Botol
     `
   },
-  { 
-    name: "VIT Mini", 
-    price: 21000, 
-    img: "images/vit-mini.jpg", 
-    category: "VIT", 
-    tambahanBiaya: true,
-    deskripsi: `
-    "Segar, Praktis, dan Terjamin Keasliannya"
-    VIT Mini 220 ml adalah air mineral murni yang berasal dari sumber mata air pegunungan dan diproses menggunakan teknologi penyaringan modern berstandar tinggi.
-    Ukuran mini ini sangat praktis untuk kebutuhan sekali minum, cocok untuk anak sekolah, acara hajatan, meeting, perjalanan, ataupun stok di rumah.
-    Jaminan Keaslian & Keamanan Produk:
-    ✔ Segel botol utuh dan resmi pabrik
-    ✔ Tanggal kedaluwarsa jelas & terbaru
-    ✔ Dikemas langsung dengan standar food grade dan higienis
-    ✔ 1 Karton isi 24 Botol
-    `
-  },
+  //{ 
+    //name: "VIT Mini", 
+    //price: 21000, 
+    //img: "images/vit-mini.jpg", 
+    //category: "VIT", 
+    //tambahanBiaya: true,
+    //deskripsi: `
+    //"Segar, Praktis, dan Terjamin Keasliannya"
+    //VIT Mini 220 ml adalah air mineral murni yang berasal dari sumber mata air pegunungan dan diproses menggunakan teknologi penyaringan modern berstandar tinggi.
+    //Ukuran mini ini sangat praktis untuk kebutuhan sekali minum, cocok untuk anak sekolah, acara hajatan, meeting, perjalanan, ataupun stok di rumah.
+    //Jaminan Keaslian & Keamanan Produk:
+    //✔ Segel botol utuh dan resmi pabrik
+    //✔ Tanggal kedaluwarsa jelas & terbaru
+    //✔ Dikemas langsung dengan standar food grade dan higienis
+    //✔ 1 Karton isi 24 Botol
+    //`
+  //},
   { 
     name: "VIT Gelas", 
     price: 24000, 
@@ -1347,6 +1347,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
