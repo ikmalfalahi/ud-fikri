@@ -182,6 +182,24 @@ if (storeOpen) {
     ✔ 1 Karton isi 48 Cup/Gelas
     `
   },
+    { 
+    name: "Aqua 1,5 Liter", 
+    price: 55000, 
+    img: "images/aqua-1,5ltr.jpg", 
+    category: "AQUA", 
+    tambahanBiaya: true,
+    deskripsi: `
+    💧 AQUA Gelas Original – Segar, Higienis, dan Terpercaya!
+    AQUA Gelas adalah pilihan terbaik untuk kebutuhan minuman praktis di rumah, kantor, sekolah, acara, hingga usaha kuliner.
+    Produk yang kami jual 100% asli pabrik, dengan segel plastik utuh dan bukan isi ulang atau kemasan ulang.
+    Jaminan Keaslian Produk:
+    ✔ Segel plastik pabrik masih utuh
+    ✔ Tidak pernah dibuka atau dipindah isi
+    ✔ Logo dan label asli AQUA
+    ✔ Diproduksi dengan standar kualitas nasional & internasional
+    ✔ 1 Karton isi 12 Botol
+    `
+  },
   { 
     name: "leMineral Galon", 
     price: 20000, 
@@ -1347,6 +1365,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
