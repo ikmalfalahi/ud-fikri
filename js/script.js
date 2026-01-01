@@ -219,7 +219,7 @@ if (storeOpen) {
     ✔ 1 Karton isi 24 Botol
     `
   },
-  { 
+    { 
     name: "leMineral 600ml", 
     price: 52000, 
     img: "images/lemineral-600ml.jpg", 
@@ -235,6 +235,24 @@ if (storeOpen) {
     ✔ Diproduksi dengan standar higienis modern
     ✔ Kualitas terkontrol langsung dari pabrik
     ✔ 1 Karton isi 24 Botol
+    `
+  },
+    { 
+    name: "Teh Pucuk Harum 350ML", 
+    price: 52000, 
+    img: "images/teh-pucuk.jpg", 
+    category: "LEMINERAL", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🍃 Teh Pucuk Harum 350 ml – Segarnya Teh dari Pucuk Daun Pilihan!
+    Teh Pucuk Harum dibuat dari pucuk daun teh terpilih yang menghasilkan rasa teh alami, harum, dan menyegarkan.
+    Diproses dengan teknologi modern untuk menjaga aroma dan kesegaran teh dalam setiap botol.
+    Jaminan Keaslian & Kebersihan:
+    ✔ Terbuat dari pucuk daun teh pilihan
+    ✔ Rasa teh alami & tidak pahit
+    ✔ Aroma harum khas teh
+    ✔ Kemasan praktis 350 ml
+    ✔ Higienis & siap minum
     `
   },
   { 
@@ -305,6 +323,23 @@ if (storeOpen) {
     ✔ Aman & higienis, diproses dengan standar pabrik modern
     `
   },
+    { 
+    name: "Tepung Terigu (Segitiga Biru)", 
+    price: 13000, 
+    img: "images/segitiga-biru.jpg", 
+    category: "TEPUNG", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🌾 Tepung Terigu Segitiga Biru Bogasari 1 kg – Serbaguna & Berkualitas!
+    Tepung serbaguna yang cocok untuk berbagai olahan masakan dan kue.
+    Terbuat dari gandum pilihan dengan kualitas terjaga, menghasilkan adonan yang halus, lembut, dan mudah diolah.
+    Jaminan Kualitas & Keaslian:
+    ✔ Produk asli Bogasari
+    ✔ Tekstur halus & bersih
+    ✔ Hasil adonan lembut & tidak mudah keras
+    ✔ Dikemas rapi & higienis 1 kg
+    `
+  },
      { 
     name: "Gula Pasir (Kristal) GMP", 
     price: 19000, 
@@ -371,6 +406,24 @@ if (storeOpen) {
     ✔ Produk resmi Minyak Kita
     ✔ Aman, bersih, dan siap pakai
     ✔ 1 Karton ini 6 pcs = 12 Liter
+    `
+  },
+    { 
+    name: "Minyak Goreng Rizki", 
+    price: 18000, 
+    img: "images/minyak-rizki.jpg", 
+    category: "MINYAK", 
+    tambahanBiaya: true,
+    deskripsi: `
+   🛢️ Minyak Goreng Rizki 800 ml – Jernih, Hemat, dan Berkualitas!
+   Minyak Goreng Rizki 800 ml adalah pilihan tepat untuk kebutuhan memasak sehari-hari.
+   Dihasilkan dari bahan baku pilihan dan diproses dengan standar mutu yang baik, membantu menghasilkan masakan yang lebih renyah dan lezat.
+    Jaminan Keaslian & Kualitas:
+    ✔ Minyak goreng jernih & bersih
+    ✔ Tidak berbau tengik
+    ✔ Stabil saat digunakan untuk menggoreng
+    ✔ Dikemas higienis & praktis 800 ml
+    ✔ Aman digunakan untuk kebutuhan dapur sehari-hari
     `
   },
   { 
@@ -1294,6 +1347,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
