@@ -239,7 +239,7 @@ if (storeOpen) {
   },
     { 
     name: "Teh Pucuk Harum 350ML", 
-    price: 52000, 
+    price: 65000, 
     img: "images/teh-pucuk.jpg", 
     category: "LEMINERAL", 
     tambahanBiaya: true,
@@ -1347,6 +1347,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
