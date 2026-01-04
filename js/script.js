@@ -446,7 +446,7 @@ if (storeOpen) {
   },
     { 
     name: "Teh Sosro Celup", 
-    price: 65000, 
+    price: 6500, 
     img: "images/teh-sosro.jpg", 
     category: "TEH", 
     tambahanBiaya: true,
@@ -1382,6 +1382,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
