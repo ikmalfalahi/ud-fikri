@@ -46,5 +46,6 @@ function logoutAdmin() {
   localStorage.removeItem("admin_logged_in");
   sessionStorage.removeItem("admin_logged_in");
   alert("Anda telah keluar.");
-  window.location.replace("login.html");
+  window.location.replace("https://ud-fikri.vercel.app");
 }
+
