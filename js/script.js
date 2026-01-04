@@ -255,24 +255,6 @@ if (storeOpen) {
     ✔ 1 Karton isi 24 Botol
     `
   },
-    { 
-    name: "Teh Pucuk Harum 350ML", 
-    price: 65000, 
-    img: "images/teh-pucuk.jpg", 
-    category: "LEMINERAL", 
-    tambahanBiaya: true,
-    deskripsi: `
-    🍃 Teh Pucuk Harum 350 ml – Segarnya Teh dari Pucuk Daun Pilihan!
-    Teh Pucuk Harum dibuat dari pucuk daun teh terpilih yang menghasilkan rasa teh alami, harum, dan menyegarkan.
-    Diproses dengan teknologi modern untuk menjaga aroma dan kesegaran teh dalam setiap botol.
-    Jaminan Keaslian & Kebersihan:
-    ✔ Terbuat dari pucuk daun teh pilihan
-    ✔ Rasa teh alami & tidak pahit
-    ✔ Aroma harum khas teh
-    ✔ Kemasan praktis 350 ml
-    ✔ Higienis & siap minum
-    `
-  },
   { 
     name: "Beras 14 Petruk", 
     price: 14000, 
@@ -444,11 +426,46 @@ if (storeOpen) {
     ✔ Aman digunakan untuk kebutuhan dapur sehari-hari
     `
   },
+    { 
+    name: "Teh Pucuk Harum 350ML", 
+    price: 65000, 
+    img: "images/teh-pucuk.jpg", 
+    category: "TEH", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🍃 Teh Pucuk Harum 350 ml – Segarnya Teh dari Pucuk Daun Pilihan!
+    Teh Pucuk Harum dibuat dari pucuk daun teh terpilih yang menghasilkan rasa teh alami, harum, dan menyegarkan.
+    Diproses dengan teknologi modern untuk menjaga aroma dan kesegaran teh dalam setiap botol.
+    Jaminan Keaslian & Kebersihan:
+    ✔ Terbuat dari pucuk daun teh pilihan
+    ✔ Rasa teh alami & tidak pahit
+    ✔ Aroma harum khas teh
+    ✔ Kemasan praktis 350 ml
+    ✔ Higienis & siap minum
+    `
+  },
+    { 
+    name: "Teh Sosro Celup", 
+    price: 65000, 
+    img: "images/teh-sosro.jpg", 
+    category: "TEH", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🍵 Teh Celup Sosro Isi 30 – Teh Asli Indonesia, Harum & Berkualitas!
+    Teh Celup Sosro dibuat dari daun teh pilihan terbaik yang dipetik dan diolah dengan standar mutu tinggi, menghasilkan rasa teh yang khas, harum, dan menyegarkan.
+    🔒 Jaminan Kualitas & Keaslian:
+    ✔ Produk asli Sosro
+    ✔ Daun teh pilihan berkualitas
+    ✔ Aroma harum & rasa teh khas
+    ✔ Praktis dengan kemasan isi 30 celup
+    ✔ Higienis & aman dikonsumsi
+    `
+  },
   { 
     name: "S-TEE", 
     price: 60000, 
     img: "images/s-tee.jpg", 
-    category: "TEH BOTOL", 
+    category: "TEH", 
     tambahanBiaya: true,
     deskripsi: `
     🍹S-TEE Teh Manis – Segar, Nikmat, dan Pas di Kantong!
@@ -466,7 +483,7 @@ if (storeOpen) {
     name: "Teh Botol Sosro", 
     price: 60000, 
     img: "images/teh-botol.jpg", 
-    category: "TEH BOTOL", 
+    category: "TEH", 
     tambahanBiaya: true,
     deskripsi: `
     "Ahlinya Teh Sejak 1940"
@@ -1365,6 +1382,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
