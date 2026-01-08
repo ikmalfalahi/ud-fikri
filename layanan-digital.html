@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Layanan Digital | UD Fikri</title>
+
+  <link rel="stylesheet" href="css/layanan-digital.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="top-header">
+  <h1>Layanan Digital</h1>
+  <p>Praktis • Cepat • Aman</p>
+</header>
+
+<!-- GRID MENU -->
+<section class="service-grid">
+
+  <div class="service-card" onclick="pilihLayanan('Pulsa Reguler')">
+    <span>📱</span>
+    <h3>Pulsa</h3>
+  </div>
+
+  <div class="service-card" onclick="pilihLayanan('Paket Data')">
+    <span>🌐</span>
+    <h3>Paket Data</h3>
+  </div>
+
+  <div class="service-card" onclick="pilihLayanan('Token PLN')">
+    <span>⚡</span>
+    <h3>Token PLN</h3>
+  </div>
+
+  <div class="service-card" onclick="pilihLayanan('Pembayaran PPOB')">
+    <span>🧾</span>
+    <h3>PPOB</h3>
+  </div>
+
+</section>
+
+<!-- FORM -->
+<section id="formLayanan" class="form-box hidden">
+  <h2 id="judulLayanan"></h2>
+
+  <input type="text" id="inputNomor" placeholder="Nomor HP / ID Pelanggan">
+  <input type="text" id="inputNominal" placeholder="Nominal (contoh: 50.000)">
+  <textarea id="inputCatatan" placeholder="Catatan tambahan (opsional)"></textarea>
+
+  <button onclick="kirimWA()">Kirim via WhatsApp</button>
+</section>
+
+<script src="js/layanan-digital.js"></script>
+</body>
+</html>
