@@ -1,61 +1,97 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Layanan Bank & Digital | UD Fikri</title>
   <link rel="stylesheet" href="css/layanan-digital.css">
 </head>
 <body>
 
-<!-- BANNER -->
-<div class="banner">
-  <h1>🏦 Layanan Bank & Digital<br>UD Fikri</h1>
-  <p>Cepat • Aman • Terpercaya</p>
-</div>
+<div class="page">
 
-<!-- AGEN BANK -->
-<div class="card">
-  <h2>🏦 Layanan Agen Bank</h2>
-  <ul class="checklist">
-    <li>Tarik Tunai</li>
-    <li>Setor Tunai</li>
-    <li>Transfer Antar Bank</li>
-    <li>Cek Saldo</li>
-  </ul>
-
-  <button class="wa-btn" onclick="hubungiBank()">
-    Hubungi via WhatsApp
-  </button>
-</div>
-
-<!-- PPOB -->
-<div class="card">
-  <h2>📱 Layanan PPOB & Digital</h2>
-
-  <div class="ppob-grid">
-    <div onclick="pilihPPOB('Pulsa')">📞<span>Pulsa</span></div>
-    <div onclick="pilihPPOB('Paket Data')">📶<span>Paket Data</span></div>
-    <div onclick="pilihPPOB('Token Listrik')">⚡<span>Token Listrik</span></div>
-    <div onclick="pilihPPOB('BPJS')">🏥<span>BPJS</span></div>
-    <div onclick="pilihPPOB('PDAM')">💧<span>PDAM</span></div>
-    <div onclick="pilihPPOB('E-Wallet')">💳<span>E-Wallet</span></div>
+  <!-- BANNER -->
+  <div class="hero">
+    <div class="hero-icon">🏦</div>
+    <div class="hero-text">
+      <h1>Layanan Bank & Digital<br>UD Fikri</h1>
+      <p>Cepat • Aman • Terpercaya</p>
+    </div>
   </div>
 
-  <button class="wa-btn" onclick="kirimPPOB()">
-    Pesan via WhatsApp
-  </button>
-</div>
+  <!-- AGEN BANK -->
+  <div class="box">
+    <div class="box-header">
+      <span>🏛️</span>
+      <h2>Layanan Agen Bank</h2>
+    </div>
 
-<!-- CARA PESAN -->
-<div class="card">
-  <h2>📝 Cara Pemesanan</h2>
-  <ol class="steps">
-    <li>Pilih layanan</li>
-    <li>Klik tombol WhatsApp</li>
-    <li>Kirim data ke admin</li>
-    <li>Transaksi diproses</li>
-  </ol>
+    <ul class="list">
+      <li>Tarik Tunai</li>
+      <li>Setor Tunai</li>
+      <li>Transfer Antar Bank</li>
+      <li>Cek Saldo</li>
+    </ul>
+
+    <button class="btn-wa" onclick="hubungiAgenBank()">
+      Hubungi via WhatsApp
+    </button>
+  </div>
+
+  <!-- PPOB -->
+  <div class="box">
+    <div class="box-header">
+      <span>📱</span>
+      <h2>Layanan PPOB & Digital</h2>
+    </div>
+
+    <div class="ppob-grid">
+      <div onclick="pilihPPOB('Pulsa')">
+        <div class="icon yellow">📞</div>
+        <p>Pulsa</p>
+      </div>
+      <div onclick="pilihPPOB('Paket Data')">
+        <div class="icon green">💳</div>
+        <p>Paket Data</p>
+      </div>
+      <div onclick="pilihPPOB('Token Listrik')">
+        <div class="icon orange">⚡</div>
+        <p>Token Listrik</p>
+      </div>
+      <div onclick="pilihPPOB('BPJS')">
+        <div class="icon lime">🏥</div>
+        <p>BPJS</p>
+      </div>
+      <div onclick="pilihPPOB('PDAM')">
+        <div class="icon blue">💧</div>
+        <p>PDAM</p>
+      </div>
+      <div onclick="pilihPPOB('E-Wallet')">
+        <div class="icon gold">💼</div>
+        <p>E-Wallet</p>
+      </div>
+    </div>
+
+    <button class="btn-wa" onclick="kirimPPOB()">
+      Pesan via WhatsApp
+    </button>
+  </div>
+
+  <!-- CARA PESAN -->
+  <div class="box">
+    <div class="box-header">
+      <span>📝</span>
+      <h2>Cara Pemesanan</h2>
+    </div>
+
+    <ul class="steps">
+      <li>Klik tombol WhatsApp</li>
+      <li>Kirim data layanan</li>
+      <li>Tunggu konfirmasi admin</li>
+      <li>Transaksi selesai</li>
+    </ul>
+  </div>
+
 </div>
 
 <script src="js/layanan-digital.js"></script>
