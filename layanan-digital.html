@@ -1,55 +1,62 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Layanan Digital | UD Fikri</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layanan Bank & Digital | UD Fikri</title>
   <link rel="stylesheet" href="css/layanan-digital.css">
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="top-header">
-  <h1>Layanan Digital</h1>
-  <p>Praktis • Cepat • Aman</p>
-</header>
+<!-- BANNER -->
+<div class="banner">
+  <h1>🏦 Layanan Bank & Digital<br>UD Fikri</h1>
+  <p>Cepat • Aman • Terpercaya</p>
+</div>
 
-<!-- GRID MENU -->
-<section class="service-grid">
+<!-- AGEN BANK -->
+<div class="card">
+  <h2>🏦 Layanan Agen Bank</h2>
+  <ul class="checklist">
+    <li>Tarik Tunai</li>
+    <li>Setor Tunai</li>
+    <li>Transfer Antar Bank</li>
+    <li>Cek Saldo</li>
+  </ul>
 
-  <div class="service-card" onclick="pilihLayanan('Pulsa Reguler')">
-    <span>📱</span>
-    <h3>Pulsa</h3>
+  <button class="wa-btn" onclick="hubungiBank()">
+    Hubungi via WhatsApp
+  </button>
+</div>
+
+<!-- PPOB -->
+<div class="card">
+  <h2>📱 Layanan PPOB & Digital</h2>
+
+  <div class="ppob-grid">
+    <div onclick="pilihPPOB('Pulsa')">📞<span>Pulsa</span></div>
+    <div onclick="pilihPPOB('Paket Data')">📶<span>Paket Data</span></div>
+    <div onclick="pilihPPOB('Token Listrik')">⚡<span>Token Listrik</span></div>
+    <div onclick="pilihPPOB('BPJS')">🏥<span>BPJS</span></div>
+    <div onclick="pilihPPOB('PDAM')">💧<span>PDAM</span></div>
+    <div onclick="pilihPPOB('E-Wallet')">💳<span>E-Wallet</span></div>
   </div>
 
-  <div class="service-card" onclick="pilihLayanan('Paket Data')">
-    <span>🌐</span>
-    <h3>Paket Data</h3>
-  </div>
+  <button class="wa-btn" onclick="kirimPPOB()">
+    Pesan via WhatsApp
+  </button>
+</div>
 
-  <div class="service-card" onclick="pilihLayanan('Token PLN')">
-    <span>⚡</span>
-    <h3>Token PLN</h3>
-  </div>
-
-  <div class="service-card" onclick="pilihLayanan('Pembayaran PPOB')">
-    <span>🧾</span>
-    <h3>PPOB</h3>
-  </div>
-
-</section>
-
-<!-- FORM -->
-<section id="formLayanan" class="form-box hidden">
-  <h2 id="judulLayanan"></h2>
-
-  <input type="text" id="inputNomor" placeholder="Nomor HP / ID Pelanggan">
-  <input type="text" id="inputNominal" placeholder="Nominal (contoh: 50.000)">
-  <textarea id="inputCatatan" placeholder="Catatan tambahan (opsional)"></textarea>
-
-  <button onclick="kirimWA()">Kirim via WhatsApp</button>
-</section>
+<!-- CARA PESAN -->
+<div class="card">
+  <h2>📝 Cara Pemesanan</h2>
+  <ol class="steps">
+    <li>Pilih layanan</li>
+    <li>Klik tombol WhatsApp</li>
+    <li>Kirim data ke admin</li>
+    <li>Transaksi diproses</li>
+  </ol>
+</div>
 
 <script src="js/layanan-digital.js"></script>
 </body>
