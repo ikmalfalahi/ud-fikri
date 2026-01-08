@@ -1,34 +1,39 @@
-let layanan = "";
+const nomorAdmin = "628XXXXXXXXXX"; // GANTI NOMOR WA
 
-function pilihLayanan(nama) {
-  layanan = nama;
-  document.getElementById("judulLayanan").innerText = nama;
-  document.getElementById("formLayanan").classList.remove("hidden");
+let layananDipilih = "";
+
+function hubungiBank() {
+  const pesan = `
+*🏦 LAYANAN AGEN BANK – UD FIKRI*
+Saya ingin melakukan:
+- Tarik / Setor Tunai
+- Transfer Bank
+- Cek Saldo
+Mohon info 🙏
+`;
+  bukaWA(pesan);
 }
 
-function kirimWA() {
-  const nomor = document.getElementById("inputNomor").value;
-  const nominal = document.getElementById("inputNominal").value;
-  const catatan = document.getElementById("inputCatatan").value;
+function pilihPPOB(layanan) {
+  layananDipilih = layanan;
+  alert(layanan + " dipilih");
+}
 
-  if (!nomor || !nominal) {
-    alert("Nomor dan nominal wajib diisi!");
+function kirimPPOB() {
+  if (!layananDipilih) {
+    alert("Pilih layanan PPOB dulu");
     return;
   }
 
   const pesan = `
-*🧾 PESANAN LAYANAN DIGITAL – UD FIKRI*
-========================
-*Layanan:* ${layanan}
-*Nomor / ID:* ${nomor}
-*Nominal:* ${nominal}
-*Catatan:* ${catatan || "-"}
-========================
-Mohon diproses 🙏
+*📱 PESANAN PPOB – UD FIKRI*
+Layanan: ${layananDipilih}
+Mohon info nominal & data 🙏
 `;
+  bukaWA(pesan);
+}
 
-  const nomorAdmin = "628XXXXXXXXXX"; // GANTI NOMOR ADMIN
-  const linkWA = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(pesan)}`;
-
-  window.open(linkWA, "_blank");
+function bukaWA(pesan) {
+  const url = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(pesan)}`;
+  window.open(url, "_blank");
 }
