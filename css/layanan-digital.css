@@ -1,100 +1,103 @@
 * {
   box-sizing: border-box;
-  font-family: "Arial", sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 body {
   margin: 0;
-  background: #f1f5f9;
+  background: #eef4fb;
 }
 
-/* HEADER */
-.top-header {
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+/* BANNER */
+.banner {
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
   color: white;
-  padding: 24px;
   text-align: center;
+  padding: 28px 16px;
 }
 
-.top-header h1 {
+.banner h1 {
   margin: 0;
-  font-size: 22px;
+  font-size: 20px;
 }
 
-.top-header p {
+.banner p {
   margin-top: 6px;
   font-size: 14px;
-  opacity: 0.85;
 }
 
-/* GRID MENU */
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  padding: 20px;
-}
-
-.service-card {
+/* CARD */
+.card {
   background: white;
+  margin: 16px;
+  padding: 16px;
   border-radius: 16px;
-  padding: 26px 10px;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  cursor: pointer;
-  transition: 0.2s;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
 }
 
-.service-card span {
-  font-size: 34px;
-  display: block;
+.card h2 {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+/* CHECKLIST */
+.checklist {
+  list-style: none;
+  padding: 0;
+}
+
+.checklist li {
+  padding-left: 26px;
   margin-bottom: 8px;
+  position: relative;
 }
 
-.service-card h3 {
-  margin: 0;
-  font-size: 16px;
+.checklist li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: green;
 }
 
-.service-card:hover {
-  transform: translateY(-4px);
+/* PPOB GRID */
+.ppob-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 16px 0;
 }
 
-/* FORM */
-.form-box {
-  background: white;
-  margin: 0 20px 30px;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-
-.form-box h2 {
+.ppob-grid div {
+  background: #f1f5f9;
+  border-radius: 12px;
   text-align: center;
-  margin-bottom: 16px;
+  padding: 14px 6px;
+  cursor: pointer;
 }
 
-.form-box input,
-.form-box textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  font-size: 15px;
-  border-radius: 10px;
-  border: 1px solid #cbd5e1;
+.ppob-grid span {
+  display: block;
+  font-size: 13px;
+  margin-top: 4px;
 }
 
-.form-box button {
+/* BUTTON WA */
+.wa-btn {
   width: 100%;
-  padding: 14px;
   background: #22c55e;
   color: white;
   border: none;
-  font-size: 16px;
+  padding: 14px;
   border-radius: 12px;
+  font-size: 16px;
   cursor: pointer;
 }
 
-.hidden {
-  display: none;
+/* STEPS */
+.steps {
+  padding-left: 20px;
+}
+
+.steps li {
+  margin-bottom: 6px;
 }
