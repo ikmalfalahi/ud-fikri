@@ -1,97 +1,48 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Layanan Bank & Digital | UD Fikri</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layanan Digital | UD Fikri</title>
   <link rel="stylesheet" href="css/layanan-digital.css">
 </head>
 <body>
 
 <div class="page">
 
-  <!-- BANNER -->
+  <!-- HEADER -->
   <div class="hero">
-    <div class="hero-icon">🏦</div>
-    <div class="hero-text">
-      <h1>Layanan Bank & Digital<br>UD Fikri</h1>
-      <p>Cepat • Aman • Terpercaya</p>
-    </div>
+    <h1>Layanan Bank & Digital</h1>
+    <p>UD Fikri • Cepat • Aman • Terpercaya</p>
   </div>
 
-  <!-- AGEN BANK -->
-  <div class="box">
-    <div class="box-header">
-      <span>🏛️</span>
-      <h2>Layanan Agen Bank</h2>
-    </div>
-
-    <ul class="list">
-      <li>Tarik Tunai</li>
-      <li>Setor Tunai</li>
-      <li>Transfer Antar Bank</li>
-      <li>Cek Saldo</li>
-    </ul>
-
-    <button class="btn-wa" onclick="hubungiAgenBank()">
-      Hubungi via WhatsApp
-    </button>
+  <!-- GRID LAYANAN -->
+  <div class="service-grid">
+    <div onclick="openService('pulsa')">📞<span>Pulsa</span></div>
+    <div onclick="openService('data')">📶<span>Paket Data</span></div>
+    <div onclick="openService('token')">⚡<span>Token PLN</span></div>
+    <div onclick="openService('pln')">💡<span>Tagihan PLN</span></div>
+    <div onclick="openService('bpjs')">🏥<span>BPJS</span></div>
+    <div onclick="openService('telkom')">☎️<span>Telkom</span></div>
+    <div onclick="openService('ewallet')">💳<span>E-Wallet</span></div>
+    <div onclick="openService('multi')">📄<span>Multifinance</span></div>
   </div>
 
-  <!-- PPOB -->
-  <div class="box">
-    <div class="box-header">
-      <span>📱</span>
-      <h2>Layanan PPOB & Digital</h2>
-    </div>
+</div>
 
-    <div class="ppob-grid">
-      <div onclick="pilihPPOB('Pulsa')">
-        <div class="icon yellow">📞</div>
-        <p>Pulsa</p>
-      </div>
-      <div onclick="pilihPPOB('Paket Data')">
-        <div class="icon green">💳</div>
-        <p>Paket Data</p>
-      </div>
-      <div onclick="pilihPPOB('Token Listrik')">
-        <div class="icon orange">⚡</div>
-        <p>Token Listrik</p>
-      </div>
-      <div onclick="pilihPPOB('BPJS')">
-        <div class="icon lime">🏥</div>
-        <p>BPJS</p>
-      </div>
-      <div onclick="pilihPPOB('PDAM')">
-        <div class="icon blue">💧</div>
-        <p>PDAM</p>
-      </div>
-      <div onclick="pilihPPOB('E-Wallet')">
-        <div class="icon gold">💼</div>
-        <p>E-Wallet</p>
-      </div>
-    </div>
+<!-- MODAL -->
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modalTitle"></h2>
 
-    <button class="btn-wa" onclick="kirimPPOB()">
-      Pesan via WhatsApp
-    </button>
+    <select id="provider"></select>
+    <select id="nominal"></select>
+
+    <input type="text" id="inputData" placeholder="Nomor / ID Pelanggan">
+
+    <button onclick="sendWA()">Pesan via WhatsApp</button>
+    <button class="close" onclick="closeModal()">Tutup</button>
   </div>
-
-  <!-- CARA PESAN -->
-  <div class="box">
-    <div class="box-header">
-      <span>📝</span>
-      <h2>Cara Pemesanan</h2>
-    </div>
-
-    <ul class="steps">
-      <li>Klik tombol WhatsApp</li>
-      <li>Kirim data layanan</li>
-      <li>Tunggu konfirmasi admin</li>
-      <li>Transaksi selesai</li>
-    </ul>
-  </div>
-
 </div>
 
 <script src="js/layanan-digital.js"></script>
