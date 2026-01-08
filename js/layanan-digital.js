@@ -1,33 +1,30 @@
-const nomorAdmin = "628XXXXXXXXXX"; // GANTI NOMOR WA
+const nomorAdmin = "628XXXXXXXXXX"; // GANTI
 
-let layananDipilih = "";
+let layananPPOB = "";
 
-function hubungiBank() {
+function hubungiAgenBank() {
   const pesan = `
-*🏦 LAYANAN AGEN BANK – UD FIKRI*
-Saya ingin melakukan:
-- Tarik / Setor Tunai
-- Transfer Bank
-- Cek Saldo
-Mohon info 🙏
+🏦 *LAYANAN AGEN BANK – UD FIKRI*
+Saya ingin melakukan layanan Agen Bank.
+Mohon info lebih lanjut 🙏
 `;
   bukaWA(pesan);
 }
 
 function pilihPPOB(layanan) {
-  layananDipilih = layanan;
+  layananPPOB = layanan;
   alert(layanan + " dipilih");
 }
 
 function kirimPPOB() {
-  if (!layananDipilih) {
-    alert("Pilih layanan PPOB dulu");
+  if (!layananPPOB) {
+    alert("Silakan pilih layanan terlebih dahulu");
     return;
   }
 
   const pesan = `
-*📱 PESANAN PPOB – UD FIKRI*
-Layanan: ${layananDipilih}
+📱 *PESANAN PPOB – UD FIKRI*
+Layanan: ${layananPPOB}
 Mohon info nominal & data 🙏
 `;
   bukaWA(pesan);
