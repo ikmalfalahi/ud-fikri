@@ -167,13 +167,18 @@ header {
   cursor: pointer;
 }
 
-/* ================= FOOTER ================= */
-.main-footer {
+/* ================= FOOTER (SAMA DENGAN HOME) ================= */
+footer {
   margin-top: 40px;
-  padding: 14px;
+  padding: 14px 5%;
   text-align: center;
   color: white;
-  background: linear-gradient(135deg,#1e90ff,#00bfff);
+  background: linear-gradient(90deg,#00bfff,#1e90ff);
+  border-radius: 10px 10px 0 0;
+}
+
+footer p {
+  margin: 0;
   font-size: 13px;
 }
 
