@@ -1,5 +1,5 @@
 /* ================= CONFIG ================= */
-const nomorAdmin = "6281287505090";
+const nomorAdmin = "6288803060094";
 let activeService = null;
 
 /* ================= DATA LAYANAN ================= */
