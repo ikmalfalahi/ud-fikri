@@ -3,31 +3,59 @@ const nomorAdmin = "6281287505090"; // NOMOR ADMIN
 
 const layanan = {
   /* ===== PRABAYAR ===== */
+ const services = {
   pulsa: {
-    title: "Pulsa",
-    provider: ["Telkomsel", "Indosat", "XL", "Tri", "Axis"],
-    nominal: ["5.000", "10.000", "20.000", "50.000"]
+    title: "Pulsa Prabayar",
+    placeholder: "Nomor HP",
+    providers: {
+      Telkomsel: ["5.000", "10.000", "20.000", "50.000"],
+      XL: ["5.000", "10.000", "25.000"],
+      Indosat: ["5.000", "10.000", "20.000"],
+      Tri: ["5.000", "10.000", "30.000"]
+    }
   },
+
   data: {
     title: "Paket Data",
-    provider: ["Telkomsel", "Indosat", "XL"],
-    nominal: ["5GB", "10GB", "20GB", "Unlimited"]
+    placeholder: "Nomor HP",
+    providers: {
+      Telkomsel: ["5GB / 30 Hari", "10GB / 30 Hari", "20GB / 30 Hari"],
+      XL: ["6GB / 30 Hari", "12GB / 30 Hari"],
+      Indosat: ["8GB / 30 Hari", "16GB / 30 Hari"],
+      Tri: ["10GB / 30 Hari", "25GB / 30 Hari"],
+      Smartfren: ["Unlimited 1 Hari", "Unlimited 30 Hari"]
+    }
   },
+
   token: {
-    title: "Token PLN",
-    provider: ["PLN"],
-    nominal: ["20.000", "50.000", "100.000", "200.000"]
+    title: "Token Listrik PLN",
+    placeholder: "ID Pelanggan",
+    providers: {
+      PLN: ["20.000", "50.000", "100.000", "200.000", "500.000", "1.000.000"]
+    }
   },
-  voucher: {
+
+  game: {
     title: "Voucher Game",
-    provider: ["Mobile Legends", "Free Fire", "PUBG", "Valorant"],
-    nominal: ["50 Diamonds", "100 Diamonds", "200 Diamonds"]
+    placeholder: "User ID / Server",
+    providers: {
+      "Mobile Legends": ["86 Diamond", "172 Diamond", "257 Diamond"],
+      "Free Fire": ["70 Diamond", "140 Diamond"],
+      PUBG: ["60 UC", "325 UC"]
+    }
   },
+
   ewallet: {
-    title: "E-Wallet",
-    provider: ["Dana", "OVO", "GoPay", "ShopeePay"],
-    nominal: ["10.000", "25.000", "50.000", "100.000"]
-  },
+    title: "Top Up E-Wallet",
+    placeholder: "Nomor Akun",
+    providers: {
+      DANA: ["10.000", "20.000", "50.000"],
+      OVO: ["10.000", "25.000", "50.000"],
+      GoPay: ["20.000", "50.000"],
+      ShopeePay: ["20.000", "50.000"]
+    }
+  }
+};
 
   /* ===== PASCABAYAR ===== */
   pln: {
@@ -77,31 +105,34 @@ const layanan = {
 let currentService = "";
 
 /* ================= OPEN MODAL ================= */
-function openService(key) {
-  currentService = key;
-  const data = layanan[key];
+let activeService = null;
 
-  document.getElementById("modalTitle").innerText = data.title;
+function openService(type) {
+  activeService = services[type];
+  if (!activeService) return;
 
-  const provider = document.getElementById("provider");
-  const nominal = document.getElementById("nominal");
-  const input = document.getElementById("inputData");
+  document.getElementById("modalTitle").innerText = activeService.title;
+  document.getElementById("inputData").placeholder = activeService.placeholder;
 
-  provider.innerHTML =
-    `<option value="">-- Pilih Provider --</option>` +
-    data.provider.map(p => `<option value="${p}">${p}</option>`).join("");
+  const providerSelect = document.getElementById("provider");
+  const nominalSelect = document.getElementById("nominal");
 
-  nominal.innerHTML =
-    `<option value="">-- Pilih Nominal --</option>` +
-    data.nominal.map(n => `<option value="${n}">${n}</option>`).join("");
+  providerSelect.innerHTML = `<option value="">Pilih Provider</option>`;
+  nominalSelect.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
 
-  // Placeholder dinamis
-  input.placeholder =
-    key === "pln" || key === "bpjs" || key === "telkom" || key === "multi"
-      ? "ID Pelanggan"
-      : "Nomor / Keterangan";
+  Object.keys(activeService.providers).forEach(p => {
+    providerSelect.innerHTML += `<option value="${p}">${p}</option>`;
+  });
 
-  input.value = "";
+  providerSelect.onchange = () => {
+    const selected = providerSelect.value;
+    nominalSelect.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
+    if (!selected) return;
+
+    activeService.providers[selected].forEach(n => {
+      nominalSelect.innerHTML += `<option value="${n}">${n}</option>`;
+    });
+  };
 
   document.getElementById("modal").classList.remove("hidden");
 }
@@ -109,30 +140,30 @@ function openService(key) {
 /* ================= CLOSE MODAL ================= */
 function closeModal() {
   document.getElementById("modal").classList.add("hidden");
+  document.getElementById("provider").innerHTML = "";
+  document.getElementById("nominal").innerHTML = "";
+  document.getElementById("inputData").value = "";
 }
 
 /* ================= SEND WHATSAPP ================= */
 function sendWA() {
   const provider = document.getElementById("provider").value;
   const nominal = document.getElementById("nominal").value;
-  const input = document.getElementById("inputData").value.trim();
+  const input = document.getElementById("inputData").value;
 
   if (!provider || !nominal || !input) {
-    alert("Mohon lengkapi semua data terlebih dahulu.");
+    alert("Lengkapi data terlebih dahulu!");
     return;
   }
 
-  const pesan = `
-*PESANAN LAYANAN DIGITAL – UD FIKRI*
-----------------------------------
-Layanan : ${layanan[currentService].title}
-Provider: ${provider}
-Detail  : ${nominal}
-Data    : ${input}
-`;
+  const text = `*PESANAN LAYANAN DIGITAL UD FIKRI*
+━━━━━━━━━━━━━━
+📌 Layanan: ${activeService.title}
+🏷 Provider: ${provider}
+📦 Paket/Nominal: ${nominal}
+🧾 Data: ${input}
+━━━━━━━━━━━━━━`;
 
-  window.open(
-    `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(pesan)}`,
-    "_blank"
-  );
+  const wa = "628xxxxxxxxxx"; // ganti nomor WA
+  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, "_blank");
 }
