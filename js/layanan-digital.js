@@ -1,9 +1,9 @@
 /* ================= CONFIG ================= */
-const nomorAdmin = "6281287505090"; // NOMOR ADMIN
+const nomorAdmin = "6281287505090";
 
-const layanan = {
+/* ================= DATA LAYANAN ================= */
+const services = {
   /* ===== PRABAYAR ===== */
- const services = {
   pulsa: {
     title: "Pulsa Prabayar",
     placeholder: "Nomor HP",
@@ -54,83 +54,107 @@ const layanan = {
       GoPay: ["20.000", "50.000"],
       ShopeePay: ["20.000", "50.000"]
     }
-  }
-};
+  },
 
   /* ===== PASCABAYAR ===== */
   pln: {
-    title: "Tagihan PLN",
-    provider: ["PLN Pascabayar"],
-    nominal: ["Cek Tagihan"]
+    title: "Tagihan PLN Pascabayar",
+    placeholder: "ID Pelanggan",
+    providers: {
+      PLN: ["Cek Tagihan"]
+    }
   },
+
   bpjs: {
     title: "BPJS Kesehatan",
-    provider: ["BPJS"],
-    nominal: ["Cek Tagihan"]
+    placeholder: "Nomor VA",
+    providers: {
+      BPJS: ["Cek Tagihan"]
+    }
   },
+
   telkom: {
-    title: "Telkom / Indihome",
-    provider: ["Telkom"],
-    nominal: ["Cek Tagihan"]
+    title: "Telkom / IndiHome",
+    placeholder: "Nomor Pelanggan",
+    providers: {
+      Telkom: ["Cek Tagihan"]
+    }
   },
+
   multi: {
     title: "Multifinance",
-    provider: ["Adira", "FIF", "WOM", "BAF"],
-    nominal: ["Cek Tagihan"]
+    placeholder: "Nomor Kontrak",
+    providers: {
+      Adira: ["Cek Tagihan"],
+      FIF: ["Cek Tagihan"],
+      WOM: ["Cek Tagihan"],
+      BAF: ["Cek Tagihan"]
+    }
   },
 
   /* ===== KEUANGAN ===== */
   transfer: {
     title: "Transfer Antar Bank",
-    provider: ["BCA", "BRI", "BNI", "Mandiri", "Bank Lainnya"],
-    nominal: ["Isi di Keterangan"]
+    placeholder: "Keterangan Transfer",
+    providers: {
+      BCA: ["Nominal Bebas"],
+      BRI: ["Nominal Bebas"],
+      BNI: ["Nominal Bebas"],
+      Mandiri: ["Nominal Bebas"]
+    }
   },
+
   tarik: {
     title: "Tarik Tunai",
-    provider: ["BCA", "BRI", "BNI", "Mandiri"],
-    nominal: ["Nominal Bebas"]
+    placeholder: "Nomor Akun",
+    providers: {
+      "Via E-Wallet": ["Nominal Bebas"]
+    }
   },
+
   setor: {
     title: "Setor Tunai",
-    provider: ["BCA", "BRI", "BNI", "Mandiri"],
-    nominal: ["Nominal Bebas"]
+    placeholder: "Nomor Akun",
+    providers: {
+      "Via E-Wallet": ["Nominal Bebas"]
+    }
   },
+
   ecommerce: {
     title: "Pembayaran E-Commerce",
-    provider: ["Shopee", "Tokopedia", "Lazada", "Bukalapak"],
-    nominal: ["Total Tagihan"]
+    placeholder: "No Pesanan",
+    providers: {
+      Shopee: ["Total Tagihan"],
+      Tokopedia: ["Total Tagihan"],
+      Lazada: ["Total Tagihan"]
+    }
   }
 };
 
-let currentService = "";
-
-/* ================= OPEN MODAL ================= */
 let activeService = null;
 
-function openService(type) {
-  activeService = services[type];
+/* ================= OPEN MODAL ================= */
+function openService(key) {
+  activeService = services[key];
   if (!activeService) return;
 
   document.getElementById("modalTitle").innerText = activeService.title;
   document.getElementById("inputData").placeholder = activeService.placeholder;
 
-  const providerSelect = document.getElementById("provider");
-  const nominalSelect = document.getElementById("nominal");
+  const provider = document.getElementById("provider");
+  const nominal = document.getElementById("nominal");
 
-  providerSelect.innerHTML = `<option value="">Pilih Provider</option>`;
-  nominalSelect.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
+  provider.innerHTML = `<option value="">Pilih Provider</option>`;
+  nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
 
   Object.keys(activeService.providers).forEach(p => {
-    providerSelect.innerHTML += `<option value="${p}">${p}</option>`;
+    provider.innerHTML += `<option value="${p}">${p}</option>`;
   });
 
-  providerSelect.onchange = () => {
-    const selected = providerSelect.value;
-    nominalSelect.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
-    if (!selected) return;
-
-    activeService.providers[selected].forEach(n => {
-      nominalSelect.innerHTML += `<option value="${n}">${n}</option>`;
+  provider.onchange = () => {
+    nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
+    activeService.providers[provider.value].forEach(n => {
+      nominal.innerHTML += `<option value="${n}">${n}</option>`;
     });
   };
 
@@ -140,9 +164,6 @@ function openService(type) {
 /* ================= CLOSE MODAL ================= */
 function closeModal() {
   document.getElementById("modal").classList.add("hidden");
-  document.getElementById("provider").innerHTML = "";
-  document.getElementById("nominal").innerHTML = "";
-  document.getElementById("inputData").value = "";
 }
 
 /* ================= SEND WHATSAPP ================= */
@@ -156,7 +177,7 @@ function sendWA() {
     return;
   }
 
-  const text = `*PESANAN LAYANAN DIGITAL UD FIKRI*
+  const pesan = `*PESANAN LAYANAN DIGITAL UD FIKRI*
 ━━━━━━━━━━━━━━
 📌 Layanan: ${activeService.title}
 🏷 Provider: ${provider}
@@ -164,6 +185,8 @@ function sendWA() {
 🧾 Data: ${input}
 ━━━━━━━━━━━━━━`;
 
-  const wa = "628xxxxxxxxxx"; // ganti nomor WA
-  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, "_blank");
+  window.open(
+    `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(pesan)}`,
+    "_blank"
+  );
 }
