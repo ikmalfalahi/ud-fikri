@@ -1,23 +1,8 @@
-/* ================= ACCORDION ================= */
-document.querySelectorAll(".accordion").forEach(acc => {
-  acc.addEventListener("click", function () {
-    this.classList.toggle("active");
-    const panel = this.nextElementSibling;
-
-    if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
-      panel.classList.remove("open");
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-      panel.classList.add("open");
-    }
-  });
-});
-
 /* ================= CONFIG ================= */
-const nomorAdmin = "6281287505090"; // GANTI NOMOR ADMIN
+const nomorAdmin = "6281287505090"; // NOMOR ADMIN
 
 const layanan = {
+  /* ===== PRABAYAR ===== */
   pulsa: {
     title: "Pulsa",
     provider: ["Telkomsel", "Indosat", "XL", "Tri", "Axis"],
@@ -26,13 +11,25 @@ const layanan = {
   data: {
     title: "Paket Data",
     provider: ["Telkomsel", "Indosat", "XL"],
-    nominal: ["5GB", "10GB", "20GB"]
+    nominal: ["5GB", "10GB", "20GB", "Unlimited"]
   },
   token: {
     title: "Token PLN",
     provider: ["PLN"],
     nominal: ["20.000", "50.000", "100.000", "200.000"]
   },
+  voucher: {
+    title: "Voucher Game",
+    provider: ["Mobile Legends", "Free Fire", "PUBG", "Valorant"],
+    nominal: ["50 Diamonds", "100 Diamonds", "200 Diamonds"]
+  },
+  ewallet: {
+    title: "E-Wallet",
+    provider: ["Dana", "OVO", "GoPay", "ShopeePay"],
+    nominal: ["10.000", "25.000", "50.000", "100.000"]
+  },
+
+  /* ===== PASCABAYAR ===== */
   pln: {
     title: "Tagihan PLN",
     provider: ["PLN Pascabayar"],
@@ -48,15 +45,32 @@ const layanan = {
     provider: ["Telkom"],
     nominal: ["Cek Tagihan"]
   },
-  ewallet: {
-    title: "E-Wallet",
-    provider: ["Dana", "OVO", "GoPay", "ShopeePay"],
-    nominal: ["10.000", "25.000", "50.000"]
-  },
   multi: {
     title: "Multifinance",
     provider: ["Adira", "FIF", "WOM", "BAF"],
     nominal: ["Cek Tagihan"]
+  },
+
+  /* ===== KEUANGAN ===== */
+  transfer: {
+    title: "Transfer Antar Bank",
+    provider: ["BCA", "BRI", "BNI", "Mandiri", "Bank Lainnya"],
+    nominal: ["Isi di Keterangan"]
+  },
+  tarik: {
+    title: "Tarik Tunai",
+    provider: ["BCA", "BRI", "BNI", "Mandiri"],
+    nominal: ["Nominal Bebas"]
+  },
+  setor: {
+    title: "Setor Tunai",
+    provider: ["BCA", "BRI", "BNI", "Mandiri"],
+    nominal: ["Nominal Bebas"]
+  },
+  ecommerce: {
+    title: "Pembayaran E-Commerce",
+    provider: ["Shopee", "Tokopedia", "Lazada", "Bukalapak"],
+    nominal: ["Total Tagihan"]
   }
 };
 
@@ -80,6 +94,12 @@ function openService(key) {
   nominal.innerHTML =
     `<option value="">-- Pilih Nominal --</option>` +
     data.nominal.map(n => `<option value="${n}">${n}</option>`).join("");
+
+  // Placeholder dinamis
+  input.placeholder =
+    key === "pln" || key === "bpjs" || key === "telkom" || key === "multi"
+      ? "ID Pelanggan"
+      : "Nomor / Keterangan";
 
   input.value = "";
 
@@ -107,7 +127,7 @@ function sendWA() {
 ----------------------------------
 Layanan : ${layanan[currentService].title}
 Provider: ${provider}
-Nominal : ${nominal}
+Detail  : ${nominal}
 Data    : ${input}
 `;
 
