@@ -160,11 +160,15 @@
 <div class="modal hidden" id="modal">
   <div class="modal-box">
     <h3 id="modalTitle"></h3>
-
+    
+    <input type="text" id="inputNama" placeholder="Nama Pemesan">
+    <input type="text" id="inputData" placeholder="Nomor / ID Pelanggan">
+    
     <select id="provider"></select>
     <select id="nominal"></select>
+    
+    <input type="text" id="nominalText" class="hidden" placeholder="Masukkan Nominal">
 
-    <input type="text" id="inputData" placeholder="Nomor / ID Pelanggan">
 
     <button class="btn-primary" onclick="sendWA()">
       <i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp
