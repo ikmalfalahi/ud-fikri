@@ -1,8 +1,8 @@
-// Accordion toggle with animation
+/* ================= ACCORDION ================= */
 document.querySelectorAll(".accordion").forEach(acc => {
-  acc.addEventListener("click", function() {
+  acc.addEventListener("click", function () {
     this.classList.toggle("active");
-    let panel = this.nextElementSibling;
+    const panel = this.nextElementSibling;
 
     if (panel.style.maxHeight) {
       panel.style.maxHeight = null;
@@ -14,7 +14,8 @@ document.querySelectorAll(".accordion").forEach(acc => {
   });
 });
 
-const nomorAdmin = "628XXXXXXXXXX";
+/* ================= CONFIG ================= */
+const nomorAdmin = "6281287505090"; // GANTI NOMOR ADMIN
 
 const layanan = {
   pulsa: {
@@ -38,13 +39,13 @@ const layanan = {
     nominal: ["Cek Tagihan"]
   },
   bpjs: {
-    title: "BPJS",
-    provider: ["BPJS Kesehatan"],
+    title: "BPJS Kesehatan",
+    provider: ["BPJS"],
     nominal: ["Cek Tagihan"]
   },
   telkom: {
-    title: "Telkom",
-    provider: ["Indihome / Telkom"],
+    title: "Telkom / Indihome",
+    provider: ["Telkom"],
     nominal: ["Cek Tagihan"]
   },
   ewallet: {
@@ -61,6 +62,7 @@ const layanan = {
 
 let currentService = "";
 
+/* ================= OPEN MODAL ================= */
 function openService(key) {
   currentService = key;
   const data = layanan[key];
@@ -69,28 +71,44 @@ function openService(key) {
 
   const provider = document.getElementById("provider");
   const nominal = document.getElementById("nominal");
+  const input = document.getElementById("inputData");
 
-  provider.innerHTML = data.provider.map(p => `<option>${p}</option>`).join("");
-  nominal.innerHTML = data.nominal.map(n => `<option>${n}</option>`).join("");
+  provider.innerHTML =
+    `<option value="">-- Pilih Provider --</option>` +
+    data.provider.map(p => `<option value="${p}">${p}</option>`).join("");
+
+  nominal.innerHTML =
+    `<option value="">-- Pilih Nominal --</option>` +
+    data.nominal.map(n => `<option value="${n}">${n}</option>`).join("");
+
+  input.value = "";
 
   document.getElementById("modal").classList.remove("hidden");
 }
 
+/* ================= CLOSE MODAL ================= */
 function closeModal() {
   document.getElementById("modal").classList.add("hidden");
 }
 
+/* ================= SEND WHATSAPP ================= */
 function sendWA() {
   const provider = document.getElementById("provider").value;
   const nominal = document.getElementById("nominal").value;
-  const input = document.getElementById("inputData").value;
+  const input = document.getElementById("inputData").value.trim();
+
+  if (!provider || !nominal || !input) {
+    alert("Mohon lengkapi semua data terlebih dahulu.");
+    return;
+  }
 
   const pesan = `
 *PESANAN LAYANAN DIGITAL – UD FIKRI*
-Layanan: ${layanan[currentService].title}
+----------------------------------
+Layanan : ${layanan[currentService].title}
 Provider: ${provider}
-Nominal: ${nominal}
-Data: ${input}
+Nominal : ${nominal}
+Data    : ${input}
 `;
 
   window.open(
