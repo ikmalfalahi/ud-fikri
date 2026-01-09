@@ -20,18 +20,18 @@ const services = {
   },
 
   data: {
-    title: "Paket Data",
-    placeholder: "Nomor HP",
-    autoDetect: true,
-    providers: {
-      Axis: ["5GB / 30 Hari", "10GB / 30 Hari", "20GB / 30 Hari"]
-      Telkomsel: ["5GB / 30 Hari", "10GB / 30 Hari", "20GB / 30 Hari"],
-      XL: ["6GB / 30 Hari", "12GB / 30 Hari"],
-      Indosat: ["8GB / 30 Hari", "16GB / 30 Hari"],
-      Tri: ["10GB / 30 Hari", "25GB / 30 Hari"],
-      Smartfren: ["Unlimited 1 Hari", "Unlimited 30 Hari"]
-    }
-  },
+  title: "Paket Data",
+  placeholder: "Nomor HP",
+  autoDetect: true,
+  providers: {
+    Axis: ["5GB / 30 Hari", "10GB / 30 Hari", "20GB / 30 Hari"],
+    Telkomsel: ["5GB / 30 Hari", "10GB / 30 Hari", "20GB / 30 Hari"],
+    XL: ["6GB / 30 Hari", "12GB / 30 Hari"],
+    Indosat: ["8GB / 30 Hari", "16GB / 30 Hari"],
+    Tri: ["10GB / 30 Hari", "25GB / 30 Hari"],
+    Smartfren: ["Unlimited 1 Hari", "Unlimited 30 Hari"]
+  }
+}
 
   token: {
     title: "Token Listrik PLN",
