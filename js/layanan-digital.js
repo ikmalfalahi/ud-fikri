@@ -19,7 +19,7 @@ const services = {
     }
   },
 
-  data: {
+data: {
   title: "Paket Data",
   placeholder: "Nomor HP",
   autoDetect: true,
@@ -31,7 +31,7 @@ const services = {
     Tri: ["10GB / 30 Hari", "25GB / 30 Hari"],
     Smartfren: ["Unlimited 1 Hari", "Unlimited 30 Hari"]
   }
-}
+}, // ← INI YANG HILANG ❗
 
   token: {
     title: "Token Listrik PLN",
