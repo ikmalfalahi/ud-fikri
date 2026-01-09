@@ -1,3 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layanan Digital | UD Fikri</title>
+
+  <link rel="icon" href="images/faveicon.png">
+  <link rel="stylesheet" href="css/layanan-digital.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- ================= HEADER (SAMA DENGAN HOME) ================= -->
+<header class="top-header">
+  <div class="top-header-inner">
+    <div class="brand">
+      <img src="images/logo.png" alt="UD Fikri">
+      <span>TOKO SEMBAKO UD-FIKRI</span>
+    </div>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Cari layanan digital...">
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <h2>Layanan Digital & PPOB</h2>
+  <p>Cepat • Aman • Terpercaya</p>
+</section>
+
+<!-- ================= CONTENT ================= -->
 <main class="container">
 
   <!-- ================= PRABAYAR ================= -->
@@ -121,3 +155,30 @@
   </section>
 
 </main>
+
+<!-- ================= MODAL ================= -->
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
+
+    <select id="provider"></select>
+    <select id="nominal"></select>
+
+    <input type="text" id="inputData" placeholder="Nomor / ID Pelanggan">
+
+    <button class="btn-primary" onclick="sendWA()">
+      <i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp
+    </button>
+
+    <button class="btn-close" onclick="closeModal()">Tutup</button>
+  </div>
+</div>
+
+<!-- ================= FOOTER (SAMA DENGAN HOME) ================= -->
+<footer class="main-footer">
+  © 2025 Ikmal Falahi. All Rights Reserved.
+</footer>
+
+<script src="js/layanan-digital.js"></script>
+</body>
+</html>
