@@ -8,51 +8,28 @@ body {
   background: #f4f7fb;
 }
 
-/* ================= HEADER ================= */
-
-/* Container header utama */
-.main-header {
-  background: linear-gradient(135deg, #00bfff, #1e90ff);
-  padding: 6px 12px;             /* tipis seperti HOME */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+/* ================= HEADER (SAMA PERSIS DENGAN HOME) ================= */
+header {
+  padding: 10px 5%;
+  background: linear-gradient(90deg,#00bfff,#1e90ff);
+  color: white;
+  border-radius: 0 0 10px 10px;
 }
 
-/* Pembatas konten supaya rata tengah + max width */
-.header-inner {
+#logo-container {
   display: flex;
   align-items: center;
-  gap: 8px;
-  max-width: 1100px;
-  width: 100%;
+  gap: 10px;
 }
 
-/* Logo kecil persis seperti homepage */
-.logo {
-  width: 28px;                   /* dipaksa sama */
-  height: 28px;                  /* dipaksa sama */
+#logo-container img {
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 }
 
-/* Teks toko kecil dan rapat */
-.header-inner .brand-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.header-inner .brand-text strong {
-  font-size: 13px;
-  line-height: 1.1;
-  margin: 0;
-}
-
-.header-inner .brand-text small {
-  font-size: 11px;
-  opacity: 0.8;
-  margin-top: -2px;
+#logo-container h1 {
+  font-size: 18px;
 }
 
 /* ================= HERO ================= */
