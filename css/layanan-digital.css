@@ -203,7 +203,7 @@ footer {
     text-align: center;
     font-size: 12px;
     padding: 10px;
-    background: rgb(30, 144, 255);
+    background: linear-gradient(90deg,#00bfff,#1e90ff);
     border-radius: 10px 10px 0px 0px;
 }
 
