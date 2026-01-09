@@ -1,115 +1,97 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #eef4fb;
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.page {
-  max-width: 420px;
+body {
+  margin: 0;
+  background: #f4f7fb;
+}
+
+/* HEADER */
+.main-header {
+  background: linear-gradient(135deg,#00bfff,#1e90ff);
+  padding: 14px;
+  color: white;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 1100px;
   margin: auto;
 }
 
+.logo {
+  width: 40px;
+}
+
+/* HERO */
 .hero {
-  background: linear-gradient(135deg, #1d9bf0, #2563eb);
-  color: white;
-  padding: 20px;
   text-align: center;
-}
-
-.accordion {
-  background: linear-gradient(90deg,#00bfff,#1e90ff);
+  padding: 24px 12px;
   color: white;
-  cursor: pointer;
-  padding: 12px;
-  width: 100%;
-  text-align: left;
-  border: none;
-  outline: none;
-  font-size: 15px;
-  font-weight: bold;
-  border-radius: 8px;
-  transition: 0.3s;
-  margin-bottom: 10px; /* ✅ jarak antar accordion */
+  background: linear-gradient(135deg,#1e90ff,#00bfff);
 }
 
-.accordion:hover {
-  background: linear-gradient(90deg,#1e90ff,#00bfff);
+.hero h2 {
+  margin: 0;
+  font-size: 20px;
 }
 
-.panel {
-  max-height: 0;
-  overflow: hidden;
-  background: #fff;
-  border-radius: 0 0 10px 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: max-height 0.4s ease;
-  padding: 0 12px;
-  box-sizing: border-box; /* ✅ biar padding masuk hitungan */
+.hero p {
+  margin-top: 6px;
+  font-size: 14px;
 }
 
-.panel.open {
-  padding: 12px;
-  max-height: 100%; /* 🔥 biar tinggi otomatis sesuai isi */
-  margin-bottom: 8px;
-}
-
-.panel textarea {
-  width: 50%;       /* ✅ penuh */
-  min-height: 80px;  /* ✅ cukup tinggi untuk nulis */
-  resize: vertical;  /* ✅ biar user bisa tarik kalau mau */
-  padding: 8px;
-  margin-top: 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
-  font-size: 12px;
-}
-
-.panel ul {
-  padding-left: 20px;
-  margin: 0; /* 🔧 betulkan margin agar rapih */
-}
-
-.panel .desc-image {
-  margin-top: 12px;
-  display: flex;
-  justify-content: center;
-}
-
-.panel .desc-image img {
-  max-width: 100%;
-  border-radius: 8px;
-}
-
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+/* CONTENT */
+.container {
+  max-width: 1100px;
+  margin: auto;
   padding: 16px;
 }
 
+/* GRID */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 12px;
+}
+
 .service-grid div {
-  background: #f1f7fd;
-  border-radius: 14px;
-  padding: 12px 6px;
+  background: white;
+  border-radius: 16px;
+  padding: 18px 10px;
   text-align: center;
+  box-shadow: 0 6px 14px rgba(0,0,0,.08);
   cursor: pointer;
+  transition: .2s;
+}
+
+.service-grid div:hover {
+  transform: translateY(-3px);
+}
+
+.service-grid i {
+  font-size: 22px;
+  color: #1e90ff;
 }
 
 .service-grid span {
   display: block;
-  font-size: 13px;
-  margin-top: 4px;
+  margin-top: 6px;
+  font-weight: 600;
 }
 
 /* MODAL */
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.5);
+  background: rgba(0,0,0,.45);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .hidden {
@@ -120,8 +102,12 @@ body {
   background: white;
   width: 90%;
   max-width: 360px;
-  padding: 16px;
-  border-radius: 16px;
+  padding: 18px;
+  border-radius: 18px;
+}
+
+.modal-box h3 {
+  margin-top: 0;
 }
 
 .modal-box select,
@@ -129,20 +115,43 @@ body {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
-.modal-box button {
+/* BUTTON */
+.btn-primary {
   width: 100%;
   padding: 12px;
-  border-radius: 12px;
   border: none;
-  background: #22c55e;
+  border-radius: 30px;
+  background: #25D366;
   color: white;
-  font-size: 15px;
+  font-weight: bold;
 }
 
-.close {
-  background: #e5e7eb;
-  color: black;
+.btn-close {
+  width: 100%;
   margin-top: 8px;
+  padding: 10px;
+  border: none;
+  border-radius: 30px;
+  background: #ddd;
+}
+
+/* FOOTER */
+.main-footer {
+  margin-top: 30px;
+  padding: 14px;
+  text-align: center;
+  color: white;
+  background: linear-gradient(135deg,#1e90ff,#00bfff);
+  font-size: 13px;
+}
+
+/* RESPONSIVE */
+@media(min-width:768px){
+  .service-grid {
+    grid-template-columns: repeat(4,1fr);
+  }
 }
