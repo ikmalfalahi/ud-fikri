@@ -3,7 +3,6 @@ const nomorAdmin = "6281287505090";
 
 /* ================= DATA LAYANAN ================= */
 const services = {
-  /* ===== PRABAYAR ===== */
   pulsa: {
     title: "Pulsa Prabayar",
     placeholder: "Nomor HP",
@@ -56,29 +55,22 @@ const services = {
     }
   },
 
-  /* ===== PASCABAYAR ===== */
   pln: {
     title: "Tagihan PLN Pascabayar",
     placeholder: "ID Pelanggan",
-    providers: {
-      PLN: ["Cek Tagihan"]
-    }
+    providers: { PLN: ["Cek Tagihan"] }
   },
 
   bpjs: {
     title: "BPJS Kesehatan",
     placeholder: "Nomor VA",
-    providers: {
-      BPJS: ["Cek Tagihan"]
-    }
+    providers: { BPJS: ["Cek Tagihan"] }
   },
 
   telkom: {
     title: "Telkom / IndiHome",
     placeholder: "Nomor Pelanggan",
-    providers: {
-      Telkom: ["Cek Tagihan"]
-    }
+    providers: { Telkom: ["Cek Tagihan"] }
   },
 
   multi: {
@@ -95,39 +87,30 @@ const services = {
   /* ===== KEUANGAN ===== */
   transfer: {
     title: "Transfer Antar Bank",
-    placeholder: "Keterangan Transfer",
-    providers: {
-      BCA: ["Nominal Bebas"],
-      BRI: ["Nominal Bebas"],
-      BNI: ["Nominal Bebas"],
-      Mandiri: ["Nominal Bebas"]
-    }
+    placeholder: "Nomor Rekening Tujuan",
+    isNominalText: true,
+    providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] }
   },
 
   tarik: {
     title: "Tarik Tunai",
     placeholder: "Nomor Akun",
-    providers: {
-      "Via E-Wallet": ["Nominal Bebas"]
-    }
+    isNominalText: true,
+    providers: { "Via E-Wallet": [] }
   },
 
   setor: {
     title: "Setor Tunai",
     placeholder: "Nomor Akun",
-    providers: {
-      "Via E-Wallet": ["Nominal Bebas"]
-    }
+    isNominalText: true,
+    providers: { "Via E-Wallet": [] }
   },
 
   ecommerce: {
     title: "Pembayaran E-Commerce",
     placeholder: "No Pesanan",
-    providers: {
-      Shopee: ["Total Tagihan"],
-      Tokopedia: ["Total Tagihan"],
-      Lazada: ["Total Tagihan"]
-    }
+    isNominalText: true,
+    providers: { Shopee: [], Tokopedia: [], Lazada: [] }
   }
 };
 
@@ -143,15 +126,28 @@ function openService(key) {
 
   const provider = document.getElementById("provider");
   const nominal = document.getElementById("nominal");
+  const nominalText = document.getElementById("nominalText");
 
   provider.innerHTML = `<option value="">Pilih Provider</option>`;
   nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
+
+  // reset visibility
+  nominal.classList.remove("hidden");
+  nominalText.classList.add("hidden");
+  nominalText.value = "";
+
+  if (activeService.isNominalText) {
+    nominal.classList.add("hidden");
+    nominalText.classList.remove("hidden");
+  }
 
   Object.keys(activeService.providers).forEach(p => {
     provider.innerHTML += `<option value="${p}">${p}</option>`;
   });
 
   provider.onchange = () => {
+    if (activeService.isNominalText) return;
+
     nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
     activeService.providers[provider.value].forEach(n => {
       nominal.innerHTML += `<option value="${n}">${n}</option>`;
@@ -168,20 +164,27 @@ function closeModal() {
 
 /* ================= SEND WHATSAPP ================= */
 function sendWA() {
+  const nama = document.getElementById("inputNama").value;
   const provider = document.getElementById("provider").value;
-  const nominal = document.getElementById("nominal").value;
+  const nominalDropdown = document.getElementById("nominal").value;
+  const nominalText = document.getElementById("nominalText").value;
   const input = document.getElementById("inputData").value;
 
-  if (!provider || !nominal || !input) {
+  const nominal = activeService.isNominalText
+    ? nominalText
+    : nominalDropdown;
+
+  if (!nama || !provider || !nominal || !input) {
     alert("Lengkapi data terlebih dahulu!");
     return;
   }
 
   const pesan = `*PESANAN LAYANAN DIGITAL UD FIKRI*
 ━━━━━━━━━━━━━━
+👤 Nama: ${nama}
 📌 Layanan: ${activeService.title}
 🏷 Provider: ${provider}
-📦 Paket/Nominal: ${nominal}
+📦 Nominal/Paket: ${nominal}
 🧾 Data: ${input}
 ━━━━━━━━━━━━━━`;
 
