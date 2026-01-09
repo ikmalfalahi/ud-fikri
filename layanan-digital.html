@@ -1,70 +1,123 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Layanan Digital | UD Fikri</title>
-
-  <link rel="icon" href="images/faveicon.png">
-  <link rel="stylesheet" href="css/layanan-digital.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-
-<!-- ================= HEADER ================= -->
-<header class="main-header">
-  <div class="header-inner">
-    <img src="images/logo.png" alt="UD Fikri" class="logo">
-    <h1>Layanan Digital UD-Fikri</h1>
-  </div>
-</header>
-
-<!-- ================= HERO ================= -->
-<section class="hero">
-  <h2>Layanan Bank & PPOB</h2>
-  <p>Cepat • Aman • Terpercaya</p>
-</section>
-
-<!-- ================= CONTENT ================= -->
 <main class="container">
 
-  <!-- GRID LAYANAN -->
-  <section class="service-grid">
-    <div onclick="openService('pulsa')"><i class="fa-solid fa-phone"></i><span>Pulsa</span></div>
-    <div onclick="openService('data')"><i class="fa-solid fa-signal"></i><span>Paket Data</span></div>
-    <div onclick="openService('token')"><i class="fa-solid fa-bolt"></i><span>Token PLN</span></div>
-    <div onclick="openService('pln')"><i class="fa-solid fa-lightbulb"></i><span>Tagihan PLN</span></div>
-    <div onclick="openService('bpjs')"><i class="fa-solid fa-heart-pulse"></i><span>BPJS</span></div>
-    <div onclick="openService('telkom')"><i class="fa-solid fa-phone-volume"></i><span>Telkom</span></div>
-    <div onclick="openService('ewallet')"><i class="fa-solid fa-wallet"></i><span>E-Wallet</span></div>
-    <div onclick="openService('multi')"><i class="fa-solid fa-file-invoice"></i><span>Multifinance</span></div>
+  <!-- ================= PRABAYAR ================= -->
+  <section class="service-section">
+    <h3>Prabayar</h3>
+    <p class="section-desc">
+      Layanan isi ulang dan voucher digital dengan proses cepat dan aman.
+    </p>
+
+    <div class="service-grid">
+      <div onclick="openService('pulsa')">
+        <i class="fa-solid fa-phone"></i>
+        <span>Pulsa</span>
+        <small>Semua operator • nominal lengkap</small>
+      </div>
+
+      <div onclick="openService('data')">
+        <i class="fa-solid fa-signal"></i>
+        <span>Paket Data</span>
+        <small>Harian • Mingguan • Bulanan</small>
+      </div>
+
+      <div onclick="openService('token')">
+        <i class="fa-solid fa-bolt"></i>
+        <span>Token PLN</span>
+        <small>20K – 1 Juta</small>
+      </div>
+
+      <div onclick="openService('game')">
+        <i class="fa-solid fa-gamepad"></i>
+        <span>Voucher Game</span>
+        <small>ML • FF • PUBG • dll</small>
+      </div>
+
+      <div onclick="openService('ewallet')">
+        <i class="fa-solid fa-wallet"></i>
+        <span>E-Wallet</span>
+        <small>DANA • OVO • GoPay • ShopeePay</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PASCABAYAR ================= -->
+  <section class="service-section">
+    <h3>Pascabayar</h3>
+    <p class="section-desc">
+      Pembayaran tagihan bulanan secara praktis dan terpercaya.
+    </p>
+
+    <div class="service-grid">
+      <div onclick="openService('pulsa-pasca')">
+        <i class="fa-solid fa-phone-volume"></i>
+        <span>Pulsa Pascabayar</span>
+        <small>Telkomsel • XL • Indosat</small>
+      </div>
+
+      <div onclick="openService('pln')">
+        <i class="fa-solid fa-lightbulb"></i>
+        <span>Tagihan PLN</span>
+        <small>Rumah • Bisnis</small>
+      </div>
+
+      <div onclick="openService('bpjs')">
+        <i class="fa-solid fa-heart-pulse"></i>
+        <span>BPJS</span>
+        <small>Kesehatan</small>
+      </div>
+
+      <div onclick="openService('telkom')">
+        <i class="fa-solid fa-phone"></i>
+        <span>Telkom</span>
+        <small>IndiHome • Telepon</small>
+      </div>
+
+      <div onclick="openService('tv')">
+        <i class="fa-solid fa-tv"></i>
+        <span>TV Kabel</span>
+        <small>IndiHome • Nex • dll</small>
+      </div>
+
+      <div onclick="openService('multi')">
+        <i class="fa-solid fa-file-invoice"></i>
+        <span>Multifinance</span>
+        <small>Motor • Mobil • Kredit</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= KEUANGAN ================= -->
+  <section class="service-section">
+    <h3>Keuangan</h3>
+    <p class="section-desc">
+      Layanan transaksi keuangan aman dan cepat.
+    </p>
+
+    <div class="service-grid">
+      <div onclick="openService('transfer')">
+        <i class="fa-solid fa-building-columns"></i>
+        <span>Transfer Bank</span>
+        <small>Semua bank</small>
+      </div>
+
+      <div onclick="openService('tarik')">
+        <i class="fa-solid fa-money-bill-wave"></i>
+        <span>Tarik Tunai</span>
+        <small>Via E-Wallet</small>
+      </div>
+
+      <div onclick="openService('setor')">
+        <i class="fa-solid fa-money-bill-trend-up"></i>
+        <span>Setor Tunai</span>
+        <small>Via E-Wallet</small>
+      </div>
+
+      <div onclick="openService('ecommerce')">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>Bayar E-Commerce</span>
+        <small>Shopee • Tokopedia • Lazada</small>
+      </div>
+    </div>
   </section>
 
 </main>
-
-<!-- ================= MODAL ================= -->
-<div class="modal hidden" id="modal">
-  <div class="modal-box">
-    <h3 id="modalTitle"></h3>
-
-    <select id="provider"></select>
-    <select id="nominal"></select>
-
-    <input type="text" id="inputData" placeholder="Nomor / ID Pelanggan">
-
-    <button class="btn-primary" onclick="sendWA()">
-      <i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp
-    </button>
-
-    <button class="btn-close" onclick="closeModal()">Tutup</button>
-  </div>
-</div>
-
-<!-- ================= FOOTER ================= -->
-<footer class="main-footer">
-  © 2025 UD Fikri • Layanan Digital
-</footer>
-
-<script src="js/layanan-digital.js"></script>
-</body>
-</html>
