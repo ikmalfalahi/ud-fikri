@@ -1,11 +1,13 @@
 /* ================= CONFIG ================= */
 const nomorAdmin = "6281287505090";
+let activeService = null;
 
 /* ================= DATA LAYANAN ================= */
 const services = {
   pulsa: {
     title: "Pulsa Prabayar",
     placeholder: "Nomor HP",
+    autoDetect: true,
     providers: {
       Telkomsel: ["5.000", "10.000", "20.000", "50.000"],
       XL: ["5.000", "10.000", "25.000"],
@@ -17,6 +19,7 @@ const services = {
   data: {
     title: "Paket Data",
     placeholder: "Nomor HP",
+    autoDetect: true,
     providers: {
       Telkomsel: ["5GB / 30 Hari", "10GB / 30 Hari", "20GB / 30 Hari"],
       XL: ["6GB / 30 Hari", "12GB / 30 Hari"],
@@ -114,24 +117,41 @@ const services = {
   }
 };
 
-let activeService = null;
+/* ================= PREFIX OPERATOR ================= */
+const prefixOperator = {
+  Telkomsel: ["0811","0812","0813","0821","0822","0823","0851","0852","0853"],
+  Indosat: ["0814","0815","0816","0855","0856","0857","0858"],
+  XL: ["0817","0818","0819","0859","0877","0878"],
+  Tri: ["0895","0896","0897","0898","0899"],
+  Axis: ["0831","0832","0833","0838"]
+};
+
+function detectOperator(nomor) {
+  if (nomor.length < 4) return null;
+  const prefix = nomor.substring(0, 4);
+  for (const op in prefixOperator) {
+    if (prefixOperator[op].includes(prefix)) return op;
+  }
+  return null;
+}
 
 /* ================= OPEN MODAL ================= */
 function openService(key) {
   activeService = services[key];
   if (!activeService) return;
 
-  document.getElementById("modalTitle").innerText = activeService.title;
-  document.getElementById("inputData").placeholder = activeService.placeholder;
-
   const provider = document.getElementById("provider");
   const nominal = document.getElementById("nominal");
   const nominalText = document.getElementById("nominalText");
+  const inputData = document.getElementById("inputData");
+
+  document.getElementById("modalTitle").innerText = activeService.title;
+  inputData.placeholder = activeService.placeholder;
+  inputData.value = "";
 
   provider.innerHTML = `<option value="">Pilih Provider</option>`;
   nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
 
-  // reset visibility
   nominal.classList.remove("hidden");
   nominalText.classList.add("hidden");
   nominalText.value = "";
@@ -147,11 +167,20 @@ function openService(key) {
 
   provider.onchange = () => {
     if (activeService.isNominalText) return;
-
     nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
     activeService.providers[provider.value].forEach(n => {
       nominal.innerHTML += `<option value="${n}">${n}</option>`;
     });
+  };
+
+  // AUTO DETEKSI OPERATOR (Pulsa & Data)
+  inputData.oninput = () => {
+    if (!activeService.autoDetect) return;
+    const op = detectOperator(inputData.value);
+    if (op && activeService.providers[op]) {
+      provider.value = op;
+      provider.onchange();
+    }
   };
 
   document.getElementById("modal").classList.remove("hidden");
@@ -164,28 +193,26 @@ function closeModal() {
 
 /* ================= SEND WHATSAPP ================= */
 function sendWA() {
-  const nama = document.getElementById("inputNama").value;
+  const nama = document.getElementById("inputNama").value.trim();
   const provider = document.getElementById("provider").value;
-  const nominalDropdown = document.getElementById("nominal").value;
-  const nominalText = document.getElementById("nominalText").value;
-  const input = document.getElementById("inputData").value;
+  const data = document.getElementById("inputData").value.trim();
 
   const nominal = activeService.isNominalText
-    ? nominalText
-    : nominalDropdown;
+    ? document.getElementById("nominalText").value.trim()
+    : document.getElementById("nominal").value;
 
-  if (!nama || !provider || !nominal || !input) {
+  if (!nama || !provider || !nominal || !data) {
     alert("Lengkapi data terlebih dahulu!");
     return;
   }
 
-  const pesan = `*PESANAN LAYANAN DIGITAL UD FIKRI*
+  const pesan = `*PESANAN LAYANAN DIGITAL – UD FIKRI*
 ━━━━━━━━━━━━━━
 👤 Nama: ${nama}
 📌 Layanan: ${activeService.title}
 🏷 Provider: ${provider}
 📦 Nominal/Paket: ${nominal}
-🧾 Data: ${input}
+🧾 Data: ${data}
 ━━━━━━━━━━━━━━`;
 
   window.open(
