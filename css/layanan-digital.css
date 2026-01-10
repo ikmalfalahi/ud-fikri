@@ -81,69 +81,57 @@ header {
 }
 
 /* ================= ACCORDION ================= */
-.accordion {
-  background: linear-gradient(90deg,#00bfff,#1e90ff);
-  color: white;
-  cursor: pointer;
-  padding: 12px;
+.udfikri-accordion {
+  margin: 24px 16px;
+}
+
+.accordion-item {
+  margin-bottom: 10px;
+}
+
+.accordion-btn {
   width: 100%;
-  text-align: left;
+  background: linear-gradient(90deg, #00bfff, #1e90ff);
+  color: white;
   border: none;
-  outline: none;
+  padding: 12px 16px;
   font-size: 15px;
   font-weight: bold;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-radius: 8px;
-  transition: 0.3s;
-  margin-bottom: 10px; /* ✅ jarak antar accordion */
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.accordion:hover {
-  background: linear-gradient(90deg,#1e90ff,#00bfff);
+.accordion-btn:hover {
+  background: linear-gradient(90deg, #1e90ff, #00bfff);
 }
 
-.panel {
+.accordion-btn i {
+  transition: transform 0.3s ease;
+}
+
+.accordion-btn.active i {
+  transform: rotate(180deg);
+}
+
+.accordion-body {
   max-height: 0;
   overflow: hidden;
-  background: #fff;
-  border-radius: 0 0 10px 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: max-height 0.4s ease;
-  padding: 0 12px;
-  box-sizing: border-box; /* ✅ biar padding masuk hitungan */
+  background: white;
+  padding: 0 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  border-radius: 0 0 8px 8px;
+  margin-top: 4px;
 }
 
-.panel.open {
-  padding: 12px;
-  max-height: 100%; /* 🔥 biar tinggi otomatis sesuai isi */
-  margin-bottom: 8px;
-}
-
-.panel textarea {
-  width: 50%;       /* ✅ penuh */
-  min-height: 80px;  /* ✅ cukup tinggi untuk nulis */
-  resize: vertical;  /* ✅ biar user bisa tarik kalau mau */
-  padding: 8px;
-  margin-top: 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
-  font-size: 12px;
-}
-
-.panel ul {
-  padding-left: 20px;
-  margin: 0; /* 🔧 betulkan margin agar rapih */
-}
-
-.panel .desc-image {
-  margin-top: 12px;
-  display: flex;
-  justify-content: center;
-}
-
-.panel .desc-image img {
-  max-width: 100%;
-  border-radius: 8px;
+.accordion-body.open {
+  padding: 12px 16px;
 }
 
 /* ================= CONTENT ================= */
