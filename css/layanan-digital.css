@@ -80,6 +80,60 @@ header {
   opacity: 0.9;
 }
 
+/* ================= ACCORDION ================= */
+.accordion-section {
+  margin: 40px auto;
+  max-width: 900px;
+  padding: 0 16px;
+}
+
+.accordion-title {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #ddd;
+}
+
+.accordion-header {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 16px 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.accordion-header i {
+  transition: transform 0.3s ease;
+}
+
+.accordion-item.active .accordion-header i {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+  padding: 0 8px;
+}
+
+.accordion-content p,
+.accordion-content ul,
+.accordion-content ol {
+  margin: 12px 0 18px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
 /* ================= CONTENT ================= */
 .container {
   max-width: 1100px;
