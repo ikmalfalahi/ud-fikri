@@ -9,7 +9,16 @@ const services = {
     placeholder: "Nomor HP",
     autoDetect: true,
     providers: {
-      Axis: ["5.000", "10.000", "20.000", "25.000", "30.000", "50.000", "75.000", "100.000"],
+      Axis: [
+        {label: "5.000", harga:6000},
+        {label: "10.000", harga:12000},
+        {label: "20.000", harga:22000},
+        {label: "25.000", harga:27000},
+        {label: "30.000", harga:32000},
+        {label: "50.000", harga:52000}
+        {label: "75.000", harga:72000},
+        {label: "100.000", harga:102000},
+      ],
       ByU: ["5.000", "10.000", "20.000", "25.000", "30.000", "50.000", "75.000", "100.000"],
       Telkomsel: ["5.000", "10.000", "20.000", "25.000", "30.000", "50.000", "75.000", "100.000"],
       XL: ["5.000", "10.000", "20.000", "25.000", "30.000", "50.000", "75.000", "100.000"],
@@ -170,13 +179,21 @@ function openService(key) {
     provider.innerHTML += `<option value="${p}">${p}</option>`;
   });
 
-  provider.onchange = () => {
-    if (activeService.isNominalText) return;
-    nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
-    activeService.providers[provider.value].forEach(n => {
-      nominal.innerHTML += `<option value="${n}">${n}</option>`;
-    });
-  };
+ provider.onchange = () => {
+  if (activeService.isNominalText) return;
+
+  nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
+
+  activeService.providers[provider.value].forEach(item => {
+    nominal.innerHTML += `
+      <option 
+        value="${item.label}" 
+        data-harga="${item.harga}">
+        ${item.label} – Rp ${item.harga.toLocaleString("id-ID")}
+      </option>
+    `;
+  });
+};
 
   // AUTO DETEKSI OPERATOR (Pulsa & Data)
   inputData.oninput = () => {
@@ -202,9 +219,14 @@ function sendWA() {
   const provider = document.getElementById("provider").value;
   const data = document.getElementById("inputData").value.trim();
 
+  const nominalEl = document.getElementById("nominal");
   const nominal = activeService.isNominalText
     ? document.getElementById("nominalText").value.trim()
-    : document.getElementById("nominal").value;
+    : nominalEl.value;
+
+  const harga = activeService.isNominalText
+    ? "-"
+    : nominalEl.options[nominalEl.selectedIndex].dataset.harga;
 
   if (!nama || !provider || !nominal || !data) {
     alert("Lengkapi data terlebih dahulu!");
@@ -216,7 +238,8 @@ function sendWA() {
 👤 Nama: ${nama}
 📌 Layanan: ${activeService.title}
 🏷 Provider: ${provider}
-📦 Nominal/Paket: ${nominal}
+📦 Paket: ${nominal}
+💰 Harga: Rp ${harga ? Number(harga).toLocaleString("id-ID") : "-"}
 🧾 Data: ${data}
 ━━━━━━━━━━━━━━`;
 
@@ -244,5 +267,3 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     }
   });
 });
-
-
