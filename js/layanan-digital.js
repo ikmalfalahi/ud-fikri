@@ -226,19 +226,23 @@ function sendWA() {
   );
 }
 
-/* ================= ACCORDION ================= */
-document.querySelectorAll(".accordion-header").forEach(btn => {
+// UD-Fikri Style Accordion Behavior
+document.querySelectorAll(".accordion-btn").forEach(btn => {
   btn.addEventListener("click", () => {
-    const item = btn.parentElement;
-    const content = btn.nextElementSibling;
+    const body = btn.nextElementSibling;
+    const isOpen = body.style.maxHeight && body.style.maxHeight !== "0px";
 
-    item.classList.toggle("active");
-
-    if (item.classList.contains("active")) {
-      content.style.maxHeight = content.scrollHeight + "px";
+    // toggle current
+    if (isOpen) {
+      body.style.maxHeight = null;
+      btn.classList.remove("active");
+      body.classList.remove("open");
     } else {
-      content.style.maxHeight = null;
+      body.style.maxHeight = body.scrollHeight + "px";
+      btn.classList.add("active");
+      body.classList.add("open");
     }
   });
 });
+
 
