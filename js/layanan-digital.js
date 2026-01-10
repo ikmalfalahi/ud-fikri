@@ -10,9 +10,9 @@ const services = {
     autoDetect: true,
     providers: {
       Axis: [
-        { label: "5.000", harga: 6000 },
-        { label: "10.000", harga: 12000 },
-        { label: "20.000", harga: 22000 },
+        { label: "5.000 / Masa Aktif 7 Hari", harga: 7000 },
+        { label: "10.000 / Masa Aktif 15 Hari", harga: 12000 },
+        { label: "15.000 / Bonus Isi Pulsa 1,5Gb 2hr di aplikasi AXISnet", harga: 17000 },
         { label: "25.000", harga: 27000 },
         { label: "30.000", harga: 32000 },
         { label: "50.000", harga: 52000 },
