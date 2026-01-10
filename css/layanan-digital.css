@@ -81,57 +81,69 @@ header {
 }
 
 /* ================= ACCORDION ================= */
-.accordion-section {
-  margin: 40px auto;
-  max-width: 900px;
-  padding: 0 16px;
-}
-
-.accordion-title {
-  text-align: center;
-  font-size: 1.4rem;
-  margin-bottom: 20px;
-  font-weight: 600;
-}
-
-.accordion-item {
-  border-bottom: 1px solid #ddd;
-}
-
-.accordion-header {
-  width: 100%;
-  background: none;
-  border: none;
-  padding: 16px 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.accordion {
+  background: linear-gradient(90deg,#00bfff,#1e90ff);
+  color: white;
   cursor: pointer;
+  padding: 12px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: 0.3s;
+  margin-bottom: 10px; /* ✅ jarak antar accordion */
 }
 
-.accordion-header i {
-  transition: transform 0.3s ease;
+.accordion:hover {
+  background: linear-gradient(90deg,#1e90ff,#00bfff);
 }
 
-.accordion-item.active .accordion-header i {
-  transform: rotate(180deg);
-}
-
-.accordion-content {
+.panel {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s ease;
-  padding: 0 8px;
+  background: #fff;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: max-height 0.4s ease;
+  padding: 0 12px;
+  box-sizing: border-box; /* ✅ biar padding masuk hitungan */
 }
 
-.accordion-content p,
-.accordion-content ul,
-.accordion-content ol {
-  margin: 12px 0 18px;
-  font-size: 0.95rem;
-  line-height: 1.6;
+.panel.open {
+  padding: 12px;
+  max-height: 100%; /* 🔥 biar tinggi otomatis sesuai isi */
+  margin-bottom: 8px;
+}
+
+.panel textarea {
+  width: 50%;       /* ✅ penuh */
+  min-height: 80px;  /* ✅ cukup tinggi untuk nulis */
+  resize: vertical;  /* ✅ biar user bisa tarik kalau mau */
+  padding: 8px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+.panel ul {
+  padding-left: 20px;
+  margin: 0; /* 🔧 betulkan margin agar rapih */
+}
+
+.panel .desc-image {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.panel .desc-image img {
+  max-width: 100%;
+  border-radius: 8px;
 }
 
 /* ================= CONTENT ================= */
