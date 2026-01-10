@@ -46,7 +46,12 @@ data: {
     title: "Token Listrik PLN",
     placeholder: "ID Pelanggan",
     providers: {
-      PLN: ["20.000", "50.000", "100.000", "200.000", "500.000", "1.000.000"]
+      PLN: [
+        {label: "PLN 20.000", harga: 23000},
+        {label: "PLN 50.000", harga: 53000},
+        {label: "PLN 100.000", harga: 103000},
+        {label: "PLN 200.000", harga: 204000},
+        ]
     }
   },
 
