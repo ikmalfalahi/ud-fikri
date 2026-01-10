@@ -276,3 +276,70 @@ footer p {
     font-size: 22px;
   }
 }
+
+/* ================ Container =================== */
+/* Wrapper jarak antar section */
+.section-wrapper {
+  padding: 16px;
+}
+
+/* Container putih */
+.section-container {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* Judul section */
+.section-title {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Deskripsi */
+.section-desc {
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Grid layanan */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+/* Card layanan */
+.service-card {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.service-card:hover {
+  background: #f1f1f1;
+}
+
+.service-card i {
+  font-size: 22px;
+  color: #2c7be5;
+  margin-bottom: 6px;
+}
+
+.service-card span {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.service-card small {
+  font-size: 11px;
+  color: #777;
+}
+
