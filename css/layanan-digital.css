@@ -114,7 +114,7 @@ header {
 /* ================= HERO ================= */
 .hero {
   text-align: center;
-  padding: 26px 12px;
+  padding: 8px 6px;
   color: white;
   background: linear-gradient(135deg,#1e90ff,#00bfff);
 }
