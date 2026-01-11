@@ -245,26 +245,26 @@ function openService(key) {
   });
 
   // PROVIDER CHANGE
-  provider.onchange = () => {
-    if (activeService.isNominalText) return;
+ provider.onchange = () => {
+  if (activeService.isNominalText) return;
 
-    nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
-    priceBox.classList.add("hidden");
+  nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
+  priceBox.classList.add("hidden");
 
-    const list = activeService.providers[provider.value];
-    if (!Array.isArray(list)) return;
+  const list = activeService.providers[provider.value];
+  if (!Array.isArray(list)) return;
 
-    list.forEach(item => {
-  if (typeof item === "string") {
-    nominal.innerHTML += `
-      <option value="${item}">${item}</option>`;
-  } else {
-    nominal.innerHTML += `
-      <option value="${item.label}" data-harga="${item.harga}">
-        ${item.label} - Rp ${item.harga.toLocaleString("id-ID")}
-      </option>`;
-  }
-});
+  list.forEach(item => {
+    if (typeof item === "string") {
+      nominal.innerHTML += `<option value="${item}">${item}</option>`;
+    } else {
+      nominal.innerHTML += `
+        <option value="${item.label}" data-harga="${item.harga}">
+          ${item.label} - Rp ${item.harga.toLocaleString("id-ID")}
+        </option>`;
+    }
+  });
+};
 
   // NOMINAL DROPDOWN
   nominal.onchange = () => {
