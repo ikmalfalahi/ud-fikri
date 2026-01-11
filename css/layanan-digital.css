@@ -256,6 +256,11 @@ html {
   z-index: 9999; /* ✅ WAJIB DIGANTI */
 }
 
+.modal-box {
+  position: relative;
+  z-index: 10000;
+}
+
 .hidden {
   display: none;
 }
