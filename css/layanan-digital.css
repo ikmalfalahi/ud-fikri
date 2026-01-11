@@ -298,6 +298,13 @@ header {
   color: #0d6efd;
 }
 
+.admin-text {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
 /* ============= Upload Bukti ============== */
 .upload-box {
   margin-top: 12px;
