@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://unpkg.com https://cdn.jsdelivr.net;
-  script-src-elem 'self' https://cdn.jsdelivr.net;
-  style-src-elem 'self' https://cdnjs.cloudflare.com;
-  font-src 'self' https://cdnjs.cloudflare.com;
+default-src 'self';
+script-src 'self' https://cdn.jsdelivr.net;
+style-src 'self' https://cdnjs.cloudflare.com;
+img-src 'self' data: https:;
+connect-src 'self' https://*.supabase.co wss://*.supabase.co;
+font-src 'self' https://cdnjs.cloudflare.com;
 ">
 
   <title>Layanan Digital | UD Fikri</title>
@@ -29,15 +30,15 @@
 
 <!-- ================= NAVBAR TOP ================= -->
 <nav class="top-nav">
-  <button class="nav-btn" onclick="window.location.href='index.html'">
+  <button class="nav-btn" data-link="index.html">
     <i class="fa-solid fa-house"></i>
     Beranda
   </button>
 
-  <button class="nav-btn" onclick="window.location.href='keranjang.html'">
-    <i class="fa-solid fa-cart-shopping"></i>
-    Keranjang
-  </button>
+  <a href="#keuangan" class="nav-btn">
+  <i class="fa-solid fa-cart-shopping"></i>
+  Keuangan
+</a>
 
   <button class="nav-btn active">
     <i class="fa-solid fa-bolt"></i>
@@ -115,31 +116,31 @@
     </p>
 
     <div class="service-grid">
-      <div class="service-card" onclick="openService('pulsa')">
+      <div class="service-card service-btn" data-service="pulsa">
         <i class="fa-solid fa-phone"></i>
         <span>Pulsa</span>
         <small>Semua operator • nominal lengkap</small>
       </div>
 
-      <div class="service-card" onclick="openService('data')">
+      <div class="service-card service-btn" data-service="data">
         <i class="fa-solid fa-signal"></i>
         <span>Paket Data</span>
         <small>Harian • Mingguan • Bulanan</small>
       </div>
 
-      <div class="service-card" onclick="openService('token')">
+      <div class="service-card service-btn" data-service="token">
         <i class="fa-solid fa-bolt"></i>
         <span>Token PLN</span>
         <small>20K – 1 Juta</small>
       </div>
 
-      <div class="service-card" onclick="openService('game')">
+      <div class="service-card service-btn" data-service="game">
         <i class="fa-solid fa-gamepad"></i>
         <span>Voucher Game</span>
         <small>ML • FF • PUBG • dll</small>
       </div>
 
-      <div class="service-card" onclick="openService('ewallet')">
+      <div class="service-card service-btn" data-service="ewallet">
         <i class="fa-solid fa-wallet"></i>
         <span>E-Wallet</span>
         <small>DANA • OVO • GoPay • ShopeePay</small>
@@ -156,37 +157,37 @@
     </p>
 
     <div class="service-grid">
-      <div onclick="openService('pulsa-pasca')">
+      <div class="service-card service-btn" data-service="pulsa-pasca">
         <i class="fa-solid fa-phone-volume"></i>
         <span>Pulsa Pascabayar</span>
         <small>Telkomsel • XL • Indosat</small>
       </div>
 
-      <div onclick="openService('pln')">
+      <div class="service-card service-btn" data-service="pln">
         <i class="fa-solid fa-lightbulb"></i>
         <span>Tagihan PLN</span>
         <small>Rumah • Bisnis</small>
       </div>
 
-      <div onclick="openService('bpjs')">
+      <div class="service-card service-btn" data-service="bpjs">
         <i class="fa-solid fa-heart-pulse"></i>
         <span>BPJS</span>
         <small>Kesehatan</small>
       </div>
 
-      <div onclick="openService('telkom')">
+      <div class="service-card service-btn" data-service="telkom">
         <i class="fa-solid fa-phone"></i>
         <span>Telkom</span>
         <small>IndiHome • Telepon</small>
       </div>
 
-      <div onclick="openService('tv')">
+      <div class="service-card service-btn" data-service="tv">
         <i class="fa-solid fa-tv"></i>
         <span>TV Kabel</span>
         <small>IndiHome • Nex • dll</small>
       </div>
 
-      <div onclick="openService('multi')">
+      <div class="service-card service-btn" data-service="multi">
         <i class="fa-solid fa-file-invoice"></i>
         <span>Multifinance</span>
         <small>Motor • Mobil • Kredit</small>
@@ -194,33 +195,33 @@
     </div>
   </section>
 
-  <!-- ================= KEUANGAN ================= -->
-  <section class="service-section">
+  <!-- ================= Keuangan  ================= -->
+  <section class="service-section" id="keuangan">
     <h3>Keuangan</h3>
     <p class="section-desc">
       Layanan transaksi keuangan aman dan cepat.
     </p>
 
     <div class="service-grid">
-      <div onclick="openService('transfer')">
+      <div class="service-card service-btn" data-service="transfer">
         <i class="fa-solid fa-building-columns"></i>
         <span>Transfer Bank</span>
         <small>Semua bank</small>
       </div>
 
-      <div onclick="openService('tarik')">
+      <div class="service-card service-btn" data-service="tarik">
         <i class="fa-solid fa-money-bill-wave"></i>
         <span>Tarik Tunai</span>
         <small>Via E-Wallet</small>
       </div>
 
-      <div onclick="openService('setor')">
+      <div class="service-card service-btn" data-service="setor">
         <i class="fa-solid fa-money-bill-trend-up"></i>
         <span>Setor Tunai</span>
         <small>Via E-Wallet</small>
       </div>
 
-      <div onclick="openService('ecommerce')">
+      <div class="service-card service-btn" data-service="ecommerce">
         <i class="fa-solid fa-cart-shopping"></i>
         <span>Bayar E-Commerce</span>
         <small>Shopee • Tokopedia • Lazada</small>
@@ -290,11 +291,11 @@
     </div>
 
     <!-- BUTTON -->
-    <button class="btn-primary" onclick="sendWA()">
+    <button class="btn-primary" id="btnSendWA">
       <i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp
     </button>
 
-    <button class="btn-close" onclick="closeModal()">Tutup</button>
+    <button class="btn-close" id="btnCloseModal">Tutup</button>
   </div>
 </div>
 
