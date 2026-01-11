@@ -1,6 +1,6 @@
 "use strict";
-window.supabase = window.supabase || window.supabaseClient;
-const supabase = window.supabase || {}; // fallback supaya tidak crash
+
+const supabase = window.supabaseClient;
 
 let buktiURL = "";
 
