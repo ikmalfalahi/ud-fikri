@@ -339,6 +339,11 @@ if (!buktiURL) {
   return;
 }
 
+if (activeService.isNominalText && isNaN(Number(nominalValue.replace(/\D/g,"")))) {
+  alert("Nominal tidak valid");
+  return;
+}
+
   const totalHarga = activeService.isNominalText
     ? Number(nominalValue.replace(/\D/g, "")) + admin
     : Number(hargaEl || 0);
@@ -404,32 +409,31 @@ bukti.onchange = async () => {
   // preview lokal
   const reader = new FileReader();
   reader.onload = e => {
-    previewBukti.src = e.target.result;
+    preview.src = e.target.result;
     previewWrapper.classList.remove("hidden");
   };
   reader.readAsDataURL(file);
 
   // ===== UPLOAD KE SUPABASE =====
-  const ext = file.name.split(".").pop();
-  const fileName = `bukti-${Date.now()}.${ext}`;
+const ext = file.name.split(".").pop();
+const fileName = `bukti-${Date.now()}.${ext}`;
+const path = `layanan-digital/${fileName}`;
 
-  const { error } = await supabase.storage
-    .from("bukti-pembayaran")
-    .upload(fileName, file);
+const { error } = await supabase.storage
+  .from("bukti-pembayaran")
+  .upload(path, file);
 
-  if (error) {
-    alert("Gagal upload bukti pembayaran!");
-    console.error(error);
-    return;
-  }
+if (error) {
+  alert("Gagal upload bukti pembayaran!");
+  console.error(error);
+  return;
+}
 
-  // ambil PUBLIC URL
-  const { data } = supabase.storage
-    .from("bukti-pembayaran")
-    .getPublicUrl(fileName);
+const { data } = supabase.storage
+  .from("bukti-pembayaran")
+  .getPublicUrl(path);
 
-  buktiURL = data.publicUrl;
-};
+buktiURL = data.publicUrl;
 
 /* Hapus bukti */
 removeBtn.onclick = () => {
