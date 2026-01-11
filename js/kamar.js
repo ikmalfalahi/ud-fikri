@@ -1,7 +1,7 @@
 // ==================== SUPABASE ====================
 // Gunakan global window.supabase dari supabase.js
 // Jangan pakai const lagi untuk menghindari error "Identifier already declared"
-const supabase = window.supabase; // bisa langsung pakai window.supabase di semua fungsi juga
+var supabase = window.supabase; // aman, bisa dipakai di semua fungsi
 
 // ==================== UPDATE STATUS ====================
 function updateAdminStatus(open) {
