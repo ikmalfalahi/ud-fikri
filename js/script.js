@@ -1,13 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
   let storeOpen = false; // default
 
-  // === FETCH STATUS TOKO dari supabaseClient ===
-  async function fetchStoreStatus() {
-  const { data, error } = await supabaseClient
+ // ================= SUPABASE =================
+const supabase = window.supabaseClient;
+
+// === FETCH STATUS TOKO dari Supabase ===
+async function fetchStoreStatus() {
+  const { data, error } = await supabase
     .from("store_status")
     .select("is_open")
     .eq("id", 1)
-    .maybeSingle(); // aman kalau kosong
+    .maybeSingle();
 
   if (error) {
     console.error("Gagal ambil status toko:", error);
@@ -22,22 +25,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }
 
-  // cek pertama kali
-  fetchStoreStatus();
+// cek pertama kali
+fetchStoreStatus();
 
-  // subscribe realtime
-  supabaseClient
-    .channel("status-channel")
-    .on(
-      "postgres_changes",
-      { event: "*", schema: "public", table: "store_status" },
-      payload => {
-        console.log("Status toko berubah:", payload.new);
-        storeOpen = payload.new.is_open;
-        updateStoreStatus();
-      }
-    )
-    .subscribe();
+// subscribe realtime
+supabase
+  .channel("status-channel")
+  .on(
+    "postgres_changes",
+    { event: "*", schema: "public", table: "store_status" },
+    payload => {
+      console.log("Status toko berubah:", payload.new);
+      storeOpen = payload.new.is_open;
+      updateStoreStatus();
+    }
+  )
+  .subscribe();
 
   // === UPDATE STATUS TOKO DI UI ===
 function updateStoreStatus() {
@@ -1382,5 +1385,6 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
