@@ -255,6 +255,17 @@ function openService(key) {
     if (!Array.isArray(list)) return;
 
     list.forEach(item => {
+  if (typeof item === "string") {
+    nominal.innerHTML += `
+      <option value="${item}">${item}</option>`;
+  } else {
+    nominal.innerHTML += `
+      <option value="${item.label}" data-harga="${item.harga}">
+        ${item.label} - Rp ${item.harga.toLocaleString("id-ID")}
+      </option>`;
+  }
+});
+Each(item => {
       nominal.innerHTML += `
         <option value="${item.label}" data-harga="${item.harga}">
           ${item.label} - Rp ${item.harga.toLocaleString("id-ID")}
@@ -406,7 +417,7 @@ bukti.onchange = async () => {
     return;
   }
 
-  // preview lokal
+  // preview
   const reader = new FileReader();
   reader.onload = e => {
     preview.src = e.target.result;
@@ -414,26 +425,27 @@ bukti.onchange = async () => {
   };
   reader.readAsDataURL(file);
 
-  // ===== UPLOAD KE SUPABASE =====
-const ext = file.name.split(".").pop();
-const fileName = `bukti-${Date.now()}.${ext}`;
-const path = `layanan-digital/${fileName}`;
+  // upload ke supabase
+  const ext = file.name.split(".").pop();
+  const fileName = `bukti-${Date.now()}.${ext}`;
+  const path = `layanan-digital/${fileName}`;
 
-const { error } = await supabase.storage
-  .from("bukti-pembayaran")
-  .upload(path, file);
+  const { error } = await supabase.storage
+    .from("bukti-pembayaran")
+    .upload(path, file);
 
-if (error) {
-  alert("Gagal upload bukti pembayaran!");
-  console.error(error);
-  return;
-}
+  if (error) {
+    alert("Gagal upload bukti pembayaran!");
+    console.error(error);
+    return;
+  }
 
-const { data } = supabase.storage
-  .from("bukti-pembayaran")
-  .getPublicUrl(path);
+  const { data } = supabase.storage
+    .from("bukti-pembayaran")
+    .getPublicUrl(path);
 
-buktiURL = data.publicUrl;
+  buktiURL = data.publicUrl;
+};
 
 /* Hapus bukti */
 removeBtn.onclick = () => {
