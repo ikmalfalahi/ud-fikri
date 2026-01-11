@@ -7,3 +7,6 @@ window.supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
+
+// opsional: bisa cek apakah berhasil
+console.log("Supabase client siap:", supabase);
