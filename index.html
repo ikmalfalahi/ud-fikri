@@ -25,6 +25,7 @@
   <meta name="twitter:description" content="Kebutuhan harian, harga ramah, tersedia layanan antar ke rumah.">
   <meta name="twitter:image" content="https://ud-fikri.vercel.app/images/slide1.jpg">
 
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <!-- Schema.org Business Info -->
 <script type="application/ld+json">
 {
@@ -275,24 +276,13 @@
 
 <footer>&copy; 2025 Ikmal Falahi. All Rights Reserved.</footer>
 
-<!-- 1. Load library supabase dulu -->
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-<!-- 2. Inisialisasi client -->
-<!-- 1. Supabase library -->
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
-<!-- 2. Supabase global config -->
 <script src="js/supabase.js"></script>
-
-<!-- 3. Script utama -->
 <script src="js/script.js"></script>
 
-<!-- 3. Baru setelah itu load script.js -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>
   AOS.init({
     duration: 800,
@@ -317,5 +307,4 @@
 
 </body>
 </html>
-
 
