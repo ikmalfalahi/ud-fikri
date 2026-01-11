@@ -82,6 +82,10 @@ header {
   color: #fff;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* ============= Handshake ========== */
 #welcome {
   font-size: 16px;
