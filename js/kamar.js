@@ -1,5 +1,7 @@
-// pastikan window.supabaseClient sudah ada (misal dari supabase.js global)
-const supabase = window.supabaseClient;
+// ==================== SUPABASE ====================
+// Gunakan global window.supabase dari supabase.js
+// Jangan pakai const lagi untuk menghindari error "Identifier already declared"
+const supabase = window.supabase; // bisa langsung pakai window.supabase di semua fungsi juga
 
 // ==================== UPDATE STATUS ====================
 function updateAdminStatus(open) {
@@ -17,33 +19,41 @@ function updateAdminStatus(open) {
 
 // ==================== SET STATUS ====================
 async function setStore(open) {
-  const { error } = await supabase
-    .from("store_status")
-    .update({
-      is_open: open,
-      updated_at: new Date().toISOString(),
-    })
-    .eq("id", 1);
+  try {
+    const { error } = await supabase
+      .from("store_status")
+      .update({
+        is_open: open,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", 1);
 
-  if (error) {
-    console.error("Gagal update status:", error);
-  } else {
-    updateAdminStatus(open);
+    if (error) {
+      console.error("Gagal update status:", error);
+    } else {
+      updateAdminStatus(open);
+    }
+  } catch (err) {
+    console.error("Error saat setStore:", err);
   }
 }
 
 // ==================== LOAD STATUS SAAT PAGE LOAD ====================
 (async () => {
-  const { data, error } = await supabase
-    .from("store_status")
-    .select("is_open")
-    .eq("id", 1)
-    .maybeSingle();
+  try {
+    const { data, error } = await supabase
+      .from("store_status")
+      .select("is_open")
+      .eq("id", 1)
+      .maybeSingle();
 
-  if (!error && data) {
-    updateAdminStatus(data.is_open);
-  } else {
-    console.warn("Belum ada data, silakan klik Buka/Tutup dulu.");
+    if (!error && data) {
+      updateAdminStatus(data.is_open);
+    } else {
+      console.warn("Belum ada data, silakan klik Buka/Tutup dulu.");
+    }
+  } catch (err) {
+    console.error("Error saat load status:", err);
   }
 })();
 
