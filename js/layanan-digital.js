@@ -1,6 +1,7 @@
 "use strict";
 window.supabase = window.supabase || window.supabaseClient;
-const supabase = window.supabase;
+let supabase = window.supabase;
+
 let buktiURL = "";
 
 /* ================= CONFIG ================= */
