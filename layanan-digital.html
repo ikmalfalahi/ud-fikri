@@ -226,21 +226,57 @@
 <div class="modal hidden" id="modal">
   <div class="modal-box">
     <h3 id="modalTitle"></h3>
-    
-    <input type="text" id="inputNama" placeholder="Nama Pemesan">
-    <input type="text" id="inputData" placeholder="Nomor / ID Pelanggan">
-    
-    <select id="provider"></select>
-    <select id="nominal"></select>
 
+    <!-- Nama -->
+    <input type="text" id="inputNama" placeholder="Nama Pemesan">
+
+    <!-- Nomor / ID -->
+    <input type="text" id="inputData" placeholder="Nomor / ID Pelanggan">
+
+    <!-- Provider -->
+    <select id="provider">
+      <option value="">Pilih Provider</option>
+    </select>
+
+    <!-- Nominal / Paket -->
+    <select id="nominal">
+      <option value="">Pilih Nominal / Paket</option>
+    </select>
+
+    <!-- TOTAL HARGA -->
     <div class="price-box hidden" id="priceBox">
       <span>Total Harga</span>
       <strong id="priceText">Rp 0</strong>
     </div>
-    
-    <input type="text" id="nominalText" class="hidden" placeholder="Masukkan Nominal">
 
+    <!-- Nominal Manual (Transfer, dll) -->
+    <input
+      type="text"
+      id="nominalText"
+      class="hidden"
+      placeholder="Masukkan Nominal"
+    >
 
+    <!-- BUKTI PEMBAYARAN -->
+    <div class="upload-box">
+      <label class="label">Bukti Pembayaran</label>
+      <input
+        type="file"
+        id="bukti"
+        accept="image/*"
+        capture="environment"
+      >
+      <small>Upload foto bukti pembayaran (JPG / PNG)</small>
+
+      <!-- PREVIEW -->
+      <img
+        id="previewBukti"
+        class="hidden"
+        style="margin-top:10px; max-width:100%; border-radius:8px;"
+      >
+    </div>
+
+    <!-- BUTTON -->
     <button class="btn-primary" onclick="sendWA()">
       <i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp
     </button>
