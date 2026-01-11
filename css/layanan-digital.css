@@ -326,6 +326,20 @@ header {
   font-weight: bold;
 }
 
+/* =========== Preview Foto =========== */
+.preview-wrapper {
+  max-width: 100%;
+  text-align: center;
+}
+
+#previewBukti {
+  max-width: 160px;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
 /* ================= BUTTON ================= */
 .btn-primary {
   width: 100%;
