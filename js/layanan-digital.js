@@ -1,6 +1,6 @@
 "use strict";
-
-const supabase = window.supabaseClient;
+window.supabase = window.supabase || window.supabaseClient;
+const supabase = window.supabase;
 let buktiURL = "";
 
 /* ================= CONFIG ================= */
@@ -265,13 +265,6 @@ function openService(key) {
       </option>`;
   }
 });
-Each(item => {
-      nominal.innerHTML += `
-        <option value="${item.label}" data-harga="${item.harga}">
-          ${item.label} - Rp ${item.harga.toLocaleString("id-ID")}
-        </option>`;
-    });
-  };
 
   // NOMINAL DROPDOWN
   nominal.onchange = () => {
