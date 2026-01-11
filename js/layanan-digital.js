@@ -147,34 +147,37 @@ data: {
   },
 
   /* ===== KEUANGAN ===== */
-  transfer: {
-    title: "Transfer Antar Bank",
-    placeholder: "Nomor Rekening Tujuan",
-    isNominalText: true,
-    providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] }
-  },
+ transfer: {
+  title: "Transfer Antar Bank",
+  placeholder: "Nomor Rekening Tujuan",
+  isNominalText: true,
+  adminFee: 7000,
+  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] }
+},
 
-  tarik: {
-    title: "Tarik Tunai",
-    placeholder: "Nomor Akun",
-    isNominalText: true,
-    providers: { "Via E-Wallet": [] }
-  },
+tarik: {
+  title: "Tarik Tunai",
+  placeholder: "Nomor Akun",
+  isNominalText: true,
+  adminFee: 5000,
+  providers: { "Via E-Wallet": [] }
+},
 
-  setor: {
-    title: "Setor Tunai",
-    placeholder: "Nomor Akun",
-    isNominalText: true,
-    providers: { "Via E-Wallet": [] }
-  },
+setor: {
+  title: "Setor Tunai",
+  placeholder: "Nomor Akun",
+  isNominalText: true,
+  adminFee: 5000,
+  providers: { "Via E-Wallet": [] }
+},
 
-  ecommerce: {
-    title: "Pembayaran E-Commerce",
-    placeholder: "No Pesanan",
-    isNominalText: true,
-    providers: { Shopee: [], Tokopedia: [], Lazada: [] }
-  }
-};
+ecommerce: {
+  title: "Pembayaran E-Commerce",
+  placeholder: "No Pesanan",
+  isNominalText: true,
+  adminFee: 3000,
+  providers: { Shopee: [], Tokopedia: [], Lazada: [] }
+}
 
 /* ================= PREFIX OPERATOR ================= */
 const prefixOperator = {
@@ -254,7 +257,6 @@ provider.onchange = () => {
     }
   });
 };
-
 
 nominal.onchange = () => {
   const opt = nominal.selectedOptions[0];
