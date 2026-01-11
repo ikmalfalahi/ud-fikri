@@ -671,6 +671,11 @@ const addCartBtn = document.getElementById("modal-add-cart");
 const toggleDescBtn = document.getElementById("modal-toggle-desc");
 const modalDesc = document.getElementById("modal-product-desc");
 
+// ⛔ CEGAH KLIK DALAM MODAL MENUTUP MODAL
+modalContent.addEventListener("click", e => {
+  e.stopPropagation();
+});
+
 function hideModal() {
   modal.classList.add("fadeOut");
   modal.addEventListener("animationend", () => {
@@ -1385,6 +1390,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
