@@ -552,9 +552,12 @@ label[for="customer-address"] {
 
 /* Deskripsi */
 #modal-product-desc {
-  max-height: 150px;
   overflow: hidden;
   transition: max-height 0.3s ease;
+}
+
+#modal-product-desc.expanded {
+  overflow: visible;
 }
 
 .modal-img {
@@ -640,4 +643,5 @@ label[for="customer-address"] {
   transform: translateY(0);
   pointer-events: auto;
 }
+
 
