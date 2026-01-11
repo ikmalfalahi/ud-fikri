@@ -1,3 +1,5 @@
+const supabase = window.supabaseClient;
+
 // ==== Toggle Password ====
 function togglePassword() {
   const passwordInput = document.getElementById("password");
