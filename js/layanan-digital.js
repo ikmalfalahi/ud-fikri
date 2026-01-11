@@ -288,12 +288,12 @@ function openService(key) {
     }
   };
 
-  document.getElementById("serviceModal").classList.remove("hidden");
+  document.getElementById("modal").classList.remove("hidden");
 }
 
 /* ================= CLOSE MODAL ================= */
 function closeModal() {
-  document.getElementById("serviceModal").classList.add("hidden");
+  document.getElementById("modal").classList.add("hidden");
 }
 
 /* ================= HITUNG TOTAL NOMINAL MANUAL ================= */
@@ -314,6 +314,14 @@ nominalText.oninput = () => {
 
   priceBox.classList.remove("hidden");
 };
+
+const bukti = document.getElementById("bukti");
+const preview = document.getElementById("previewBukti");
+const previewWrapper = document.getElementById("previewWrapper");
+const removeBtn = document.getElementById("removeBukti");
+
+const imgModal = document.getElementById("imgModal");
+const imgModalContent = document.getElementById("imgModalContent");
 
 /* ================= SEND WHATSAPP ================= */
 function sendWA() {
@@ -392,14 +400,6 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
 });
 
 /* ===================== Preview Foto =====================*/
-const bukti = document.getElementById("bukti");
-const preview = document.getElementById("previewBukti");
-const previewWrapper = document.getElementById("previewWrapper");
-const removeBtn = document.getElementById("removeBukti");
-
-const imgModal = document.getElementById("imgModal");
-const imgModalContent = document.getElementById("imgModalContent");
-
 /* Preview foto */
 bukti.onchange = async () => {
   const file = bukti.files[0];
@@ -468,22 +468,5 @@ document.querySelectorAll(".service-btn").forEach(btn => {
 });
 
 /* ================= BUTTON MODAL ACTION ================= */
-document.addEventListener("DOMContentLoaded", () => {
-  const btnWA = document.getElementById("btnSendWA");
-  const btnClose = document.getElementById("btnCloseModal");
-
-  if (btnWA) {
-    btnWA.addEventListener("click", () => {
-      console.log("WA diklik");
-      sendWA();
-    });
-  }
-
-  if (btnClose) {
-    btnClose.addEventListener("click", () => {
-      console.log("Modal ditutup");
-      closeModal();
-    });
-  }
-});
-
+document.getElementById("btnSendWA").onclick = sendWA;
+document.getElementById("btnCloseModal").onclick = closeModal;
