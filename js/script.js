@@ -655,8 +655,8 @@ function showProductDetail(index) {
     (p.deskripsi || "Tidak ada deskripsi.").replace(/\n/g, "<br>");
 
     // === RESET DESKRIPSI DAN TOMBOL ===
-  modalDesc.style.maxHeight = "150px";
-  toggleDescBtn.textContent = "Selengkapnya";
+modalDesc.classList.remove("expanded");
+toggleDescBtn.textContent = "Selengkapnya";
   
   document.getElementById("product-modal").classList.remove("hidden");
 }
@@ -705,17 +705,13 @@ addCartBtn.addEventListener("click", () => {
 
   // Selengkapnya //
 toggleDescBtn.addEventListener("click", e => {
-  e.preventDefault(); // 🔥 penting
+  e.preventDefault();
 
-  const expanded = modalDesc.classList.toggle("expanded");
-
-  if (expanded) {
-    modalDesc.style.maxHeight = "none";
-    toggleDescBtn.textContent = "Sembunyikan";
-  } else {
-    modalDesc.style.maxHeight = "150px";
-    toggleDescBtn.textContent = "Selengkapnya";
-  }
+  modalDesc.classList.toggle("expanded");
+  toggleDescBtn.textContent =
+    modalDesc.classList.contains("expanded")
+      ? "Sembunyikan"
+      : "Selengkapnya";
 });
 
 // Animasi Terbang ke Keranjang //
@@ -1394,8 +1390,4 @@ if (document.getElementById("user-map")) {
 }
 
 });
-
-
-
-
 
