@@ -2,6 +2,13 @@
 const nomorAdmin = "6288803060094";
 let activeService = null;
 
+
+const priceBox = document.getElementById("priceBox");
+const priceText = document.getElementById("priceText");
+const adminText = document.getElementById("adminText");
+
+const nominalText = document.getElementById("nominalText");
+
 /* ================= DATA LAYANAN ================= */
 const services = {
   pulsa: {
@@ -178,6 +185,7 @@ ecommerce: {
   adminFee: 3000,
   providers: { Shopee: [], Tokopedia: [], Lazada: [] }
 }
+}; // ⬅️ INI WAJIB
 
 /* ================= PREFIX OPERATOR ================= */
 const prefixOperator = {
@@ -203,14 +211,14 @@ function openService(key) {
   activeService = services[key];
   if (!activeService) return;
 
-    // 🔽 RESET HARGA SETIAP MODAL DIBUKA
-  document.getElementById("priceBox").classList.add("hidden");
-  document.getElementById("priceText").innerText = "Rp 0";
-
   const provider = document.getElementById("provider");
   const nominal = document.getElementById("nominal");
-  const nominalText = document.getElementById("nominalText");
   const inputData = document.getElementById("inputData");
+
+  // reset harga
+  priceBox.classList.add("hidden");
+  priceText.innerText = "Rp 0";
+  adminText.innerText = "";
 
   document.getElementById("modalTitle").innerText = activeService.title;
   inputData.placeholder = activeService.placeholder;
@@ -232,45 +240,36 @@ function openService(key) {
     provider.innerHTML += `<option value="${p}">${p}</option>`;
   });
 
-provider.onchange = () => {
-  if (activeService.isNominalText) return;
+  // PROVIDER CHANGE
+  provider.onchange = () => {
+    if (activeService.isNominalText) return;
 
-  nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
-  document.getElementById("priceBox").classList.add("hidden");
+    nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
+    priceBox.classList.add("hidden");
 
-  const list = activeService.providers[provider.value];
+    const list = activeService.providers[provider.value];
+    if (!Array.isArray(list)) return;
 
-  if (!Array.isArray(list)) return;
-
-  list.forEach(item => {
-    // kalau format object
-    if (typeof item === "object") {
+    list.forEach(item => {
       nominal.innerHTML += `
         <option value="${item.label}" data-harga="${item.harga}">
           ${item.label} - Rp ${item.harga.toLocaleString("id-ID")}
-        </option>
-      `;
-    }
-    // fallback (kalau masih string)
-    else {
-      nominal.innerHTML += `<option value="${item}">${item}</option>`;
-    }
-  });
-};
+        </option>`;
+    });
+  };
 
-nominal.onchange = () => {
-  const opt = nominal.selectedOptions[0];
-  if (!opt || !opt.dataset.harga) return;
+  // NOMINAL DROPDOWN
+  nominal.onchange = () => {
+    const opt = nominal.selectedOptions[0];
+    if (!opt || !opt.dataset.harga) return;
 
-  const harga = Number(opt.dataset.harga);
-  document.getElementById("priceText").innerText =
-    "Rp " + harga.toLocaleString("id-ID");
+    priceText.innerText =
+      "Rp " + Number(opt.dataset.harga).toLocaleString("id-ID");
+    adminText.innerText = "";
+    priceBox.classList.remove("hidden");
+  };
 
-  document.getElementById("priceBox").classList.remove("hidden");
-};
-
-
-  // AUTO DETEKSI OPERATOR (Pulsa & Data)
+  // AUTO DETEKSI OPERATOR
   inputData.oninput = () => {
     if (!activeService.autoDetect) return;
     const op = detectOperator(inputData.value);
@@ -288,27 +287,47 @@ function closeModal() {
   document.getElementById("modal").classList.add("hidden");
 }
 
+/* ================= HITUNG TOTAL NOMINAL MANUAL ================= */
+nominalText.oninput = () => {
+  if (!activeService || !activeService.isNominalText) return;
+
+  const nominal = Number(nominalText.value.replace(/\D/g, ""));
+  if (!nominal) {
+    priceBox.classList.add("hidden");
+    return;
+  }
+
+  const admin = activeService.adminFee || 0;
+  const total = nominal + admin;
+
+  priceText.innerText = "Rp " + total.toLocaleString("id-ID");
+  adminText.innerText = `Biaya admin Rp ${admin.toLocaleString("id-ID")}`;
+
+  priceBox.classList.remove("hidden");
+};
+
 /* ================= SEND WHATSAPP ================= */
 function sendWA() {
   const nama = document.getElementById("inputNama").value.trim();
   const provider = document.getElementById("provider").value;
   const data = document.getElementById("inputData").value.trim();
+  const admin = activeService.adminFee || 0;
 
   const nominalValue = activeService.isNominalText
-    ? document.getElementById("nominalText").value.trim()
+    ? nominalText.value.trim()
     : document.getElementById("nominal").value;
 
   const hargaEl = document.getElementById("nominal")
     .selectedOptions[0]?.dataset.harga;
 
-  if (!nama || !provider || !nominalValue || !data) {
-    alert("Lengkapi data terlebih dahulu!");
-    return;
-  }
+if (!nama || !nominalValue || !data) {
+  alert("Lengkapi data terlebih dahulu!");
+  return;
+}
 
-  const hargaText = hargaEl
-    ? "Rp " + Number(hargaEl).toLocaleString("id-ID")
-    : "-";
+  const totalHarga = activeService.isNominalText
+    ? Number(nominalValue.replace(/\D/g, "")) + admin
+    : Number(hargaEl || 0);
 
   const pesan = `*PESANAN LAYANAN DIGITAL – UD FIKRI*
 ━━━━━━━━━━━━━━
@@ -316,11 +335,9 @@ function sendWA() {
 📌 Layanan: ${activeService.title}
 🏷 Provider: ${provider}
 📦 Nominal/Paket: ${nominalValue}
-💰 Total Harga: ${hargaText}
+💰 Total Harga: Rp ${totalHarga.toLocaleString("id-ID")}
+${admin > 0 ? `🧾 Biaya Admin: Rp ${admin.toLocaleString("id-ID")}` : ""}
 🧾 Data: ${data}
-
-📸 Bukti Pembayaran:
-_(harap lampirkan foto bukti pembayaran)_
 ━━━━━━━━━━━━━━`;
 
   window.open(
