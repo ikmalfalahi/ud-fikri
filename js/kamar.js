@@ -1,3 +1,5 @@
+const supabase = window.supabaseClient;
+
 function updateAdminStatus(open) {
 const msg = document.getElementById("admin-status");
 
@@ -48,4 +50,5 @@ function logoutAdmin() {
   alert("Anda telah keluar.");
   window.location.replace("https://ud-fikri.vercel.app");
 }
+
 
