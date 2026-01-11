@@ -1,4 +1,6 @@
-const supabase = window.supabaseClient;
+"use strict";
+
+const db = window.supabaseClient;
 
 // ==== Toggle Password ====
 function togglePassword() {
@@ -15,11 +17,13 @@ function togglePassword() {
 }
 window.togglePassword = togglePassword;
 
-// ==== Login dengan Supabase ====
+// ==== Login ====
 function initLogin() {
-  const supabaseClient = window.supabaseClient; // <-- pastikan pakai supabaseClient
+  const form = document.getElementById("loginForm");
 
-  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const email = document.getElementById("email").value.trim();
@@ -32,7 +36,7 @@ function initLogin() {
     }
 
     try {
-      const { data, error } = await supabaseClient
+      const { data, error } = await db
         .from("admin_users")
         .select("*")
         .eq("email", email)
@@ -48,17 +52,13 @@ function initLogin() {
         return;
       }
 
-      if (remember) {
-        localStorage.setItem("admin_logged_in", "true");
-      } else {
-        sessionStorage.setItem("admin_logged_in", "true");
-      }
+      const storage = remember ? localStorage : sessionStorage;
+      storage.setItem("admin_logged_in", "true");
 
-      alert("Login berhasil! Mengarahkan ke halaman admin...");
       window.location.href = "kamar.html";
     } catch (err) {
-      console.error("Login error:", err);
-      alert("Terjadi kesalahan. Coba lagi nanti.");
+      console.error(err);
+      alert("Terjadi kesalahan. Coba lagi.");
     }
   });
 }
