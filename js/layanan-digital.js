@@ -200,6 +200,10 @@ function openService(key) {
   activeService = services[key];
   if (!activeService) return;
 
+    // 🔽 RESET HARGA SETIAP MODAL DIBUKA
+  document.getElementById("priceBox").classList.add("hidden");
+  document.getElementById("priceText").innerText = "Rp 0";
+
   const provider = document.getElementById("provider");
   const nominal = document.getElementById("nominal");
   const nominalText = document.getElementById("nominalText");
@@ -225,21 +229,44 @@ function openService(key) {
     provider.innerHTML += `<option value="${p}">${p}</option>`;
   });
 
- provider.onchange = () => {
+provider.onchange = () => {
   if (activeService.isNominalText) return;
 
   nominal.innerHTML = `<option value="">Pilih Nominal / Paket</option>`;
+  document.getElementById("priceBox").classList.add("hidden");
 
-  activeService.providers[provider.value].forEach(item => {
-    nominal.innerHTML += `
-      <option 
-        value="${item.label}" 
-        data-harga="${item.harga}">
-        ${item.label} – Rp ${item.harga.toLocaleString("id-ID")}
-      </option>
-    `;
+  const list = activeService.providers[provider.value];
+
+  if (!Array.isArray(list)) return;
+
+  list.forEach(item => {
+    // kalau format object
+    if (typeof item === "object") {
+      nominal.innerHTML += `
+        <option value="${item.label}" data-harga="${item.harga}">
+          ${item.label} - Rp ${item.harga.toLocaleString("id-ID")}
+        </option>
+      `;
+    }
+    // fallback (kalau masih string)
+    else {
+      nominal.innerHTML += `<option value="${item}">${item}</option>`;
+    }
   });
 };
+
+
+nominal.onchange = () => {
+  const opt = nominal.selectedOptions[0];
+  if (!opt || !opt.dataset.harga) return;
+
+  const harga = Number(opt.dataset.harga);
+  document.getElementById("priceText").innerText =
+    "Rp " + harga.toLocaleString("id-ID");
+
+  document.getElementById("priceBox").classList.remove("hidden");
+};
+
 
   // AUTO DETEKSI OPERATOR (Pulsa & Data)
   inputData.oninput = () => {
@@ -265,28 +292,33 @@ function sendWA() {
   const provider = document.getElementById("provider").value;
   const data = document.getElementById("inputData").value.trim();
 
-  const nominalEl = document.getElementById("nominal");
-  const nominal = activeService.isNominalText
+  const nominalValue = activeService.isNominalText
     ? document.getElementById("nominalText").value.trim()
-    : nominalEl.value;
+    : document.getElementById("nominal").value;
 
-  const harga = activeService.isNominalText
-    ? "-"
-    : nominalEl.options[nominalEl.selectedIndex].dataset.harga;
+  const hargaEl = document.getElementById("nominal")
+    .selectedOptions[0]?.dataset.harga;
 
-  if (!nama || !provider || !nominal || !data) {
+  if (!nama || !provider || !nominalValue || !data) {
     alert("Lengkapi data terlebih dahulu!");
     return;
   }
+
+  const hargaText = hargaEl
+    ? "Rp " + Number(hargaEl).toLocaleString("id-ID")
+    : "-";
 
   const pesan = `*PESANAN LAYANAN DIGITAL – UD FIKRI*
 ━━━━━━━━━━━━━━
 👤 Nama: ${nama}
 📌 Layanan: ${activeService.title}
 🏷 Provider: ${provider}
-📦 Paket: ${nominal}
-💰 Harga: Rp ${harga ? Number(harga).toLocaleString("id-ID") : "-"}
+📦 Nominal/Paket: ${nominalValue}
+💰 Total Harga: ${hargaText}
 🧾 Data: ${data}
+
+📸 Bukti Pembayaran:
+_(harap lampirkan foto bukti pembayaran)_
 ━━━━━━━━━━━━━━`;
 
   window.open(
@@ -313,3 +345,25 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     }
   });
 });
+
+/* ===================== Preview Foto =====================*/
+const bukti = document.getElementById("bukti");
+const preview = document.getElementById("previewBukti");
+
+bukti.onchange = () => {
+  const file = bukti.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    alert("File harus berupa gambar!");
+    bukti.value = "";
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    preview.src = e.target.result;
+    preview.classList.remove("hidden");
+  };
+  reader.readAsDataURL(file);
+};
