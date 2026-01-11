@@ -288,12 +288,12 @@ function openService(key) {
     }
   };
 
-  document.getElementById("modal").classList.remove("hidden");
+  document.getElementById("serviceModal").classList.remove("hidden");
 }
 
 /* ================= CLOSE MODAL ================= */
 function closeModal() {
-  document.getElementById("modal").classList.add("hidden");
+  document.getElementById("serviceModal").classList.add("hidden");
 }
 
 /* ================= HITUNG TOTAL NOMINAL MANUAL ================= */
@@ -466,3 +466,24 @@ document.querySelectorAll(".service-btn").forEach(btn => {
     openService(key);
   });
 });
+
+/* ================= BUTTON MODAL ACTION ================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const btnWA = document.getElementById("btnSendWA");
+  const btnClose = document.getElementById("btnCloseModal");
+
+  if (btnWA) {
+    btnWA.addEventListener("click", () => {
+      console.log("WA diklik");
+      sendWA();
+    });
+  }
+
+  if (btnClose) {
+    btnClose.addEventListener("click", () => {
+      console.log("Modal ditutup");
+      closeModal();
+    });
+  }
+});
+
