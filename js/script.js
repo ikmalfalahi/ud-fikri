@@ -704,13 +704,17 @@ addCartBtn.addEventListener("click", () => {
 });
 
   // Selengkapnya //
-toggleDescBtn.addEventListener("click", () => {
-  if (modalDesc.style.maxHeight === "none") {
-    modalDesc.style.maxHeight = "150px";
-    toggleDescBtn.textContent = "Selengkapnya";
-  } else {
+toggleDescBtn.addEventListener("click", e => {
+  e.preventDefault(); // 🔥 penting
+
+  const expanded = modalDesc.classList.toggle("expanded");
+
+  if (expanded) {
     modalDesc.style.maxHeight = "none";
     toggleDescBtn.textContent = "Sembunyikan";
+  } else {
+    modalDesc.style.maxHeight = "150px";
+    toggleDescBtn.textContent = "Selengkapnya";
   }
 });
 
@@ -1390,6 +1394,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
