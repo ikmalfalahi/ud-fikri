@@ -566,8 +566,7 @@ label[for="customer-address"] {
 }
 
 #modal-product-desc.expanded {
-  max-height: none;
-  overflow: visible;
+  max-height: 1000px; /* cukup besar */
 }
 
 .modal-img {
@@ -645,4 +644,5 @@ label[for="customer-address"] {
   transform: translateY(0);
   pointer-events: auto;
 }
+
 
