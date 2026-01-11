@@ -320,8 +320,13 @@ function sendWA() {
   const hargaEl = document.getElementById("nominal")
     .selectedOptions[0]?.dataset.harga;
 
-if (!nama || !nominalValue || !data) {
-  alert("Lengkapi data terlebih dahulu!");
+if (!nama || !provider || !nominalValue || !data) {
+  alert("Lengkapi semua data pesanan!");
+  return;
+}
+
+if (!bukti.files || bukti.files.length === 0) {
+  alert("Silakan upload bukti pembayaran terlebih dahulu!");
   return;
 }
 
@@ -368,7 +373,13 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
 /* ===================== Preview Foto =====================*/
 const bukti = document.getElementById("bukti");
 const preview = document.getElementById("previewBukti");
+const previewWrapper = document.getElementById("previewWrapper");
+const removeBtn = document.getElementById("removeBukti");
 
+const imgModal = document.getElementById("imgModal");
+const imgModalContent = document.getElementById("imgModalContent");
+
+/* Preview foto */
 bukti.onchange = () => {
   const file = bukti.files[0];
   if (!file) return;
@@ -385,4 +396,22 @@ bukti.onchange = () => {
     previewWrapper.classList.remove("hidden");
   };
   reader.readAsDataURL(file);
+};
+
+/* Hapus bukti */
+removeBtn.onclick = () => {
+  bukti.value = "";
+  preview.src = "";
+  previewWrapper.classList.add("hidden");
+};
+
+/* Klik foto → fullscreen */
+preview.onclick = () => {
+  imgModalContent.src = preview.src;
+  imgModal.classList.remove("hidden");
+};
+
+/* Tutup fullscreen */
+imgModal.onclick = () => {
+  imgModal.classList.add("hidden");
 };
