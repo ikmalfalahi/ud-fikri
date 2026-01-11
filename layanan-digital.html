@@ -30,20 +30,20 @@ font-src 'self' https://cdnjs.cloudflare.com;
 
 <!-- ================= NAVBAR TOP ================= -->
 <nav class="top-nav">
-  <button class="nav-btn" data-link="index.html">
-    <i class="fa-solid fa-house"></i>
-    Beranda
-  </button>
+  <a href="index.html" class="nav-btn">
+  <i class="fa-solid fa-house"></i>
+  Beranda
+  </a>
 
   <a href="#keuangan" class="nav-btn">
   <i class="fa-solid fa-cart-shopping"></i>
   Keuangan
 </a>
 
-  <button class="nav-btn active">
+  <a href="layanan-digital.html" class="nav-btn">
     <i class="fa-solid fa-bolt"></i>
     Layanan Digital
-  </button>
+  </a>
 </nav>
 
 <!-- ============= Handshake ================= -->
@@ -146,7 +146,6 @@ font-src 'self' https://cdnjs.cloudflare.com;
         <small>DANA • OVO • GoPay • ShopeePay</small>
       </div>
     </div>
-  </div>
 </section>
 
   <!-- ================= PASCABAYAR ================= -->
@@ -291,11 +290,11 @@ font-src 'self' https://cdnjs.cloudflare.com;
     </div>
 
     <!-- BUTTON -->
-    <button class="btn-primary" id="btnSendWA">
+    <button class="btn-primary" id="btnSendWA" type="button">
       <i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp
     </button>
 
-    <button class="btn-close" id="btnCloseModal">Tutup</button>
+    <button class="btn-close" id="btnCloseModal" type="button">Tutup</button>
   </div>
 </div>
 
@@ -304,8 +303,8 @@ font-src 'self' https://cdnjs.cloudflare.com;
   © 2025 Ikmal Falahi. All Rights Reserved.
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/js/supabase.js"></script>
-<script src="js/layanan-digital.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="/js/supabase.js" defer></script>
+<script src="js/layanan-digital.js" defer></script>
 </body>
 </html>
