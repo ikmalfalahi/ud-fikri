@@ -1,6 +1,6 @@
 "use strict";
 
-const supabase = window.supabaseClient;
+const db = window.supabaseClient;
 
 let buktiURL = "";
 
@@ -424,7 +424,7 @@ bukti.onchange = async () => {
   const fileName = `bukti-${Date.now()}.${ext}`;
   const path = `layanan-digital/${fileName}`;
 
-  const { error } = await supabase.storage
+  const { error } = await db.storage
     .from("bukti-pembayaran")
     .upload(path, file);
 
@@ -434,7 +434,7 @@ bukti.onchange = async () => {
     return;
   }
 
-  const { data } = supabase.storage
+  const { data } = db.storage
     .from("bukti-pembayaran")
     .getPublicUrl(path);
 
