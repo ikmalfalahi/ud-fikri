@@ -458,3 +458,11 @@ preview.onclick = () => {
 imgModal.onclick = () => {
   imgModal.classList.add("hidden");
 };
+
+/* ================= SERVICE BUTTON CLICK ================= */
+document.querySelectorAll(".service-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const key = btn.dataset.service;
+    openService(key);
+  });
+});
