@@ -25,10 +25,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   }, 100);
 
   function initLogin() {
-    const supabaseUrl = "https://nnohtnywmhuzueamsats.supabase.co";
-    const supabaseKey =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ub2h0bnl3bWh1enVlYW1zYXRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkwNjM4NDksImV4cCI6MjA3NDYzOTg0OX0.S8FeDIdXQ32WH9QPVlSsYGRjxYbLMg6HXQicZ35A1pg";
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    // Langsung pakai window.supabase dari supabase.js
+    const supabaseClient = window.supabase;
 
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -43,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
           .from("admin_users")
           .select("*")
           .eq("email", email)
