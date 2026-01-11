@@ -1,3 +1,14 @@
+// ================= SUPABASE =================
+const SUPABASE_URL = "https://xxxx.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ub2h0bnl3bWh1enVlYW1zYXRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkwNjM4NDksImV4cCI6MjA3NDYzOTg0OX0.S8FeDIdXQ32WH9QPVlSsYGRjxYbLMg6HXQicZ35A1pg";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+let buktiURL = ""; // simpan link bukti
+
 /* ================= CONFIG ================= */
 const nomorAdmin = "6288803060094";
 let activeService = null;
@@ -330,6 +341,11 @@ if (!bukti.files || bukti.files.length === 0) {
   return;
 }
 
+if (!buktiURL) {
+  alert("Upload bukti pembayaran terlebih dahulu!");
+  return;
+}
+
   const totalHarga = activeService.isNominalText
     ? Number(nominalValue.replace(/\D/g, "")) + admin
     : Number(hargaEl || 0);
@@ -342,6 +358,8 @@ if (!bukti.files || bukti.files.length === 0) {
 📦 Nominal/Paket: ${nominalValue}
 💰 Total Harga: Rp ${totalHarga.toLocaleString("id-ID")}
 ${admin > 0 ? `🧾 Biaya Admin: Rp ${admin.toLocaleString("id-ID")}` : ""}
+📎 Bukti Pembayaran:
+${buktiURL}
 🧾 Data: ${data}
 ━━━━━━━━━━━━━━`;
 
@@ -380,7 +398,7 @@ const imgModal = document.getElementById("imgModal");
 const imgModalContent = document.getElementById("imgModalContent");
 
 /* Preview foto */
-bukti.onchange = () => {
+bukti.onchange = async () => {
   const file = bukti.files[0];
   if (!file) return;
 
@@ -390,12 +408,34 @@ bukti.onchange = () => {
     return;
   }
 
+  // preview lokal
   const reader = new FileReader();
   reader.onload = e => {
-    preview.src = e.target.result;
+    previewBukti.src = e.target.result;
     previewWrapper.classList.remove("hidden");
   };
   reader.readAsDataURL(file);
+
+  // ===== UPLOAD KE SUPABASE =====
+  const ext = file.name.split(".").pop();
+  const fileName = `bukti-${Date.now()}.${ext}`;
+
+  const { error } = await supabase.storage
+    .from("bukti-pembayaran")
+    .upload(fileName, file);
+
+  if (error) {
+    alert("Gagal upload bukti pembayaran!");
+    console.error(error);
+    return;
+  }
+
+  // ambil PUBLIC URL
+  const { data } = supabase.storage
+    .from("bukti-pembayaran")
+    .getPublicUrl(fileName);
+
+  buktiURL = data.publicUrl;
 };
 
 /* Hapus bukti */
