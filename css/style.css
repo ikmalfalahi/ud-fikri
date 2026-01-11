@@ -40,7 +40,8 @@ header { padding:10px 5%; background:linear-gradient(90deg,#00bfff,#1e90ff); col
   background: white;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  display: flex: row;
+  display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 20px;
 }
@@ -524,6 +525,7 @@ label[for="customer-address"] {
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  pointer-events: auto;
 }
 
 .modal.hidden {
@@ -539,6 +541,7 @@ label[for="customer-address"] {
   position: relative;
   z-index: 10000; /* 🔥 INI PENTING */
   text-align: center;
+  pointer-events: auto;
 }
 
 /* Close */
@@ -552,11 +555,18 @@ label[for="customer-address"] {
 
 /* Deskripsi */
 #modal-product-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-line;
+  margin-bottom: 10px;
+
+  max-height: 150px;
   overflow: hidden;
   transition: max-height 0.3s ease;
 }
 
 #modal-product-desc.expanded {
+  max-height: none;
   overflow: visible;
 }
 
@@ -566,14 +576,6 @@ label[for="customer-address"] {
 
 #modal-product-name { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
 #modal-product-price { font-size: 20px; font-weight: bold; color: #1e90ff; margin-bottom: 6px; }
-#modal-product-desc { font-size: 14px; line-height: 1.5; white-space: pre-line; margin-bottom: 10px; }
-
-/* Deskripsi produk scrollable */
-#modal-product-desc {
-  max-height: 150px;       /* default potongan deskripsi */
-  overflow: hidden;        /* sembunyikan overflow awal */
-  transition: max-height 0.3s ease;
-}
 
 /* Tombol Baca Selengkapnya */
 #modal-toggle-desc {
@@ -643,5 +645,4 @@ label[for="customer-address"] {
   transform: translateY(0);
   pointer-events: auto;
 }
-
 
