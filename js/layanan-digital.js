@@ -1,16 +1,16 @@
-const supabase = window.supabaseClient;
+"use strict";
 
-let buktiURL = ""; // simpan link bukti
+const supabase = window.supabaseClient;
+let buktiURL = "";
 
 /* ================= CONFIG ================= */
 const nomorAdmin = "6288803060094";
 let activeService = null;
 
-
+/* ================= ELEMENT ================= */
 const priceBox = document.getElementById("priceBox");
 const priceText = document.getElementById("priceText");
 const adminText = document.getElementById("adminText");
-
 const nominalText = document.getElementById("nominalText");
 
 /* ================= DATA LAYANAN ================= */
