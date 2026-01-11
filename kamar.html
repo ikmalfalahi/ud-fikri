@@ -15,65 +15,39 @@ font-src 'self' https://cdnjs.cloudflare.com;
   <link rel="stylesheet" href="css/kamar.css">
 </head>
 <body>
-   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Cek apakah admin sudah login
-    const isLoggedIn =
-      localStorage.getItem("admin_logged_in") === "true" ||
-      sessionStorage.getItem("admin_logged_in") === "true";
-
-    console.log("Login status:", isLoggedIn); // Debug
-
-    if (!isLoggedIn) {
-      console.warn("Belum login, mengarahkan ke login.html...");
-      window.location.replace("login.html");
-      return;
-    }
-
-    console.log("Sudah login, tetap di halaman kamar.html");
-  });
-</script>
-
-  <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const isLoggedIn =
-      localStorage.getItem("admin_logged_in") === "true" ||
-      sessionStorage.getItem("admin_logged_in") === "true";
-
-    if (!isLoggedIn) {
-      window.location.replace("login.html");
-      return;
-    }
-  });
-</script>
 
   <div class="container">
     <h1>KAMAR UD-FIKRI</h1>
-    <div id="admin-status" class="store-status">Silahkan Pilih</div>
-    <div class="buttons">
-      <button class="btn btn-open" onclick="setStore(true)">🟢 Buka Toko</button>
-      <button class="btn btn-close" onclick="setStore(false)">🔴 Tutup Toko</button>
-    </div>
-    
-    <button class="btn btn-logout" onclick="logoutAdmin()">🚪 Logout</button>
-  </div>
-<div id="store-status"></div>
+    <div id="admin-status" class="store-status">Memuat status...</div>
 
-<!-- urutan script di semua page -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/js/supabase.js"></script>
-<script src="js/kamar.js"></script>
+    <div class="buttons">
+      <button id="btnOpen" class="btn btn-open">🟢 Buka Toko</button>
+      <button id="btnClose" class="btn btn-close">🔴 Tutup Toko</button>
+    </div>
+
+    <button id="logoutBtn" class="btn btn-logout">🚪 Logout</button>
+  </div>
+
+  <div id="store-status"></div>
+
+  <!-- SCRIPT -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/supabase.js"></script>
+  <script src="js/kamar.js"></script>
+
+  <!-- CEK LOGIN -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const isLoggedIn =
+        localStorage.getItem("admin_logged_in") === "true" ||
+        sessionStorage.getItem("admin_logged_in") === "true";
+
+      if (!isLoggedIn) {
+        console.warn("Belum login, mengarahkan ke login.html...");
+        window.location.replace("login.html");
+      }
+    });
+  </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
