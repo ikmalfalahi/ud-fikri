@@ -382,7 +382,7 @@ bukti.onchange = () => {
   const reader = new FileReader();
   reader.onload = e => {
     preview.src = e.target.result;
-    preview.classList.remove("hidden");
+    previewWrapper.classList.remove("hidden");
   };
   reader.readAsDataURL(file);
 };
