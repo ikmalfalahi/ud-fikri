@@ -308,10 +308,11 @@ html {
 }
 
 .admin-text {
-  display: block;
-  margin-top: 4px;
   font-size: 12px;
   color: #666;
+  display: inline-block;     /* biar bisa sejajar horizontal */
+  float: right;              /* posisikan di kanan price-box */
+  margin: 0;                 /* hilangkan margin atas */
 }
 
 /* ============= Upload Bukti ============== */
