@@ -237,7 +237,8 @@ data: {
     if (nominal <= 2000000) return 10000;
     if (nominal <= 4000000) return 20000;
     return 0; // bisa ganti sesuai aturan, misal >4jt free admin
-  },
+  }
+},
 
 tarik: {
   title: "Tarik Tunai",
