@@ -225,20 +225,24 @@ data: {
     }
   },
 
-/* ===== KEUANGAN ===== */
+/* ===== Keuangan ===== */
 const layananDigital = {
+  // ===== TRANSFER =====
   transfer: {
     title: "Transfer Antar Bank",
     placeholder: "Nomor Rekening Tujuan",
     isNominalText: true,
     providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] },
+
+    // admin fee dinamis berdasarkan nominal
     getAdminFee: function(nominal) {
       if (nominal <= 2000000) return 10000;
       if (nominal <= 4000000) return 20000;
-      return 0;
+      return 0; // >4jt free admin
     }
   },
 
+  // ===== TARIK TUNAI =====
   tarik: {
     title: "Tarik Tunai",
     placeholder: "Nomor Akun",
@@ -247,6 +251,7 @@ const layananDigital = {
     providers: { "Via E-Wallet": [] }
   },
 
+  // ===== SETOR TUNAI =====
   setor: {
     title: "Setor Tunai",
     placeholder: "Nomor Akun",
@@ -255,6 +260,7 @@ const layananDigital = {
     providers: { "Via E-Wallet": [] }
   },
 
+  // ===== E-COMMERCE =====
   ecommerce: {
     title: "Pembayaran E-Commerce",
     placeholder: "No Pesanan",
@@ -262,7 +268,7 @@ const layananDigital = {
     adminFee: 3000,
     providers: { Shopee: [], Tokopedia: [], Lazada: [] }
   }
-}; // ← pastikan ada titik koma di sini
+};
 
 /* ================= PREFIX OPERATOR ================= */
 const prefixOperator = {
