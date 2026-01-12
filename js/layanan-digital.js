@@ -225,49 +225,43 @@ data: {
     }
   },
 
-/* ===== Keuangan ===== */
-  // ===== TRANSFER =====
-  transfer: {
-    title: "Transfer Antar Bank",
-    placeholder: "Nomor Rekening Tujuan",
-    isNominalText: true,
-    adminfee: "nominal",
-    providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] },
+ /* ===== KEUANGAN ===== */
+services.transfer = {
+  title: "Transfer Antar Bank",
+  placeholder: "Nomor Rekening Tujuan",
+  isNominalText: true,
+  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] },
 
-    // admin fee dinamis berdasarkan nominal
-    getAdminFee: function(nominal) {
-      if (nominal <= 2000000) return 10000;
-      if (nominal <= 4000000) return 20000;
-      return 0; // >4jt free admin
-    }
-  },
-
-  // ===== TARIK TUNAI =====
-  tarik: {
-    title: "Tarik Tunai",
-    placeholder: "Nomor Akun",
-    isNominalText: true,
-    adminFee: 5000,
-    providers: { "Via E-Wallet": [] }
-  },
-
-  // ===== SETOR TUNAI =====
-  setor: {
-    title: "Setor Tunai",
-    placeholder: "Nomor Akun",
-    isNominalText: true,
-    adminFee: 5000,
-    providers: { "Via E-Wallet": [] }
-  },
-
-  // ===== E-COMMERCE =====
-  ecommerce: {
-    title: "Pembayaran E-Commerce",
-    placeholder: "No Pesanan",
-    isNominalText: true,
-    adminFee: 3000,
-    providers: { Shopee: [], Tokopedia: [], Lazada: [] }
+  // admin fee dinamis berdasarkan nominal
+  getAdminFee: function(nominal) {
+    if (nominal <= 2000000) return 10000;
+    if (nominal <= 4000000) return 20000;
+    return 0; // >4jt gratis admin
   }
+};
+
+services.tarik = {
+  title: "Tarik Tunai",
+  placeholder: "Nomor Akun",
+  isNominalText: true,
+  adminFee: 5000, // statis
+  providers: { "Via E-Wallet": [] }
+};
+
+services.setor = {
+  title: "Setor Tunai",
+  placeholder: "Nomor Akun",
+  isNominalText: true,
+  adminFee: 5000, // statis
+  providers: { "Via E-Wallet": [] }
+};
+
+services.ecommerce = {
+  title: "Pembayaran E-Commerce",
+  placeholder: "No Pesanan",
+  isNominalText: true,
+  adminFee: 3000, // statis
+  providers: { Shopee: [], Tokopedia: [], Lazada: [] }
 };
 
 /* ================= PREFIX OPERATOR ================= */
