@@ -442,7 +442,7 @@ function sendWA() {
   pesan += `_Terima kasih sudah berbelanja 🙏_\n`;
   pesan += `https://ud-fikri.vercel.app`;
 
-  const nomorAdmin = "6281287505090"; // nomor tujuan WA
+  const nomorAdmin = "6288803060094"; // nomor tujuan WA
   window.open(
     `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(pesan)}`,
     "_blank"
