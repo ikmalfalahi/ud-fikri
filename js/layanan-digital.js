@@ -226,7 +226,6 @@ data: {
   },
 
 /* ===== Keuangan ===== */
-const layananDigital = {
   // ===== TRANSFER =====
   transfer: {
     title: "Transfer Antar Bank",
