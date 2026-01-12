@@ -404,43 +404,45 @@ function sendWA() {
   const hargaEl = document.getElementById("nominal")
     .selectedOptions[0]?.dataset.harga;
 
-if (!nama || !provider || !nominalValue || !data) {
-  alert("Lengkapi semua data pesanan!");
-  return;
-}
+  if (!nama || !provider || !nominalValue || !data) {
+    alert("Lengkapi semua data pesanan!");
+    return;
+  }
 
-if (!bukti.files || bukti.files.length === 0) {
-  alert("Silakan upload bukti pembayaran terlebih dahulu!");
-  return;
-}
+  if (!bukti.files || bukti.files.length === 0) {
+    alert("Silakan upload bukti pembayaran terlebih dahulu!");
+    return;
+  }
 
-if (!buktiURL) {
-  alert("Upload bukti pembayaran terlebih dahulu!");
-  return;
-}
+  if (!buktiURL) {
+    alert("Upload bukti pembayaran terlebih dahulu!");
+    return;
+  }
 
-if (activeService.isNominalText && isNaN(Number(nominalValue.replace(/\D/g,"")))) {
-  alert("Nominal tidak valid");
-  return;
-}
+  if (activeService.isNominalText && isNaN(Number(nominalValue.replace(/\D/g, "")))) {
+    alert("Nominal tidak valid");
+    return;
+  }
 
   const totalHarga = activeService.isNominalText
     ? Number(nominalValue.replace(/\D/g, "")) + admin
-    : Number(hargaEl || 0);
+    : Number(hargaEl || 0) + admin;
 
-  const pesan = `*PESANAN LAYANAN DIGITAL – UD FIKRI*
-━━━━━━━━━━━━━━
-👤 Nama: ${nama}
-📌 Layanan: ${activeService.title}
-🏷 Provider: ${provider}
-📦 Nominal/Paket: ${nominalValue}
-💰 Total Harga: Rp ${totalHarga.toLocaleString("id-ID")}
-${admin > 0 ? `🧾 Biaya Admin: Rp ${admin.toLocaleString("id-ID")}` : ""}
-📎 Bukti Pembayaran:
-${buktiURL}
-🧾 Data: ${data}
-━━━━━━━━━━━━━━`;
+  let pesan = `*PESANAN LAYANAN DIGITAL – UD FIKRI*\n====================\n`;
+  pesan += `👤 Nama: ${nama}\n`;
+  pesan += `📌 Layanan: ${activeService.title}\n`;
+  pesan += `🏷 Provider: ${provider}\n`;
+  pesan += `🧾 Data: ${data}\n`;
+  pesan += `📦 Nominal/Paket: ${nominalValue}\n`;
+  pesan += `💰 Total Harga: Rp ${totalHarga.toLocaleString("id-ID")}\n`;
+  if (admin > 0) pesan += `🧾 Biaya Admin: Rp ${admin.toLocaleString("id-ID")}\n`;
+  pesan += `--------------------\n`;
+  pesan += `📎 Bukti Pembayaran:\n${buktiURL}\n`;
+  pesan += `====================\n`;
+  pesan += `_Terima kasih sudah berbelanja 🙏_\n`;
+  pesan += `https://ud-fikri.vercel.app`;
 
+  const nomorAdmin = "6281287505090"; // nomor tujuan WA
   window.open(
     `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(pesan)}`,
     "_blank"
