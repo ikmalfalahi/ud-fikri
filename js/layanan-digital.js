@@ -232,15 +232,12 @@ const layananDigital = {
     placeholder: "Nomor Rekening Tujuan",
     isNominalText: true,
     providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] },
-
-    // Fungsi hitung admin fee berdasarkan nominal
     getAdminFee: function(nominal) {
       if (nominal <= 2000000) return 10000;
       if (nominal <= 4000000) return 20000;
-      return 0; // >4jt free admin
+      return 0;
     }
   },
-
   tarik: {
     title: "Tarik Tunai",
     placeholder: "Nomor Akun",
@@ -248,7 +245,6 @@ const layananDigital = {
     adminFee: 5000,
     providers: { "Via E-Wallet": [] }
   },
-
   setor: {
     title: "Setor Tunai",
     placeholder: "Nomor Akun",
@@ -256,7 +252,6 @@ const layananDigital = {
     adminFee: 5000,
     providers: { "Via E-Wallet": [] }
   },
-
   ecommerce: {
     title: "Pembayaran E-Commerce",
     placeholder: "No Pesanan",
@@ -264,8 +259,7 @@ const layananDigital = {
     adminFee: 3000,
     providers: { Shopee: [], Tokopedia: [], Lazada: [] }
   }
-};
- // ⬅️ INI WAJIB
+}; // ← pastikan ada titik koma di sini
 
 /* ================= PREFIX OPERATOR ================= */
 const prefixOperator = {
