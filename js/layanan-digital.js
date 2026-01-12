@@ -231,6 +231,7 @@ data: {
     title: "Transfer Antar Bank",
     placeholder: "Nomor Rekening Tujuan",
     isNominalText: true,
+    adminfee: "nominal",
     providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] },
 
     // admin fee dinamis berdasarkan nominal
