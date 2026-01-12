@@ -225,45 +225,47 @@ data: {
     }
   },
 
-  /* ===== KEUANGAN ===== */
- const transfer = {
-  title: "Transfer Antar Bank",
-  placeholder: "Nomor Rekening Tujuan",
-  isNominalText: true,
-  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] },
+/* ===== KEUANGAN ===== */
+const layananDigital = {
+  transfer: {
+    title: "Transfer Antar Bank",
+    placeholder: "Nomor Rekening Tujuan",
+    isNominalText: true,
+    providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] },
 
-  // Fungsi hitung admin fee berdasarkan nominal
-  getAdminFee: function(nominal) {
-    if (nominal <= 2000000) return 10000;
-    if (nominal <= 4000000) return 20000;
-    return 0; // bisa ganti sesuai aturan, misal >4jt free admin
+    // Fungsi hitung admin fee berdasarkan nominal
+    getAdminFee: function(nominal) {
+      if (nominal <= 2000000) return 10000;
+      if (nominal <= 4000000) return 20000;
+      return 0; // >4jt free admin
+    }
+  },
+
+  tarik: {
+    title: "Tarik Tunai",
+    placeholder: "Nomor Akun",
+    isNominalText: true,
+    adminFee: 5000,
+    providers: { "Via E-Wallet": [] }
+  },
+
+  setor: {
+    title: "Setor Tunai",
+    placeholder: "Nomor Akun",
+    isNominalText: true,
+    adminFee: 5000,
+    providers: { "Via E-Wallet": [] }
+  },
+
+  ecommerce: {
+    title: "Pembayaran E-Commerce",
+    placeholder: "No Pesanan",
+    isNominalText: true,
+    adminFee: 3000,
+    providers: { Shopee: [], Tokopedia: [], Lazada: [] }
   }
-},
-
-tarik: {
-  title: "Tarik Tunai",
-  placeholder: "Nomor Akun",
-  isNominalText: true,
-  adminFee: 5000,
-  providers: { "Via E-Wallet": [] }
-},
-
-setor: {
-  title: "Setor Tunai",
-  placeholder: "Nomor Akun",
-  isNominalText: true,
-  adminFee: 5000,
-  providers: { "Via E-Wallet": [] }
-},
-
-ecommerce: {
-  title: "Pembayaran E-Commerce",
-  placeholder: "No Pesanan",
-  isNominalText: true,
-  adminFee: 3000,
-  providers: { Shopee: [], Tokopedia: [], Lazada: [] }
-}
-}; // ⬅️ INI WAJIB
+};
+ // ⬅️ INI WAJIB
 
 /* ================= PREFIX OPERATOR ================= */
 const prefixOperator = {
