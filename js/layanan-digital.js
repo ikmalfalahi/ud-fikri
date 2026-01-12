@@ -238,6 +238,7 @@ const layananDigital = {
       return 0;
     }
   },
+
   tarik: {
     title: "Tarik Tunai",
     placeholder: "Nomor Akun",
@@ -245,6 +246,7 @@ const layananDigital = {
     adminFee: 5000,
     providers: { "Via E-Wallet": [] }
   },
+
   setor: {
     title: "Setor Tunai",
     placeholder: "Nomor Akun",
@@ -252,6 +254,7 @@ const layananDigital = {
     adminFee: 5000,
     providers: { "Via E-Wallet": [] }
   },
+
   ecommerce: {
     title: "Pembayaran E-Commerce",
     placeholder: "No Pesanan",
