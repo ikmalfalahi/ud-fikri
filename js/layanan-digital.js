@@ -226,13 +226,19 @@ data: {
   },
 
   /* ===== KEUANGAN ===== */
- transfer: {
+ const transfer = {
   title: "Transfer Antar Bank",
   placeholder: "Nomor Rekening Tujuan",
   isNominalText: true,
-  adminFee: 7000,
-  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] }
-},
+  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] },
+
+  // Fungsi hitung admin fee berdasarkan nominal
+  getAdminFee: function(nominal) {
+    if (nominal <= 2000000) return 10000;
+    if (nominal <= 4000000) return 20000;
+    return 0; // bisa ganti sesuai aturan, misal >4jt free admin
+  }
+};
 
 tarik: {
   title: "Tarik Tunai",
@@ -429,17 +435,17 @@ function sendWA() {
     : Number(hargaEl || 0) + admin;
 
   let pesan = `*PESANAN LAYANAN DIGITAL – UD FIKRI*\n====================\n`;
-  pesan += `👤 Nama: ${nama}\n`;
-  pesan += `📌 Layanan: ${activeService.title}\n`;
-  pesan += `🏷 Provider: ${provider}\n`;
-  pesan += `🧾 Data: ${data}\n`;
-  pesan += `📦 Nominal/Paket: ${nominalValue}\n`;
-  pesan += `💰 Total Harga: Rp ${totalHarga.toLocaleString("id-ID")}\n`;
-  if (admin > 0) pesan += `🧾 Biaya Admin: Rp ${admin.toLocaleString("id-ID")}\n`;
+  pesan += `*Nama*: ${nama}\n`;
+  pesan += `*Layanan*: ${activeService.title}\n`;
+  pesan += `*Provider*: ${provider}\n`;
+  pesan += `*Data*: ${data}\n`;
+  pesan += `*Nominal/Paket*: ${nominalValue}\n`;
+  pesan += `*Total Harga*: Rp ${totalHarga.toLocaleString("id-ID")}\n`;
+  if (admin > 0) pesan += `*Biaya Admin*: Rp ${admin.toLocaleString("id-ID")}\n`;
   pesan += `--------------------\n`;
-  pesan += `📎 Bukti Pembayaran:\n${buktiURL}\n`;
+  pesan += `*Bukti Pembayaran*:\n${buktiURL}\n`;
   pesan += `====================\n`;
-  pesan += `_Terima kasih sudah berbelanja 🙏_\n`;
+  pesan += `_Terima kasih sudah berbelanja_\n`;
   pesan += `https://ud-fikri.vercel.app`;
 
   const nomorAdmin = "6288803060094"; // nomor tujuan WA
