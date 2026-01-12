@@ -380,6 +380,7 @@ nominalText.oninput = () => {
   adminText.innerText = `Biaya admin Rp ${admin.toLocaleString("id-ID")}`;
 
   priceBox.classList.remove("hidden");
+  adminText.classList.remove("hidden");
 };
 
 const bukti = document.getElementById("bukti");
