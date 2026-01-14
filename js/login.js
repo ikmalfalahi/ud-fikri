@@ -54,8 +54,16 @@ function initLogin() {
 
       const storage = remember ? localStorage : sessionStorage;
       storage.setItem("admin_logged_in", "true");
-
+      
+      const msg = document.getElementById("loginMsg");
+      msg.textContent = "✅ Berhasil login, diarahkan ke halaman admin...";
+      msg.className = "login-msg success";
+      msg.style.display = "block";
+      
+      setTimeout(() => {
       window.location.href = "kamar.html";
+      }, 1500);
+
     } catch (err) {
       console.error(err);
       alert("Terjadi kesalahan. Coba lagi.");
