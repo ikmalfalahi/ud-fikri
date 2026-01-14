@@ -23,7 +23,7 @@ header {
 }
 
 #logo-container img {
-  height: 48px;      /* atau 56px */
+  height: 40px;      /* atau 56px */
   width: auto;
   object-fit: contain;
 }
