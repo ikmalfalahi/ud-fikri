@@ -1,7 +1,14 @@
 // ==================== SUPABASE ====================
-// Gunakan global window.supabase dari supabase.js
-// Jangan pakai const lagi untuk menghindari error "Identifier already declared"
-var supabase = window.supabase; // aman, bisa dipakai di semua fungsi
+// Ambil CLIENT Supabase yang benar dari supabase.js
+function getSupabase() {
+  if (!window.supabaseClient) {
+    console.error("Supabase client belum siap");
+    return null;
+  }
+  return window.supabaseClient;
+}
+
+console.log("Supabase ready:", !!window.supabaseClient);
 
 // ==================== UPDATE STATUS ====================
 function updateAdminStatus(open) {
@@ -20,6 +27,9 @@ function updateAdminStatus(open) {
 // ==================== SET STATUS ====================
 async function setStore(open) {
   try {
+    const supabase = getSupabase();
+    if (!supabase) return;
+    
     const { error } = await supabase
       .from("store_status")
       .update({
@@ -41,6 +51,9 @@ async function setStore(open) {
 // ==================== LOAD STATUS SAAT PAGE LOAD ====================
 (async () => {
   try {
+    const supabase = getSupabase();
+    if (!supabase) return;
+    
     const { data, error } = await supabase
       .from("store_status")
       .select("is_open")
@@ -76,3 +89,4 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnClose = document.getElementById("btnClose");
   if (btnClose) btnClose.addEventListener("click", () => setStore(false));
 });
+
