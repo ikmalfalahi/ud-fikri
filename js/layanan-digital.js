@@ -408,12 +408,23 @@ data: {
   },
 
  /* ===== KEUANGAN ===== */
-  transfer: {
+transfer: {
   title: "Transfer Antar Bank",
   placeholder: "Nomor Rekening Tujuan",
   isNominalText: true,
-  adminFee: 10000,
-  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [], DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": [] }
+  adminFee: {
+    rules: [
+      { min: 0, max: 99999, fee: 2500 },
+      { min: 100000, max: 499999, fee: 5000 },
+      { min: 500000, max: 999999, fee: 7500 },
+      { min: 1000000, max: 1000000000, fee: 10000 }
+    ],
+    default: 10000
+  },
+  providers: {
+    BCA: [], BRI: [], BNI: [], Mandiri: [],
+    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
+  }
 },
 
 tarik: {
@@ -440,6 +451,27 @@ ecommerce: {
   providers: { Shopee: [], Tokopedia: [], Lazada: [], Lainya: [] }
 }
 };
+
+// ===== HITUNG ADMIN FEE (SUPPORT ANGKA & RULES) =====
+function getAdminFee(service, nominal) {
+  if (!service || !service.adminFee) return 0;
+
+  // admin fee lama (angka)
+  if (typeof service.adminFee === "number") {
+    return service.adminFee;
+  }
+
+  // admin fee bertingkat (rules)
+  if (service.adminFee.rules) {
+    const rule = service.adminFee.rules.find(
+      r => nominal >= r.min && nominal <= r.max
+    );
+    return rule ? rule.fee : service.adminFee.default;
+  }
+
+  return 0;
+}
+
 
 /* ================= PREFIX OPERATOR ================= */
 const prefixOperator = {
@@ -555,7 +587,16 @@ nominalText.oninput = () => {
     return;
   }
 
-  const admin = activeService.adminFee || 0;
+  // ✅ UBAH DI SINI SAJA
+  const admin =
+    typeof activeService.adminFee === "number"
+      ? activeService.adminFee
+      : activeService.adminFee?.rules
+        ? (activeService.adminFee.rules.find(
+            r => nominal >= r.min && nominal <= r.max
+          )?.fee ?? activeService.adminFee.default)
+        : 0;
+
   const total = nominal + admin;
 
   priceText.innerText = "Rp " + total.toLocaleString("id-ID");
@@ -565,20 +606,12 @@ nominalText.oninput = () => {
   adminText.classList.remove("hidden");
 };
 
-const bukti = document.getElementById("bukti");
-const preview = document.getElementById("previewBukti");
-const previewWrapper = document.getElementById("previewWrapper");
-const removeBtn = document.getElementById("removeBukti");
-
-const imgModal = document.getElementById("imgModal");
-const imgModalContent = document.getElementById("imgModalContent");
-
 /* ================= SEND WHATSAPP ================= */
 function sendWA() {
   const nama = document.getElementById("inputNama").value.trim();
   const provider = document.getElementById("provider").value;
   const data = document.getElementById("inputData").value.trim();
-  const admin = activeService.adminFee || 0;
+  const admin = getAdminFee(activeService, nominalNumber);
 
   const nominalValue = activeService.isNominalText
     ? nominalText.value.trim()
