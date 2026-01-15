@@ -117,7 +117,7 @@ ecommerce: {
   providers: {
     Shopee: [], "Toko Pedia": [], "Lazada": []
   }
-}
+},
 
  /* ===== PRABAYARA ===== */
   pulsa: {
