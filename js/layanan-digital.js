@@ -423,10 +423,10 @@ transfer: {
   isNominalText: true,
   adminFee: {
     rules: [
-      { min: 0, max: 99999, fee: 2500 },
-      { min: 100000, max: 499999, fee: 5000 },
-      { min: 500000, max: 999999, fee: 7500 },
-      { min: 1000000, max: 1000000000, fee: 10000 }
+      { min: 0, max: 99999, fee: 10000 },
+      { min: 100000, max: 499999, fee: 10000 },
+      { min: 500000, max: 999999, fee: 10000 },
+      { min: 1000000, max: 1000000000, fee: 15000 }
     ],
     default: 10000
   },
@@ -440,18 +440,40 @@ tarik: {
   title: "Tarik Tunai",
   placeholder: "Nomor Akun",
   isNominalText: true,
-  adminFee: 5000,
-  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [], DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": [] }
+  adminFee: {
+    rules: [
+      { min: 0, max: 99999, fee: 5000 },
+      { min: 100000, max: 499999, fee: 5000 },
+      { min: 500000, max: 149999, fee: 5000 },
+      { min: 1500000, max: 1000000000, fee: 10000 }
+    ],
+    default: 10000
+  },
+  providers: {
+    BCA: [], BRI: [], BNI: [], Mandiri: [],
+    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
+  }
 },
 
 setor: {
   title: "Setor Tunai",
   placeholder: "Nomor Akun",
   isNominalText: true,
-  adminFee: 10000,
-  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [], DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": [] }
+  adminFee: {
+    rules: [
+      { min: 0, max: 99999, fee: 10000 },
+      { min: 100000, max: 499999, fee: 10000 },
+      { min: 500000, max: 999999, fee: 10000 },
+      { min: 1000000, max: 1000000000, fee: 15000 }
+    ],
+    default: 10000
+  },
+  providers: {
+    BCA: [], BRI: [], BNI: [], Mandiri: [],
+    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
+  }
 },
-
+  
 ecommerce: {
   title: "Pembayaran E-Commerce",
   placeholder: "No Pesanan",
