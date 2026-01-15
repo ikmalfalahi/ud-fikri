@@ -416,13 +416,6 @@ data: {
   providers: { BCA: [], BRI: [], BNI: [], Mandiri: [], DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": [] }
 },
 
-  title: "Transfer Antar Bank",
-  placeholder: "Nomor Rekening Tujuan",
-  isNominalText: true,
-  adminFee: 10000,
-  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [], DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": [] }
-},
-
 tarik: {
   title: "Tarik Tunai",
   placeholder: "Nomor Akun",
