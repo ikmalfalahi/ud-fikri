@@ -14,6 +14,15 @@ const priceText = document.getElementById("priceText");
 const adminText = document.getElementById("adminText");
 const nominalText = document.getElementById("nominalText");
 
+const bukti = document.getElementById("bukti");
+const preview = document.getElementById("previewBukti");
+const previewWrapper = document.getElementById("previewWrapper");
+const removeBtn = document.getElementById("removeBukti");
+
+const imgModal = document.getElementById("imgModal");
+const imgModalContent = document.getElementById("imgModalContent");
+
+
 /* ================= DATA LAYANAN ================= */
 const services = {
   pulsa: {
@@ -611,38 +620,39 @@ function sendWA() {
   const nama = document.getElementById("inputNama").value.trim();
   const provider = document.getElementById("provider").value;
   const data = document.getElementById("inputData").value.trim();
-  const admin = getAdminFee(activeService, nominalNumber);
-
-  const nominalValue = activeService.isNominalText
-    ? nominalText.value.trim()
-    : document.getElementById("nominal").value;
 
   const hargaEl = document.getElementById("nominal")
     .selectedOptions[0]?.dataset.harga;
 
-  if (!nama || !provider || !nominalValue || !data) {
-    alert("Lengkapi semua data pesanan!");
-    return;
-  }
+  const nominalNumber = activeService.isNominalText
+    ? Number(nominalText.value.replace(/\D/g, ""))
+    : Number(hargaEl || 0);
 
-  if (!bukti.files || bukti.files.length === 0) {
-    alert("Silakan upload bukti pembayaran terlebih dahulu!");
-    return;
-  }
+  const nominalValue = activeService.isNominalText
+    ? nominalText.value
+    : document.getElementById("nominal").value;
 
-  if (!buktiURL) {
-    alert("Upload bukti pembayaran terlebih dahulu!");
-    return;
-  }
+ if (!nama || !data || (!activeService.isNominalText && !nominalValue)) {
+  alert("Lengkapi semua data pesanan!");
+  return;
+}
 
-  if (activeService.isNominalText && isNaN(Number(nominalValue.replace(/\D/g, "")))) {
+
+  if (
+    activeService.isNominalText &&
+    (!nominalValue || isNaN(Number(nominalValue.replace(/\D/g, ""))))
+  ) {
     alert("Nominal tidak valid");
     return;
   }
 
-  const totalHarga = activeService.isNominalText
-    ? Number(nominalValue.replace(/\D/g, "")) + admin
-    : Number(hargaEl || 0) + admin;
+  if (!bukti.files || bukti.files.length === 0 || !buktiURL) {
+    alert("Upload bukti pembayaran terlebih dahulu!");
+    return;
+  }
+
+  const admin = getAdminFee(activeService, nominalNumber);
+  const totalHarga = nominalNumber + admin;
 
   let pesan = `*PESANAN LAYANAN DIGITAL – UD FIKRI*\n====================\n`;
   pesan += `*Nama*: ${nama}\n`;
@@ -658,7 +668,6 @@ function sendWA() {
   pesan += `_Terima kasih sudah berbelanja_\n`;
   pesan += `https://ud-fikri.vercel.app`;
 
-  const nomorAdmin = "6288803060094"; // nomor tujuan WA
   window.open(
     `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(pesan)}`,
     "_blank"
