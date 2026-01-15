@@ -48,7 +48,7 @@ transfer: {
 
 tarik: {
   title: "Tarik Tunai",
-  placeholder: "Nomor Akun",
+  placeholder: "Nomor Rekening/Akun",
   isNominalText: true,
   adminFee: {
     rules: [
@@ -67,7 +67,7 @@ tarik: {
 
 setor: {
   title: "Setor Tunai",
-  placeholder: "Nomor Akun",
+  placeholder: "Nomor Rekening",
   isNominalText: true,
   adminFee: {
     rules: [
@@ -80,7 +80,6 @@ setor: {
   },
   providers: {
     BCA: [], BRI: [], BNI: [], Mandiri: [],
-    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
   }
 },
 
@@ -95,21 +94,30 @@ setor: {
       { min: 500000, max: 999999, fee: 10000 },
       { min: 1000000, max: 1000000000, fee: 15000 }
     ],
-    default: 10000
+    default: 5000
   },
   providers: {
-    BCA: [], BRI: [], BNI: [], Mandiri: [],
-    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
+    DANA: [], "GOPAY CUSTOMER": [], "GOPAY DRIVER": [], "OVO": [], "ShopeePay": [],
   }
 },
  
 ecommerce: {
   title: "Pembayaran E-Commerce",
   placeholder: "No Pesanan",
-  isNominalText: true,
-  adminFee: 5000,
-  providers: { Shopee: [], Tokopedia: [], Lazada: [], Lainya: [] }
-},
+ isNominalText: true,
+    adminFee: {
+    rules: [
+      { min: 0, max: 99999, fee: 5000 },
+      { min: 100000, max: 499999, fee: 5000 },
+      { min: 500000, max: 999999, fee: 5000 },
+      { min: 1000000, max: 1000000000, fee: 10000 }
+    ],
+    default: 5000
+  },
+  providers: {
+    Shopee: [], "Toko Pedia": [], "Lazada": []
+  }
+}
 
  /* ===== PRABAYARA ===== */
   pulsa: {
