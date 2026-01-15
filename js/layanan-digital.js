@@ -24,7 +24,94 @@ const imgModalContent = document.getElementById("imgModalContent");
 
 
 /* ================= DATA LAYANAN ================= */
+
 const services = {
+  /* ===== KEUANGAN ===== */
+transfer: {
+  title: "Transfer Antar Bank",
+  placeholder: "Nomor Rekening Tujuan",
+  isNominalText: true,
+  adminFee: {
+    rules: [
+      { min: 0, max: 99999, fee: 10000 },
+      { min: 100000, max: 499999, fee: 10000 },
+      { min: 500000, max: 999999, fee: 10000 },
+      { min: 1000000, max: 1000000000, fee: 15000 }
+    ],
+    default: 10000
+  },
+  providers: {
+    BCA: [], BRI: [], BNI: [], Mandiri: [],
+    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
+  }
+},
+
+tarik: {
+  title: "Tarik Tunai",
+  placeholder: "Nomor Akun",
+  isNominalText: true,
+  adminFee: {
+    rules: [
+      { min: 0, max: 99999, fee: 5000 },
+      { min: 100000, max: 499999, fee: 5000 },
+      { min: 500000, max: 149999, fee: 5000 },
+      { min: 1500000, max: 1000000000, fee: 10000 }
+    ],
+    default: 10000
+  },
+  providers: {
+    BCA: [], BRI: [], BNI: [], Mandiri: [],
+    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
+  }
+},
+
+setor: {
+  title: "Setor Tunai",
+  placeholder: "Nomor Akun",
+  isNominalText: true,
+  adminFee: {
+    rules: [
+      { min: 0, max: 99999, fee: 10000 },
+      { min: 100000, max: 499999, fee: 10000 },
+      { min: 500000, max: 999999, fee: 10000 },
+      { min: 1000000, max: 1000000000, fee: 15000 }
+    ],
+    default: 10000
+  },
+  providers: {
+    BCA: [], BRI: [], BNI: [], Mandiri: [],
+    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
+  }
+},
+
+  ewallet: {
+    title: "Top Up E-Wallet",
+    placeholder: "Nomor Akun",
+    isNominalText: true,
+    adminFee: {
+    rules: [
+      { min: 0, max: 99999, fee: 10000 },
+      { min: 100000, max: 499999, fee: 10000 },
+      { min: 500000, max: 999999, fee: 10000 },
+      { min: 1000000, max: 1000000000, fee: 15000 }
+    ],
+    default: 10000
+  },
+  providers: {
+    BCA: [], BRI: [], BNI: [], Mandiri: [],
+    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
+  }
+},
+ 
+ecommerce: {
+  title: "Pembayaran E-Commerce",
+  placeholder: "No Pesanan",
+  isNominalText: true,
+  adminFee: 5000,
+  providers: { Shopee: [], Tokopedia: [], Lazada: [], Lainya: [] }
+},
+
+ /* ===== PRABAYARA ===== */
   pulsa: {
     title: "Pulsa Prabayar",
     placeholder: "Nomor HP",
@@ -171,6 +258,7 @@ data: {
   }
 },
 
+ /* ===== PASCABAYAR ===== */
   token: {
     title: "Token Listrik PLN",
     placeholder: "ID Pelanggan",
@@ -193,25 +281,6 @@ data: {
       PUBG: ["60 UC", "325 UC"]
     }
   },
-
-  ewallet: {
-    title: "Top Up E-Wallet",
-    placeholder: "Nomor Akun",
-   isNominalText: true,
-  adminFee: {
-    rules: [
-      { min: 0, max: 99999, fee: 10000 },
-      { min: 100000, max: 499999, fee: 10000 },
-      { min: 500000, max: 999999, fee: 10000 },
-      { min: 1000000, max: 1000000000, fee: 15000 }
-    ],
-    default: 10000
-  },
-  providers: {
-    BCA: [], BRI: [], BNI: [], Mandiri: [],
-    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
-  }
-},
 
   pln: {
     title: "Tagihan PLN Pascabayar",
@@ -243,72 +312,6 @@ data: {
       BAF: ["Cek Tagihan"]
     }
   },
-
- /* ===== KEUANGAN ===== */
-transfer: {
-  title: "Transfer Antar Bank",
-  placeholder: "Nomor Rekening Tujuan",
-  isNominalText: true,
-  adminFee: {
-    rules: [
-      { min: 0, max: 99999, fee: 10000 },
-      { min: 100000, max: 499999, fee: 10000 },
-      { min: 500000, max: 999999, fee: 10000 },
-      { min: 1000000, max: 1000000000, fee: 15000 }
-    ],
-    default: 10000
-  },
-  providers: {
-    BCA: [], BRI: [], BNI: [], Mandiri: [],
-    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
-  }
-},
-
-tarik: {
-  title: "Tarik Tunai",
-  placeholder: "Nomor Akun",
-  isNominalText: true,
-  adminFee: {
-    rules: [
-      { min: 0, max: 99999, fee: 5000 },
-      { min: 100000, max: 499999, fee: 5000 },
-      { min: 500000, max: 149999, fee: 5000 },
-      { min: 1500000, max: 1000000000, fee: 10000 }
-    ],
-    default: 10000
-  },
-  providers: {
-    BCA: [], BRI: [], BNI: [], Mandiri: [],
-    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
-  }
-},
-
-setor: {
-  title: "Setor Tunai",
-  placeholder: "Nomor Akun",
-  isNominalText: true,
-  adminFee: {
-    rules: [
-      { min: 0, max: 99999, fee: 10000 },
-      { min: 100000, max: 499999, fee: 10000 },
-      { min: 500000, max: 999999, fee: 10000 },
-      { min: 1000000, max: 1000000000, fee: 15000 }
-    ],
-    default: 10000
-  },
-  providers: {
-    BCA: [], BRI: [], BNI: [], Mandiri: [],
-    DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": []
-  }
-},
-  
-ecommerce: {
-  title: "Pembayaran E-Commerce",
-  placeholder: "No Pesanan",
-  isNominalText: true,
-  adminFee: 5000,
-  providers: { Shopee: [], Tokopedia: [], Lazada: [], Lainya: [] }
-}
 };
 
 // ===== HITUNG ADMIN FEE (SUPPORT ANGKA & RULES) =====
