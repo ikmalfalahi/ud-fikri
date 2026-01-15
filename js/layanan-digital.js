@@ -397,6 +397,8 @@ data: {
   multi: {
     title: "Multifinance",
     placeholder: "Nomor Kontrak",
+    isNominalText: true,
+    adminFee: 10000,
     providers: {
       Adira: ["Cek Tagihan"],
       FIF: ["Cek Tagihan"],
@@ -410,8 +412,8 @@ data: {
   title: "Transfer Antar Bank",
   placeholder: "Nomor Rekening Tujuan",
   isNominalText: true,
-  adminFee: 7000,
-  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [] }
+  adminFee: 10000,
+  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [], DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": [] }
 },
 
 tarik: {
@@ -426,16 +428,16 @@ setor: {
   title: "Setor Tunai",
   placeholder: "Nomor Akun",
   isNominalText: true,
-  adminFee: 5000,
-  providers: { "Via E-Wallet": [] }
+  adminFee: 10000,
+  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [], DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": [] }
 },
 
 ecommerce: {
   title: "Pembayaran E-Commerce",
   placeholder: "No Pesanan",
   isNominalText: true,
-  adminFee: 3000,
-  providers: { Shopee: [], Tokopedia: [], Lazada: [] }
+  adminFee: 5000,
+  providers: { Shopee: [], Tokopedia: [], Lazada: [], Lainya: [] }
 }
 };
 
