@@ -408,7 +408,7 @@ data: {
   },
 
  /* ===== KEUANGAN ===== */
-transfer: {
+  transfer: {
     title: "Transfer Antar Bank",
     placeholder: "Nomor Rekening Tujuan",
     isNominalText: true,
@@ -418,8 +418,8 @@ transfer: {
       { min: 500000, max: 999999, fee: 7500 },
       { min: 1000000, max: 999999999, fee: 10000 }
     ]
-  }
-};
+},
+
 
   title: "Transfer Antar Bank",
   placeholder: "Nomor Rekening Tujuan",
