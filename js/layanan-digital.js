@@ -419,7 +419,7 @@ tarik: {
   placeholder: "Nomor Akun",
   isNominalText: true,
   adminFee: 5000,
-  providers: { "Via E-Wallet": [] }
+  providers: { BCA: [], BRI: [], BNI: [], Mandiri: [], DANA: [], "GOPAY DRIVER": [], "GOPAY CUSTOMER": [], "OVO": [] }
 },
 
 setor: {
