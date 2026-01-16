@@ -154,7 +154,23 @@ async function loadOrders() {
         <td>${item.provider || "-"}</td>
         <td>Rp ${Number(item.nominal || 0).toLocaleString("id-ID")}</td>
         <td><strong>Rp ${Number(item.total || 0).toLocaleString("id-ID")}</strong></td>
-        <td>${item.status || "Pending"}</td>
+        <td>
+          <select 
+            class="status-select"
+            data-id="${item.id}"
+            data-old="${item.status || "pending"}"
+          >
+            <option value="pending" ${item.status === "pending" ? "selected" : ""}>
+              Pending
+            </option>
+            <option value="sukses" ${item.status === "sukses" ? "selected" : ""}>
+              Sukses
+            </option>
+            <option value="ditolak" ${item.status === "ditolak" ? "selected" : ""}>
+              Ditolak
+            </option>
+          </select>
+        </td>
         <td>${tanggal}</td>
         <td>${item.bukti_url ? `<a href="${item.bukti_url}" target="_blank">Lihat</a>` : "-"}</td>
         <td>
@@ -282,3 +298,40 @@ document.getElementById("searchNama").addEventListener("input", function () {
   });
 });
 
+// ================= UPDATE STATUS =================
+document.addEventListener("change", async (e) => {
+  if (!e.target.classList.contains("status-select")) return;
+
+  const supabase = getSupabase();
+  if (!supabase) return;
+
+  const select = e.target;
+  const id = select.dataset.id;
+  const statusBaru = select.value;
+  const statusLama = select.dataset.old || "pending";
+
+  const konfirmasi = confirm(
+    `Ubah status pesanan menjadi "${statusBaru.toUpperCase()}"?`
+  );
+
+  if (!konfirmasi) {
+    select.value = statusLama;
+    return;
+  }
+
+  const { error } = await supabase
+    .from("pesanan_layanan_digital")
+    .update({ status: statusBaru })
+    .eq("id", id);
+
+  if (error) {
+    alert("❌ Gagal mengubah status");
+    console.error(error);
+    select.value = statusLama;
+    return;
+  }
+
+  // simpan status baru
+  select.dataset.old = statusBaru;
+  console.log(`✅ Status pesanan ${id} → ${statusBaru}`);
+});
