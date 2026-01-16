@@ -53,41 +53,45 @@ async function hapusPesanan(id) {
   const supabase = getSupabase();
   if (!supabase) {
     console.error("Supabase client belum siap!");
-    alert("Supabase client belum siap!");
     return;
   }
 
-  const numericId = Number(id);
-  console.log("ID akan dihapus:", numericId, typeof numericId);
+  console.log("ID akan dihapus (string):", id, typeof id);
 
   try {
-       const { data, error } = await supabase
-        .from("pesanan_layanan_digital")
-        .delete()
-        .eq("id", id.toString()) // ID sebagai string
-        .select();
+    const { data, error } = await supabase
+      .from("pesanan_layanan_digital")
+      .delete()
+      .eq("id", id.toString()) // ✅ PENTING: bigint → string
+      .select();
+
+    console.log("Data terhapus:", data);
+    console.log("Error:", error);
 
     if (error) {
-      console.error("Error hapus pesanan:", error);
-      alert("Gagal menghapus pesanan! Cek console untuk detail.");
+      alert("Gagal menghapus pesanan! Cek console.");
       return;
     }
 
     if (!data || data.length === 0) {
-      console.warn("Tidak ada row yang dihapus. ID mungkin salah atau constraint mencegah delete.");
-      alert("Pesanan tidak bisa dihapus! Cek console.");
+      alert(
+        "Pesanan TIDAK terhapus.\n" +
+        "Kemungkinan ada FOREIGN KEY / constraint di database."
+      );
       return;
     }
 
-    // hapus row langsung di UI
-    const row = document.querySelector(`button[data-id='${id}']`)?.closest("tr");
+    // hapus row dari UI
+    const row = document
+      .querySelector(`button[data-id="${id}"]`)
+      ?.closest("tr");
+
     if (row) row.remove();
 
-    console.log("Pesanan berhasil dihapus:", data);
     alert("Pesanan berhasil dihapus!");
   } catch (err) {
     console.error("Exception hapusPesanan:", err);
-    alert("Terjadi error saat menghapus pesanan. Cek console.");
+    alert("Terjadi error saat menghapus pesanan.");
   }
 }
 
@@ -214,5 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
+
 
 
