@@ -36,7 +36,7 @@ async function setStore(open) {
   if (!error) updateAdminStatus(open);
 }
 
-// ==================== HAPUS PESANAN ====================
+// ==================== HAPUS PESANAN (SINGLE) ====================
 async function hapusPesanan(id) {
   if (!confirm("Yakin ingin menghapus pesanan ini?")) return;
 
@@ -54,7 +54,6 @@ async function hapusPesanan(id) {
     return;
   }
 
-  // hapus row dari UI
   const row = document
     .querySelector(`button[data-id="${id}"]`)
     ?.closest("tr");
@@ -62,6 +61,37 @@ async function hapusPesanan(id) {
   if (row) row.remove();
 
   alert("Pesanan berhasil dihapus!");
+}
+
+// ==================== HAPUS PESANAN TERPILIH (BARU) ====================
+async function hapusPesananTerpilih() {
+  const checked = document.querySelectorAll(".row-check:checked");
+
+  if (checked.length === 0) {
+    alert("Pilih minimal satu pesanan.");
+    return;
+  }
+
+  if (!confirm(`Yakin ingin menghapus ${checked.length} pesanan?`)) return;
+
+  const ids = Array.from(checked).map(cb => cb.dataset.id.toString());
+  const supabase = getSupabase();
+  if (!supabase) return;
+
+  const { error } = await supabase
+    .from("pesanan_layanan_digital")
+    .delete()
+    .in("id", ids); // 🔥 bulk delete
+
+  if (error) {
+    alert("Gagal menghapus pesanan terpilih.");
+    return;
+  }
+
+  checked.forEach(cb => cb.closest("tr")?.remove());
+  document.getElementById("checkAll").checked = false;
+
+  alert("Pesanan terpilih berhasil dihapus!");
 }
 
 // ==================== LOAD STATUS ====================
@@ -94,7 +124,7 @@ async function loadOrders() {
   if (error || !data || data.length === 0) {
     table.innerHTML = `
       <tr>
-        <td colspan="10" class="empty">Belum ada pesanan</td>
+        <td colspan="11" class="empty">Belum ada pesanan</td>
       </tr>
     `;
     return;
@@ -134,9 +164,17 @@ async function loadOrders() {
     `;
   });
 
+  // tombol hapus satuan
   document.querySelectorAll(".hapus-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       hapusPesanan(btn.dataset.id);
+    });
+  });
+
+  // check all
+  document.getElementById("checkAll")?.addEventListener("change", e => {
+    document.querySelectorAll(".row-check").forEach(cb => {
+      cb.checked = e.target.checked;
     });
   });
 }
@@ -172,9 +210,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("logoutBtn")?.addEventListener("click", logoutAdmin);
   document.getElementById("btnOpen")?.addEventListener("click", () => setStore(true));
   document.getElementById("btnClose")?.addEventListener("click", () => setStore(false));
+  document.getElementById("hapusTerpilih")?.addEventListener("click", hapusPesananTerpilih);
 
   loadStoreStatus();
   loadOrders();
   listenOrdersRealtime();
 });
-
