@@ -115,6 +115,9 @@ async function loadOrders() {
 
     table.innerHTML += `
       <tr>
+        <td>
+          <input type="checkbox" class="row-check" data-id="${item.id}">
+        </td>
         <td>${index + 1}</td>
         <td>${item.nama || "-"}</td>
         <td>${item.layanan || "-"}</td>
@@ -174,3 +177,4 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
+
