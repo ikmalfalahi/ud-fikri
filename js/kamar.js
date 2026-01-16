@@ -62,10 +62,10 @@ async function hapusPesanan(id) {
 
   try {
        const { data, error } = await supabase
-      .from("pesanan_layanan_digital")
-      .delete()
-      .eq("id", id.toString())
-      .select();
+        .from("pesanan_layanan_digital")
+        .delete()
+        .eq("id", id.toString()) // ID sebagai string
+        .select();
 
     if (error) {
       console.error("Error hapus pesanan:", error);
@@ -214,4 +214,5 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
+
 
