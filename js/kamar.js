@@ -53,7 +53,7 @@ async function hapusPesanan(id) {
   const supabase = getSupabase();
   if (!supabase) return;
 
-  console.log("Menghapus pesanan ID:", id);
+  console.log("ID akan dihapus:", id);
 
   const { error, count } = await supabase
     .from("pesanan_layanan_digital")
@@ -192,6 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
+
 
 
 
