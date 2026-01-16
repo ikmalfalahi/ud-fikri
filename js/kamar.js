@@ -1,7 +1,6 @@
 "use strict";
 
 // ==================== SUPABASE ====================
-// Ambil CLIENT Supabase yang benar dari supabase.js
 function getSupabase() {
   if (!window.supabaseClient) {
     console.error("Supabase client belum siap");
@@ -40,17 +39,14 @@ async function setStore(open) {
       })
       .eq("id", 1);
 
-    if (error) {
-      console.error("Gagal update status:", error);
-    } else {
-      updateAdminStatus(open);
-    }
+    if (error) console.error("Gagal update status:", error);
+    else updateAdminStatus(open);
   } catch (err) {
     console.error("Error saat setStore:", err);
   }
 }
 
-/* ============= Hapus Pesanana ==========*/
+// ==================== HAPUS PESANAN ====================
 async function hapusPesanan(id) {
   if (!confirm("Yakin ingin menghapus pesanan ini?")) return;
 
@@ -69,11 +65,10 @@ async function hapusPesanan(id) {
   }
 
   alert("Pesanan berhasil dihapus!");
-  loadOrders(); // refresh tabel setelah hapus
+  loadOrders();
 }
 
-
-// ==================== LOAD STATUS SAAT PAGE LOAD ====================
+// ==================== LOAD STATUS ====================
 async function loadStoreStatus() {
   try {
     const supabase = getSupabase();
@@ -85,11 +80,8 @@ async function loadStoreStatus() {
       .eq("id", 1)
       .maybeSingle();
 
-    if (!error && data) {
-      updateAdminStatus(data.is_open);
-    } else {
-      console.warn("Status toko belum tersedia");
-    }
+    if (!error && data) updateAdminStatus(data.is_open);
+    else console.warn("Status toko belum tersedia");
   } catch (err) {
     console.error("Error load status:", err);
   }
@@ -110,58 +102,51 @@ async function loadOrders() {
 
   if (error) {
     console.error(error);
-    table.innerHTML = `
-      <tr>
-        <td colspan="9" class="empty">Gagal memuat data</td>
-      </tr>
-    `;
+    table.innerHTML = `<tr><td colspan="9" class="empty">Gagal memuat data</td></tr>`;
     return;
   }
 
   if (!data || data.length === 0) {
-    table.innerHTML = `
-      <tr>
-        <td colspan="9" class="empty">Belum ada pesanan</td>
-      </tr>
-    `;
+    table.innerHTML = `<tr><td colspan="9" class="empty">Belum ada pesanan</td></tr>`;
     return;
   }
 
   table.innerHTML = "";
 
   data.forEach((item, index) => {
-  const tanggal = item.created_at
-    ? new Date(item.created_at).toLocaleString("id-ID", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    : "-";
+    const tanggal = item.created_at
+      ? new Date(item.created_at).toLocaleString("id-ID", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      : "-";
 
-  table.innerHTML += `
-    <tr>
-      <td>${index + 1}</td>
-      <td>${item.nama || "-"}</td>
-      <td>${item.layanan || "-"}</td>
-      <td>${item.provider || "-"}</td>
-      <td>Rp ${Number(item.nominal || 0).toLocaleString("id-ID")}</td>
-      <td><strong>Rp ${Number(item.total || 0).toLocaleString("id-ID")}</strong></td>
-      <td>${item.status || "Pending"}</td>
-      <td>${tanggal}</td>
-      <td>
-        ${item.bukti_url ? `<a href="${item.bukti_url}" target="_blank">Lihat</a>` : "-"}
-        <button class="hapus-btn" data-id="${item.id}">Hapus</button>
-      </td>
-    </tr>
-  `;
-});
+    table.innerHTML += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${item.nama || "-"}</td>
+        <td>${item.layanan || "-"}</td>
+        <td>${item.provider || "-"}</td>
+        <td>Rp ${Number(item.nominal || 0).toLocaleString("id-ID")}</td>
+        <td><strong>Rp ${Number(item.total || 0).toLocaleString("id-ID")}</strong></td>
+        <td>${item.status || "Pending"}</td>
+        <td>${tanggal}</td>
+        <td>
+          ${item.bukti_url ? `<a href="${item.bukti_url}" target="_blank">Lihat</a>` : "-"}
+          <button class="hapus-btn" data-id="${item.id}">Hapus</button>
+        </td>
+      </tr>
+    `;
+  });
 
-// Pasang event hapus setelah semua row di-render
-document.querySelectorAll(".hapus-btn").forEach(btn => {
-  btn.onclick = () => hapusPesanan(btn.dataset.id);
-});
+  // Pasang event hapus setelah semua row di-render
+  document.querySelectorAll(".hapus-btn").forEach((btn) => {
+    btn.onclick = () => hapusPesanan(btn.dataset.id);
+  });
+}
 
 // ==================== REALTIME PESANAN ====================
 function listenOrdersRealtime() {
@@ -193,14 +178,11 @@ function logoutAdmin() {
 
 // ==================== EVENT LISTENER ====================
 document.addEventListener("DOMContentLoaded", () => {
-  // tombol
   document.getElementById("logoutBtn")?.addEventListener("click", logoutAdmin);
   document.getElementById("btnOpen")?.addEventListener("click", () => setStore(true));
   document.getElementById("btnClose")?.addEventListener("click", () => setStore(false));
 
-  // init
   loadStoreStatus();
   loadOrders();
   listenOrdersRealtime();
 });
-
