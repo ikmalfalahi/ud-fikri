@@ -167,32 +167,27 @@ body {
   }
 }
 
-/* ================= FOOTER (SAMA DENGAN HOME) ================= */
+/* ================= FIX FOOTER ================= */
 html, body {
   height: 100%;
 }
 
-.wrapper {
-  min-height: 100vh;
+body {
   display: flex;
   flex-direction: column;
 }
 
-main {
+/* konten utama */
+.container {
   flex: 1;
 }
 
-/* FOOTER */
+/* footer nempel bawah */
 footer {
   background: linear-gradient(90deg,#00bfff,#1e90ff);
   color: white;
   text-align: center;
   font-size: 12px;
-  padding: 10px;
-  border-radius: 10px 10px 0 0;
-}
-
-footer p {
-  margin: 0;
-  font-size: 11px;
+  padding: 12px;
+  border-radius: 0;
 }
