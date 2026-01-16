@@ -50,6 +50,29 @@ async function setStore(open) {
   }
 }
 
+/* ============= Hapus Pesanana ==========*/
+async function hapusPesanan(id) {
+  if (!confirm("Yakin ingin menghapus pesanan ini?")) return;
+
+  const supabase = getSupabase();
+  if (!supabase) return;
+
+  const { error } = await supabase
+    .from("pesanan_layanan_digital")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Gagal hapus pesanan:", error);
+    alert("Gagal menghapus pesanan!");
+    return;
+  }
+
+  alert("Pesanan berhasil dihapus!");
+  loadOrders(); // refresh tabel setelah hapus
+}
+
+
 // ==================== LOAD STATUS SAAT PAGE LOAD ====================
 async function loadStoreStatus() {
   try {
@@ -107,38 +130,38 @@ async function loadOrders() {
   table.innerHTML = "";
 
   data.forEach((item, index) => {
-    const tanggal = item.created_at
-      ? new Date(item.created_at).toLocaleString("id-ID", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        })
-      : "-";
+  const tanggal = item.created_at
+    ? new Date(item.created_at).toLocaleString("id-ID", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : "-";
 
-    table.innerHTML += `
-      <tr>
-        <td>${index + 1}</td>
-        <td>${item.nama || "-"}</td>
-        <td>${item.layanan || "-"}</td>
-        <td>${item.provider || "-"}</td>
-        <td>Rp ${Number(item.nominal || 0).toLocaleString("id-ID")}</td>
-        <td><strong>Rp ${Number(item.total || 0).toLocaleString("id-ID")}</strong></td>
-        <td>${item.status || "Pending"}</td>
-        <td>${tanggal}</td>
-        <td>
-          ${
-            item.bukti_url
-              ? `<a href="${item.bukti_url}" target="_blank">Lihat</a>`
-              : "-"
-          }
-        </td>
-      </tr>
-    `;
-  });
-}
+  table.innerHTML += `
+    <tr>
+      <td>${index + 1}</td>
+      <td>${item.nama || "-"}</td>
+      <td>${item.layanan || "-"}</td>
+      <td>${item.provider || "-"}</td>
+      <td>Rp ${Number(item.nominal || 0).toLocaleString("id-ID")}</td>
+      <td><strong>Rp ${Number(item.total || 0).toLocaleString("id-ID")}</strong></td>
+      <td>${item.status || "Pending"}</td>
+      <td>${tanggal}</td>
+      <td>
+        ${item.bukti_url ? `<a href="${item.bukti_url}" target="_blank">Lihat</a>` : "-"}
+        <button class="hapus-btn" data-id="${item.id}">Hapus</button>
+      </td>
+    </tr>
+  `;
+});
 
+// Pasang event hapus setelah semua row di-render
+document.querySelectorAll(".hapus-btn").forEach(btn => {
+  btn.onclick = () => hapusPesanan(btn.dataset.id);
+});
 
 // ==================== REALTIME PESANAN ====================
 function listenOrdersRealtime() {
