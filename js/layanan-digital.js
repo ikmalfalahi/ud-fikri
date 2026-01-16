@@ -486,13 +486,12 @@ async function simpanPesanan({
   total,
   bukti_url
 }) {
-  const supabase = window.supabaseClient;
-  if (!supabase) {
+  if (!db) {
     console.error("Supabase client tidak tersedia");
     return false;
   }
 
-  const { error } = await supabase
+  const { error } = await db
     .from("pesanan_layanan_digital")
     .insert([{
       nama,
@@ -514,9 +513,8 @@ async function simpanPesanan({
   return true;
 }
 
-
 /* ================= SEND WHATSAPP ================= */
-function sendWA() {
+async function sendWA() {
   const nama = document.getElementById("inputNama").value.trim();
   const provider = document.getElementById("provider").value;
   const data = document.getElementById("inputData").value.trim();
