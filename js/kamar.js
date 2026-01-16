@@ -57,14 +57,15 @@ async function hapusPesanan(id) {
     return;
   }
 
-  console.log("ID akan dihapus:", id);
+  const numericId = Number(id);
+  console.log("ID akan dihapus:", numericId, typeof numericId);
 
   try {
     const { data, error } = await supabase
       .from("pesanan_layanan_digital")
       .delete()
-      .eq("id", Number(id)) // pastikan tipe data cocok
-      .select(); // <- pakai select() supaya data yang dihapus dikembalikan
+      .eq("id", numericId)
+      .select(); // pastikan data dikembalikan
 
     if (error) {
       console.error("Error hapus pesanan:", error);
@@ -124,12 +125,12 @@ async function loadOrders() {
 
   if (error) {
     console.error(error);
-    table.innerHTML = `<tr><td colspan="9" class="empty">Gagal memuat data</td></tr>`;
+    table.innerHTML = `<tr><td colspan="10" class="empty">Gagal memuat data</td></tr>`;
     return;
   }
 
   if (!data || data.length === 0) {
-    table.innerHTML = `<tr><td colspan="9" class="empty">Belum ada pesanan</td></tr>`;
+    table.innerHTML = `<tr><td colspan="10" class="empty">Belum ada pesanan</td></tr>`;
     return;
   }
 
@@ -145,9 +146,9 @@ async function loadOrders() {
           minute: "2-digit",
         })
       : "-";
-     
-    // 🔹 Tambahkan log di sini
-  console.log("ID pesanan:", item.id, typeof item.id);
+
+    // 🔹 Debug ID pesanan
+    console.log("ID pesanan:", item.id, typeof item.id);
 
     table.innerHTML += `
       <tr>
@@ -165,14 +166,14 @@ async function loadOrders() {
     `;
   });
 
-  // ⚡ Pasang event listener untuk tombol hapus (dengan log debug)
-document.querySelectorAll(".hapus-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const id = btn.dataset.id;
-    console.log("Klik Hapus ID:", id, typeof id); // 🔹 log debug
-    hapusPesanan(id);
+  // ⚡ Pasang event listener tombol Hapus
+  document.querySelectorAll(".hapus-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      console.log("Klik Hapus ID:", id, typeof id);
+      hapusPesanan(id);
+    });
   });
-});
 }
 
 // ==================== REALTIME PESANAN ====================
@@ -213,6 +214,3 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
-
-
-
