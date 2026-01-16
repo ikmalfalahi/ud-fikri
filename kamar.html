@@ -21,64 +21,89 @@
 
 <!-- ================= HEADER ================= -->
 <header class="admin-header">
-  <h1>Admin Layanan Digital</h1>
+  <h1>KAMAR TOKO SEMBAKO UD-FIKRI</h1>
   <button id="logoutBtn" class="btn btn-logout">
     <i class="fa-solid fa-right-from-bracket"></i> Logout
   </button>
 </header>
 
-<!-- ================= STATUS BAR ================= -->
-<section class="status-bar">
-  <div id="admin-status" class="store-status">
-    Memuat status layanan...
-  </div>
+<!-- ================= CONTAINER ================= -->
+<div class="container">
 
-  <div class="buttons">
-    <button id="btnOpen" class="btn btn-open">
-      🟢 Buka Layanan
-    </button>
-    <button id="btnClose" class="btn btn-close">
-      🔴 Tutup Layanan
-    </button>
-  </div>
-</section>
+  <!-- ================= STATUS BAR ================= -->
+  <section class="status-bar">
+    <div>
+      <div id="admin-status" class="store-status">
+        Memuat status layanan...
+      </div>
+      <small id="tanggalOtomatis"></small>
+    </div>
 
-<!-- ================= CONTENT ================= -->
-<main class="admin-content">
+    <div class="buttons">
+      <button id="btnOpen" class="btn btn-open">
+        🟢 Buka Layanan
+      </button>
+      <button id="btnClose" class="btn btn-close">
+        🔴 Tutup Layanan
+      </button>
+    </div>
+  </section>
 
-  <h2>Pesanan Masuk</h2>
+  <!-- ================= CONTENT ================= -->
+  <main class="admin-content">
 
-  <div class="table-wrapper">
-    <table class="admin-table">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Nama</th>
-          <th>Layanan</th>
-          <th>Provider</th>
-          <th>Nominal</th>
-          <th>Total</th>
-          <th>Status</th>
-          <th>Bukti</th>
-        </tr>
-      </thead>
-      <tbody id="orderTable">
-        <tr>
-          <td colspan="8" class="empty">
-            Belum ada pesanan
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <h2>Pesanan Masuk</h2>
 
-</main>
+    <div class="table-wrapper">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Layanan</th>
+            <th>Provider</th>
+            <th>Nominal</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Bukti</th>
+          </tr>
+        </thead>
+        <tbody id="orderTable">
+          <tr>
+            <td colspan="8" class="empty">
+              Belum ada pesanan
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+</div>
 
 <!-- ================= SCRIPT ================= -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/js/supabase.js"></script>
 <script src="js/kamar.js"></script>
 <script src="js/admin-layanan.js"></script>
+
+<!-- ================= TANGGAL OTOMATIS ================= -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const el = document.getElementById("tanggalOtomatis");
+  if (el) {
+    const now = new Date();
+    const options = {
+      weekday: "long",
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
+    };
+    el.textContent = "Tanggal: " + now.toLocaleDateString("id-ID", options);
+  }
+});
+</script>
 
 <!-- ================= LOGIN GUARD ================= -->
 <script>
