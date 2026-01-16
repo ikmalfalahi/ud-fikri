@@ -41,12 +41,8 @@
     </div>
 
     <div class="buttons">
-      <button id="btnOpen" class="btn btn-open">
-        🟢 Buka Layanan
-      </button>
-      <button id="btnClose" class="btn btn-close">
-        🔴 Tutup Layanan
-      </button>
+      <button id="btnOpen" class="btn btn-open">🟢 Buka Layanan</button>
+      <button id="btnClose" class="btn btn-close">🔴 Tutup Layanan</button>
     </div>
   </section>
 
@@ -54,6 +50,13 @@
   <main class="admin-content">
 
     <h2>Pesanan Masuk</h2>
+
+    <!-- 🔥 AKSI BULK -->
+    <div style="margin-bottom: 10px;">
+      <button id="hapusTerpilih" class="btn btn-danger">
+        <i class="fa-solid fa-trash"></i> Hapus Terpilih
+      </button>
+    </div>
 
     <div class="table-wrapper">
       <table class="admin-table">
@@ -74,10 +77,10 @@
             <th>Aksi</th>
           </tr>
         </thead>
+
+        <!-- ✅ SATU TBODY SAJA -->
         <tbody id="orderTable"></tbody>
-          <tr>
-          </tr>
-        </tbody>
+
       </table>
     </div>
 
@@ -121,9 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
-  
+
 </body>
 </html>
-
-
-
