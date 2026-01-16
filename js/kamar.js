@@ -64,8 +64,11 @@ async function hapusPesanan(id) {
     return;
   }
 
+  // ⚡ Hapus row langsung dari UI
+  const row = document.querySelector(`button[data-id='${id}']`)?.closest("tr");
+  if (row) row.remove();
+
   alert("Pesanan berhasil dihapus!");
-  loadOrders();
 }
 
 // ==================== LOAD STATUS ====================
@@ -140,9 +143,12 @@ async function loadOrders() {
     `;
   });
 
-  // Pasang event hapus setelah semua row di-render
-  document.querySelectorAll(".hapus-btn").forEach((btn) => {
-    btn.onclick = () => hapusPesanan(btn.dataset.id);
+  // ⚡ Pasang event listener untuk tombol hapus
+  document.querySelectorAll(".hapus-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      hapusPesanan(id);
+    });
   });
 }
 
@@ -184,4 +190,5 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
+
 
