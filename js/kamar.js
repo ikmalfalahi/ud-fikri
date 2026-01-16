@@ -2,14 +2,9 @@
 
 // ==================== SUPABASE ====================
 function getSupabase() {
-  if (!window.supabaseClient) {
-    console.error("Supabase client belum siap");
-    return null;
-  }
+  if (!window.supabaseClient) return null;
   return window.supabaseClient;
 }
-
-console.log("Supabase ready:", !!window.supabaseClient);
 
 // ==================== UPDATE STATUS ====================
 function updateAdminStatus(open) {
@@ -27,23 +22,18 @@ function updateAdminStatus(open) {
 
 // ==================== SET STATUS ====================
 async function setStore(open) {
-  try {
-    const supabase = getSupabase();
-    if (!supabase) return;
+  const supabase = getSupabase();
+  if (!supabase) return;
 
-    const { error } = await supabase
-      .from("store_status")
-      .update({
-        is_open: open,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", 1);
+  const { error } = await supabase
+    .from("store_status")
+    .update({
+      is_open: open,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", 1);
 
-    if (error) console.error("Gagal update status:", error);
-    else updateAdminStatus(open);
-  } catch (err) {
-    console.error("Error saat setStore:", err);
-  }
+  if (!error) updateAdminStatus(open);
 }
 
 // ==================== HAPUS PESANAN ====================
@@ -51,67 +41,41 @@ async function hapusPesanan(id) {
   if (!confirm("Yakin ingin menghapus pesanan ini?")) return;
 
   const supabase = getSupabase();
-  if (!supabase) {
-    console.error("Supabase client belum siap!");
+  if (!supabase) return;
+
+  const { data, error } = await supabase
+    .from("pesanan_layanan_digital")
+    .delete()
+    .eq("id", id.toString()) // bigint → string
+    .select();
+
+  if (error || !data || data.length === 0) {
+    alert("Pesanan tidak dapat dihapus.");
     return;
   }
 
-  console.log("ID akan dihapus (string):", id, typeof id);
+  // hapus row dari UI
+  const row = document
+    .querySelector(`button[data-id="${id}"]`)
+    ?.closest("tr");
 
-  try {
-    const { data, error } = await supabase
-      .from("pesanan_layanan_digital")
-      .delete()
-      .eq("id", id.toString()) // ✅ PENTING: bigint → string
-      .select();
+  if (row) row.remove();
 
-    console.log("Data terhapus:", data);
-    console.log("Error:", error);
-
-    if (error) {
-      alert("Gagal menghapus pesanan! Cek console.");
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      alert(
-        "Pesanan TIDAK terhapus.\n" +
-        "Kemungkinan ada FOREIGN KEY / constraint di database."
-      );
-      return;
-    }
-
-    // hapus row dari UI
-    const row = document
-      .querySelector(`button[data-id="${id}"]`)
-      ?.closest("tr");
-
-    if (row) row.remove();
-
-    alert("Pesanan berhasil dihapus!");
-  } catch (err) {
-    console.error("Exception hapusPesanan:", err);
-    alert("Terjadi error saat menghapus pesanan.");
-  }
+  alert("Pesanan berhasil dihapus!");
 }
 
 // ==================== LOAD STATUS ====================
 async function loadStoreStatus() {
-  try {
-    const supabase = getSupabase();
-    if (!supabase) return;
+  const supabase = getSupabase();
+  if (!supabase) return;
 
-    const { data, error } = await supabase
-      .from("store_status")
-      .select("is_open")
-      .eq("id", 1)
-      .maybeSingle();
+  const { data, error } = await supabase
+    .from("store_status")
+    .select("is_open")
+    .eq("id", 1)
+    .maybeSingle();
 
-    if (!error && data) updateAdminStatus(data.is_open);
-    else console.warn("Status toko belum tersedia");
-  } catch (err) {
-    console.error("Error load status:", err);
-  }
+  if (!error && data) updateAdminStatus(data.is_open);
 }
 
 // ==================== LOAD PESANAN ====================
@@ -127,14 +91,12 @@ async function loadOrders() {
     .select("*")
     .order("created_at", { ascending: false });
 
-  if (error) {
-    console.error(error);
-    table.innerHTML = `<tr><td colspan="10" class="empty">Gagal memuat data</td></tr>`;
-    return;
-  }
-
-  if (!data || data.length === 0) {
-    table.innerHTML = `<tr><td colspan="10" class="empty">Belum ada pesanan</td></tr>`;
+  if (error || !data || data.length === 0) {
+    table.innerHTML = `
+      <tr>
+        <td colspan="10" class="empty">Belum ada pesanan</td>
+      </tr>
+    `;
     return;
   }
 
@@ -151,9 +113,6 @@ async function loadOrders() {
         })
       : "-";
 
-    // 🔹 Debug ID pesanan
-    console.log("ID pesanan:", item.id, typeof item.id);
-
     table.innerHTML += `
       <tr>
         <td>${index + 1}</td>
@@ -165,17 +124,16 @@ async function loadOrders() {
         <td>${item.status || "Pending"}</td>
         <td>${tanggal}</td>
         <td>${item.bukti_url ? `<a href="${item.bukti_url}" target="_blank">Lihat</a>` : "-"}</td>
-        <td><button class="hapus-btn" data-id="${item.id}">Hapus</button></td>
+        <td>
+          <button class="hapus-btn" data-id="${item.id}">Hapus</button>
+        </td>
       </tr>
     `;
   });
 
-  // ⚡ Pasang event listener tombol Hapus
   document.querySelectorAll(".hapus-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-      const id = btn.dataset.id;
-      console.log("Klik Hapus ID:", id, typeof id);
-      hapusPesanan(id);
+      hapusPesanan(btn.dataset.id);
     });
   });
 }
@@ -194,9 +152,7 @@ function listenOrdersRealtime() {
         schema: "public",
         table: "pesanan_layanan_digital",
       },
-      () => {
-        loadOrders();
-      }
+      () => loadOrders()
     )
     .subscribe();
 }
@@ -208,7 +164,7 @@ function logoutAdmin() {
   window.location.replace("https://ud-fikri.vercel.app");
 }
 
-// ==================== EVENT LISTENER ====================
+// ==================== INIT ====================
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("logoutBtn")?.addEventListener("click", logoutAdmin);
   document.getElementById("btnOpen")?.addEventListener("click", () => setStore(true));
@@ -218,6 +174,3 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
-
-
-
