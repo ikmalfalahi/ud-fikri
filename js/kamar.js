@@ -226,7 +226,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     const rows = Array.from(tbody.querySelectorAll("tr"));
     const type = th.dataset.sort;
 
-    // reset icon
+    // reset icon semua kolom
     document.querySelectorAll(".admin-table th")
       .forEach(h => h.classList.remove("sort-asc", "sort-desc"));
 
@@ -234,23 +234,33 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
       let A = a.children[index].innerText.trim();
       let B = b.children[index].innerText.trim();
 
+      // NUMBER
       if (type === "number") {
         A = parseFloat(A.replace(/\D/g, "")) || 0;
         B = parseFloat(B.replace(/\D/g, "")) || 0;
+        return asc ? A - B : B - A;
       }
 
+      // DATE
       if (type === "date") {
-        A = new Date(A);
-        B = new Date(B);
+        A = new Date(A).getTime() || 0;
+        B = new Date(B).getTime() || 0;
+        return asc ? A - B : B - A;
       }
 
-      return asc ? A.localeCompare(B, "id", { numeric: true }) 
-                 : B.localeCompare(A, "id", { numeric: true });
+      // STRING (default)
+      return asc
+        ? A.localeCompare(B, "id", { sensitivity: "base" })
+        : B.localeCompare(A, "id", { sensitivity: "base" });
     });
 
-    rows.forEach(tr => tbody.appendChild(tr));
-
+    // toggle icon
     th.classList.add(asc ? "sort-asc" : "sort-desc");
+
+    // render ulang
+    rows.forEach(row => tbody.appendChild(row));
+
+    // toggle arah sort
     asc = !asc;
   });
 });
