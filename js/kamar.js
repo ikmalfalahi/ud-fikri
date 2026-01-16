@@ -173,7 +173,7 @@ document.querySelectorAll(".hapus-btn").forEach(btn => {
     hapusPesanan(id);
   });
 });
-
+}
 
 // ==================== REALTIME PESANAN ====================
 function listenOrdersRealtime() {
@@ -213,5 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
+
 
 
