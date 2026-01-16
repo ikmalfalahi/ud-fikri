@@ -168,8 +168,23 @@ body {
 }
 
 /* ================= FOOTER (SAMA DENGAN HOME) ================= */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* tinggi penuh layar */
+}
+
+main {
+  flex: 1; /* dorong footer ke bawah */
+}
+
+/* Footer tetap seperti yang kamu buat */
 footer {
-    margin-top: 20px;
     color: white;
     text-align: center;
     font-size: 12px;
