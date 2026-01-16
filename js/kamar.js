@@ -108,7 +108,13 @@ async function loadOrders() {
 
   data.forEach((item, index) => {
     const tanggal = item.created_at
-      ? new Date(item.created_at).toLocaleString("id-ID")
+      ? new Date(item.created_at).toLocaleString("id-ID", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        })
       : "-";
 
     table.innerHTML += `
@@ -117,9 +123,9 @@ async function loadOrders() {
         <td>${item.nama || "-"}</td>
         <td>${item.layanan || "-"}</td>
         <td>${item.provider || "-"}</td>
-        <td>${item.nominal || "-"}</td>
-        <td>Rp ${Number(item.total || 0).toLocaleString("id-ID")}</td>
-        <td>${item.status || "-"}</td>
+        <td>Rp ${Number(item.nominal || 0).toLocaleString("id-ID")}</td>
+        <td><strong>Rp ${Number(item.total || 0).toLocaleString("id-ID")}</strong></td>
+        <td>${item.status || "Pending"}</td>
         <td>${tanggal}</td>
         <td>
           ${
@@ -132,6 +138,7 @@ async function loadOrders() {
     `;
   });
 }
+
 
 // ==================== REALTIME PESANAN ====================
 function listenOrdersRealtime() {
@@ -173,3 +180,4 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
+
