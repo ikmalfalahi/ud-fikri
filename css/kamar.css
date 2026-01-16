@@ -240,3 +240,28 @@ footer {
   outline: none;
   border-color: #1e90ff;
 }
+
+/* ================= STATUS SELECT ================= */
+.status-select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Pending */
+.status-select option[value="pending"] {
+  color: #f39c12;
+}
+
+/* Sukses */
+.status-select option[value="sukses"] {
+  color: #2ecc71;
+}
+
+/* Ditolak */
+.status-select option[value="ditolak"] {
+  color: #e74c3c;
+}
