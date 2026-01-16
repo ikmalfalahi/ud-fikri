@@ -150,3 +150,18 @@ body {
     flex-direction: column;
   }
 }
+
+/* CONTAINER UTAMA */
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* TANGGAL */
+#tanggalPemesanan {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #666;
+}
