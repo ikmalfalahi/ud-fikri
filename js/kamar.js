@@ -264,3 +264,21 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
+// ================= SEARCH NAMA =================
+document.getElementById("searchNama").addEventListener("input", function () {
+  const keyword = this.value.toLowerCase();
+  const rows = document.querySelectorAll("#orderTable tr");
+
+  rows.forEach(row => {
+    // kolom NAMA = index ke-2
+    const nama = row.children[2]?.innerText.toLowerCase() || "";
+
+    if (nama.includes(keyword)) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+});
+
