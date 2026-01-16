@@ -134,10 +134,8 @@ async function loadOrders() {
         <td><strong>Rp ${Number(item.total || 0).toLocaleString("id-ID")}</strong></td>
         <td>${item.status || "Pending"}</td>
         <td>${tanggal}</td>
-        <td>
-          ${item.bukti_url ? `<a href="${item.bukti_url}" target="_blank">Lihat</a>` : "-"}
-          <button class="hapus-btn" data-id="${item.id}">Hapus</button>
-        </td>
+        <td>${item.bukti_url ? `<a href="${item.bukti_url}" target="_blank">Lihat</a>` : "-"}</td>
+        <td><button class="hapus-btn" data-id="${item.id}">Hapus</button></td>
       </tr>
     `;
   });
@@ -186,3 +184,4 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
+
