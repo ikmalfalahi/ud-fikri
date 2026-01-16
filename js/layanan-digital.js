@@ -476,6 +476,45 @@ nominalText.oninput = () => {
   adminText.classList.remove("hidden");
 };
 
+/* ================= Simpan Pesanan di SUPABASE ============== */
+async function simpanPesanan({
+  nama,
+  layanan,
+  provider,
+  data,
+  nominal,
+  total,
+  bukti_url
+}) {
+  const supabase = window.supabaseClient;
+  if (!supabase) {
+    console.error("Supabase client tidak tersedia");
+    return false;
+  }
+
+  const { error } = await supabase
+    .from("pesanan_layanan_digital")
+    .insert([{
+      nama,
+      layanan,
+      provider,
+      data,
+      nominal,
+      total,
+      status: "Pending",
+      bukti_url
+    }]);
+
+  if (error) {
+    console.error("Gagal simpan pesanan:", error);
+    alert("Pesanan gagal disimpan ke sistem!");
+    return false;
+  }
+
+  return true;
+}
+
+
 /* ================= SEND WHATSAPP ================= */
 function sendWA() {
   const nama = document.getElementById("inputNama").value.trim();
@@ -514,6 +553,17 @@ function sendWA() {
 
   const admin = getAdminFee(activeService, nominalNumber);
   const totalHarga = nominalNumber + admin;
+    const berhasil = await simpanPesanan({
+    nama,
+    layanan: activeService.title,
+    provider,
+    data,
+    nominal: nominalNumber,
+    total: totalHarga,
+    bukti_url: buktiURL
+  });
+
+  if (!berhasil) return;
 
   let pesan = `*PESANAN LAYANAN DIGITAL – UD FIKRI*\n====================\n`;
   pesan += `*Nama*: ${nama}\n`;
