@@ -20,75 +20,77 @@
 </head>
 <body>
 
-<!-- ================= HEADER ================= -->
-<header class="admin-header">
-  <h1>KAMAR TOKO SEMBAKO UD-FIKRI</h1>
-  <button id="logoutBtn" class="btn btn-logout">
-    <i class="fa-solid fa-right-from-bracket"></i> Logout
-  </button>
-</header>
+<div class="wrapper">
 
-<!-- ================= CONTAINER ================= -->
-<div class="container">
+  <!-- ================= HEADER ================= -->
+  <header class="admin-header">
+    <h1>KAMAR TOKO SEMBAKO UD-FIKRI</h1>
+    <button id="logoutBtn" class="btn btn-logout">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </button>
+  </header>
 
-  <!-- ================= STATUS BAR ================= -->
-  <section class="status-bar">
-    <div>
-      <div id="admin-status" class="store-status">
-        Memuat status layanan...
+  <!-- ================= MAIN ================= -->
+  <main class="container">
+
+    <!-- ================= STATUS BAR ================= -->
+    <section class="status-bar">
+      <div>
+        <div id="admin-status" class="store-status">
+          Memuat status layanan...
+        </div>
+        <small id="tanggalOtomatis"></small>
       </div>
-      <small id="tanggalOtomatis"></small>
-    </div>
 
-    <div class="buttons">
-      <button id="btnOpen" class="btn btn-open">🟢 Buka Layanan</button>
-      <button id="btnClose" class="btn btn-close">🔴 Tutup Layanan</button>
-    </div>
-  </section>
+      <div class="buttons">
+        <button id="btnOpen" class="btn btn-open">🟢 Buka Layanan</button>
+        <button id="btnClose" class="btn btn-close">🔴 Tutup Layanan</button>
+      </div>
+    </section>
 
-  <!-- ================= CONTENT ================= -->
-  <main class="admin-content">
+    <!-- ================= CONTENT ================= -->
+    <section class="admin-content">
 
-    <h2>Pesanan Masuk</h2>
+      <h2>Pesanan Masuk</h2>
 
-    <!-- 🔥 AKSI BULK -->
-    <div class="bulk-actions">
-      <button id="hapusTerpilih" class="btn btn-danger">
-        <i class="fa-solid fa-trash"></i> Hapus Terpilih
-      </button>
-    </div>
+      <!-- 🔥 AKSI BULK -->
+      <div class="bulk-actions">
+        <button id="hapusTerpilih" class="btn btn-danger">
+          <i class="fa-solid fa-trash"></i> Hapus Terpilih
+        </button>
+      </div>
 
-    <div class="table-wrapper">
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>
-              <input type="checkbox" id="checkAll">
-            </th>
-            <th>No</th>
-            <th>Nama</th>
-            <th>Layanan</th>
-            <th>Provider</th>
-            <th>Nominal</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th>Tanggal</th>
-            <th>Bukti</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
+      <div class="table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="checkAll"></th>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Layanan</th>
+              <th>Provider</th>
+              <th>Nominal</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Tanggal</th>
+              <th>Bukti</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="orderTable"></tbody>
+        </table>
+      </div>
 
-        <!-- ✅ SATU TBODY SAJA -->
-        <tbody id="orderTable"></tbody>
-
-      </table>
-    </div>
+    </section>
 
   </main>
 
-</div>
+  <!-- ================= FOOTER ================= -->
+  <footer class="main-footer">
+    © 2025 Ikmal Falahi. All Rights Reserved.
+  </footer>
 
-<footer>&copy; 2025 Ikmal Falahi. All Rights Reserved.</footer>
+</div>
 
 <!-- ================= SCRIPT ================= -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -127,4 +129,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
-
