@@ -53,18 +53,20 @@ async function hapusPesanan(id) {
   const supabase = getSupabase();
   if (!supabase) return;
 
-  const { error } = await supabase
+  console.log("Menghapus pesanan ID:", id);
+
+  const { error, count } = await supabase
     .from("pesanan_layanan_digital")
     .delete()
-    .eq("id", id);
+    .eq("id", Number(id)); // pastikan tipe data cocok
+  console.log(error);
 
   if (error) {
-    console.error("Gagal hapus pesanan:", error);
-    alert("Gagal menghapus pesanan!");
+    alert("Gagal menghapus pesanan! Cek console untuk detail.");
     return;
   }
 
-  // ⚡ Hapus row langsung dari UI
+  // hapus row di UI
   const row = document.querySelector(`button[data-id='${id}']`)?.closest("tr");
   if (row) row.remove();
 
@@ -190,5 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
+
 
 
