@@ -25,6 +25,60 @@ body {
   margin: 0;
 }
 
+/* ================ Tombol Navbar ============= */
+/* Navbar container */
+.top-nav {
+  display: flex;
+  gap: 10px;
+  padding: 8px 8px;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Tombol navbar */
+.nav-btn {
+  flex: 1;
+  border: none;
+  background: #f5f5f5;
+  padding: 10px 8px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  transition: 0.2s ease;
+}
+
+.nav-btn i {
+  font-size: 14px;
+}
+
+/* Hover */
+.nav-btn:hover {
+  background: #eaeaea;
+}
+
+/* Active page */
+.nav-btn.active {
+  background: #2c7be5;
+  color: #fff;
+}
+
+.nav-btn.active i {
+  color: #fff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 /* ================= BUTTON ================= */
 .btn {
   border: none;
@@ -265,3 +319,4 @@ footer {
 .status-select option[value="ditolak"] {
   color: #e74c3c;
 }
+
