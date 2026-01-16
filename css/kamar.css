@@ -25,25 +25,40 @@ body {
   margin: 0;
 }
 
-.btn-logout {
-  background: #ff4b5c;
+/* ================= BUTTON ================= */
+.btn {
   border: none;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 20px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
+  padding: 10px 16px;
 }
 
-/* ================= LAYOUT ================= */
-.admin-wrapper {
+.btn-logout {
+  background: #ff4b5c;
+  color: white;
+  border-radius: 20px;
+}
+
+.btn-open {
+  background: #2ecc71;
+  color: #fff;
+}
+
+.btn-close {
+  background: #e74c3c;
+  color: #fff;
+}
+
+/* ================= CONTAINER ================= */
+.container {
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
   padding: 20px;
 }
 
-/* ================= STATUS ================= */
-.status-card {
+/* ================= STATUS BAR ================= */
+.status-bar {
   background: #fff;
   padding: 20px;
   border-radius: 12px;
@@ -53,6 +68,7 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  gap: 12px;
 }
 
 .store-status {
@@ -68,36 +84,30 @@ body {
   color: #e74c3c;
 }
 
-.status-actions {
+/* TANGGAL */
+#tanggalOtomatis {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #666;
+}
+
+/* BUTTON AREA */
+.buttons {
   display: flex;
   gap: 10px;
 }
 
-.btn-open {
-  background: #2ecc71;
-  color: #fff;
-}
-
-.btn-close {
-  background: #e74c3c;
-  color: #fff;
-}
-
-.btn-open,
-.btn-close {
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
 /* ================= CONTENT ================= */
-.content-card {
+.admin-content {
   background: #fff;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.admin-content h2 {
+  margin-top: 0;
 }
 
 /* ================= TABLE ================= */
@@ -130,38 +140,29 @@ body {
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
-  .status-card {
+
+  .admin-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 10px;
   }
 
   .admin-header h1 {
     font-size: 16px;
   }
 
+  .status-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
   .btn-open,
   .btn-close {
     width: 100%;
   }
-
-  .status-actions {
-    width: 100%;
-    flex-direction: column;
-  }
-}
-
-/* CONTAINER UTAMA */
-.container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-/* TANGGAL */
-#tanggalPemesanan {
-  display: block;
-  margin-top: 6px;
-  font-size: 13px;
-  color: #666;
 }
