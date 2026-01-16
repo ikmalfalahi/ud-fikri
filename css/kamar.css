@@ -195,3 +195,29 @@ footer {
   font-size: 12px;
   border-radius: 0;
 }
+
+/* ================= SORT TABLE ================= */
+.admin-table th[data-sort] {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 20px;
+}
+
+.admin-table th[data-sort]::after {
+  content: "⇅";
+  position: absolute;
+  right: 6px;
+  color: #999;
+  font-size: 12px;
+}
+
+.admin-table th.sort-asc::after {
+  content: "↑";
+  color: #1e90ff;
+}
+
+.admin-table th.sort-desc::after {
+  content: "↓";
+  color: #1e90ff;
+}
