@@ -145,6 +145,9 @@ async function loadOrders() {
           minute: "2-digit",
         })
       : "-";
+     
+    // 🔹 Tambahkan log di sini
+  console.log("ID pesanan:", item.id, typeof item.id);
 
     table.innerHTML += `
       <tr>
@@ -209,8 +212,4 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
-
-
-
-
 
