@@ -165,14 +165,15 @@ async function loadOrders() {
     `;
   });
 
-  // ⚡ Pasang event listener untuk tombol hapus
-  document.querySelectorAll(".hapus-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = btn.dataset.id;
-      hapusPesanan(id);
-    });
+  // ⚡ Pasang event listener untuk tombol hapus (dengan log debug)
+document.querySelectorAll(".hapus-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = btn.dataset.id;
+    console.log("Klik Hapus ID:", id, typeof id); // 🔹 log debug
+    hapusPesanan(id);
   });
-}
+});
+
 
 // ==================== REALTIME PESANAN ====================
 function listenOrdersRealtime() {
@@ -212,4 +213,5 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
+
 
