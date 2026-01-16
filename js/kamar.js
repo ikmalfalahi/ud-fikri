@@ -216,3 +216,41 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
+
+// ================= SORT TABLE =================
+document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
+  let asc = true;
+
+  th.addEventListener("click", () => {
+    const tbody = document.getElementById("orderTable");
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+    const type = th.dataset.sort;
+
+    // reset icon
+    document.querySelectorAll(".admin-table th")
+      .forEach(h => h.classList.remove("sort-asc", "sort-desc"));
+
+    rows.sort((a, b) => {
+      let A = a.children[index].innerText.trim();
+      let B = b.children[index].innerText.trim();
+
+      if (type === "number") {
+        A = parseFloat(A.replace(/\D/g, "")) || 0;
+        B = parseFloat(B.replace(/\D/g, "")) || 0;
+      }
+
+      if (type === "date") {
+        A = new Date(A);
+        B = new Date(B);
+      }
+
+      return asc ? A.localeCompare(B, "id", { numeric: true }) 
+                 : B.localeCompare(A, "id", { numeric: true });
+    });
+
+    rows.forEach(tr => tbody.appendChild(tr));
+
+    th.classList.add(asc ? "sort-asc" : "sort-desc");
+    asc = !asc;
+  });
+});
