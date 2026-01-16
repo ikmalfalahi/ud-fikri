@@ -167,27 +167,31 @@ body {
   }
 }
 
-/* ================= FIX FOOTER ================= */
+/* ================= FINAL FOOTER FIX ================= */
 html, body {
   height: 100%;
+  margin: 0;
 }
 
 body {
   display: flex;
   flex-direction: column;
+  background: #f4f7fb; /* samakan */
 }
 
 /* konten utama */
 .container {
-  flex: 1;
+  flex: 1 0 auto;
 }
 
-/* footer nempel bawah */
+/* footer benar-benar di bawah */
 footer {
+  flex-shrink: 0;
+  margin-top: auto;
   background: linear-gradient(90deg,#00bfff,#1e90ff);
-  color: white;
+  color: #fff;
   text-align: center;
+  padding: 14px 10px;
   font-size: 12px;
-  padding: 12px;
   border-radius: 0;
 }
