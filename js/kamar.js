@@ -51,26 +51,43 @@ async function hapusPesanan(id) {
   if (!confirm("Yakin ingin menghapus pesanan ini?")) return;
 
   const supabase = getSupabase();
-  if (!supabase) return;
-
-  console.log("ID akan dihapus:", id);
-
-  const { error, count } = await supabase
-    .from("pesanan_layanan_digital")
-    .delete()
-    .eq("id", Number(id)); // pastikan tipe data cocok
-  console.log(error);
-
-  if (error) {
-    alert("Gagal menghapus pesanan! Cek console untuk detail.");
+  if (!supabase) {
+    console.error("Supabase client belum siap!");
+    alert("Supabase client belum siap!");
     return;
   }
 
-  // hapus row di UI
-  const row = document.querySelector(`button[data-id='${id}']`)?.closest("tr");
-  if (row) row.remove();
+  console.log("ID akan dihapus:", id);
 
-  alert("Pesanan berhasil dihapus!");
+  try {
+    const { data, error } = await supabase
+      .from("pesanan_layanan_digital")
+      .delete()
+      .eq("id", Number(id)) // pastikan tipe data cocok
+      .select(); // <- pakai select() supaya data yang dihapus dikembalikan
+
+    if (error) {
+      console.error("Error hapus pesanan:", error);
+      alert("Gagal menghapus pesanan! Cek console untuk detail.");
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      console.warn("Tidak ada row yang dihapus. ID mungkin salah atau constraint mencegah delete.");
+      alert("Pesanan tidak bisa dihapus! Cek console.");
+      return;
+    }
+
+    // hapus row langsung di UI
+    const row = document.querySelector(`button[data-id='${id}']`)?.closest("tr");
+    if (row) row.remove();
+
+    console.log("Pesanan berhasil dihapus:", data);
+    alert("Pesanan berhasil dihapus!");
+  } catch (err) {
+    console.error("Exception hapusPesanan:", err);
+    alert("Terjadi error saat menghapus pesanan. Cek console.");
+  }
 }
 
 // ==================== LOAD STATUS ====================
@@ -192,6 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadOrders();
   listenOrdersRealtime();
 });
+
 
 
 
