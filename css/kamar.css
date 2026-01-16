@@ -170,27 +170,26 @@ body {
 /* ================= FOOTER (SAMA DENGAN HOME) ================= */
 html, body {
   height: 100%;
-  margin: 0;
 }
 
 .wrapper {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* tinggi penuh layar */
 }
 
 main {
-  flex: 1; /* dorong footer ke bawah */
+  flex: 1;
 }
 
-/* Footer tetap seperti yang kamu buat */
+/* FOOTER */
 footer {
-    color: white;
-    text-align: center;
-    font-size: 12px;
-    padding: 10px;
-    background: linear-gradient(90deg,#00bfff,#1e90ff);
-    border-radius: 10px 10px 0px 0px;
+  background: linear-gradient(90deg,#00bfff,#1e90ff);
+  color: white;
+  text-align: center;
+  font-size: 12px;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
 }
 
 footer p {
