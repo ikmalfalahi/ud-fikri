@@ -3,52 +3,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="
-default-src 'self';
-connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://unpkg.com https://cdn.jsdelivr.net;
-script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
-style-src 'self' https://cdnjs.cloudflare.com;
-font-src 'self' https://cdnjs.cloudflare.com;
-">
 
-  <title>kamar-udfikri</title>
+  <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://unpkg.com https://cdn.jsdelivr.net;
+  script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+  style-src 'self' https://cdnjs.cloudflare.com;
+  font-src 'self' https://cdnjs.cloudflare.com;
+  ">
+
+  <title>Admin UD-Fikri</title>
   <link rel="stylesheet" href="css/kamar.css">
 </head>
 <body>
 
-  <div class="container">
-    <h1>KAMAR UD-FIKRI</h1>
-    <div id="admin-status" class="store-status">Memuat status...</div>
+<div class="container">
 
-    <div class="buttons">
-      <button id="btnOpen" class="btn btn-open">🟢 Buka Toko</button>
-      <button id="btnClose" class="btn btn-close">🔴 Tutup Toko</button>
-    </div>
+  <!-- JUDUL -->
+  <h1>ADMIN UD-FIKRI</h1>
 
-    <button id="logoutBtn" class="btn btn-logout">🚪 Logout</button>
+  <!-- STATUS TOKO -->
+  <div id="admin-status" class="store-status">
+    Memuat status...
   </div>
 
-  <div id="store-status"></div>
+  <!-- BUTTON CONTROL -->
+  <div class="buttons">
+    <button id="btnOpen" class="btn btn-open">🟢 Buka Toko</button>
+    <button id="btnClose" class="btn btn-close">🔴 Tutup Toko</button>
+  </div>
 
-  <!-- SCRIPT -->
+  <hr style="margin:30px 0">
+
+  <!-- ================= DASHBOARD PESANAN ================= -->
+  <h2>Pesanan Layanan Digital</h2>
+
+  <div class="table-wrapper">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Layanan</th>
+          <th>Provider</th>
+          <th>Nominal</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Bukti</th>
+        </tr>
+      </thead>
+      <tbody id="orderTable">
+        <tr>
+          <td colspan="8" style="text-align:center;">
+            Belum ada pesanan
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- LOGOUT -->
+  <button id="logoutBtn" class="btn btn-logout" style="margin-top:30px">
+    🚪 Logout
+  </button>
+
+</div>
+
+<!-- SCRIPT -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/js/supabase.js"></script> <!-- membuat window.supabase -->
-<script src="js/kamar.js"></script>       <!-- pakai window.supabase -->
+<script src="/js/supabase.js"></script>
+<script src="js/kamar.js"></script>
+<script src="js/admin-layanan.js"></script>
 
-  <!-- CEK LOGIN -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const isLoggedIn =
-        localStorage.getItem("admin_logged_in") === "true" ||
-        sessionStorage.getItem("admin_logged_in") === "true";
+<!-- CEK LOGIN -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const isLoggedIn =
+    localStorage.getItem("admin_logged_in") === "true" ||
+    sessionStorage.getItem("admin_logged_in") === "true";
 
-      if (!isLoggedIn) {
-        console.warn("Belum login, mengarahkan ke login.html...");
-        window.location.replace("login.html");
-      }
-    });
-  </script>
+  if (!isLoggedIn) {
+    console.warn("Belum login, redirect...");
+    window.location.replace("login.html");
+  }
+});
+</script>
 
 </body>
 </html>
-
