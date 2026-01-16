@@ -166,3 +166,19 @@ body {
     width: 100%;
   }
 }
+
+/* ================= FOOTER (SAMA DENGAN HOME) ================= */
+footer {
+    margin-top: 20px;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    padding: 10px;
+    background: linear-gradient(90deg,#00bfff,#1e90ff);
+    border-radius: 10px 10px 0px 0px;
+}
+
+footer p {
+  margin: 0;
+  font-size: 11px;
+}
