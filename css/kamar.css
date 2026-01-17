@@ -320,3 +320,31 @@ footer {
   color: #e74c3c;
 }
 
+/* ===================== Order Layer Pesanan ================= */
+.order-layer {
+  display: none;
+}
+
+.order-layer.active {
+  display: block;
+}
+
+.order-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.order-tabs .tab {
+  padding: 8px 14px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  background: #eee;
+}
+
+.order-tabs .tab.active {
+  background: #1e90ff;
+  color: white;
+}
+
