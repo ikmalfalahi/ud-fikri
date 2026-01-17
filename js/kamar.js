@@ -335,3 +335,90 @@ document.addEventListener("change", async (e) => {
   select.dataset.old = statusBaru;
   console.log(`✅ Status pesanan ${id} → ${statusBaru}`);
 });
+
+// ================= LAYER SWITCH =================
+const tabDigital = document.getElementById("tab-digital");
+const tabSembako = document.getElementById("tab-sembako");
+
+const layerDigital = document.getElementById("layer-digital");
+const layerSembako = document.getElementById("layer-sembako");
+
+tabDigital.onclick = () => {
+  tabDigital.classList.add("active");
+  tabSembako.classList.remove("active");
+
+  layerDigital.classList.add("active");
+  layerSembako.classList.remove("active");
+};
+
+tabSembako.onclick = () => {
+  tabSembako.classList.add("active");
+  tabDigital.classList.remove("active");
+
+  layerSembako.classList.add("active");
+  layerDigital.classList.remove("active");
+
+  loadPesananSembako();
+};
+
+// =================== Load Data Pesanan Sembako ==================
+async function loadPesananSembako() {
+  const tbody = document.getElementById("tbody-sembako");
+  tbody.innerHTML = "<tr><td colspan='8'>Loading...</td></tr>";
+
+  const { data, error } = await supabase
+    .from("pesanan_sembako")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    tbody.innerHTML = "<tr><td colspan='8'>Gagal load data</td></tr>";
+    console.error(error);
+    return;
+  }
+
+  if (!data.length) {
+    tbody.innerHTML = "<tr><td colspan='8'>Belum ada pesanan</td></tr>";
+    return;
+  }
+
+  tbody.innerHTML = "";
+
+  data.forEach((row, i) => {
+    const items = row.items
+      .map(it => `${it.nama} (${it.qty})`)
+      .join("<br>");
+
+    tbody.innerHTML += `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${row.nama}</td>
+        <td>${row.alamat}</td>
+        <td>${items}</td>
+        <td>Rp ${Number(row.total).toLocaleString("id-ID")}</td>
+        <td>${row.metode_pembayaran}</td>
+        <td>
+          <select onchange="updateStatusSembako(${row.id}, this.value)">
+            <option value="pending" ${row.status === "pending" ? "selected" : ""}>Pending</option>
+            <option value="sukses" ${row.status === "sukses" ? "selected" : ""}>Sukses</option>
+            <option value="ditolak" ${row.status === "ditolak" ? "selected" : ""}>Ditolak</option>
+          </select>
+        </td>
+        <td>${new Date(row.created_at).toLocaleString("id-ID")}</td>
+      </tr>
+    `;
+  });
+}
+
+// ==================== Update Status Pesanan Sembako ================
+async function updateStatusSembako(id, status) {
+  const { error } = await supabase
+    .from("pesanan_sembako")
+    .update({ status })
+    .eq("id", id);
+
+  if (error) {
+    alert("Gagal update status");
+    console.error(error);
+  }
+}
