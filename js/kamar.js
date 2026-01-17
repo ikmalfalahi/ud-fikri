@@ -363,8 +363,16 @@ tabSembako.onclick = () => {
 
 // =================== Load Data Pesanan Sembako ==================
 async function loadPesananSembako() {
+  const supabase = getSupabase();
+  if (!supabase) {
+    console.error("Supabase client belum siap");
+    return;
+  }
+
   const tbody = document.getElementById("tbody-sembako");
-  tbody.innerHTML = "<tr><td colspan='8'>Loading...</td></tr>";
+  if (!tbody) return;
+
+  tbody.innerHTML = `<tr><td colspan="8" class="text-center">Loading...</td></tr>`;
 
   const { data, error } = await supabase
     .from("pesanan_sembako")
@@ -372,53 +380,77 @@ async function loadPesananSembako() {
     .order("created_at", { ascending: false });
 
   if (error) {
-    tbody.innerHTML = "<tr><td colspan='8'>Gagal load data</td></tr>";
     console.error(error);
+    tbody.innerHTML = `<tr><td colspan="8" class="text-center">Gagal load data</td></tr>`;
     return;
   }
 
-  if (!data.length) {
-    tbody.innerHTML = "<tr><td colspan='8'>Belum ada pesanan</td></tr>";
+  if (!data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8" class="text-center">Belum ada pesanan</td></tr>`;
     return;
   }
 
   tbody.innerHTML = "";
 
   data.forEach((row, i) => {
-    const items = row.items
-      .map(it => `${it.nama} (${it.qty})`)
-      .join("<br>");
+    const tr = document.createElement("tr");
 
-    tbody.innerHTML += `
-      <tr>
-        <td>${i + 1}</td>
-        <td>${row.nama}</td>
-        <td>${row.alamat}</td>
-        <td>${items}</td>
-        <td>Rp ${Number(row.total).toLocaleString("id-ID")}</td>
-        <td>${row.metode_pembayaran}</td>
-        <td>
-          <select onchange="updateStatusSembako(${row.id}, this.value)">
-            <option value="pending" ${row.status === "pending" ? "selected" : ""}>Pending</option>
-            <option value="sukses" ${row.status === "sukses" ? "selected" : ""}>Sukses</option>
-            <option value="ditolak" ${row.status === "ditolak" ? "selected" : ""}>Ditolak</option>
-          </select>
-        </td>
-        <td>${new Date(row.created_at).toLocaleString("id-ID")}</td>
-      </tr>
+    const items = Array.isArray(row.items)
+      ? row.items.map(it => `${it.nama} (${it.qty})`).join("<br>")
+      : "-";
+
+    tr.innerHTML = `
+      <td>${i + 1}</td>
+      <td>${row.nama || "-"}</td>
+      <td>${row.alamat || "-"}</td>
+      <td>${items}</td>
+      <td>Rp ${Number(row.total || 0).toLocaleString("id-ID")}</td>
+      <td>${row.metode_pembayaran || "-"}</td>
+      <td>
+        <select class="status-sembako" data-id="${row.id}" data-old="${row.status}">
+          <option value="pending" ${row.status === "pending" ? "selected" : ""}>Pending</option>
+          <option value="sukses" ${row.status === "sukses" ? "selected" : ""}>Sukses</option>
+          <option value="ditolak" ${row.status === "ditolak" ? "selected" : ""}>Ditolak</option>
+        </select>
+      </td>
+      <td>${new Date(row.created_at).toLocaleString("id-ID")}</td>
     `;
+
+    tbody.appendChild(tr);
   });
 }
 
+
 // ==================== Update Status Pesanan Sembako ================
-async function updateStatusSembako(id, status) {
+document.addEventListener("change", async (e) => {
+  if (!e.target.classList.contains("status-sembako")) return;
+
+  const supabase = getSupabase();
+  if (!supabase) return;
+
+  const select = e.target;
+  const id = select.dataset.id;
+  const statusBaru = select.value;
+  const statusLama = select.dataset.old;
+
+  const ok = confirm(`Ubah status pesanan menjadi ${statusBaru.toUpperCase()}?`);
+  if (!ok) {
+    select.value = statusLama;
+    return;
+  }
+
   const { error } = await supabase
     .from("pesanan_sembako")
-    .update({ status })
+    .update({ status: statusBaru })
     .eq("id", id);
 
   if (error) {
     alert("Gagal update status");
     console.error(error);
+    select.value = statusLama;
+    return;
   }
-}
+
+  select.dataset.old = statusBaru;
+});
+
