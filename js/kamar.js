@@ -357,11 +357,11 @@ async function loadPesananSembako() {
 
   tbody.innerHTML = `<tr><td colspan="10">Loading...</td></tr>`;
 
-  const { data, error } = await supabase
+ const { data, error } = await supabase
   .from("pesanan_sembako")
   .select("*")
-  .order("created_at", { ascending: false })
-  .maybeSingle(); // jika mau ambil single
+  .eq("id", 123)
+  .maybeSingle(); // aman, cuma 1 row
 
   if (error) {
     console.error(error);
@@ -450,5 +450,3 @@ document.addEventListener("change", async (e) => {
 
   select.dataset.old = statusBaru;
 });
-
-
