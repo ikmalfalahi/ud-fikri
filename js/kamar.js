@@ -64,9 +64,22 @@ async function hapusPesanan(id) {
 }
 
 // ==================== HAPUS PESANAN TERPILIH (BARU) ====================
-async function hapusPesananTerpilih() {
-  const checked = document.querySelectorAll(".row-check:checked");
+document.getElementById("hapusTerpilih")?.addEventListener("click", async () => {
+  const activeTab = document.querySelector(".tab.active")?.id;
 
+  let tbodySelector, tableName;
+  if (activeTab === "tab-digital") {
+    tbodySelector = "#orderTable";
+    tableName = "pesanan_layanan_digital";
+  } else if (activeTab === "tab-sembako") {
+    tbodySelector = "#tbody-sembako";
+    tableName = "pesanan_sembako";
+  } else {
+    alert("Tidak ada tab aktif.");
+    return;
+  }
+
+  const checked = document.querySelectorAll(`${tbodySelector} .row-check:checked`);
   if (checked.length === 0) {
     alert("Pilih minimal satu pesanan.");
     return;
@@ -75,24 +88,23 @@ async function hapusPesananTerpilih() {
   if (!confirm(`Yakin ingin menghapus ${checked.length} pesanan?`)) return;
 
   const ids = Array.from(checked).map(cb => cb.dataset.id.toString());
-  const supabase = getSupabase();
-  if (!supabase) return;
-
-  const { error } = await supabase
-    .from("pesanan_layanan_digital")
-    .delete()
-    .in("id", ids); // 🔥 bulk delete
+  const { error } = await supabase.from(tableName).delete().in("id", ids);
 
   if (error) {
-    alert("Gagal menghapus pesanan terpilih.");
+    console.error(error);
+    alert("Gagal menghapus pesanan.");
     return;
   }
 
   checked.forEach(cb => cb.closest("tr")?.remove());
-  document.getElementById("checkAll").checked = false;
+
+  // reset checkAll
+  const checkAllId = activeTab === "tab-digital" ? "checkAllDigital" : "checkAllSembako";
+  const checkAll = document.getElementById(checkAllId);
+  if (checkAll) checkAll.checked = false;
 
   alert("Pesanan terpilih berhasil dihapus!");
-}
+});
 
 // ==================== LOAD STATUS ====================
 async function loadStoreStatus() {
@@ -145,9 +157,7 @@ async function loadOrders() {
 
     table.innerHTML += `
       <tr>
-        <td>
-          <input type="checkbox" class="row-check" data-id="${item.id}">
-        </td>
+        <td><input type="checkbox" class="row-check" data-id="${row.id}"></td>
         <td>${index + 1}</td>
         <td>${item.nama || "-"}</td>
         <td>${item.layanan || "-"}</td>
@@ -188,10 +198,9 @@ async function loadOrders() {
   });
 
   // check all
-  document.getElementById("checkAll")?.addEventListener("change", e => {
-    document.querySelectorAll(".row-check").forEach(cb => {
-      cb.checked = e.target.checked;
-    });
+  document.getElementById("checkAllDigital")?.addEventListener("change", e => {
+  document.querySelectorAll("#orderTable .row-check").forEach(cb => cb.checked = e.target.checked);
+});
   });
 }
 
@@ -282,19 +291,19 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
 });
 
 // ================= SEARCH NAMA =================
-document.getElementById("searchNama").addEventListener("input", function () {
+document.getElementById("searchNama")?.addEventListener("input", function () {
   const keyword = this.value.toLowerCase();
-  const rows = document.querySelectorAll("#orderTable tr");
+  const activeTab = document.querySelector(".tab.active")?.id;
 
+  let tbodySelector;
+  if (activeTab === "tab-digital") tbodySelector = "#orderTable";
+  else if (activeTab === "tab-sembako") tbodySelector = "#tbody-sembako";
+  else return;
+
+  const rows = document.querySelectorAll(`${tbodySelector} tr`);
   rows.forEach(row => {
-    // kolom NAMA = index ke-2
-    const nama = row.children[2]?.innerText.toLowerCase() || "";
-
-    if (nama.includes(keyword)) {
-      row.style.display = "";
-    } else {
-      row.style.display = "none";
-    }
+    const nama = row.children[1]?.innerText.toLowerCase() || "";
+    row.style.display = nama.includes(keyword) ? "" : "none";
   });
 });
 
@@ -398,6 +407,7 @@ async function loadPesananSembako() {
 
     tbody.insertAdjacentHTML("beforeend", `
       <tr>
+        <td><input type="checkbox" class="row-check" data-id="${row.id}"></td>
         <td>${i + 1}</td>
         <td>${row.nama}</td>
         <td>${row.alamat}</td>
@@ -417,6 +427,10 @@ async function loadPesananSembako() {
     `);
   });
 }
+
+document.getElementById("checkAllSembako")?.addEventListener("change", e => {
+  document.querySelectorAll("#tbody-sembako .row-check").forEach(cb => cb.checked = e.target.checked);
+});
 
 // ==================== Update Status Pesanan Sembako ================
 document.addEventListener("change", async (e) => {
@@ -450,6 +464,7 @@ document.addEventListener("change", async (e) => {
 
   select.dataset.old = statusBaru;
 });
+
 
 
 
