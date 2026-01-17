@@ -164,6 +164,7 @@ async function loadOrders() {
     return;
   }
 
+  // 🟢 Kosongkan tabel sebelum render ulang
   table.innerHTML = "";
 
   data.forEach((item, index) => {
@@ -177,6 +178,7 @@ async function loadOrders() {
         })
       : "-";
 
+    // 🟢 Render tiap baris pesanan
     table.innerHTML += `
       <tr>
         <td><input type="checkbox" class="row-check" data-id="${item.id}"></td>
@@ -204,16 +206,53 @@ async function loadOrders() {
     `;
   });
 
-  // tombol hapus satuan Digital
+  // 🟢 Tambahkan event listener hapus satuan
   document.querySelectorAll(".hapus-btn").forEach(btn => {
     btn.addEventListener("click", () => hapusPesanan(btn.dataset.id));
   });
 
-  // check all Digital
+  // 🟢 Check all digital
   document.getElementById("checkAllDigital")?.addEventListener("change", e => {
     document.querySelectorAll("#orderTable .row-check").forEach(cb => cb.checked = e.target.checked);
   });
 }
+
+/* ==================== UPDATE STATUS DIGITAL ==================== */
+// 🟢 Event delegation global untuk semua select.status-select
+document.addEventListener("change", async (e) => {
+  if (!e.target.classList.contains("status-select")) return;
+
+  const supabase = getSupabase();
+  if (!supabase) return;
+
+  const select = e.target;
+  const id = select.dataset.id;
+  const statusBaru = select.value;
+  const statusLama = select.dataset.old || "pending";
+
+  // 🟢 Konfirmasi sebelum update
+  if (!confirm(`Ubah status pesanan menjadi "${statusBaru.toUpperCase()}"?`)) {
+    select.value = statusLama;
+    return;
+  }
+
+  // 🟢 Update status di Supabase
+  const { data, error } = await supabase
+    .from("pesanan_layanan_digital")
+    .update({ status: statusBaru })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    console.error("Gagal update status:", error);
+    alert("❌ Gagal mengubah status");
+    select.value = statusLama;
+    return;
+  }
+
+  console.log("Data setelah update:", data);
+  select.dataset.old = statusBaru; // 🟢 Simpan status lama
+});
 
 /* ==================== LOAD PESANAN SEMBAKO ==================== */
 async function loadPesananSembako() {
@@ -420,5 +459,6 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
