@@ -268,9 +268,6 @@ async function loadPesananSembako() {
             <option value="ditolak" ${row.status === "ditolak" ? "selected" : ""}>Ditolak</option>
           </select>
         </td>
-        <td>
-          <button class="hapus-btn sembako" data-id="${row.id}">Hapus</button>
-        </td>
         <td>${new Date(row.created_at).toLocaleString("id-ID")}</td>
       </tr>
     `);
@@ -423,3 +420,4 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
