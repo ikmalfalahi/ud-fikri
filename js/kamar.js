@@ -375,39 +375,33 @@ function logoutAdmin() {
 }
 
 /* ==================== LAYER SWITCH ==================== */
+/* ==================== SLIDE TRANSISI TAB ==================== */
 function slideTab(showLayer, hideLayer, tabActive, tabInactive, callback) {
+  if (!showLayer || !hideLayer) return;
+
   tabActive.classList.add("active");
   tabInactive.classList.remove("active");
 
-  // slide out layer lama ke kiri
+  // slide out
   hideLayer.style.transform = "translateX(-100%)";
-  hideLayer.style.opacity = 0;
+  hideLayer.style.opacity = "0";
 
   setTimeout(() => {
     hideLayer.classList.remove("active");
-    hideLayer.style.transform = "translateX(100%)"; // reset posisi offscreen kanan
+    hideLayer.style.transform = "translateX(100%)";
 
-    // slide in layer baru dari kanan
     showLayer.classList.add("active");
-    showLayer.style.transform = "translateX(100%)"; // start posisi kanan
-    showLayer.style.opacity = 0;
+    showLayer.style.transform = "translateX(100%)";
+    showLayer.style.opacity = "0";
 
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       showLayer.style.transform = "translateX(0)";
-      showLayer.style.opacity = 1;
-    }, 10);
+      showLayer.style.opacity = "1";
+    });
 
     if (callback) callback();
-  }, 300); // durasi sama dengan CSS transition
+  }, 300);
 }
-
-tabDigital.onclick = () => {
-  slideTab(layerDigital, layerSembako, tabDigital, tabSembako);
-};
-
-tabSembako.onclick = () => {
-  slideTab(layerSembako, layerDigital, tabSembako, tabDigital, loadPesananSembako);
-};
 
 /* ==================== INIT ==================== */
 document.addEventListener("DOMContentLoaded", () => {
@@ -501,4 +495,5 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
