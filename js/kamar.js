@@ -361,58 +361,6 @@ tabSembako.onclick = () => {
   loadPesananSembako();
 };
 
-// =================== Load Data Pesanan Sembako ==================
-async function loadPesananSembako() {
-  const supabase = window.supabaseClient;
-  const tbody = document.getElementById("tbody-sembako");
-
-  tbody.innerHTML = `<tr><td colspan="9">Loading...</td></tr>`;
-
-  const { data, error } = await supabase
-    .from("pesanan_sembako")
-    .select("*")
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    console.error(error);
-    tbody.innerHTML = `<tr><td colspan="9">Gagal load data</td></tr>`;
-    return;
-  }
-
-  if (!data || data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="9">Belum ada pesanan</td></tr>`;
-    return;
-  }
-
-  tbody.innerHTML = "";
-
-  data.forEach((row, i) => {
-    const itemsHtml = row.items
-      .map(it => `${it.nama} (${it.qty})`)
-      .join("<br>");
-
-    tbody.insertAdjacentHTML("beforeend", `
-      <tr>
-        <td>${i + 1}</td>
-        <td>${row.nama}</td>
-        <td>${row.alamat}</td>
-        <td>${row.lokasi_map || "-"}</td>
-        <td>${itemsHtml}</td>
-        <td>Rp ${Number(row.total).toLocaleString("id-ID")}</td>
-        <td>${row.metode_pembayaran}</td>
-        <td>
-          <select onchange="updateStatusSembako(${row.id}, this.value)">
-            <option value="pending" ${row.status === "pending" ? "selected" : ""}>Pending</option>
-            <option value="sukses" ${row.status === "sukses" ? "selected" : ""}>Sukses</option>
-            <option value="ditolak" ${row.status === "ditolak" ? "selected" : ""}>Ditolak</option>
-          </select>
-        </td>
-        <td>${new Date(row.created_at).toLocaleString("id-ID")}</td>
-      </tr>
-    `);
-  });
-}
-
 // ==================== Update Status Pesanan Sembako ================
 document.addEventListener("change", async (e) => {
   if (!e.target.classList.contains("status-sembako")) return;
@@ -445,4 +393,5 @@ document.addEventListener("change", async (e) => {
 
   select.dataset.old = statusBaru;
 });
+
 
