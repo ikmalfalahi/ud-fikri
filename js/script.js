@@ -4,55 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
  // ================= SUPABASE =================
 const supabase = window.supabaseClient;
 
-// === SUBMIT PESANAN KE SUPABASE ===
-async function submitPesananSembako() {
-  if (!Array.isArray(cart) || cart.length === 0) {
-    alert("Keranjang kosong! Tambahkan barang dulu.");
-    return;
-  }
-
-  const nama = document.getElementById("input-nama").value.trim();
-  const alamat = document.getElementById("input-alamat").value.trim();
-  const lokasi = document.getElementById("input-lokasi").value.trim();
-  const pembayaran = paymentSelect.value;
-
-  if (!nama || !alamat || !lokasi || !pembayaran) {
-    alert("Mohon lengkapi semua data sebelum checkout.");
-    return;
-  }
-
-  let totalBelanja = cart.reduce((sum, item) => sum + hitungSubtotal(item), 0);
-  let totalOngkir = hitungOngkir(cart.reduce((sum, item) => sum + item.qty, 0));
-  let grandTotal = totalBelanja + totalOngkir;
-
-  try {
-   const { data, error } = await supabase
-  .from("pesanan_sembako")
-  .insert([{
-    nama,
-    alamat,
-    lokasi_map: lokasi,
-    items: JSON.stringify(cart),
-    total: grandTotal,
-    metode_pembayaran: pembayaran,
-    status: "Menunggu",
-    created_at: new Date().toISOString()
-  }]);
-
-    if (error) throw error;
-
-    alert("Pesanan berhasil dikirim!");
-    cart = [];
-    saveCart();
-    renderCart();
-    updateCartBadge();
-
-  } catch (err) {
-    console.error("Gagal submit pesanan:", err);
-    alert("Gagal submit pesanan, silakan coba lagi.");
-  }
-}
-
 // === FETCH STATUS TOKO dari Supabase ===
 async function fetchStoreStatus() {
   const { data, error } = await supabase
@@ -1155,93 +1106,101 @@ paymentSelect.addEventListener("change", () => {
   }
 });
 
-  // === CHECKOUT ===
-document.getElementById("checkout").addEventListener("click", () => {
+  // ================= CHECKOUT & SUBMIT PESANAN SEMBAKO =================
+document.getElementById("checkout").addEventListener("click", async () => {
   if (!storeOpen) {
     alert("Toko sedang tutup, checkout tidak bisa dilakukan.");
     return;
   }
-  if (cart.length === 0) {
-    alert("Keranjang kosong!");
+
+  if (!cart || cart.length === 0) {
+    alert("Keranjang kosong! Tambahkan barang dulu.");
     return;
   }
 
-  let name = document.getElementById("customer-name").value.trim();
-  let addr = document.getElementById("customer-address").value.trim();
-  let pay = paymentSelect.value;
-  let lokasi = document.getElementById("lokasi").value.trim();
+  // Ambil input user
+  const nama = document.getElementById("customer-name").value.trim();
+  const alamat = document.getElementById("customer-address").value.trim();
+  const metodePembayaran = document.getElementById("payment-method").value;
+  const lokasiMap = document.getElementById("lokasi").value.trim();
 
-  // 🔹 Validasi wajib
-  if (!name || !addr || !pay || !lokasi) {
-    alert("Mohon isi nama, alamat, metode pembayaran, dan titik lokasi (share lokasi).");
+  if (!nama || !alamat || !metodePembayaran || !lokasiMap) {
+    alert("Mohon lengkapi semua data: nama, alamat, metode pembayaran, lokasi.");
     return;
   }
 
+  // Hitung total
+  let totalBelanja = cart.reduce((sum, item) => sum + hitungSubtotal(item), 0);
+  let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+  let biayaOngkir = hitungOngkir(totalQty);
+  let grandTotal = totalBelanja + biayaOngkir;
+
+  // ================= INSERT KE SUPABASE =================
+  try {
+    const supabase = window.supabaseClient;
+    if (!supabase) throw new Error("Supabase client tidak ditemukan!");
+
+    const { data, error } = await supabase
+      .from("pesanan_sembako")
+      .insert([{
+        nama,
+        alamat,
+        lokasi_map: lokasiMap,
+        items: cart, // Supabase jsonb
+        total: grandTotal,
+        metode_pembayaran: metodePembayaran,
+        status: "pending",
+        created_at: new Date().toISOString()
+      }]);
+
+    if (error) throw error;
+
+    // Reset keranjang setelah berhasil insert
+    cart = [];
+    saveCart();
+    renderCart();
+    updateCartBadge();
+
+    alert("Pesanan berhasil dikirim dan tercatat di sistem!");
+
+  } catch (err) {
+    console.error("Gagal submit pesanan ke Supabase:", err);
+    alert("Gagal mengirim pesanan. Silakan coba lagi.");
+    return;
+  }
+
+  // ================= KIRIM PESAN KE WHATSAPP =================
   let msg = `*🛒 PESANAN UD FIKRI 🛒*\n`;
   msg += `=====================\n`;
-  msg += `*Nama:* ${name}\n`;
-  msg += `*Alamat:* ${addr}\n`;
-  msg += `📍 *Lokasi:* ${lokasi}\n`;
+  msg += `*Nama:* ${nama}\n`;
+  msg += `*Alamat:* ${alamat}\n`;
+  msg += `📍 *Lokasi:* ${lokasiMap}\n`;
   msg += `=====================\n`;
   msg += `*Pesanan:*\n`;
 
-  let totalItem = 0;
-  let totalBelanja = 0;
   cart.forEach(item => {
-    let extra = (item.tambahanBiaya && item.antarDalamRumah) ? " + antar dalam rumah" : "";
     let subtotal = hitungSubtotal(item);
-    totalItem += item.qty;
-    totalBelanja += subtotal;
-
-    msg += `- ${item.name} x${item.qty}${extra}\n   = Rp ${subtotal.toLocaleString()}\n`;
+    msg += `- ${item.name} x${item.qty} = Rp ${subtotal.toLocaleString()}\n`;
   });
-  
-  // 🔹 Hitung ongkir & total bayar
-  let biayaOngkir = hitungOngkir(totalItem);
-  let grandTotal = totalBelanja + biayaOngkir;
 
-  // Tambahkan ongkir detail
   msg += `---------------------\n`;
-  msg += `*Ongkir:*\n${detailOngkir(totalItem)}\n`;
+  msg += `*Ongkir:* Rp ${biayaOngkir.toLocaleString()}\n`;
   msg += `*Total Bayar:* Rp ${grandTotal.toLocaleString()}\n`;
-
-  msg += `=====================\n`;
-  msg += `*Total Item:* ${totalItem}\n`;
-  // 🔹 Logika status pesanan sesuai jarak
-  let minimalAntar = jarak <= 1 ? 40000 : 60000;
-  
-  if (totalBelanja < minimalAntar) {
-  msg += `*Status Pesanan:* Ambil di toko 🏪 (belum mencapai minimal antar Rp ${minimalAntar.toLocaleString()})\n`;
-  } else {
-  msg += `*Status Pesanan:* Siap diantar 🚚\n`;
-  }
-  if (jarak > 0) {
-    msg += `*Ongkir:* Rp ${biayaOngkir.toLocaleString()} (jarak ${jarak.toFixed(1)} km)\n`;
-  } else {
-    msg += `*Ongkir:* Belum dihitung\n`;
-  }
-  msg += `*Metode Pembayaran:* ${pay}\n`;
+  msg += `*Metode Pembayaran:* ${metodePembayaran}\n`;
   msg += `=====================\n`;
 
-  // 🔹 Saran produk opsional
   const saran = document.getElementById("saran-produk").value.trim();
   if (saran) {
-    msg += `\n💡 Saran/Masukan: ${saran}\n`;
+    msg += `💡 Saran/Masukan: ${saran}\n`;
   }
 
-  msg += `=====================\n`;
   msg += `_Terima kasih sudah berbelanja 🙏_`;
-  msg += `*https://ud-fikri.vercel.app*`;
+  msg += `\n*https://ud-fikri.vercel.app*`;
 
-  // Kirim ke WA
+  // Buka WhatsApp
   window.open(`https://wa.me/6281287505090?text=${encodeURIComponent(msg)}`, "_blank");
-
-  // reset keranjang
-  cart = [];
-  renderCart();
-  updateCartBadge();
-
 });
+
 
   // === SEARCH & FILTER ===
   document.getElementById("search-input").addEventListener("input", (e) => {
@@ -1439,6 +1398,4 @@ if (document.getElementById("user-map")) {
 }
 
 });
-
-
 
