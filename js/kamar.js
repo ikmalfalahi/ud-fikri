@@ -388,8 +388,8 @@ async function loadPesananSembako() {
 
   data.forEach((row, i) => {
     const itemsHtml = row.items
-      .map(it => `${it.nama} (${it.qty})`)
-      .join("<br>");
+  .map(it => `${it.name} x${it.qty} = Rp ${Number(it.harga * it.qty).toLocaleString()}`)
+  .join("<br>");
 
     tbody.insertAdjacentHTML("beforeend", `
       <tr>
@@ -445,4 +445,5 @@ document.addEventListener("change", async (e) => {
 
   select.dataset.old = statusBaru;
 });
+
 
