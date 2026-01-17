@@ -374,38 +374,32 @@ function logoutAdmin() {
   window.location.replace("https://ud-fikri.vercel.app");
 }
 
-/* ==================== SWITCH TAB SLIDE ==================== */
+/* ==================== LAYER SWITCH (NORMAL) ==================== */
 const tabDigital = document.getElementById("tab-digital");
 const tabSembako = document.getElementById("tab-sembako");
 
 const layerDigital = document.getElementById("layer-digital");
 const layerSembako = document.getElementById("layer-sembako");
 
-function switchTab(showLayer, hideLayer, tabOn, tabOff, callback) {
-  if (!showLayer || !hideLayer) return;
-
-  // tab active
-  tabOn.classList.add("active");
-  tabOff.classList.remove("active");
-
-  // slide out
-  hideLayer.classList.add("slide-left");
-  hideLayer.classList.remove("active");
-
-  // slide in
-  showLayer.classList.remove("slide-left");
-  showLayer.classList.add("active");
-
-  if (callback) callback();
-}
-
-/* ==================== EVENT ==================== */
 tabDigital?.addEventListener("click", () => {
-  switchTab(layerDigital, layerSembako, tabDigital, tabSembako);
+  tabDigital.classList.add("active");
+  tabSembako.classList.remove("active");
+
+  layerDigital.classList.add("active");
+  layerSembako.classList.remove("active");
 });
 
 tabSembako?.addEventListener("click", () => {
-  switchTab(layerSembako, layerDigital, tabSembako, tabDigital);
+  tabSembako.classList.add("active");
+  tabDigital.classList.remove("active");
+
+  layerSembako.classList.add("active");
+  layerDigital.classList.remove("active");
+
+  // load sembako saat tab dibuka
+  if (typeof loadPesananSembako === "function") {
+    loadPesananSembako();
+  }
 });
 
 /* ==================== INIT ==================== */
@@ -500,6 +494,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
