@@ -388,7 +388,12 @@ async function loadPesananSembako() {
 
   data.forEach((row, i) => {
     const itemsHtml = row.items
-  .map(it => `${it.name} x${it.qty} = Rp ${Number(it.harga * it.qty).toLocaleString()}`)
+  .map(it => {
+    const price = Number(it.harga) || 0; // fallback jika undefined
+    const qty = Number(it.qty) || 0;
+    const subtotal = price * qty;
+    return `${it.name} x${qty} = Rp ${subtotal.toLocaleString("id-ID")}`;
+  })
   .join("<br>");
 
     tbody.insertAdjacentHTML("beforeend", `
@@ -445,5 +450,6 @@ document.addEventListener("change", async (e) => {
 
   select.dataset.old = statusBaru;
 });
+
 
 
