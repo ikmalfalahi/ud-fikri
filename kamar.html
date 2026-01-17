@@ -66,48 +66,94 @@
       </div>
     </section>
 
-    <!-- ================= CONTENT ================= -->
-    <section class="admin-content">
+   <!-- ================= CONTENT ================= -->
+<section class="admin-content">
 
-      <h2>Pesanan Masuk</h2>
+  <h2>Pesanan Masuk</h2>
 
-      <!-- 🔥 AKSI BULK -->
-      <div class="bulk-actions">
-        <button id="hapusTerpilih" class="btn btn-danger">
-          <i class="fa-solid fa-trash"></i> Hapus Terpilih
-        </button>
-      </div>
+  <!-- ===== TAB NAVIGATION ===== -->
+  <div class="order-tabs">
+    <button id="tab-digital" class="tab active">
+      <i class="fa-solid fa-bolt"></i> Pesanan Layanan Digital
+    </button>
+    <button id="tab-sembako" class="tab">
+      <i class="fa-solid fa-basket-shopping"></i> Pesanan Sembako
+    </button>
+  </div>
 
-      <div class="search-box">
-        <input
-          type="text"
-          id="searchNama"
-          placeholder="🔍 Cari berdasarkan nama..."
-        >
-      </div>
+  <!-- 🔥 AKSI BULK (UNTUK DIGITAL SAJA) -->
+  <div id="bulkDigital" class="bulk-actions">
+    <button id="hapusTerpilih" class="btn btn-danger">
+      <i class="fa-solid fa-trash"></i> Hapus Terpilih
+    </button>
+  </div>
 
-      <div class="table-wrapper">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th><input type="checkbox" id="checkAll"></th>
-              <th>No</th>
-              <th data-sort="string">Nama</th>
-              <th data-sort="string">Layanan</th>
-              <th data-sort="string">Provider</th>
-              <th data-sort="number">Nominal</th>
-              <th data-sort="number">Total</th>
-              <th data-sort="string">Status</th>
-              <th data-sort="date">Tanggal</th>
-              <th>Bukti</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="orderTable"></tbody>
-        </table>
-      </div>
+  <!-- SEARCH (DIGITAL) -->
+  <div id="searchDigital" class="search-box">
+    <input
+      type="text"
+      id="searchNama"
+      placeholder="🔍 Cari berdasarkan nama..."
+    >
+  </div>
 
-    </section>
+  <!-- ===== LAYER: PESANAN DIGITAL ===== -->
+  <div id="layer-digital" class="order-layer active">
+
+    <div class="table-wrapper">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="checkAll"></th>
+            <th>No</th>
+            <th data-sort="string">Nama</th>
+            <th data-sort="string">Layanan</th>
+            <th data-sort="string">Provider</th>
+            <th data-sort="number">Nominal</th>
+            <th data-sort="number">Total</th>
+            <th data-sort="string">Status</th>
+            <th data-sort="date">Tanggal</th>
+            <th>Bukti</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="orderTable"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ===== LAYER: PESANAN SEMBAKO ===== -->
+  <div id="layer-sembako" class="order-layer">
+
+    <div class="table-wrapper">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Alamat</th>
+            <th>Lokasi</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Pembayaran</th>
+            <th>Status</th>
+            <th>Tanggal</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-sembako">
+          <tr>
+            <td colspan="8" style="text-align:center">
+              Pilih tab Sembako untuk memuat data
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</section>
 
   </main>
 
@@ -155,6 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
 
 
 
