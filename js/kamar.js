@@ -58,24 +58,33 @@ async function hapusPesanan(id) {
 }
 
 /* ==================== HAPUS PESANAN SEMBAKO (SINGLE) ==================== */
-async function hapusPesananSembako(id) {
+async function hapusPesanan(id, table) {
   if (!confirm("Yakin ingin menghapus pesanan ini?")) return;
 
   const supabase = getSupabase();
   if (!supabase) return;
 
+  // Periksa apakah table valid
+  if (!table) table = "pesanan_sembako";
+
   const { data, error } = await supabase
-    .from("pesanan_sembako")
+    .from(table)
     .delete()
-    .eq("id", id.toString())
+    .eq("id", id)
     .select();
 
-  if (error || !data || data.length === 0) {
-    alert("Pesanan tidak dapat dihapus.");
-    console.error(error);
+  if (error) {
+    console.error("Gagal hapus:", error);
+    alert("Pesanan tidak dapat dihapus. Cek RLS!");
     return;
   }
 
+  if (!data || data.length === 0) {
+    alert("Pesanan tidak ditemukan atau tidak diizinkan (RLS).");
+    return;
+  }
+
+  // hapus row di UI
   const row = document.querySelector(`button[data-id="${id}"]`)?.closest("tr");
   if (row) row.remove();
 
@@ -444,3 +453,4 @@ document.addEventListener("change", async (e) => {
 
   select.dataset.old = statusBaru;
 });
+
