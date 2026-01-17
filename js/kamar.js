@@ -375,24 +375,38 @@ function logoutAdmin() {
 }
 
 /* ==================== LAYER SWITCH ==================== */
-const tabDigital = document.getElementById("tab-digital");
-const tabSembako = document.getElementById("tab-sembako");
-const layerDigital = document.getElementById("layer-digital");
-const layerSembako = document.getElementById("layer-sembako");
+function slideTab(showLayer, hideLayer, tabActive, tabInactive, callback) {
+  tabActive.classList.add("active");
+  tabInactive.classList.remove("active");
+
+  // slide out layer lama ke kiri
+  hideLayer.style.transform = "translateX(-100%)";
+  hideLayer.style.opacity = 0;
+
+  setTimeout(() => {
+    hideLayer.classList.remove("active");
+    hideLayer.style.transform = "translateX(100%)"; // reset posisi offscreen kanan
+
+    // slide in layer baru dari kanan
+    showLayer.classList.add("active");
+    showLayer.style.transform = "translateX(100%)"; // start posisi kanan
+    showLayer.style.opacity = 0;
+
+    setTimeout(() => {
+      showLayer.style.transform = "translateX(0)";
+      showLayer.style.opacity = 1;
+    }, 10);
+
+    if (callback) callback();
+  }, 300); // durasi sama dengan CSS transition
+}
 
 tabDigital.onclick = () => {
-  tabDigital.classList.add("active");
-  tabSembako.classList.remove("active");
-  layerDigital.classList.add("active");
-  layerSembako.classList.remove("active");
+  slideTab(layerDigital, layerSembako, tabDigital, tabSembako);
 };
 
 tabSembako.onclick = () => {
-  tabSembako.classList.add("active");
-  tabDigital.classList.remove("active");
-  layerSembako.classList.add("active");
-  layerDigital.classList.remove("active");
-  loadPesananSembako();
+  slideTab(layerSembako, layerDigital, tabSembako, tabDigital, loadPesananSembako);
 };
 
 /* ==================== INIT ==================== */
@@ -487,3 +501,4 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
