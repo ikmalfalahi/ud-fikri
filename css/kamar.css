@@ -296,7 +296,8 @@ footer {
 }
 
 /* ================= STATUS SELECT ================= */
-.status-select {
+.status-select,
+.status-sembako {
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 13px;
@@ -306,17 +307,20 @@ footer {
 }
 
 /* Pending */
-.status-select option[value="pending"] {
+.status-select option[value="pending"],
+.status-sembako option[value="pending"] {
   color: #f39c12;
 }
 
 /* Sukses */
-.status-select option[value="sukses"] {
+.status-select option[value="sukses"],
+.status-sembako option[value="sukses"] {
   color: #2ecc71;
 }
 
 /* Ditolak */
-.status-select option[value="ditolak"] {
+.status-select option[value="ditolak"],
+.status-sembako option[value="ditolak"] {
   color: #e74c3c;
 }
 
@@ -347,4 +351,5 @@ footer {
   background: #1e90ff;
   color: white;
 }
+
 
