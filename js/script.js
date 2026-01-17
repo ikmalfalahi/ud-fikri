@@ -4,6 +4,55 @@ document.addEventListener("DOMContentLoaded", () => {
  // ================= SUPABASE =================
 const supabase = window.supabaseClient;
 
+// === SUBMIT PESANAN KE SUPABASE ===
+async function submitPesananSembako() {
+  if (!Array.isArray(cart) || cart.length === 0) {
+    alert("Keranjang kosong! Tambahkan barang dulu.");
+    return;
+  }
+
+  const nama = document.getElementById("input-nama").value.trim();
+  const alamat = document.getElementById("input-alamat").value.trim();
+  const lokasi = document.getElementById("input-lokasi").value.trim();
+  const pembayaran = paymentSelect.value;
+
+  if (!nama || !alamat || !lokasi || !pembayaran) {
+    alert("Mohon lengkapi semua data sebelum checkout.");
+    return;
+  }
+
+  let totalBelanja = cart.reduce((sum, item) => sum + hitungSubtotal(item), 0);
+  let totalOngkir = hitungOngkir(cart.reduce((sum, item) => sum + item.qty, 0));
+  let grandTotal = totalBelanja + totalOngkir;
+
+  try {
+   const { data, error } = await supabase
+  .from("pesanan_sembako")
+  .insert([{
+    nama,
+    alamat,
+    lokasi_map: lokasi,
+    items: JSON.stringify(cart),
+    total: grandTotal,
+    metode_pembayaran: pembayaran,
+    status: "Menunggu",
+    created_at: new Date().toISOString()
+  }]);
+
+    if (error) throw error;
+
+    alert("Pesanan berhasil dikirim!");
+    cart = [];
+    saveCart();
+    renderCart();
+    updateCartBadge();
+
+  } catch (err) {
+    console.error("Gagal submit pesanan:", err);
+    alert("Gagal submit pesanan, silakan coba lagi.");
+  }
+}
+
 // === FETCH STATUS TOKO dari Supabase ===
 async function fetchStoreStatus() {
   const { data, error } = await supabase
@@ -1194,57 +1243,6 @@ document.getElementById("checkout").addEventListener("click", () => {
 
 });
 
-// === SUBMIT PESANAN KE SUPABASE ===
-  async function submitPesananSembako() {
-    if (!Array.isArray(cart) || cart.length === 0) {
-      alert("Keranjang kosong! Tambahkan barang dulu.");
-      return;
-    }
-
-    const nama = document.getElementById("input-nama").value.trim();
-    const alamat = document.getElementById("input-alamat").value.trim();
-    const lokasi = document.getElementById("input-lokasi").value.trim();
-    const pembayaran = paymentSelect.value;
-
-    if (!nama || !alamat || !lokasi || !pembayaran) {
-      alert("Mohon lengkapi semua data sebelum checkout.");
-      return;
-    }
-
-    let totalBelanja = cart.reduce((sum, item) => sum + hitungSubtotal(item), 0);
-    let totalOngkir = hitungOngkir(cart.reduce((sum, item) => sum + item.qty, 0));
-    let grandTotal = totalBelanja + totalOngkir;
-
-    try {
-      const { data, error } = await supabase
-        .from("pesanan_sembako")
-        .insert([{
-          nama,
-          alamat,
-          lokasi,
-          items: JSON.stringify(cart),
-          total: grandTotal,
-          pembayaran,
-          status: "Menunggu",
-          tanggal: new Date().toISOString()
-        }]);
-
-      if (error) throw error;
-
-      alert("Pesanan berhasil dikirim!");
-      cart = [];
-      saveCart();
-      renderCart();
-      updateCartBadge();
-
-    } catch (err) {
-      console.error("Gagal submit pesanan:", err);
-      alert("Gagal submit pesanan, silakan coba lagi.");
-    }
-  }
-  
-});
-
   // === SEARCH & FILTER ===
   document.getElementById("search-input").addEventListener("input", (e) => {
     let keyword = e.target.value.toLowerCase();
@@ -1441,5 +1439,6 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
