@@ -43,7 +43,7 @@ async function hapusPesanan(id) {
   const { data, error } = await supabase
     .from("pesanan_layanan_digital")
     .delete()
-    .eq("id", id.toString())
+    .eq("id", id)
     .select();
 
   if (error || !data || data.length === 0) {
@@ -58,20 +58,20 @@ async function hapusPesanan(id) {
 }
 
 /* ==================== HAPUS PESANAN SEMBAKO (SINGLE) ==================== */
-async function hapusPesanan(id, table = "pesanan_sembako") {
+async function hapusPesananSembako(id) {
   if (!confirm("Yakin ingin menghapus pesanan ini?")) return;
 
   const supabase = getSupabase();
   if (!supabase) return;
 
   const { data, error } = await supabase
-    .from(table)
+    .from("pesanan_sembako")
     .delete()
     .eq("id", id)
-    .select(); // select untuk memastikan data terhapus
+    .select();
 
   if (error) {
-    console.error("Error hapus:", error);
+    console.error(error);
     alert("Gagal menghapus pesanan. Cek RLS Supabase!");
     return;
   }
@@ -81,7 +81,6 @@ async function hapusPesanan(id, table = "pesanan_sembako") {
     return;
   }
 
-  // hapus row di UI
   const row = document.querySelector(`button[data-id="${id}"]`)?.closest("tr");
   if (row) row.remove();
 
@@ -114,7 +113,7 @@ async function hapusPesananTerpilih() {
 
   const ids = Array.from(checked).map(cb => cb.dataset.id);
   const supabase = getSupabase();
-  const { data, error } = await supabase.from(tableName).delete().in("id", ids).select();
+  const { error } = await supabase.from(tableName).delete().in("id", ids).select();
 
   if (error) {
     console.error("Gagal hapus:", error);
@@ -130,6 +129,8 @@ async function hapusPesananTerpilih() {
 
   alert("Pesanan terpilih berhasil dihapus!");
 }
+
+document.getElementById("hapusTerpilih")?.addEventListener("click", hapusPesananTerpilih);
 
 /* ==================== LOAD STORE STATUS ==================== */
 async function loadStoreStatus() {
@@ -203,7 +204,7 @@ async function loadOrders() {
     `;
   });
 
-  // hapus satuan Digital
+  // tombol hapus satuan Digital
   document.querySelectorAll(".hapus-btn").forEach(btn => {
     btn.addEventListener("click", () => hapusPesanan(btn.dataset.id));
   });
@@ -214,142 +215,6 @@ async function loadOrders() {
   });
 }
 
-/* ==================== REALTIME PESANAN DIGITAL ==================== */
-function listenOrdersRealtime() {
-  const supabase = getSupabase();
-  if (!supabase) return;
-
-  supabase
-    .channel("admin-pesanan")
-    .on(
-      "postgres_changes",
-      { event: "INSERT", schema: "public", table: "pesanan_layanan_digital" },
-      () => loadOrders()
-    )
-    .subscribe();
-}
-
-/* ==================== LOGOUT ADMIN ==================== */
-function logoutAdmin() {
-  localStorage.removeItem("admin_logged_in");
-  sessionStorage.removeItem("admin_logged_in");
-  window.location.replace("https://ud-fikri.vercel.app");
-}
-
-/* ==================== INIT ==================== */
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("logoutBtn")?.addEventListener("click", logoutAdmin);
-  document.getElementById("btnOpen")?.addEventListener("click", () => setStore(true));
-  document.getElementById("btnClose")?.addEventListener("click", () => setStore(false));
-
-  loadStoreStatus();
-  loadOrders();
-  listenOrdersRealtime();
-});
-
-/* ==================== SORT TABLE ==================== */
-document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
-  let asc = true;
-
-  th.addEventListener("click", () => {
-    const tbody = document.getElementById("orderTable");
-    const rows = Array.from(tbody.querySelectorAll("tr"));
-    const type = th.dataset.sort;
-
-    document.querySelectorAll(".admin-table th").forEach(h => h.classList.remove("sort-asc", "sort-desc"));
-
-    rows.sort((a, b) => {
-      let A = a.children[index].innerText.trim();
-      let B = b.children[index].innerText.trim();
-
-      if (type === "number") {
-        A = parseFloat(A.replace(/\D/g, "")) || 0;
-        B = parseFloat(B.replace(/\D/g, "")) || 0;
-        return asc ? A - B : B - A;
-      }
-
-      if (type === "date") {
-        A = new Date(A).getTime() || 0;
-        B = new Date(B).getTime() || 0;
-        return asc ? A - B : B - A;
-      }
-
-      return asc ? A.localeCompare(B, "id", { sensitivity: "base" }) : B.localeCompare(A, "id", { sensitivity: "base" });
-    });
-
-    th.classList.add(asc ? "sort-asc" : "sort-desc");
-    rows.forEach(row => tbody.appendChild(row));
-    asc = !asc;
-  });
-});
-
-/* ==================== SEARCH NAMA ==================== */
-document.getElementById("searchNama")?.addEventListener("input", function () {
-  const keyword = this.value.toLowerCase();
-  const activeTab = document.querySelector(".tab.active")?.id;
-  let tbodySelector;
-
-  if (activeTab === "tab-digital") tbodySelector = "#orderTable";
-  else if (activeTab === "tab-sembako") tbodySelector = "#tbody-sembako";
-  else return;
-
-  const rows = document.querySelectorAll(`${tbodySelector} tr`);
-  rows.forEach(row => {
-    const nama = row.children[1]?.innerText.toLowerCase() || "";
-    row.style.display = nama.includes(keyword) ? "" : "none";
-  });
-});
-
-/* ==================== UPDATE STATUS DIGITAL ==================== */
-document.addEventListener("change", async (e) => {
-  if (!e.target.classList.contains("status-select")) return;
-
-  const supabase = getSupabase();
-  if (!supabase) return;
-
-  const select = e.target;
-  const id = select.dataset.id;
-  const statusBaru = select.value;
-  const statusLama = select.dataset.old || "pending";
-
-  if (!confirm(`Ubah status pesanan menjadi "${statusBaru.toUpperCase()}"?`)) {
-    select.value = statusLama;
-    return;
-  }
-
-  const { error } = await supabase.from("pesanan_layanan_digital").update({ status: statusBaru }).eq("id", id);
-
-  if (error) {
-    alert("❌ Gagal mengubah status");
-    console.error(error);
-    select.value = statusLama;
-    return;
-  }
-
-  select.dataset.old = statusBaru;
-});
-
-/* ==================== LAYER SWITCH ==================== */
-const tabDigital = document.getElementById("tab-digital");
-const tabSembako = document.getElementById("tab-sembako");
-const layerDigital = document.getElementById("layer-digital");
-const layerSembako = document.getElementById("layer-sembako");
-
-tabDigital.onclick = () => {
-  tabDigital.classList.add("active");
-  tabSembako.classList.remove("active");
-  layerDigital.classList.add("active");
-  layerSembako.classList.remove("active");
-};
-
-tabSembako.onclick = () => {
-  tabSembako.classList.add("active");
-  tabDigital.classList.remove("active");
-  layerSembako.classList.add("active");
-  layerDigital.classList.remove("active");
-  loadPesananSembako();
-};
-
 /* ==================== LOAD PESANAN SEMBAKO ==================== */
 async function loadPesananSembako() {
   const supabase = getSupabase();
@@ -357,11 +222,11 @@ async function loadPesananSembako() {
 
   tbody.innerHTML = `<tr><td colspan="10">Loading...</td></tr>`;
 
- const { data, error } = await supabase
-  .from("pesanan_sembako")
-  .select("*")
-  .eq("id", 123)
-  .maybeSingle(); // aman, cuma 1 row
+  // ⚡ ambil semua row sembako, jangan maybeSingle()
+  const { data, error } = await supabase
+    .from("pesanan_sembako")
+    .select("*")
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.error(error);
@@ -449,4 +314,112 @@ document.addEventListener("change", async (e) => {
   }
 
   select.dataset.old = statusBaru;
+});
+
+/* ==================== REALTIME PESANAN DIGITAL ==================== */
+function listenOrdersRealtime() {
+  const supabase = getSupabase();
+  if (!supabase) return;
+
+  supabase
+    .channel("admin-pesanan")
+    .on(
+      "postgres_changes",
+      { event: "INSERT", schema: "public", table: "pesanan_layanan_digital" },
+      () => loadOrders()
+    )
+    .subscribe();
+}
+
+/* ==================== LOGOUT ADMIN ==================== */
+function logoutAdmin() {
+  localStorage.removeItem("admin_logged_in");
+  sessionStorage.removeItem("admin_logged_in");
+  window.location.replace("https://ud-fikri.vercel.app");
+}
+
+/* ==================== LAYER SWITCH ==================== */
+const tabDigital = document.getElementById("tab-digital");
+const tabSembako = document.getElementById("tab-sembako");
+const layerDigital = document.getElementById("layer-digital");
+const layerSembako = document.getElementById("layer-sembako");
+
+tabDigital.onclick = () => {
+  tabDigital.classList.add("active");
+  tabSembako.classList.remove("active");
+  layerDigital.classList.add("active");
+  layerSembako.classList.remove("active");
+};
+
+tabSembako.onclick = () => {
+  tabSembako.classList.add("active");
+  tabDigital.classList.remove("active");
+  layerSembako.classList.add("active");
+  layerDigital.classList.remove("active");
+  loadPesananSembako();
+};
+
+/* ==================== INIT ==================== */
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("logoutBtn")?.addEventListener("click", logoutAdmin);
+  document.getElementById("btnOpen")?.addEventListener("click", () => setStore(true));
+  document.getElementById("btnClose")?.addEventListener("click", () => setStore(false));
+
+  loadStoreStatus();
+  loadOrders();
+  listenOrdersRealtime();
+});
+
+/* ==================== SEARCH NAMA ==================== */
+document.getElementById("searchNama")?.addEventListener("input", function () {
+  const keyword = this.value.toLowerCase();
+  const activeTab = document.querySelector(".tab.active")?.id;
+  let tbodySelector;
+
+  if (activeTab === "tab-digital") tbodySelector = "#orderTable";
+  else if (activeTab === "tab-sembako") tbodySelector = "#tbody-sembako";
+  else return;
+
+  const rows = document.querySelectorAll(`${tbodySelector} tr`);
+  rows.forEach(row => {
+    const nama = row.children[1]?.innerText.toLowerCase() || "";
+    row.style.display = nama.includes(keyword) ? "" : "none";
+  });
+});
+
+/* ==================== SORT TABLE ==================== */
+document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
+  let asc = true;
+
+  th.addEventListener("click", () => {
+    const tbody = document.getElementById("orderTable");
+    if (!tbody) return;
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+    const type = th.dataset.sort;
+
+    document.querySelectorAll(".admin-table th").forEach(h => h.classList.remove("sort-asc", "sort-desc"));
+
+    rows.sort((a, b) => {
+      let A = a.children[index].innerText.trim();
+      let B = b.children[index].innerText.trim();
+
+      if (type === "number") {
+        A = parseFloat(A.replace(/\D/g, "")) || 0;
+        B = parseFloat(B.replace(/\D/g, "")) || 0;
+        return asc ? A - B : B - A;
+      }
+
+      if (type === "date") {
+        A = new Date(A).getTime() || 0;
+        B = new Date(B).getTime() || 0;
+        return asc ? A - B : B - A;
+      }
+
+      return asc ? A.localeCompare(B, "id", { sensitivity: "base" }) : B.localeCompare(A, "id", { sensitivity: "base" });
+    });
+
+    th.classList.add(asc ? "sort-asc" : "sort-desc");
+    rows.forEach(row => tbody.appendChild(row));
+    asc = !asc;
+  });
 });
