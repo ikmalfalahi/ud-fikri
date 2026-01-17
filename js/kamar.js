@@ -58,24 +58,21 @@ async function hapusPesanan(id) {
 }
 
 /* ==================== HAPUS PESANAN SEMBAKO (SINGLE) ==================== */
-async function hapusPesanan(id, table) {
+async function hapusPesanan(id, table = "pesanan_sembako") {
   if (!confirm("Yakin ingin menghapus pesanan ini?")) return;
 
   const supabase = getSupabase();
   if (!supabase) return;
 
-  // Periksa apakah table valid
-  if (!table) table = "pesanan_sembako";
-
   const { data, error } = await supabase
     .from(table)
     .delete()
     .eq("id", id)
-    .select();
+    .select(); // select untuk memastikan data terhapus
 
   if (error) {
-    console.error("Gagal hapus:", error);
-    alert("Pesanan tidak dapat dihapus. Cek RLS!");
+    console.error("Error hapus:", error);
+    alert("Gagal menghapus pesanan. Cek RLS Supabase!");
     return;
   }
 
@@ -94,8 +91,8 @@ async function hapusPesanan(id, table) {
 /* ==================== HAPUS PESANAN TERPILIH ==================== */
 async function hapusPesananTerpilih() {
   const activeTab = document.querySelector(".tab.active")?.id;
-
   let tbodySelector, tableName;
+
   if (activeTab === "tab-digital") {
     tbodySelector = "#orderTable";
     tableName = "pesanan_layanan_digital";
@@ -115,13 +112,13 @@ async function hapusPesananTerpilih() {
 
   if (!confirm(`Yakin ingin menghapus ${checked.length} pesanan?`)) return;
 
-  const ids = Array.from(checked).map(cb => cb.dataset.id.toString());
+  const ids = Array.from(checked).map(cb => cb.dataset.id);
   const supabase = getSupabase();
-  const { error } = await supabase.from(tableName).delete().in("id", ids);
+  const { data, error } = await supabase.from(tableName).delete().in("id", ids).select();
 
   if (error) {
-    console.error(error);
-    alert("Gagal menghapus pesanan.");
+    console.error("Gagal hapus:", error);
+    alert("Gagal menghapus pesanan. Cek RLS!");
     return;
   }
 
@@ -133,7 +130,6 @@ async function hapusPesananTerpilih() {
 
   alert("Pesanan terpilih berhasil dihapus!");
 }
-document.getElementById("hapusTerpilih")?.addEventListener("click", hapusPesananTerpilih);
 
 /* ==================== LOAD STORE STATUS ==================== */
 async function loadStoreStatus() {
@@ -362,9 +358,10 @@ async function loadPesananSembako() {
   tbody.innerHTML = `<tr><td colspan="10">Loading...</td></tr>`;
 
   const { data, error } = await supabase
-    .from("pesanan_sembako")
-    .select("*")
-    .order("created_at", { ascending: false });
+  .from("pesanan_sembako")
+  .select("*")
+  .order("created_at", { ascending: false })
+  .maybeSingle(); // jika mau ambil single
 
   if (error) {
     console.error(error);
@@ -453,4 +450,5 @@ document.addEventListener("change", async (e) => {
 
   select.dataset.old = statusBaru;
 });
+
 
