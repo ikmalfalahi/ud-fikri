@@ -433,21 +433,34 @@ document.getElementById("searchNama")?.addEventListener("input", function () {
   });
 });
 
-/* ==================== SORT TABLE ==================== */
+/* ==================== SORT TABLE (Digital & Sembako) ==================== */
 document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
   let asc = true;
 
   th.addEventListener("click", () => {
-    const tbody = document.getElementById("orderTable");
+    const activeTab = document.querySelector(".tab.active")?.id;
+    let tbody;
+
+    // pilih tbody berdasarkan tab aktif
+    if (activeTab === "tab-digital") tbody = document.getElementById("orderTable");
+    else if (activeTab === "tab-sembako") tbody = document.getElementById("tbody-sembako");
+    else return;
+
     if (!tbody) return;
+
     const rows = Array.from(tbody.querySelectorAll("tr"));
     const type = th.dataset.sort;
 
+    // hapus class sort dari semua th
     document.querySelectorAll(".admin-table th").forEach(h => h.classList.remove("sort-asc", "sort-desc"));
 
+    // sort rows
     rows.sort((a, b) => {
-      let A = a.children[index].innerText.trim();
-      let B = b.children[index].innerText.trim();
+      // skip placeholder row (colspan)
+      if (a.querySelector("td[colspan]") || b.querySelector("td[colspan]")) return 0;
+
+      let A = a.children[index]?.innerText.trim() || "";
+      let B = b.children[index]?.innerText.trim() || "";
 
       if (type === "number") {
         A = parseFloat(A.replace(/\D/g, "")) || 0;
@@ -461,15 +474,16 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
         return asc ? A - B : B - A;
       }
 
-      return asc ? A.localeCompare(B, "id", { sensitivity: "base" }) : B.localeCompare(A, "id", { sensitivity: "base" });
+      return asc ? A.localeCompare(B, "id", { sensitivity: "base" }) 
+                 : B.localeCompare(A, "id", { sensitivity: "base" });
     });
 
+    // tandai arah sort
     th.classList.add(asc ? "sort-asc" : "sort-desc");
+
+    // append sorted rows kembali ke tbody
     rows.forEach(row => tbody.appendChild(row));
+
     asc = !asc;
   });
 });
-
-
-
-
