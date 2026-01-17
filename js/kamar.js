@@ -389,7 +389,7 @@ async function loadPesananSembako() {
   data.forEach((row, i) => {
     const itemsHtml = row.items
   .map(it => {
-    const price = Number(it.harga) || 0; // fallback jika undefined
+    const price = Number(it.harga ?? it.price) || 0; // ambil harga dari properti yang ada
     const qty = Number(it.qty) || 0;
     const subtotal = price * qty;
     return `${it.name} x${qty} = Rp ${subtotal.toLocaleString("id-ID")}`;
@@ -450,6 +450,7 @@ document.addEventListener("change", async (e) => {
 
   select.dataset.old = statusBaru;
 });
+
 
 
 
