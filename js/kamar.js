@@ -374,34 +374,39 @@ function logoutAdmin() {
   window.location.replace("https://ud-fikri.vercel.app");
 }
 
-/* ==================== LAYER SWITCH ==================== */
-/* ==================== SLIDE TRANSISI TAB ==================== */
-function slideTab(showLayer, hideLayer, tabActive, tabInactive, callback) {
+/* ==================== SWITCH TAB SLIDE ==================== */
+const tabDigital = document.getElementById("tab-digital");
+const tabSembako = document.getElementById("tab-sembako");
+
+const layerDigital = document.getElementById("layer-digital");
+const layerSembako = document.getElementById("layer-sembako");
+
+function switchTab(showLayer, hideLayer, tabOn, tabOff, callback) {
   if (!showLayer || !hideLayer) return;
 
-  tabActive.classList.add("active");
-  tabInactive.classList.remove("active");
+  // tab active
+  tabOn.classList.add("active");
+  tabOff.classList.remove("active");
 
   // slide out
-  hideLayer.style.transform = "translateX(-100%)";
-  hideLayer.style.opacity = "0";
+  hideLayer.classList.add("slide-left");
+  hideLayer.classList.remove("active");
 
-  setTimeout(() => {
-    hideLayer.classList.remove("active");
-    hideLayer.style.transform = "translateX(100%)";
+  // slide in
+  showLayer.classList.remove("slide-left");
+  showLayer.classList.add("active");
 
-    showLayer.classList.add("active");
-    showLayer.style.transform = "translateX(100%)";
-    showLayer.style.opacity = "0";
-
-    requestAnimationFrame(() => {
-      showLayer.style.transform = "translateX(0)";
-      showLayer.style.opacity = "1";
-    });
-
-    if (callback) callback();
-  }, 300);
+  if (callback) callback();
 }
+
+/* ==================== EVENT ==================== */
+tabDigital?.addEventListener("click", () => {
+  switchTab(layerDigital, layerSembako, tabDigital, tabSembako);
+});
+
+tabSembako?.addEventListener("click", () => {
+  switchTab(layerSembako, layerDigital, tabSembako, tabDigital);
+});
 
 /* ==================== INIT ==================== */
 document.addEventListener("DOMContentLoaded", () => {
@@ -495,5 +500,6 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
