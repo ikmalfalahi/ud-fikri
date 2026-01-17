@@ -1,12 +1,12 @@
 "use strict";
 
-// ==================== SUPABASE ====================
+/* ==================== SUPABASE ==================== */
 function getSupabase() {
   if (!window.supabaseClient) return null;
   return window.supabaseClient;
 }
 
-// ==================== UPDATE STATUS ====================
+/* ==================== UPDATE ADMIN STATUS ==================== */
 function updateAdminStatus(open) {
   const msg = document.getElementById("admin-status");
   if (!msg) return;
@@ -20,23 +20,20 @@ function updateAdminStatus(open) {
   }
 }
 
-// ==================== SET STATUS ====================
+/* ==================== SET STORE STATUS ==================== */
 async function setStore(open) {
   const supabase = getSupabase();
   if (!supabase) return;
 
   const { error } = await supabase
     .from("store_status")
-    .update({
-      is_open: open,
-      updated_at: new Date().toISOString(),
-    })
+    .update({ is_open: open, updated_at: new Date().toISOString() })
     .eq("id", 1);
 
   if (!error) updateAdminStatus(open);
 }
 
-// ==================== HAPUS PESANAN (SINGLE) ====================
+/* ==================== HAPUS PESANAN DIGITAL (SINGLE) ==================== */
 async function hapusPesanan(id) {
   if (!confirm("Yakin ingin menghapus pesanan ini?")) return;
 
@@ -60,7 +57,32 @@ async function hapusPesanan(id) {
   alert("Pesanan berhasil dihapus!");
 }
 
-// ==================== HAPUS PESANAN TERPILIH ====================
+/* ==================== HAPUS PESANAN SEMBAKO (SINGLE) ==================== */
+async function hapusPesananSembako(id) {
+  if (!confirm("Yakin ingin menghapus pesanan ini?")) return;
+
+  const supabase = getSupabase();
+  if (!supabase) return;
+
+  const { data, error } = await supabase
+    .from("pesanan_sembako")
+    .delete()
+    .eq("id", id.toString())
+    .select();
+
+  if (error || !data || data.length === 0) {
+    alert("Pesanan tidak dapat dihapus.");
+    console.error(error);
+    return;
+  }
+
+  const row = document.querySelector(`button[data-id="${id}"]`)?.closest("tr");
+  if (row) row.remove();
+
+  alert("Pesanan berhasil dihapus!");
+}
+
+/* ==================== HAPUS PESANAN TERPILIH ==================== */
 async function hapusPesananTerpilih() {
   const activeTab = document.querySelector(".tab.active")?.id;
 
@@ -102,10 +124,9 @@ async function hapusPesananTerpilih() {
 
   alert("Pesanan terpilih berhasil dihapus!");
 }
-
 document.getElementById("hapusTerpilih")?.addEventListener("click", hapusPesananTerpilih);
 
-// ==================== LOAD STATUS ====================
+/* ==================== LOAD STORE STATUS ==================== */
 async function loadStoreStatus() {
   const supabase = getSupabase();
   if (!supabase) return;
@@ -119,7 +140,7 @@ async function loadStoreStatus() {
   if (!error && data) updateAdminStatus(data.is_open);
 }
 
-// ==================== LOAD PESANAN DIGITAL ====================
+/* ==================== LOAD PESANAN DIGITAL ==================== */
 async function loadOrders() {
   const supabase = getSupabase();
   if (!supabase) return;
@@ -177,18 +198,18 @@ async function loadOrders() {
     `;
   });
 
-  // tombol hapus satuan
+  // hapus satuan Digital
   document.querySelectorAll(".hapus-btn").forEach(btn => {
     btn.addEventListener("click", () => hapusPesanan(btn.dataset.id));
   });
 
-  // check all
+  // check all Digital
   document.getElementById("checkAllDigital")?.addEventListener("change", e => {
     document.querySelectorAll("#orderTable .row-check").forEach(cb => cb.checked = e.target.checked);
   });
 }
 
-// ==================== REALTIME PESANAN DIGITAL ====================
+/* ==================== REALTIME PESANAN DIGITAL ==================== */
 function listenOrdersRealtime() {
   const supabase = getSupabase();
   if (!supabase) return;
@@ -203,14 +224,14 @@ function listenOrdersRealtime() {
     .subscribe();
 }
 
-// ==================== LOGOUT ADMIN ====================
+/* ==================== LOGOUT ADMIN ==================== */
 function logoutAdmin() {
   localStorage.removeItem("admin_logged_in");
   sessionStorage.removeItem("admin_logged_in");
   window.location.replace("https://ud-fikri.vercel.app");
 }
 
-// ==================== INIT ====================
+/* ==================== INIT ==================== */
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("logoutBtn")?.addEventListener("click", logoutAdmin);
   document.getElementById("btnOpen")?.addEventListener("click", () => setStore(true));
@@ -221,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
   listenOrdersRealtime();
 });
 
-// ================= SORT TABLE =================
+/* ==================== SORT TABLE ==================== */
 document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
   let asc = true;
 
@@ -257,7 +278,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
   });
 });
 
-// ================= SEARCH NAMA =================
+/* ==================== SEARCH NAMA ==================== */
 document.getElementById("searchNama")?.addEventListener("input", function () {
   const keyword = this.value.toLowerCase();
   const activeTab = document.querySelector(".tab.active")?.id;
@@ -274,7 +295,7 @@ document.getElementById("searchNama")?.addEventListener("input", function () {
   });
 });
 
-// ================= UPDATE STATUS DIGITAL =================
+/* ==================== UPDATE STATUS DIGITAL ==================== */
 document.addEventListener("change", async (e) => {
   if (!e.target.classList.contains("status-select")) return;
 
@@ -303,7 +324,7 @@ document.addEventListener("change", async (e) => {
   select.dataset.old = statusBaru;
 });
 
-// ================= LAYER SWITCH =================
+/* ==================== LAYER SWITCH ==================== */
 const tabDigital = document.getElementById("tab-digital");
 const tabSembako = document.getElementById("tab-sembako");
 const layerDigital = document.getElementById("layer-digital");
@@ -324,7 +345,7 @@ tabSembako.onclick = () => {
   loadPesananSembako();
 };
 
-// =================== LOAD PESANAN SEMBAKO ==================
+/* ==================== LOAD PESANAN SEMBAKO ==================== */
 async function loadPesananSembako() {
   const supabase = getSupabase();
   const tbody = document.getElementById("tbody-sembako");
@@ -376,17 +397,26 @@ async function loadPesananSembako() {
             <option value="ditolak" ${row.status === "ditolak" ? "selected" : ""}>Ditolak</option>
           </select>
         </td>
+        <td>
+          <button class="hapus-btn sembako" data-id="${row.id}">Hapus</button>
+        </td>
         <td>${new Date(row.created_at).toLocaleString("id-ID")}</td>
       </tr>
     `);
   });
+
+  // tombol hapus satuan Sembako
+  document.querySelectorAll(".hapus-btn.sembako").forEach(btn => {
+    btn.addEventListener("click", () => hapusPesananSembako(btn.dataset.id));
+  });
 }
 
+/* ==================== CHECK ALL SEMBAKO ==================== */
 document.getElementById("checkAllSembako")?.addEventListener("change", e => {
   document.querySelectorAll("#tbody-sembako .row-check").forEach(cb => cb.checked = e.target.checked);
 });
 
-// ==================== UPDATE STATUS SEMBAKO ====================
+/* ==================== UPDATE STATUS SEMBAKO ==================== */
 document.addEventListener("change", async (e) => {
   if (!e.target.classList.contains("status-sembako")) return;
 
