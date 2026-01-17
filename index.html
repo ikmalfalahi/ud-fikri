@@ -25,6 +25,14 @@
   <meta name="twitter:description" content="Kebutuhan harian, harga ramah, tersedia layanan antar ke rumah.">
   <meta name="twitter:image" content="https://ud-fikri.vercel.app/images/slide1.jpg">
 
+  <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://unpkg.com https://cdn.jsdelivr.net;
+  script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+  style-src 'self' https://cdnjs.cloudflare.com;
+  font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:;
+">
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <!-- Schema.org Business Info -->
 <script type="application/ld+json">
@@ -307,6 +315,7 @@
 
 </body>
 </html>
+
 
 
 
