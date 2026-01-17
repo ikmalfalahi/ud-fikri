@@ -201,7 +201,6 @@ async function loadOrders() {
         </td>
         <td>${tanggal}</td>
         <td>${item.bukti_url ? `<a href="${item.bukti_url}" target="_blank">Lihat</a>` : "-"}</td>
-        <td><button class="hapus-btn" data-id="${item.id}">Hapus</button></td>
       </tr>
     `;
   });
@@ -494,6 +493,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
