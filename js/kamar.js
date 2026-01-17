@@ -2,8 +2,7 @@
 
 // ==================== SUPABASE ====================
 function getSupabase() {
-  if (!window.supabaseClient) return null;
-  return window.supabaseClient;
+  return window.supabaseClient || null;
 }
 
 // ==================== UPDATE STATUS ====================
@@ -37,16 +36,16 @@ async function setStore(open) {
 }
 
 // ==================== HAPUS PESANAN (SINGLE) ====================
-async function hapusPesanan(id) {
+async function hapusPesanan(id, tableName = "pesanan_layanan_digital") {
   if (!confirm("Yakin ingin menghapus pesanan ini?")) return;
 
   const supabase = getSupabase();
   if (!supabase) return;
 
   const { data, error } = await supabase
-    .from("pesanan_layanan_digital")
+    .from(tableName)
     .delete()
-    .eq("id", id.toString()) // bigint → string
+    .eq("id", id.toString())
     .select();
 
   if (error || !data || data.length === 0) {
@@ -54,47 +53,33 @@ async function hapusPesanan(id) {
     return;
   }
 
-  const row = document
-    .querySelector(`button[data-id="${id}"]`)
-    ?.closest("tr");
-
+  const row = document.querySelector(`button[data-id="${id}"]`)?.closest("tr");
   if (row) row.remove();
-
   alert("Pesanan berhasil dihapus!");
 }
 
-// ==================== HAPUS PESANAN TERPILIH (BARU) ====================
+// ==================== HAPUS PESANAN TERPILIH ====================
 document.getElementById("hapusTerpilih")?.addEventListener("click", async () => {
   const activeTab = document.querySelector(".tab.active")?.id;
-
   let tbodySelector, tableName;
+
   if (activeTab === "tab-digital") {
     tbodySelector = "#orderTable";
     tableName = "pesanan_layanan_digital";
   } else if (activeTab === "tab-sembako") {
     tbodySelector = "#tbody-sembako";
     tableName = "pesanan_sembako";
-  } else {
-    alert("Tidak ada tab aktif.");
-    return;
-  }
+  } else return alert("Tidak ada tab aktif.");
 
   const checked = document.querySelectorAll(`${tbodySelector} .row-check:checked`);
-  if (checked.length === 0) {
-    alert("Pilih minimal satu pesanan.");
-    return;
-  }
-
+  if (checked.length === 0) return alert("Pilih minimal satu pesanan.");
   if (!confirm(`Yakin ingin menghapus ${checked.length} pesanan?`)) return;
 
   const ids = Array.from(checked).map(cb => cb.dataset.id.toString());
+  const supabase = getSupabase();
   const { error } = await supabase.from(tableName).delete().in("id", ids);
 
-  if (error) {
-    console.error(error);
-    alert("Gagal menghapus pesanan.");
-    return;
-  }
+  if (error) return alert("Gagal menghapus pesanan.");
 
   checked.forEach(cb => cb.closest("tr")?.remove());
 
@@ -120,13 +105,13 @@ async function loadStoreStatus() {
   if (!error && data) updateAdminStatus(data.is_open);
 }
 
-// ==================== LOAD PESANAN ====================
+// ==================== LOAD PESANAN DIGITAL ====================
 async function loadOrders() {
   const supabase = getSupabase();
   if (!supabase) return;
 
-  const table = document.getElementById("orderTable");
-  if (!table) return;
+  const tbody = document.getElementById("orderTable");
+  if (!tbody) return;
 
   const { data, error } = await supabase
     .from("pesanan_layanan_digital")
@@ -134,246 +119,57 @@ async function loadOrders() {
     .order("created_at", { ascending: false });
 
   if (error || !data || data.length === 0) {
-    table.innerHTML = `
-      <tr>
-        <td colspan="11" class="empty">Belum ada pesanan</td>
-      </tr>
-    `;
+    tbody.innerHTML = `<tr><td colspan="11" class="empty">Belum ada pesanan</td></tr>`;
     return;
   }
 
-  table.innerHTML = "";
+  tbody.innerHTML = "";
 
-  data.forEach((item, index) => {
-    const tanggal = item.created_at
-      ? new Date(item.created_at).toLocaleString("id-ID", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        })
-      : "-";
+  data.forEach((item, i) => {
+    const tanggal = item.created_at ? new Date(item.created_at).toLocaleString("id-ID", {
+      day: "2-digit", month: "long", year: "numeric",
+      hour: "2-digit", minute: "2-digit"
+    }) : "-";
 
-    table.innerHTML += `
+    tbody.insertAdjacentHTML("beforeend", `
       <tr>
-        <td><input type="checkbox" class="row-check" data-id="${row.id}"></td>
-        <td>${index + 1}</td>
+        <td><input type="checkbox" class="row-check" data-id="${item.id}"></td>
+        <td>${i+1}</td>
         <td>${item.nama || "-"}</td>
         <td>${item.layanan || "-"}</td>
         <td>${item.provider || "-"}</td>
         <td>Rp ${Number(item.nominal || 0).toLocaleString("id-ID")}</td>
-        <td><strong>Rp ${Number(item.total || 0).toLocaleString("id-ID")}</strong></td>
+        <td>Rp ${Number(item.total || 0).toLocaleString("id-ID")}</td>
         <td>
-          <select 
-            class="status-select"
-            data-id="${item.id}"
-            data-old="${item.status || "pending"}"
-          >
-            <option value="pending" ${item.status === "pending" ? "selected" : ""}>
-              Pending
-            </option>
-            <option value="sukses" ${item.status === "sukses" ? "selected" : ""}>
-              Sukses
-            </option>
-            <option value="ditolak" ${item.status === "ditolak" ? "selected" : ""}>
-              Ditolak
-            </option>
+          <select class="status-select" data-id="${item.id}" data-old="${item.status || "pending"}">
+            <option value="pending" ${item.status === "pending" ? "selected": ""}>Pending</option>
+            <option value="sukses" ${item.status === "sukses" ? "selected": ""}>Sukses</option>
+            <option value="ditolak" ${item.status === "ditolak" ? "selected": ""}>Ditolak</option>
           </select>
         </td>
         <td>${tanggal}</td>
         <td>${item.bukti_url ? `<a href="${item.bukti_url}" target="_blank">Lihat</a>` : "-"}</td>
-        <td>
-          <button class="hapus-btn" data-id="${item.id}">Hapus</button>
-        </td>
+        <td><button class="hapus-btn" data-id="${item.id}">Hapus</button></td>
       </tr>
-    `;
+    `);
   });
 
-  // tombol hapus satuan
-  document.querySelectorAll(".hapus-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      hapusPesanan(btn.dataset.id);
-    });
+  // hapus satuan
+  tbody.querySelectorAll(".hapus-btn").forEach(btn => {
+    btn.addEventListener("click", () => hapusPesanan(btn.dataset.id));
   });
 
-  // check all
+  // checkAll digital
   document.getElementById("checkAllDigital")?.addEventListener("change", e => {
-  document.querySelectorAll("#orderTable .row-check").forEach(cb => cb.checked = e.target.checked);
-});
+    tbody.querySelectorAll(".row-check").forEach(cb => cb.checked = e.target.checked);
   });
 }
 
-// ==================== REALTIME PESANAN ====================
-function listenOrdersRealtime() {
-  const supabase = getSupabase();
-  if (!supabase) return;
-
-  supabase
-    .channel("admin-pesanan")
-    .on(
-      "postgres_changes",
-      {
-        event: "INSERT",
-        schema: "public",
-        table: "pesanan_layanan_digital",
-      },
-      () => loadOrders()
-    )
-    .subscribe();
-}
-
-// ==================== LOGOUT ADMIN ====================
-function logoutAdmin() {
-  localStorage.removeItem("admin_logged_in");
-  sessionStorage.removeItem("admin_logged_in");
-  window.location.replace("https://ud-fikri.vercel.app");
-}
-
-// ==================== INIT ====================
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("logoutBtn")?.addEventListener("click", logoutAdmin);
-  document.getElementById("btnOpen")?.addEventListener("click", () => setStore(true));
-  document.getElementById("btnClose")?.addEventListener("click", () => setStore(false));
-  document.getElementById("hapusTerpilih")?.addEventListener("click", hapusPesananTerpilih);
-
-  loadStoreStatus();
-  loadOrders();
-  listenOrdersRealtime();
-});
-
-// ================= SORT TABLE =================
-document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
-  let asc = true;
-
-  th.addEventListener("click", () => {
-    const tbody = document.getElementById("orderTable");
-    const rows = Array.from(tbody.querySelectorAll("tr"));
-    const type = th.dataset.sort;
-
-    // reset icon semua kolom
-    document.querySelectorAll(".admin-table th")
-      .forEach(h => h.classList.remove("sort-asc", "sort-desc"));
-
-    rows.sort((a, b) => {
-      let A = a.children[index].innerText.trim();
-      let B = b.children[index].innerText.trim();
-
-      // NUMBER
-      if (type === "number") {
-        A = parseFloat(A.replace(/\D/g, "")) || 0;
-        B = parseFloat(B.replace(/\D/g, "")) || 0;
-        return asc ? A - B : B - A;
-      }
-
-      // DATE
-      if (type === "date") {
-        A = new Date(A).getTime() || 0;
-        B = new Date(B).getTime() || 0;
-        return asc ? A - B : B - A;
-      }
-
-      // STRING (default)
-      return asc
-        ? A.localeCompare(B, "id", { sensitivity: "base" })
-        : B.localeCompare(A, "id", { sensitivity: "base" });
-    });
-
-    // toggle icon
-    th.classList.add(asc ? "sort-asc" : "sort-desc");
-
-    // render ulang
-    rows.forEach(row => tbody.appendChild(row));
-
-    // toggle arah sort
-    asc = !asc;
-  });
-});
-
-// ================= SEARCH NAMA =================
-document.getElementById("searchNama")?.addEventListener("input", function () {
-  const keyword = this.value.toLowerCase();
-  const activeTab = document.querySelector(".tab.active")?.id;
-
-  let tbodySelector;
-  if (activeTab === "tab-digital") tbodySelector = "#orderTable";
-  else if (activeTab === "tab-sembako") tbodySelector = "#tbody-sembako";
-  else return;
-
-  const rows = document.querySelectorAll(`${tbodySelector} tr`);
-  rows.forEach(row => {
-    const nama = row.children[1]?.innerText.toLowerCase() || "";
-    row.style.display = nama.includes(keyword) ? "" : "none";
-  });
-});
-
-// ================= UPDATE STATUS =================
-document.addEventListener("change", async (e) => {
-  if (!e.target.classList.contains("status-select")) return;
-
-  const supabase = getSupabase();
-  if (!supabase) return;
-
-  const select = e.target;
-  const id = select.dataset.id;
-  const statusBaru = select.value;
-  const statusLama = select.dataset.old || "pending";
-
-  const konfirmasi = confirm(
-    `Ubah status pesanan menjadi "${statusBaru.toUpperCase()}"?`
-  );
-
-  if (!konfirmasi) {
-    select.value = statusLama;
-    return;
-  }
-
-  const { error } = await supabase
-    .from("pesanan_layanan_digital")
-    .update({ status: statusBaru })
-    .eq("id", id);
-
-  if (error) {
-    alert("❌ Gagal mengubah status");
-    console.error(error);
-    select.value = statusLama;
-    return;
-  }
-
-  // simpan status baru
-  select.dataset.old = statusBaru;
-  console.log(`✅ Status pesanan ${id} → ${statusBaru}`);
-});
-
-// ================= LAYER SWITCH =================
-const tabDigital = document.getElementById("tab-digital");
-const tabSembako = document.getElementById("tab-sembako");
-
-const layerDigital = document.getElementById("layer-digital");
-const layerSembako = document.getElementById("layer-sembako");
-
-tabDigital.onclick = () => {
-  tabDigital.classList.add("active");
-  tabSembako.classList.remove("active");
-
-  layerDigital.classList.add("active");
-  layerSembako.classList.remove("active");
-};
-
-tabSembako.onclick = () => {
-  tabSembako.classList.add("active");
-  tabDigital.classList.remove("active");
-
-  layerSembako.classList.add("active");
-  layerDigital.classList.remove("active");
-
-  loadPesananSembako();
-};
-
-// =================== Load Data Pesanan Sembako ==================
+// ==================== LOAD PESANAN SEMBAKO ====================
 async function loadPesananSembako() {
-  const supabase = window.supabaseClient;
+  const supabase = getSupabase();
   const tbody = document.getElementById("tbody-sembako");
+  if (!tbody) return;
 
   tbody.innerHTML = `<tr><td colspan="9">Loading...</td></tr>`;
 
@@ -396,19 +192,17 @@ async function loadPesananSembako() {
   tbody.innerHTML = "";
 
   data.forEach((row, i) => {
-    const itemsHtml = row.items
-  .map(it => {
-    const price = Number(it.harga ?? it.price) || 0; // ambil harga dari properti yang ada
-    const qty = Number(it.qty) || 0;
-    const subtotal = price * qty;
-    return `${it.name} x${qty} = Rp ${subtotal.toLocaleString("id-ID")}`;
-  })
-  .join("<br>");
+    const itemsHtml = (row.items || []).map(it => {
+      const price = Number(it.harga ?? it.price) || 0;
+      const qty = Number(it.qty) || 0;
+      const subtotal = price * qty;
+      return `${it.name} x${qty} = Rp ${subtotal.toLocaleString("id-ID")}`;
+    }).join("<br>");
 
     tbody.insertAdjacentHTML("beforeend", `
       <tr>
         <td><input type="checkbox" class="row-check" data-id="${row.id}"></td>
-        <td>${i + 1}</td>
+        <td>${i+1}</td>
         <td>${row.nama}</td>
         <td>${row.alamat}</td>
         <td>${row.lokasi_map || "-"}</td>
@@ -416,7 +210,7 @@ async function loadPesananSembako() {
         <td>Rp ${Number(row.total).toLocaleString("id-ID")}</td>
         <td>${row.metode_pembayaran}</td>
         <td>
-          <select onchange="updateStatusSembako(${row.id}, this.value)">
+          <select class="status-sembako" data-id="${row.id}" data-old="${row.status}">
             <option value="pending" ${row.status === "pending" ? "selected" : ""}>Pending</option>
             <option value="sukses" ${row.status === "sukses" ? "selected" : ""}>Sukses</option>
             <option value="ditolak" ${row.status === "ditolak" ? "selected" : ""}>Ditolak</option>
@@ -426,46 +220,117 @@ async function loadPesananSembako() {
       </tr>
     `);
   });
+
+  // checkAll sembako
+  document.getElementById("checkAllSembako")?.addEventListener("change", e => {
+    tbody.querySelectorAll(".row-check").forEach(cb => cb.checked = e.target.checked);
+  });
 }
 
-document.getElementById("checkAllSembako")?.addEventListener("change", e => {
-  document.querySelectorAll("#tbody-sembako .row-check").forEach(cb => cb.checked = e.target.checked);
-});
-
-// ==================== Update Status Pesanan Sembako ================
-document.addEventListener("change", async (e) => {
-  if (!e.target.classList.contains("status-sembako")) return;
-
+// ==================== REALTIME PESANAN ====================
+function listenOrdersRealtime() {
   const supabase = getSupabase();
   if (!supabase) return;
 
-  const select = e.target;
-  const id = select.dataset.id;
-  const statusBaru = select.value;
-  const statusLama = select.dataset.old;
+  supabase
+    .channel("admin-pesanan")
+    .on("postgres_changes", { event: "INSERT", schema: "public", table: "pesanan_layanan_digital" }, () => loadOrders())
+    .subscribe();
+}
 
-  const ok = confirm(`Ubah status pesanan menjadi ${statusBaru.toUpperCase()}?`);
-  if (!ok) {
-    select.value = statusLama;
-    return;
-  }
+// ==================== LOGOUT ADMIN ====================
+function logoutAdmin() {
+  localStorage.removeItem("admin_logged_in");
+  sessionStorage.removeItem("admin_logged_in");
+  window.location.replace("https://ud-fikri.vercel.app");
+}
 
-  const { error } = await supabase
-    .from("pesanan_sembako")
-    .update({ status: statusBaru })
-    .eq("id", id);
+// ==================== INIT ====================
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("logoutBtn")?.addEventListener("click", logoutAdmin);
+  document.getElementById("btnOpen")?.addEventListener("click", () => setStore(true));
+  document.getElementById("btnClose")?.addEventListener("click", () => setStore(false));
 
-  if (error) {
-    alert("Gagal update status");
-    console.error(error);
-    select.value = statusLama;
-    return;
-  }
-
-  select.dataset.old = statusBaru;
+  loadStoreStatus();
+  loadOrders();
+  listenOrdersRealtime();
 });
 
+// ==================== UPDATE STATUS SELECT ====================
+document.addEventListener("change", async (e) => {
+  const supabase = getSupabase();
+  if (!supabase) return;
 
+  // Digital
+  if (e.target.classList.contains("status-select")) {
+    const select = e.target;
+    const id = select.dataset.id;
+    const statusBaru = select.value;
+    const statusLama = select.dataset.old || "pending";
 
+    if (!confirm(`Ubah status pesanan menjadi ${statusBaru.toUpperCase()}?`)) {
+      select.value = statusLama;
+      return;
+    }
 
+    const { error } = await supabase
+      .from("pesanan_layanan_digital")
+      .update({ status: statusBaru })
+      .eq("id", id);
 
+    if (error) {
+      alert("❌ Gagal update status");
+      select.value = statusLama;
+      return;
+    }
+
+    select.dataset.old = statusBaru;
+  }
+
+  // Sembako
+  if (e.target.classList.contains("status-sembako")) {
+    const select = e.target;
+    const id = select.dataset.id;
+    const statusBaru = select.value;
+    const statusLama = select.dataset.old;
+
+    if (!confirm(`Ubah status pesanan menjadi ${statusBaru.toUpperCase()}?`)) {
+      select.value = statusLama;
+      return;
+    }
+
+    const { error } = await supabase
+      .from("pesanan_sembako")
+      .update({ status: statusBaru })
+      .eq("id", id);
+
+    if (error) {
+      alert("❌ Gagal update status");
+      select.value = statusLama;
+      return;
+    }
+
+    select.dataset.old = statusBaru;
+  }
+});
+
+// ==================== SWITCH TAB ====================
+const tabDigital = document.getElementById("tab-digital");
+const tabSembako = document.getElementById("tab-sembako");
+const layerDigital = document.getElementById("layer-digital");
+const layerSembako = document.getElementById("layer-sembako");
+
+tabDigital.onclick = () => {
+  tabDigital.classList.add("active");
+  tabSembako.classList.remove("active");
+  layerDigital.classList.add("active");
+  layerSembako.classList.remove("active");
+};
+
+tabSembako.onclick = () => {
+  tabSembako.classList.add("active");
+  tabDigital.classList.remove("active");
+  layerSembako.classList.add("active");
+  layerDigital.classList.remove("active");
+  loadPesananSembako();
+});
