@@ -410,15 +410,25 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById("searchNama")?.addEventListener("input", function () {
   const keyword = this.value.toLowerCase();
   const activeTab = document.querySelector(".tab.active")?.id;
-  let tbodySelector;
+  let tbodySelector, nameColumnIndex;
 
-  if (activeTab === "tab-digital") tbodySelector = "#orderTable";
-  else if (activeTab === "tab-sembako") tbodySelector = "#tbody-sembako";
-  else return;
+  if (activeTab === "tab-digital") {
+    tbodySelector = "#orderTable";
+    nameColumnIndex = 2; // kolom nama di tabel digital
+  } else if (activeTab === "tab-sembako") {
+    tbodySelector = "#tbody-sembako";
+    nameColumnIndex = 2; // kolom nama di tabel sembako
+  } else return;
 
   const rows = document.querySelectorAll(`${tbodySelector} tr`);
   rows.forEach(row => {
-    const nama = row.children[1]?.innerText.toLowerCase() || "";
+    // skip baris placeholder (misal Belum ada pesanan)
+    if (row.querySelector("td[colspan]")) {
+      row.style.display = "";
+      return;
+    }
+
+    const nama = row.children[nameColumnIndex]?.innerText.toLowerCase() || "";
     row.style.display = nama.includes(keyword) ? "" : "none";
   });
 });
@@ -459,6 +469,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
