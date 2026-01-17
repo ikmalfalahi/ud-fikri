@@ -108,7 +108,7 @@ html {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 25px;
+  padding: 20px;
 }
 
 /* ================= STATUS BAR ================= */
@@ -360,6 +360,7 @@ footer {
 .order-layer.active {
   display: block;
 }
+
 
 
 
