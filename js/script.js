@@ -99,7 +99,7 @@ if (storeOpen) {
 },
 { 
   name: "Aqua Galon", 
-  price: 22000, 
+  price: 23000, 
   img: "images/aqua-galon.jpg", 
   category: "AQUA", 
   tambahanBiaya: true,
@@ -362,7 +362,7 @@ if (storeOpen) {
   },
   { 
     name: "Telur 1kg", 
-    price: 32000, 
+    price: 31000, 
     img: "images/telur.jpg", 
     category: "TELUR", 
     tambahanBiaya: true,
@@ -1398,4 +1398,5 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
