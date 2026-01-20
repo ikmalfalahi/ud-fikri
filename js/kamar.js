@@ -304,11 +304,29 @@ function cetakThermal() {
     return;
   }
 
-  const data = Array.from(rows).filter(tr => {
-    if (tr.querySelector("td[colspan]")) return false;
-    const cell = tr.children[tanggalIndex];
-    return cell?.dataset.date?.slice(0, 10) === tanggal;
-  });
+const data = Array.from(rows).filter(tr => {
+  if (tr.querySelector("td[colspan]")) return false;
+
+  const cell = tr.children[tanggalIndex];
+  if (!cell) return false;
+
+  // 1️⃣ PRIORITAS data-date (DIGITAL)
+  if (cell.dataset.date) {
+    return cell.dataset.date.slice(0, 10) === tanggal;
+  }
+
+  // 2️⃣ FALLBACK TEKS (SEMBAKO)
+  const text = cell.innerText.trim();
+
+  // contoh: 20/01/2026 atau 20-01-2026
+  const match = text.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+  if (!match) return false;
+
+  const [, d, m, y] = match;
+  const rowISO = `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+
+  return rowISO === tanggal;
+});
 
   if (data.length === 0) {
     alert("Tidak ada pesanan di tanggal tersebut");
@@ -415,15 +433,15 @@ TERIMA KASIH
 </html>
 `;
 
-  const win = window.open("", "_blank", "width=300,height=600");
-  win.document.open();
-  win.document.write(html);
-  win.document.close();
+ const frame = document.getElementById("printFrame");
+const doc = frame.contentWindow.document;
 
-  setTimeout(() => {
-    win.focus();
-    win.print();
-  }, 400);
+doc.open();
+doc.write(html);
+doc.close();
+
+frame.contentWindow.focus();
+frame.contentWindow.print();
 }
 
 /* ======================== Event Hapus dan Cetak =============== */
@@ -792,6 +810,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
