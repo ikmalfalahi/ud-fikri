@@ -150,7 +150,7 @@ function cetakPesananByTanggal() {
     tanggalIndex = 9;
     jenisPesanan = "Sembako";
   }
-  } else {
+    else {
     alert("Tab tidak dikenali");
     return;
   }
@@ -617,6 +617,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
