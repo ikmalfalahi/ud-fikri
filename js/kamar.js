@@ -213,32 +213,35 @@ function cetakPesananByTanggal() {
   `;
 
   rowsFiltered.forEach((tr, i) => {
-    const td = tr.children;
+  const td = tr.children;
 
-    if (activeTab === "tab-digital") {
-      html += `
-        <tr>
-          <td>${i + 1}</td>
-          <td>${td[2].innerText}</td>
-          <td>${td[3].innerText} - ${td[4].innerText}</td>
-          <td>${td[6].innerText}</td>
-          <td>${td[5].innerText || "-"}</td>
-          <td>${td[7].querySelector("select")?.value || "-"}</td>
-        </tr>
-      `;
-    } else {
-      html += `
-        <tr>
-          <td>${i + 1}</td>
-          <td>${td[2].innerText}</td>
-          <td>${td[5].innerText}</td>
-          <td>${td[6].innerText}</td>
-          <td>${td[7].innerText || "-"}</td>
-          <td>${td[8].querySelector("select")?.value || "-"}</td>
-        </tr>
-      `;
-    }
-  });
+  if (activeTab === "tab-digital") {
+    html += `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${td[2].innerText}</td>   <!-- Nama -->
+        <td>${td[3].innerText}</td>   <!-- Layanan -->
+        <td>${td[4].innerText}</td>   <!-- Provider -->
+        <td>${td[5].innerText}</td>   <!-- Nominal -->
+        <td>${td[6].innerText}</td>   <!-- Total -->
+        <td>${td[7].querySelector("select")?.value || td[7].innerText}</td> <!-- Status -->
+        <td>${td[8].innerText}</td>   <!-- Tanggal -->
+      </tr>
+    `;
+  } else {
+    // SEMBAKO (SUDAH BENAR, TIDAK DIUBAH)
+    html += `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${td[2].innerText}</td>  <!-- Nama -->
+        <td>${td[5].innerText}</td>  <!-- Detail -->
+        <td>${td[6].innerText}</td>  <!-- Total -->
+        <td>${td[8].querySelector("select")?.value || "-"}</td> <!-- Status -->
+        <td>${td[9].innerText}</td>
+      </tr>
+    `;
+  }
+});
 
   html += `
       </table>
@@ -623,3 +626,4 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
