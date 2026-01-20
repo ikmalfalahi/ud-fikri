@@ -414,14 +414,23 @@ footer {
   background: #f8f9fa;
   color: #333;
   border: 1px solid #ccc;
+  transition: all 0.25s ease;
 }
 
-#cetakThermal:hover {
+/* HANYA hover kalau TIDAK disabled */
+#cetakThermal:not(:disabled):hover {
   background: linear-gradient(135deg, #0d6efd, #1e90ff);
   color: #fff;
   border-color: transparent;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(13,110,253,0.4);
+  cursor: pointer;
+}
+
+/* tampilan disabled */
+#cetakThermal:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* ================= CETAK TANGGAL ================= */
@@ -458,5 +467,6 @@ footer {
     width: 100%;
   }
 }
+
 
 
