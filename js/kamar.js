@@ -331,15 +331,30 @@ function cetakThermal() {
         size: 58mm auto;
         margin: 0;
       }
-      body {
+    
+      html, body {
         width: 58mm;
+        max-width: 58mm;
+        margin: 0;
+        padding: 0;
         font-family: monospace;
         font-size: 11px;
-        padding: 6px;
+        overflow: hidden;
       }
-      .center { text-align: center; }
-      .line { border-top: 1px dashed #000; margin: 6px 0; }
-      .item { margin-bottom: 6px; }
+    
+      .center {
+        text-align: center;
+      }
+    
+      .line {
+        border-top: 1px dashed #000;
+        margin: 6px 0;
+      }
+    
+      .item {
+        margin-bottom: 6px;
+        word-wrap: break-word;
+      }
     </style>
   </head>
   <body>
@@ -763,6 +778,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
