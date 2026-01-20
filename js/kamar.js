@@ -143,7 +143,7 @@ function cetakPesananByTanggal() {
 
   if (activeTab === "tab-digital") {
     rows = document.querySelectorAll("#orderTable tr");
-    tanggalIndex = 8;
+    tanggalIndex = 9;
     jenisPesanan = "Layanan Digital";
   } else if (activeTab === "tab-sembako") {
     rows = document.querySelectorAll("#tbody-sembako tr");
@@ -617,13 +617,5 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
-
-
-
-
-
-
-
-
 
 
