@@ -143,11 +143,11 @@ function cetakPesananByTanggal() {
 
   if (activeTab === "tab-digital") {
     rows = document.querySelectorAll("#orderTable tr");
-    tanggalIndex = 9;
+    tanggalIndex = 8; // ✅ FIX: digital beda index
     jenisPesanan = "Layanan Digital";
   } else if (activeTab === "tab-sembako") {
     rows = document.querySelectorAll("#tbody-sembako tr");
-    tanggalIndex = 9;
+    tanggalIndex = 9; // ✅ sembako tetap
     jenisPesanan = "Sembako";
   } else {
     alert("Tab tidak dikenali");
@@ -155,33 +155,30 @@ function cetakPesananByTanggal() {
   }
 
   const rowsFiltered = Array.from(rows).filter(tr => {
-  if (tr.querySelector("td[colspan]")) return false;
+    if (tr.querySelector("td[colspan]")) return false;
 
-  const cell = tr.children[tanggalIndex];
-  if (!cell) return false;
+    const cell = tr.children[tanggalIndex];
+    if (!cell) return false;
 
-  // 1️⃣ Jika ada data-date (FORMAT ISO)
-  if (cell.dataset.date) {
-    return cell.dataset.date.slice(0, 10) === tanggal;
-  }
+    // PRIORITAS data-date
+    if (cell.dataset.date) {
+      return cell.dataset.date.slice(0, 10) === tanggal;
+    }
 
-  // 2️⃣ Fallback: parsing manual dari teks tabel
-  const text = cell.innerText.trim();
+    // FALLBACK parsing teks
+    const text = cell.innerText.trim();
+    const match = text.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+    if (!match) return false;
 
-  // contoh: 17/01/2026 atau 17-01-2026
-  const match = text.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
-  if (!match) return false;
-
-  const [_, d, m, y] = match;
-  const rowISO = `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
-
-  return rowISO === tanggal;
-});
+    const [, d, m, y] = match;
+    const rowISO = `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+    return rowISO === tanggal;
+  });
 
   if (rowsFiltered.length === 0) {
-  alert("Tidak ada pesanan di tanggal tersebut");
-  return;
-}
+    alert("Tidak ada pesanan di tanggal tersebut");
+    return;
+  }
 
   let html = `
     <html>
@@ -224,6 +221,7 @@ function cetakPesananByTanggal() {
           <td>${td[2].innerText}</td>
           <td>${td[3].innerText} - ${td[4].innerText}</td>
           <td>${td[6].innerText}</td>
+          <td>${td[5].innerText || "-"}</td>
           <td>${td[7].querySelector("select")?.value || "-"}</td>
         </tr>
       `;
@@ -234,6 +232,7 @@ function cetakPesananByTanggal() {
           <td>${td[2].innerText}</td>
           <td>${td[5].innerText}</td>
           <td>${td[6].innerText}</td>
+          <td>${td[7].innerText || "-"}</td>
           <td>${td[8].querySelector("select")?.value || "-"}</td>
         </tr>
       `;
@@ -617,5 +616,6 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
