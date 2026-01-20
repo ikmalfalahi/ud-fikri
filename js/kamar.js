@@ -130,7 +130,117 @@ async function hapusPesananTerpilih() {
   alert("Pesanan terpilih berhasil dihapus!");
 }
 
+/* ==================== CETAK PESANAN BY TANGGAL ==================== */
+function cetakPesananByTanggal() {
+  const tanggal = document.getElementById("filterTanggal")?.value;
+  if (!tanggal) {
+    alert("Pilih tanggal terlebih dahulu");
+    return;
+  }
+
+  const activeTab = document.querySelector(".tab.active")?.id;
+  let rows, tanggalIndex, jenisPesanan;
+
+  if (activeTab === "tab-digital") {
+    rows = document.querySelectorAll("#orderTable tr");
+    tanggalIndex = 8;
+    jenisPesanan = "Layanan Digital";
+  } else if (activeTab === "tab-sembako") {
+    rows = document.querySelectorAll("#tbody-sembako tr");
+    tanggalIndex = 9;
+    jenisPesanan = "Sembako";
+  } else {
+    alert("Tab tidak dikenali");
+    return;
+  }
+
+  const targetDate = new Date(tanggal).toDateString();
+
+  const rowsFiltered = Array.from(rows).filter(tr => {
+  if (tr.querySelector("td[colspan]")) return false;
+
+  const cell = tr.children[tanggalIndex];
+  const rowDate = cell?.dataset.date;
+
+  return rowDate === tanggal;
+});
+
+  if (rowsFiltered.length === 0) {
+    alert("Tidak ada pesanan di tanggal tersebut");
+    return;
+  }
+
+  let html = `
+    <html>
+    <head>
+      <title>Cetak Pesanan ${jenisPesanan}</title>
+      <style>
+        body { font-family: Arial; font-size: 12px; }
+        h2 { text-align: center; margin-bottom: 4px; }
+        small { display:block; text-align:center; margin-bottom:10px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border:1px solid #000; padding:6px; }
+        th { background:#eee; }
+      </style>
+    </head>
+    <body>
+      <h2>UD FIKRI</h2>
+      <small>
+        Rekap Pesanan ${jenisPesanan}<br>
+        Tanggal ${new Date(tanggal).toLocaleDateString("id-ID")}
+      </small>
+
+      <table>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Detail</th>
+          <th>Total</th>
+          <th>Status</th>
+        </tr>
+  `;
+
+  rowsFiltered.forEach((tr, i) => {
+    const td = tr.children;
+
+    if (activeTab === "tab-digital") {
+      html += `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${td[2].innerText}</td>
+          <td>${td[3].innerText} - ${td[4].innerText}</td>
+          <td>${td[6].innerText}</td>
+          <td>${td[7].querySelector("select")?.value || "-"}</td>
+        </tr>
+      `;
+    } else {
+      html += `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${td[2].innerText}</td>
+          <td>${td[5].innerText}</td>
+          <td>${td[6].innerText}</td>
+          <td>${td[8].querySelector("select")?.value || "-"}</td>
+        </tr>
+      `;
+    }
+  });
+
+  html += `
+      </table>
+    </body>
+    </html>
+  `;
+
+  const win = window.open("", "", "width=900,height=650");
+  win.document.write(html);
+  win.document.close();
+  win.print();
+}
+
+/* ======================== Event Hapus dan Cetak =============== */
 document.getElementById("hapusTerpilih")?.addEventListener("click", hapusPesananTerpilih);
+document.getElementById("cetakTanggal")?.addEventListener("click", cetakPesananByTanggal);
 
 /* ==================== LOAD STORE STATUS ==================== */
 async function loadStoreStatus() {
@@ -493,6 +603,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
