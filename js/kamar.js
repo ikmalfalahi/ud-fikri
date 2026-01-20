@@ -139,41 +139,65 @@ function cetakPesananByTanggal() {
   }
 
   const activeTab = document.querySelector(".tab.active")?.id;
-  let rows, tanggalIndex, jenisPesanan;
+  let rows, tanggalIndex, jenisPesanan, headerHTML = "";
 
-    if (activeTab === "tab-digital") {
+  /* ================= TAB & INDEX ================= */
+  if (activeTab === "tab-digital") {
     rows = document.querySelectorAll("#orderTable tr");
-    tanggalIndex = 8; // ✅ FIX
+    tanggalIndex = 8; // kolom tanggal digital
     jenisPesanan = "Layanan Digital";
-  } else if (activeTab === "tab-sembako") {
+
+    headerHTML = `
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Layanan</th>
+        <th>Provider</th>
+        <th>Nominal</th>
+        <th>Total</th>
+        <th>Status</th>
+      </tr>
+    `;
+  } 
+  else if (activeTab === "tab-sembako") {
     rows = document.querySelectorAll("#tbody-sembako tr");
     tanggalIndex = 9;
     jenisPesanan = "Sembako";
-  }
-    else {
+
+    headerHTML = `
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Alamat</th>
+        <th>Items</th>
+        <th>Total</th>
+        <th>Pembayaran</th>
+        <th>Status</th>
+      </tr>
+    `;
+  } 
+  else {
     alert("Tab tidak dikenali");
     return;
   }
 
+  /* ================= FILTER TANGGAL ================= */
   const rowsFiltered = Array.from(rows).filter(tr => {
     if (tr.querySelector("td[colspan]")) return false;
 
     const cell = tr.children[tanggalIndex];
     if (!cell) return false;
 
-    // PRIORITAS data-date
     if (cell.dataset.date) {
       return cell.dataset.date.slice(0, 10) === tanggal;
     }
 
-    // FALLBACK parsing teks
     const text = cell.innerText.trim();
     const match = text.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
     if (!match) return false;
 
     const [, d, m, y] = match;
-    const rowISO = `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
-    return rowISO === tanggal;
+    return `${y}-${m.padStart(2,"0")}-${d.padStart(2,"0")}` === tanggal;
   });
 
   if (rowsFiltered.length === 0) {
@@ -181,6 +205,7 @@ function cetakPesananByTanggal() {
     return;
   }
 
+  /* ================= HTML CETAK ================= */
   let html = `
     <html>
     <head>
@@ -202,46 +227,40 @@ function cetakPesananByTanggal() {
       </small>
 
       <table>
-        <tr>
-          <th>No</th>
-          <th>Nama</th>
-          <th>Detail</th>
-          <th>Total</th>
-          <th>Pembayaran</th>
-          <th>Status</th>
-        </tr>
+        ${headerHTML}
   `;
 
+  /* ================= ISI TABEL ================= */
   rowsFiltered.forEach((tr, i) => {
-  const td = tr.children;
+    const td = tr.children;
 
-  if (activeTab === "tab-digital") {
-    html += `
-      <tr>
-        <td>${i + 1}</td>
-        <td>${td[2].innerText}</td>   <!-- Nama -->
-        <td>${td[3].innerText}</td>   <!-- Layanan -->
-        <td>${td[4].innerText}</td>   <!-- Provider -->
-        <td>${td[5].innerText}</td>   <!-- Nominal -->
-        <td>${td[6].innerText}</td>   <!-- Total -->
-        <td>${td[7].querySelector("select")?.value || td[7].innerText}</td> <!-- Status -->
-        <td>${td[8].innerText}</td>   <!-- Tanggal -->
-      </tr>
-    `;
-  } else {
-    // SEMBAKO (SUDAH BENAR, TIDAK DIUBAH)
-    html += `
-      <tr>
-        <td>${i + 1}</td>
-        <td>${td[2].innerText}</td>  <!-- Nama -->
-        <td>${td[5].innerText}</td>  <!-- Detail -->
-        <td>${td[6].innerText}</td>  <!-- Total -->
-        <td>${td[8].querySelector("select")?.value || "-"}</td> <!-- Status -->
-        <td>${td[9].innerText}</td>
-      </tr>
-    `;
-  }
-});
+    if (activeTab === "tab-digital") {
+      html += `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${td[2].innerText}</td>
+          <td>${td[3].innerText}</td>
+          <td>${td[4].innerText}</td>
+          <td>${td[5].innerText}</td>
+          <td>${td[6].innerText}</td>
+          <td>${td[7].querySelector("select")?.value || td[7].innerText}</td>
+        </tr>
+      `;
+    } else {
+      html += `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${td[2].innerText}</td>
+          <td>${td[3].innerText}</td>
+          <td>${td[4].innerText}</td>
+          <td>${td[5].innerText}</td>
+          <td>${td[6].innerText}</td>
+          <td>${td[7].innerText}</td>
+          <td>${td[8].querySelector("select")?.value || "-"}</td>
+        </tr>
+      `;
+    }
+  });
 
   html += `
       </table>
@@ -249,16 +268,15 @@ function cetakPesananByTanggal() {
     </html>
   `;
 
-  const win = window.open("", "", "width=900,height=650");
+  const win = window.open("", "", "width=1000,height=700");
+  if (!win) {
+    alert("Popup diblokir browser.");
+    return;
+  }
 
-if (!win) {
-  alert("Popup diblokir browser. Izinkan popup untuk mencetak.");
-  return;
-}
-
-win.document.write(html);
-win.document.close();
-win.print();
+  win.document.write(html);
+  win.document.close();
+  win.print();
 }
 
 /* ======================== Event Hapus dan Cetak =============== */
@@ -626,4 +644,5 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
