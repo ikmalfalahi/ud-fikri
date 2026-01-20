@@ -252,7 +252,6 @@ function cetakPesananByTanggal() {
           <td>${i + 1}</td>
           <td>${td[2].innerText}</td>
           <td>${td[3].innerText}</td>
-          <td>${td[4].innerText}</td>
           <td>${td[5].innerText}</td>
           <td>${td[6].innerText}</td>
           <td>${td[7].innerText}</td>
@@ -644,5 +643,6 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
