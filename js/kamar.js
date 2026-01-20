@@ -405,11 +405,13 @@ function cetakThermal() {
   </html>
   `;
 
-  const win = window.open("", "", "width=300,height=600");
-  win.document.write(html);
-  win.document.close();
-  win.focus();
-  win.print();
+  const frame = document.getElementById("printFrame");
+frame.contentDocument.open();
+frame.contentDocument.write(html);
+frame.contentDocument.close();
+
+frame.contentWindow.focus();
+frame.contentWindow.print();
 }
 
 /* ======================== Event Hapus dan Cetak =============== */
@@ -778,6 +780,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
