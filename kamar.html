@@ -81,19 +81,28 @@
     </button>
   </div>
 
-  <!-- 🔥 AKSI BULK (UNTUK DIGITAL SAJA) -->
-  <div id="bulkDigital" class="bulk-actions">
+  <!-- 🔥 AKSI BULK Hapsu dan Cetak -->
+<div id="bulkDigital" class="bulk-actions">
   <input
     type="date"
     id="filterTanggal"
     class="filter-date"
   >
 
-  <button id="cetakTanggal" class="btn btn-primary">
+  <button
+    type="button"
+    id="cetakTanggal"
+    class="btn btn-print"
+    onclick="cetakPesananByTanggal()"
+  >
     <i class="fa-solid fa-print"></i> Cetak
   </button>
 
-  <button id="hapusTerpilih" class="btn btn-danger">
+  <button
+    type="button"
+    id="hapusTerpilih"
+    class="btn btn-danger"
+  >
     <i class="fa-solid fa-trash"></i> Hapus Terpilih
   </button>
 </div>
@@ -211,6 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
 
 
 
