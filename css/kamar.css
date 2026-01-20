@@ -361,7 +361,7 @@ footer {
   display: block;
 }
 
-/* ==================== Button Print ===================== */
+/* ==================== Button Print dan Tanggal ===================== */
 .bulk-actions {
   display: flex;
   gap: 10px;
@@ -378,4 +378,25 @@ footer {
 .btn-print:hover {
   background: #0b5ed7;
 }
+
+/* Input tanggal */
+.filter-date {
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Responsive: biar tidak kepanjangan di HP */
+@media (max-width: 600px) {
+  .bulk-actions {
+    flex-wrap: wrap;
+  }
+
+  .filter-date {
+    width: 100%;
+  }
+}
+
 
