@@ -383,6 +383,46 @@ footer {
   color: #fff;
 }
 
+#hapusTerpilih {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+}
+
+#hapusTerpilih:hover {
+  background: linear-gradient(135deg, #0d6efd, #1e90ff);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(13,110,253,0.4);
+}
+
+#cetakThermal {
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+#cetakThermal:hover {
+  background: linear-gradient(135deg, #0d6efd, #1e90ff);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(13,110,253,0.4);
+}
+
+#cetakTanggal {
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+#cetakTanggal:hover {
+  background: linear-gradient(135deg, #0d6efd, #1e90ff);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(13,110,253,0.4);
+}
+
 /* ================= INPUT TANGGAL ================= */
 .filter-date {
   padding: 7px 10px;
@@ -402,3 +442,4 @@ footer {
     width: 100%;
   }
 }
+
