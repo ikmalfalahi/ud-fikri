@@ -141,14 +141,15 @@ function cetakPesananByTanggal() {
   const activeTab = document.querySelector(".tab.active")?.id;
   let rows, tanggalIndex, jenisPesanan;
 
-  if (activeTab === "tab-digital") {
+    if (activeTab === "tab-digital") {
     rows = document.querySelectorAll("#orderTable tr");
-    tanggalIndex = 8; // ✅ FIX: digital beda index
+    tanggalIndex = 8; // ✅ FIX
     jenisPesanan = "Layanan Digital";
   } else if (activeTab === "tab-sembako") {
     rows = document.querySelectorAll("#tbody-sembako tr");
-    tanggalIndex = 9; // ✅ sembako tetap
+    tanggalIndex = 9;
     jenisPesanan = "Sembako";
+  }
   } else {
     alert("Tab tidak dikenali");
     return;
@@ -616,6 +617,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
