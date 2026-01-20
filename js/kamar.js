@@ -292,12 +292,14 @@ function cetakThermal() {
   if (activeTab === "tab-digital") {
     rows = document.querySelectorAll("#orderTable tr");
     tanggalIndex = 8;
-    jenis = "Layanan Digital";
-  } else if (activeTab === "tab-sembako") {
+    jenis = "LAYANAN DIGITAL";
+  } 
+  else if (activeTab === "tab-sembako") {
     rows = document.querySelectorAll("#tbody-sembako tr");
     tanggalIndex = 9;
-    jenis = "Sembako";
-  } else {
+    jenis = "SEMBAKO";
+  } 
+  else {
     alert("Tab tidak dikenali");
     return;
   }
@@ -314,60 +316,61 @@ function cetakThermal() {
   }
 
   let html = `
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Struk ${jenis}</title>
-
-<style>
-@page {
-  size: 58mm auto;
-  margin: 0;
-}
-
-html, body {
-  width: 58mm;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: monospace;
-  font-size: 11px;
-}
-
-.container {
-  width: 58mm;
-  padding: 6px;
-  box-sizing: border-box;
-}
-
-.center {
-  text-align: center;
-}
-
-.line {
-  border-top: 1px dashed #000;
-  margin: 6px 0;
-}
-
-.item {
-  margin-bottom: 6px;
-}
-</style>
-</head>
-
-<body>
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="UTF-8">
+    <title>Struk ${jenis}</title>
+      <style>
+      @page {
+        size: 58mm auto;
+        margin: 0;
+      }
+      
+      * {
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        width: 58mm;
+        margin: 0;
+        padding: 0;
+      }
+      
+      body {
+        font-family: monospace;
+        font-size: 11px;
+      }
+      
+      .container {
+        width: 100%;
+        padding: 5mm 3mm;
+      }
+      
+      .center {
+        text-align: center;
+      }
+      
+      .line {
+        border-top: 1px dashed #000;
+        margin: 6px 0;
+      }
+      
+      .item {
+        margin-bottom: 6px;
+      }
+      </style>
+    </head>
+    <body>
 <div class="container">
 
-  <div class="center">
-    <strong>UD FIKRI</strong><br>
-    STRUK PESANAN<br>
-    ${new Date(tanggal).toLocaleDateString("id-ID")}
-  </div>
+<div class="center">
+  <strong>UD FIKRI</strong><br>
+  STRUK PESANAN ${jenis}<br>
+  ${new Date(tanggal).toLocaleDateString("id-ID")}
+</div>
 
-  <div class="line"></div>
+<div class="line"></div>
 `;
 
   data.forEach((tr, i) => {
@@ -375,50 +378,52 @@ body {
 
     if (activeTab === "tab-digital") {
       html += `
-  <div class="item">
-    ${i + 1}. ${td[2].innerText}<br>
-    ${td[3].innerText}<br>
-    ${td[4].innerText}<br>
-    <strong>${td[6].innerText}</strong><br>
-    Status: ${td[7].querySelector("select")?.value || td[7].innerText}
-  </div>
-  <div class="line"></div>
+<div class="item">
+${i + 1}. ${td[2].innerText}<br>
+${td[3].innerText}<br>
+${td[4].innerText}<br>
+${td[5].innerText}<br>
+<strong>${td[6].innerText}</strong><br>
+Status: ${td[7].querySelector("select")?.value || td[7].innerText}
+</div>
+<div class="line"></div>
 `;
-    } else {
+    } 
+    else {
       html += `
-  <div class="item">
-    ${i + 1}. ${td[2].innerText}<br>
-    ${td[5].innerText}<br>
-    <strong>${td[6].innerText}</strong><br>
-    Status: ${td[8].querySelector("select")?.value || "-"}
-  </div>
-  <div class="line"></div>
+<div class="item">
+${i + 1}. ${td[2].innerText}<br>
+${td[3].innerText}<br>
+${td[5].innerText}<br>
+<strong>${td[6].innerText}</strong><br>
+<strong>${td[7].innerText}</strong><br>
+Status: ${td[8].querySelector("select")?.value || "-"}
+</div>
+<div class="line"></div>
 `;
     }
   });
 
   html += `
-  <div class="center">
-    TOTAL PESANAN: ${data.length}<br>
-    Terima Kasih
-  </div>
+<div class="center">
+TOTAL PESANAN: ${data.length}<br>
+TERIMA KASIH
+</div>
 
 </div>
 </body>
 </html>
 `;
 
-  const frame = document.getElementById("printFrame");
-  const doc = frame.contentWindow.document;
-
-  doc.open();
-  doc.write(html);
-  doc.close();
+  const win = window.open("", "_blank", "width=300,height=600");
+  win.document.open();
+  win.document.write(html);
+  win.document.close();
 
   setTimeout(() => {
-    frame.contentWindow.focus();
-    frame.contentWindow.print();
-  }, 300);
+    win.focus();
+    win.print();
+  }, 400);
 }
 
 /* ======================== Event Hapus dan Cetak =============== */
@@ -787,6 +792,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
