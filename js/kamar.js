@@ -209,6 +209,7 @@ function cetakPesananByTanggal() {
           <th>Nama</th>
           <th>Detail</th>
           <th>Total</th>
+          <th>Pembayaran</th>
           <th>Status</th>
         </tr>
   `;
@@ -616,6 +617,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
