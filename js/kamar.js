@@ -154,8 +154,6 @@ function cetakPesananByTanggal() {
     return;
   }
 
-  const targetDate = new Date(tanggal).toDateString();
-
   const rowsFiltered = Array.from(rows).filter(tr => {
   if (tr.querySelector("td[colspan]")) return false;
 
@@ -603,6 +601,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
