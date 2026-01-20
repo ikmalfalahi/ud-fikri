@@ -378,11 +378,25 @@ footer {
 }
 
 /* ================= HOVER CETAK (BIRU GRADASI) ================= */
-.btn-print:hover {
-  background: linear-gradient(90deg, #0d6efd, #1e90ff);
-  color: #fff;
+
+/* efek halus untuk semua tombol terkait */
+#hapusTerpilih,
+#cetakThermal,
+#cetakTanggal,
+.btn-print {
+  transition: all 0.25s ease;
 }
 
+/* class umum cetak (opsional, kalau dipakai) */
+.btn-print:hover {
+  background: linear-gradient(135deg, #0d6efd, #1e90ff);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(13,110,253,0.4);
+}
+
+/* ================= HAPUS TERPILIH ================= */
 #hapusTerpilih {
   background: #dc3545;
   color: #fff;
@@ -395,6 +409,7 @@ footer {
   box-shadow: 0 4px 12px rgba(13,110,253,0.4);
 }
 
+/* ================= CETAK THERMAL ================= */
 #cetakThermal {
   background: #f8f9fa;
   color: #333;
@@ -409,6 +424,7 @@ footer {
   box-shadow: 0 4px 12px rgba(13,110,253,0.4);
 }
 
+/* ================= CETAK TANGGAL ================= */
 #cetakTanggal {
   background: #f8f9fa;
   color: #333;
@@ -442,4 +458,5 @@ footer {
     width: 100%;
   }
 }
+
 
