@@ -362,7 +362,7 @@ const data = Array.from(rows).filter(tr => {
       
       .container {
         width: 100%;
-        padding: 5mm 3mm;
+        padding: 3mm 2mm;
       }
       
       .center {
@@ -810,6 +810,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
