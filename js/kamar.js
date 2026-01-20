@@ -247,10 +247,15 @@ function cetakPesananByTanggal() {
   `;
 
   const win = window.open("", "", "width=900,height=650");
-  win.document.write(html);
-  win.document.close();
-  win.print();
+
+if (!win) {
+  alert("Popup diblokir browser. Izinkan popup untuk mencetak.");
+  return;
 }
+
+win.document.write(html);
+win.document.close();
+win.print();
 
 /* ======================== Event Hapus dan Cetak =============== */
 document.getElementById("hapusTerpilih")?.addEventListener("click", hapusPesananTerpilih);
@@ -323,7 +328,7 @@ async function loadOrders() {
             <option value="ditolak" ${item.status === "ditolak" ? "selected" : ""}>Ditolak</option>
           </select>
         </td>
-        <td>${tanggal}</td>
+        <td data-date="${item.created_at}"> ${tanggal} </td>
         <td>${item.bukti_url ? `<a href="${item.bukti_url}" target="_blank">Lihat</a>` : "-"}</td>
       </tr>
     `;
@@ -617,6 +622,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
