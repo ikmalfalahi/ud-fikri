@@ -278,9 +278,129 @@ function cetakPesananByTanggal() {
   win.print();
 }
 
+/* =============== CETAK THERMAL ============= */
+function cetakThermal() {
+  const tanggal = document.getElementById("filterTanggal")?.value;
+  if (!tanggal) {
+    alert("Pilih tanggal terlebih dahulu");
+    return;
+  }
+
+  const activeTab = document.querySelector(".tab.active")?.id;
+  let rows, tanggalIndex, jenis;
+
+  if (activeTab === "tab-digital") {
+    rows = document.querySelectorAll("#orderTable tr");
+    tanggalIndex = 8;
+    jenis = "Layanan Digital";
+  } else if (activeTab === "tab-sembako") {
+    rows = document.querySelectorAll("#tbody-sembako tr");
+    tanggalIndex = 9;
+    jenis = "Sembako";
+  } else {
+    alert("Tab tidak dikenali");
+    return;
+  }
+
+  const data = Array.from(rows).filter(tr => {
+    if (tr.querySelector("td[colspan]")) return false;
+    const cell = tr.children[tanggalIndex];
+    if (!cell) return false;
+
+    if (cell.dataset.date) {
+      return cell.dataset.date.slice(0, 10) === tanggal;
+    }
+
+    const text = cell.innerText;
+    return text.includes(
+      new Date(tanggal).toLocaleDateString("id-ID")
+    );
+  });
+
+  if (data.length === 0) {
+    alert("Tidak ada pesanan di tanggal tersebut");
+    return;
+  }
+
+  let html = `
+  <html>
+  <head>
+    <title>Struk ${jenis}</title>
+    <style>
+      @page {
+        size: 58mm auto;
+        margin: 0;
+      }
+      body {
+        width: 58mm;
+        font-family: monospace;
+        font-size: 11px;
+        padding: 6px;
+      }
+      .center { text-align: center; }
+      .line { border-top: 1px dashed #000; margin: 6px 0; }
+      .item { margin-bottom: 6px; }
+    </style>
+  </head>
+  <body>
+
+  <div class="center">
+    <strong>UD FIKRI</strong><br>
+    Struk Pesanan<br>
+    ${new Date(tanggal).toLocaleDateString("id-ID")}
+  </div>
+
+  <div class="line"></div>
+  `;
+
+  data.forEach((tr, i) => {
+    const td = tr.children;
+
+    if (activeTab === "tab-digital") {
+      html += `
+      <div class="item">
+        ${i + 1}. ${td[2].innerText}<br>
+        ${td[3].innerText}<br>
+        ${td[4].innerText}<br>
+        <strong>${td[6].innerText}</strong><br>
+        Status: ${td[7].querySelector("select")?.value || td[7].innerText}
+      </div>
+      <div class="line"></div>
+      `;
+    } else {
+      html += `
+      <div class="item">
+        ${i + 1}. ${td[2].innerText}<br>
+        ${td[5].innerText}<br>
+        <strong>${td[6].innerText}</strong><br>
+        Status: ${td[8].querySelector("select")?.value || "-"}
+      </div>
+      <div class="line"></div>
+      `;
+    }
+  });
+
+  html += `
+    <div class="center">
+      TOTAL PESANAN: ${data.length}<br>
+      Terima Kasih
+    </div>
+
+  </body>
+  </html>
+  `;
+
+  const win = window.open("", "", "width=300,height=600");
+  win.document.write(html);
+  win.document.close();
+  win.focus();
+  win.print();
+}
+
 /* ======================== Event Hapus dan Cetak =============== */
 document.getElementById("hapusTerpilih")?.addEventListener("click", hapusPesananTerpilih);
 document.getElementById("cetakTanggal")?.addEventListener("click", cetakPesananByTanggal);
+document.getElementById("cetakThermal")?.addEventListener("click", cetakThermal);
 
 /* ==================== LOAD STORE STATUS ==================== */
 async function loadStoreStatus() {
@@ -643,6 +763,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
