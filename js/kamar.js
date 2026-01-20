@@ -155,30 +155,33 @@ function cetakPesananByTanggal() {
   }
 
   const rowsFiltered = Array.from(rows).filter(tr => {
-    if (tr.querySelector("td[colspan]")) return false;
+  if (tr.querySelector("td[colspan]")) return false;
 
-    const cell = tr.children[tanggalIndex];
-    if (!cell) return false;
+  const cell = tr.children[tanggalIndex];
+  if (!cell) return false;
 
-    // 🔹 PRIORITAS: pakai data-date jika ada
-    if (cell.dataset.date) {
-      return cell.dataset.date === tanggal;
-    }
+  // 1️⃣ Jika ada data-date (FORMAT ISO)
+  if (cell.dataset.date) {
+    return cell.dataset.date.slice(0, 10) === tanggal;
+  }
 
-    // 🔹 FALLBACK: ambil dari teks tanggal (jika data-date belum ada)
-    const text = cell.innerText.trim();
-    const parsed = new Date(text);
+  // 2️⃣ Fallback: parsing manual dari teks tabel
+  const text = cell.innerText.trim();
 
-    if (isNaN(parsed)) return false;
+  // contoh: 17/01/2026 atau 17-01-2026
+  const match = text.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+  if (!match) return false;
 
-    const iso = parsed.toISOString().slice(0, 10);
-    return iso === tanggal;
-  });
+  const [_, d, m, y] = match;
+  const rowISO = `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+
+  return rowISO === tanggal;
+});
 
   if (rowsFiltered.length === 0) {
-    alert("Tidak ada pesanan di tanggal tersebut");
-    return;
-  }
+  alert("Tidak ada pesanan di tanggal tersebut");
+  return;
+}
 
   let html = `
     <html>
@@ -613,6 +616,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
