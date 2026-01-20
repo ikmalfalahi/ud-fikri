@@ -155,13 +155,25 @@ function cetakPesananByTanggal() {
   }
 
   const rowsFiltered = Array.from(rows).filter(tr => {
-  if (tr.querySelector("td[colspan]")) return false;
+    if (tr.querySelector("td[colspan]")) return false;
 
-  const cell = tr.children[tanggalIndex];
-  const rowDate = cell?.dataset.date;
+    const cell = tr.children[tanggalIndex];
+    if (!cell) return false;
 
-  return rowDate === tanggal;
-});
+    // 🔹 PRIORITAS: pakai data-date jika ada
+    if (cell.dataset.date) {
+      return cell.dataset.date === tanggal;
+    }
+
+    // 🔹 FALLBACK: ambil dari teks tanggal (jika data-date belum ada)
+    const text = cell.innerText.trim();
+    const parsed = new Date(text);
+
+    if (isNaN(parsed)) return false;
+
+    const iso = parsed.toISOString().slice(0, 10);
+    return iso === tanggal;
+  });
 
   if (rowsFiltered.length === 0) {
     alert("Tidak ada pesanan di tanggal tersebut");
@@ -601,6 +613,7 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
+
 
 
 
