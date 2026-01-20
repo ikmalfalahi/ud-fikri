@@ -256,6 +256,7 @@ if (!win) {
 win.document.write(html);
 win.document.close();
 win.print();
+}
 
 /* ======================== Event Hapus dan Cetak =============== */
 document.getElementById("hapusTerpilih")?.addEventListener("click", hapusPesananTerpilih);
@@ -622,9 +623,3 @@ document.querySelectorAll(".admin-table th[data-sort]").forEach((th, index) => {
     asc = !asc;
   });
 });
-
-
-
-
-
-
