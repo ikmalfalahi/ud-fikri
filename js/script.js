@@ -381,7 +381,7 @@ if (storeOpen) {
     img: "images/minyak-1ltr.jpg", 
     category: "MINYAK", 
     tambahanBiaya: true, 
-    promo: { qty: 12, price: 217000 },
+    promo: { qty: 12, price: 230000 },
     deskripsi: `
     🛢️ Minyak Kita Original – Minyak Goreng Higienis & Lebih Terjamin!
     Minyak Kita merupakan minyak goreng pilihan masyarakat yang diproduksi dengan standar pemerintah dan proses yang higienis.
@@ -399,7 +399,7 @@ if (storeOpen) {
     img: "images/minyak-1ltr.jpg", 
     category: "MINYAK", 
     tambahanBiaya: true, 
-    promo: { qty: 6, price: 217000 },
+    promo: { qty: 6, price: 230000 },
     deskripsi: `
     🛢️ Minyak Kita Original – Minyak Goreng Higienis & Lebih Terjamin!
     Minyak Kita merupakan minyak goreng pilihan masyarakat yang diproduksi dengan standar pemerintah dan proses yang higienis.
@@ -1398,6 +1398,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
