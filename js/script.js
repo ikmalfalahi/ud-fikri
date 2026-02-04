@@ -377,7 +377,7 @@ if (storeOpen) {
   },
   { 
     name: "Minyak Kita 1ltr", 
-    price: 20000, 
+    price: 21000, 
     img: "images/minyak-1ltr.jpg", 
     category: "MINYAK", 
     tambahanBiaya: true, 
@@ -395,7 +395,7 @@ if (storeOpen) {
   },
   { 
     name: "Minyak Kita 2ltr", 
-    price: 40000, 
+    price: 41000, 
     img: "images/minyak-1ltr.jpg", 
     category: "MINYAK", 
     tambahanBiaya: true, 
@@ -1398,6 +1398,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
