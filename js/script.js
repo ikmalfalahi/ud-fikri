@@ -205,7 +205,7 @@ if (storeOpen) {
   },
   { 
     name: "leMineral Galon", 
-    price: 21000, 
+    price: 22000, 
     img: "images/lemineral-galon.jpg", 
     category: "LEMINERAL", 
     tambahanBiaya: true,
@@ -1398,6 +1398,7 @@ if (document.getElementById("user-map")) {
 }
 
 });
+
 
 
 
