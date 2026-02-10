@@ -1,95 +1,150 @@
 document.addEventListener("DOMContentLoaded", () => {
-  let storeOpen = false;
   const supabase = window.supabaseClient;
+  let storeOpen = true; // kue-ma selalu buka (opsional pakai store_status)
 
-  const statusEl = document.getElementById("store-status-msg");
-  const nominalInput = document.getElementById("nominal");
-  const jumlahKueEl = document.getElementById("jumlah-kue");
-  const totalHargaEl = document.getElementById("total-harga");
-
-  const HARGA_KUE = 500;
-
-  /* ================= STATUS TOKO ================= */
-  async function fetchStoreStatus() {
-    const { data } = await supabase
-      .from("store_status")
-      .select("is_open")
-      .eq("id", 1)
-      .maybeSingle();
-
-    if (data) {
-      storeOpen = data.is_open;
-      updateStoreStatus();
+  /* ================= PRODUK ================= */
+  const products = [
+    {
+      name: "Kue Basah Campur",
+      type: "kue",
+      price_per_item: 500,
+      img: "images/kue.jpg",
+      category: "KUE",
+      deskripsi: "Kue basah aneka rasa. Harga 500 / pcs"
+    },
+    {
+      name: "Telur Ayam 1 Kg",
+      type: "produk",
+      price: 31000,
+      img: "images/telur.jpg",
+      category: "TELUR"
     }
+  ];
+
+  /* ================= CART ================= */
+  let cart = JSON.parse(localStorage.getItem("cart_kue_ma") || "[]");
+
+  function saveCart() {
+    localStorage.setItem("cart_kue_ma", JSON.stringify(cart));
   }
 
-  function updateStoreStatus() {
-    if (storeOpen) {
-      statusEl.innerHTML = `<i class="fas fa-check-circle"></i> <strong>Toko Sedang Buka</strong>`;
-      statusEl.className = "store-open";
-    } else {
-      statusEl.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>Toko Tutup</strong>`;
-      statusEl.className = "store-closed";
-    }
-  }
+  /* ================= RENDER PRODUK ================= */
+  function renderProducts() {
+    const container = document.getElementById("products-container");
+    container.innerHTML = "";
 
-  fetchStoreStatus();
+    products.forEach((p, i) => {
+      const div = document.createElement("div");
+      div.className = "product-card";
 
-  supabase
-    .channel("status-channel")
-    .on("postgres_changes",
-      { event: "*", schema: "public", table: "store_status" },
-      payload => {
-        storeOpen = payload.new.is_open;
-        updateStoreStatus();
+      if (p.type === "kue") {
+        div.innerHTML = `
+          <img src="${p.img}">
+          <h3>${p.name}</h3>
+          <p>Rp 500 / pcs</p>
+          <input type="number" placeholder="Masukkan nominal (Rp)" 
+            id="nominal-${i}" style="width:100%;margin-bottom:6px;">
+          <button onclick="addKue(${i})">Pesan</button>
+        `;
+      } else {
+        div.innerHTML = `
+          <img src="${p.img}">
+          <h3>${p.name}</h3>
+          <p>Rp ${p.price.toLocaleString()}</p>
+          <button onclick="addProduk(${i})">Tambah</button>
+        `;
       }
-    ).subscribe();
 
-  /* ================= HITUNG KUE ================= */
-  function hitung(nominal) {
-    const jumlah = Math.floor(nominal / HARGA_KUE);
-    jumlahKueEl.textContent = jumlah;
-    totalHargaEl.textContent = "Rp " + nominal.toLocaleString("id-ID");
+      container.appendChild(div);
+    });
   }
 
-  document.querySelectorAll(".btn-nominal").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const nominal = parseInt(btn.dataset.nominal);
-      nominalInput.value = nominal;
-      hitung(nominal);
+  /* ================= TAMBAH KUE ================= */
+  window.addKue = function(index) {
+    const nominal = Number(document.getElementById(`nominal-${index}`).value);
+    if (!nominal || nominal < 500) {
+      alert("Minimal Rp 500");
+      return;
+    }
+
+    const qty = nominal / 500;
+    cart.push({
+      name: products[index].name,
+      qty,
+      price: nominal,
+      type: "kue"
     });
-  });
 
-  nominalInput.addEventListener("input", () => {
-    const val = parseInt(nominalInput.value || 0);
-    hitung(val);
-  });
+    saveCart();
+    renderCart();
+  };
 
-  /* ================= PESAN ================= */
-  document.getElementById("pesan-kue").addEventListener("click", () => {
-    if (!storeOpen) {
-      alert("Toko sedang tutup 🙏");
+  /* ================= TAMBAH PRODUK ================= */
+  window.addProduk = function(index) {
+    const p = products[index];
+    let item = cart.find(i => i.name === p.name);
+
+    if (item) item.qty++;
+    else cart.push({ name: p.name, qty: 1, price: p.price, type: "produk" });
+
+    saveCart();
+    renderCart();
+  };
+
+  /* ================= RENDER CART ================= */
+  function renderCart() {
+    const el = document.getElementById("cart-items");
+    el.innerHTML = "";
+
+    let total = 0;
+    cart.forEach(item => {
+      total += item.price;
+      el.innerHTML += `
+        <li>${item.name} (${item.qty}) - Rp ${item.price.toLocaleString()}</li>
+      `;
+    });
+
+    document.getElementById("cart-total").innerText =
+      "Total: Rp " + total.toLocaleString();
+  }
+
+  /* ================= CHECKOUT ================= */
+  document.getElementById("checkout").addEventListener("click", async () => {
+    if (cart.length === 0) {
+      alert("Keranjang kosong");
       return;
     }
 
-    const nama = document.getElementById("nama").value.trim();
-    const alamat = document.getElementById("alamat").value.trim();
-    const nominal = parseInt(nominalInput.value || 0);
+    const nama = document.getElementById("customer-name").value;
+    const alamat = document.getElementById("customer-address").value;
 
-    if (!nama || !alamat || nominal < 5000) {
-      alert("Lengkapi data & minimal Rp 5.000");
+    if (!nama || !alamat) {
+      alert("Lengkapi data");
       return;
     }
 
-    const jumlah = Math.floor(nominal / HARGA_KUE);
+    const total = cart.reduce((s, i) => s + i.price, 0);
 
-    const pesan = `Pesanan Kue MA
-Nama: ${nama}
-Alamat: ${alamat}
-Jumlah: ${jumlah} pcs
-Total: Rp ${nominal.toLocaleString("id-ID")}`;
+    await supabase.from("pesanan_kue_ma").insert([{
+      nama,
+      alamat,
+      items: cart,
+      total,
+      status: "pending"
+    }]);
 
-    const wa = "6288803060094";
-    window.open(`https://wa.me/${wa}?text=${encodeURIComponent(pesan)}`);
+    let msg = `🍰 *PESANAN KUE-MA*\n`;
+    msg += `Nama: ${nama}\nAlamat: ${alamat}\n\n`;
+    cart.forEach(i => {
+      msg += `- ${i.name} (${i.qty}) Rp ${i.price}\n`;
+    });
+    msg += `\nTotal: Rp ${total}`;
+
+    cart = [];
+    saveCart();
+    window.open(`https://wa.me/62812xxxxxxx?text=${encodeURIComponent(msg)}`);
   });
+
+  renderProducts();
+  renderCart();
 });
