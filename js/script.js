@@ -83,7 +83,7 @@ if (storeOpen) {
 },
 { 
   name: "Gas Elpiji 12kg", 
-  price: 220000, 
+  price: 260000, 
   img: "images/gas-12kg.jpg", 
   category: "GAS ELPIJI", 
   tambahanBiaya: true, 
@@ -260,7 +260,7 @@ if (storeOpen) {
   },
   { 
     name: "Beras 14 Petruk", 
-    price: 14000, 
+    price: 14500, 
     img: "images/beras-14.jpg", 
     category: "BERAS", 
     tambahanBiaya: true,
@@ -277,7 +277,7 @@ if (storeOpen) {
   },
   { 
     name: "Beras 13 Cap Kelapa 3", 
-    price: 13000, 
+    price: 13500, 
     img: "images/beras-13.jpg", 
     category: "BERAS", 
     tambahanBiaya: true,
@@ -294,7 +294,7 @@ if (storeOpen) {
   },
   { 
     name: "Beras 12 Batik Solo", 
-    price: 12000, 
+    price: 13000, 
     img: "images/beras-12.jpg", 
     category: "BERAS", 
     tambahanBiaya: true,
@@ -345,7 +345,7 @@ if (storeOpen) {
   },
      { 
     name: "Gula Pasir (Kristal) GMP", 
-    price: 19000, 
+    price: 20000, 
     img: "images/gula-pasir.jpg", 
     category: "GULA", 
     tambahanBiaya: true,
@@ -362,7 +362,7 @@ if (storeOpen) {
   },
   { 
     name: "Telur 1kg", 
-    price: 31000, 
+    price: 30000, 
     img: "images/telur.jpg", 
     category: "TELUR", 
     tambahanBiaya: true,
@@ -377,7 +377,7 @@ if (storeOpen) {
   },
   { 
     name: "Minyak Kita 1ltr", 
-    price: 21000, 
+    price: 22000, 
     img: "images/minyak-1ltr.jpg", 
     category: "MINYAK", 
     tambahanBiaya: true, 
@@ -395,7 +395,7 @@ if (storeOpen) {
   },
   { 
     name: "Minyak Kita 2ltr", 
-    price: 41000, 
+    price: 44000, 
     img: "images/minyak-1ltr.jpg", 
     category: "MINYAK", 
     tambahanBiaya: true, 
@@ -576,7 +576,7 @@ if (storeOpen) {
   //},
   { 
     name: "VIT Gelas", 
-    price: 24000, 
+    price: 26000, 
     img: "images/vit-gelas.jpg", 
     category: "VIT", 
     tambahanBiaya: true,
@@ -593,7 +593,7 @@ if (storeOpen) {
   },
   { 
     name: "Air Isi Ulang", 
-    price: 7000, 
+    price: 8000, 
     img: "images/isiulang.jpg", 
     category: "REFIL", 
     tambahanBiaya: true,
