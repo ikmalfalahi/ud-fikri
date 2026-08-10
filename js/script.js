@@ -430,6 +430,83 @@ if (storeOpen) {
     `
   },
     { 
+    name: "Good Day Mocacinno - Isi 10", 
+    price: 20000, 
+    img: "images/good-daymocacinno.jpg", 
+    category: "MINUMAN SASET", 
+    tambahanBiaya: true,
+    deskripsi: `
+    ☕ Good Day Mocacinno – Kopi Nikmat dengan Sensasi Cokelat yang Menggoda!
+    Good Day Mocacinno adalah pilihan tepat bagi kamu yang suka kopi dengan perpaduan rasa kopi dan cokelat yang creamy dan nikmat.
+    Praktis disajikan panas maupun dingin, Good Day Mocacinno siap menjadi teman ngopi favorit setiap hari.
+    Jaminan Keaslian:
+    ✔ Produk original & resmi
+    ✔ Kemasan tersegel rapi
+    ✔ Aman dan praktis untuk dikonsumsi
+    `
+  },
+    { 
+    name: "Good Day Cappucinno - Isi 10", 
+    price: 25000, 
+    img: "images/cappuccino.jpg", 
+    category: "MINUMAN SASET", 
+    tambahanBiaya: true,
+    deskripsi: `
+    ☕ Good Day Cappuccino – Kopi Nikmat dengan Sensasi Cokelat yang Menggoda!
+    Good Day Cappuccino adalah pilihan tepat bagi kamu yang suka kopi dengan perpaduan rasa kopi dan cokelat yang creamy dan nikmat.
+    Praktis disajikan panas maupun dingin, Good Day Mocacinno siap menjadi teman ngopi favorit setiap hari.
+    Jaminan Keaslian:
+    ✔ Produk original & resmi
+    ✔ Kemasan tersegel rapi
+    ✔ Aman dan praktis untuk dikonsumsi
+    `
+  },
+    { 
+    name: "Gula Merah - 1Kg", 
+    price: 20000, 
+    img: "images/gula-merah.jpg", 
+    category: "BUMBU DAPUR", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🍬 Gula Merah – Manis Alami!
+    Gula merah menjadi pilihan tepat untuk memberikan rasa manis khas dan aroma yang lebih harum pada berbagai hidangan.
+    Cocok digunakan untuk membuat kue, jajanan tradisional, minuman, saus, hingga berbagai masakan favorit keluarga.
+    Jaminan Produk:
+    ✔ Produk berkualitas
+    ✔ Dikemas dengan rapi
+    ✔ Cocok untuk berbagai kebutuhan masak
+    ✔ Aroma dan rasa khas gula merah
+    `
+  },
+    { 
+    name: "Kecap Nasional 700 Gram", 
+    price: 17500, 
+    img: "images/kecap-nasional.jpg", 
+    category: "BUMBU DAPUR", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🥢 Kecap Nasional – Manis di Setiap Masakan!
+    Kecap Nasional siap melengkapi berbagai hidangan favorit keluarga dengan perpaduan rasa manis dan gurih yang nikmat.
+    Cocok digunakan untuk nasi goreng, mie goreng, sate, ayam, tahu, tempe, tumisan, hingga berbagai masakan lainnya.
+    Jaminan Keaslian:
+    ✔ Siap digunakan untuk berbagai masakan
+    `
+  },
+    { 
+    name: "Indocafe Coffeemix - Isi 10", 
+    price: 22000, 
+    img: "images/indocafe.jpg", 
+    category: "MINUMAN SASET", 
+    tambahanBiaya: true,
+    deskripsi: `
+    ☕ Indocafe Coffeemix – Kopi 3 in 1!
+    Indocafe Coffeemix adalah pilihan praktis untuk menikmati kopi dengan perpaduan kopi, gula, dan krimer dalam satu sajian.
+    Tinggal seduh dengan air panas, kopi siap dinikmati kapan saja.
+    Jaminan Keaslian:
+    ✔ Praktis diseduh kapan saja
+    `
+  },
+    { 
     name: "Teh Pucuk Harum 350ML", 
     price: 65000, 
     img: "images/teh-pucuk.jpg", 
