@@ -432,7 +432,7 @@ if (storeOpen) {
     { 
     name: "Good Day Mocacinno - Isi 10", 
     price: 20000, 
-    img: "images/good-daymocacinno.jpg", 
+    img: "images/goo-daymocacinno.jpg", 
     category: "MINUMAN SASET", 
     tambahanBiaya: true,
     deskripsi: `
@@ -504,6 +504,40 @@ if (storeOpen) {
     Tinggal seduh dengan air panas, kopi siap dinikmati kapan saja.
     Jaminan Keaslian:
     ✔ Praktis diseduh kapan saja
+    `
+  },
+    { 
+    name: "Kapal Api Tanpa Gula - Isi 11", 
+    price: 16500, 
+    img: "images/kapal-api-tanpagula.jpg", 
+    category: "MINUMAN SASET", 
+    tambahanBiaya: true,
+    deskripsi: `
+    ☕ Kapal Api Tanpa Gula – Kopi Mantap untuk Pecinta Kopi Tanpa Gula!**
+    Kapal Api Tanpa Gula cocok untuk kamu yang ingin menikmati kopi dengan rasa khas tanpa tambahan gula. 
+    Aromanya yang kuat dan cita rasa kopinya pas untuk menemani aktivitas sehari-hari.
+    🎁 PROMO SPESIAL: BELI 10 GRATIS 1!
+    Jaminan Keaslian:
+    ✔ Produk original & resmi
+    ✔ Kemasan tersegel rapi
+    ✔ Tanggal kedaluwarsa jelas
+    ✔ Cocok untuk stok di rumah maupun usaha
+    `
+  },
+    { 
+    name: "Kapal Api Mix Gula - Isi 10", 
+    price: 20000, 
+    img: "images/kopihitam.jpg", 
+    category: "MINUMAN SASET", 
+    tambahanBiaya: true,
+    deskripsi: `
+    ☕ Kapal Api Mix Gula – Kopi Nikmat, Praktis, dan Pas untuk Teman Beraktivitas!
+    Kapal Api Mix Gula menghadirkan perpaduan kopi dan gula dalam satu kemasan praktis.
+    Tinggal seduh dengan air panas, aduk, dan kopi siap dinikmati. Pas untuk menemani pagi, bekerja, belajar, maupun waktu santai.
+    Jaminan Keaslian:
+    ✔ Kemasan tersegel
+    ✔ Tanggal kedaluwarsa jelas
+    ✔ Praktis dan mudah disajikan
     `
   },
     { 
