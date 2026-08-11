@@ -494,7 +494,7 @@ if (storeOpen) {
   },
     { 
     name: "Indocafe Coffeemix - Isi 10", 
-    price: 22000, 
+    price: 20000, 
     img: "images/indocafe.jpg", 
     category: "MINUMAN SASET", 
     tambahanBiaya: true,
