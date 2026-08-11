@@ -260,7 +260,7 @@ if (storeOpen) {
   },
   { 
     name: "Beras 14 Petruk", 
-    price: 14500, 
+    price: 15500, 
     img: "images/beras-14.jpg", 
     category: "BERAS", 
     tambahanBiaya: true,
@@ -277,7 +277,7 @@ if (storeOpen) {
   },
   { 
     name: "Beras 13 Cap Kelapa 3", 
-    price: 13500, 
+    price: 14500, 
     img: "images/beras-13.jpg", 
     category: "BERAS", 
     tambahanBiaya: true,
@@ -294,7 +294,7 @@ if (storeOpen) {
   },
   { 
     name: "Beras 12 Batik Solo", 
-    price: 13000, 
+    price: 13500, 
     img: "images/beras-12.jpg", 
     category: "BERAS", 
     tambahanBiaya: true,
