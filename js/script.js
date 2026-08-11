@@ -669,7 +669,7 @@ if (storeOpen) {
     name: "Garam Segitifa Emas 250 Gram", 
     price: 4000,
     img: "images/garam-segitigaemas.jpg", 
-    category: "MINUMAN SASET", 
+    category: "BUMBU DAPUR", 
     tambahanBiaya: true,
     deskripsi: `
     🧂 Garam Segitiga Emas – Pelengkap Wajib untuk Masakan Sehari-hari!
