@@ -627,7 +627,60 @@ if (storeOpen) {
     ✔ Kemasan tersegel rapi
     ✔ Tanggal kedaluwarsa jelas
     ✔ Praktis disajikan kapan saja
-
+    `
+  },
+    { 
+    name: "Sasa 250 Gram", 
+    price: 15000,
+    img: "images/sasa250g.jpg", 
+    category: "BUMBU DAPUR", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🧂 Sasa 250 g – Penyedap Rasa untuk Masakan Lebih Gurih dan Nikmat!
+    Sasa hadir sebagai penyedap rasa yang praktis digunakan untuk berbagai masakan sehari-hari.
+    Cocok ditambahkan pada sup, tumisan, nasi goreng, mie, sayuran, dan berbagai hidangan favorit keluarga.
+    Dengan kemasan 250 g, cocok untuk kebutuhan dapur maupun sebagai stok penyedap di rumah.
+    Jaminan Keaslian:
+    ✔ Produk original & resmi
+    ✔ Kemasan tersegel rapi
+    ✔ Berat sesuai kemasan
+    ✔ Tanggal kedaluwarsa jelas
+    `
+  },
+    { 
+    name: "Tea Jus Gula Batu Isi 10", 
+    price: 5000,
+    img: "images/teajus.jpg", 
+    category: "MINUMAN SASET", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🧊 Tea Jus Gula Batu – Minuman Teh Manis yang Segar dan Praktis!
+    Tea Jus Gula Batu merupakan minuman serbuk rasa teh dengan sensasi manis yang pas dan menyegarkan.
+    Praktis disajikan kapan saja, terutama saat cuaca panas atau sebagai teman bersantai.
+    Cukup larutkan dengan air dan tambahkan es batu untuk mendapatkan minuman yang lebih segar dan nikmat.
+    Jaminan Keaslian:
+    ✔ Produk original & resmi
+    ✔ Kemasan tersegel
+    ✔ Tanggal kedaluwarsa jelas
+    ✔ Praktis disajikan kapan saja
+    `
+  },
+    { 
+    name: "Garam Segitifa Emas 250 Gram", 
+    price: 4000,
+    img: "images/garam-segitigaemas.jpg", 
+    category: "MINUMAN SASET", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🧂 Garam Segitiga Emas – Pelengkap Wajib untuk Masakan Sehari-hari!
+    Garam Segitiga Emas cocok digunakan sebagai pelengkap berbagai masakan sehari-hari.
+    Membantu memberikan rasa asin yang pas pada sayur, tumisan, sup, gorengan, dan berbagai hidangan favorit keluarga.
+    Cocok untuk kebutuhan dapur rumah tangga, warung makan, maupun usaha kuliner.
+    Jaminan Keaslian:
+    ✔ Produk original & resmi
+    ✔ Kemasan tersegel rapi
+    ✔ Berat sesuai kemasan
+    ✔ Cocok untuk kebutuhan dapur sehari-hari
     `
   },
     { 
