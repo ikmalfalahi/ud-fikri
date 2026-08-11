@@ -541,6 +541,96 @@ if (storeOpen) {
     `
   },
     { 
+    name: "LADAKU Isi 12", 
+    price: 12000, 
+    img: "images/ladaku.jpg", 
+    category: "BUMBU DAPUR", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🌶️ Ladaku – Lada Berkualitas untuk Masakan Lebih Harum dan Sedap!
+    Ladaku siap membantu memberikan aroma dan cita rasa lada yang khas pada berbagai masakan.
+    Cocok digunakan untuk sup, tumisan, ayam, daging, seafood, mie, nasi goreng, dan berbagai menu lainnya.
+    Praktis digunakan sehari-hari dan cocok menjadi salah satu bumbu wajib di dapur.
+    Jaminan Keaslian:
+    ✔ Produk original & resmi
+    ✔ Kemasan tersegel rapi
+    ✔ Tanggal kedaluwarsa jelas
+    ✔ Praktis digunakan untuk berbagai masakan
+    `
+  },
+    { 
+    name: "Luwak White Koffie Isi 10", 
+    price: 20000, 
+    img: "images/luwak-whitekoffie.jpg", 
+    category: "MINUMAN SASET", 
+    tambahanBiaya: true,
+    deskripsi: `
+    ☕ Luwak White Koffie – Kopi Putih dengan Rasa Lembut dan Nikmat!
+    Luwak White Koffie hadir untuk kamu yang menyukai kopi dengan cita rasa lembut dan aroma yang khas.
+    Nikmati sensasi kopi putih yang praktis disajikan kapan saja.
+    Cukup seduh dengan air panas dan aduk hingga rata. Cocok menemani sarapan, bekerja, belajar, maupun waktu santai bersama keluarga.
+    Jaminan Keaslian:
+    ✔ Produk original & resmi
+    ✔ Kemasan tersegel
+    ✔ Tanggal kedaluwarsa jelas
+    ✔ Praktis disajikan kapan saja
+    `
+  },
+    { 
+    name: "Mama Lemon", 
+    price: 10000, 
+    img: "images/mamalimon.jpg", 
+    category: "SABUN CUCI PIRING", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🍋 Mama Lemon Sunlight – Bersih Maksimal, Wangi Segar, dan Ampuh Angkat Lemak!
+    Mama Lemon Sunlight adalah sabun cuci piring yang praktis digunakan untuk membantu membersihkan berbagai peralatan makan dan masak dari sisa makanan serta lemak.
+    Pilihan praktis untuk menjaga peralatan makan dan dapur tetap bersih setelah digunakan.
+    Jaminan Keaslian:
+    ✔ Produk original & resmi
+    ✔ Kemasan tersegel rapi
+    ✔ Kemasan dan isi sesuai produk
+    ✔ Cocok untuk kebutuhan rumah tangga maupun usaha kuliner
+    `
+  },
+    { 
+    name: "Masako Sapi Isi 12", 
+    price: 6000, 
+    img: "images/masako-sapi.jpg", 
+    category: "BUMBU DAPUR", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🥩 Masako Rasa Sapi – Bumbu Kaldu untuk Masakan Lebih Gurih dan Lezat!
+    Masako Rasa Sapi siap membantu menambah cita rasa gurih dan aroma kaldu pada berbagai masakan.
+    Cocok digunakan untuk sup, tumisan, nasi goreng, mie, sayur, dan berbagai menu keluarga lainnya.
+    Praktis digunakan sehari-hari untuk membantu membuat masakan semakin nikmat.
+    Jaminan Keaslian:
+    ✔ Produk original & resmi
+    ✔ Kemasan tersegel
+    ✔ Tanggal kedaluwarsa jelas
+    ✔ Praktis untuk berbagai jenis masakan
+    `
+  },
+    { 
+    name: "Nutrisari Jeruk Peras Isi 10", 
+    price: 20000, 
+    img: "images/nutrisari.jpg", 
+    category: "MINUMAN SASET", 
+    tambahanBiaya: true,
+    deskripsi: `
+    🍊 Nutrisari Jeruk Peras – Rasa Jeruk Segar yang Cocok untuk Kapan Saja!
+    Nutrisari Jeruk Peras menghadirkan sensasi rasa jeruk yang segar dan nikmat dalam sajian praktis.
+    Cocok dinikmati saat cuaca panas, menemani waktu santai, maupun menjadi minuman favorit keluarga.
+    Tinggal larutkan dengan air, sajian minuman jeruk siap dinikmati.
+    Jaminan Keaslian:
+    ✔ Produk original & resmi
+    ✔ Kemasan tersegel rapi
+    ✔ Tanggal kedaluwarsa jelas
+    ✔ Praktis disajikan kapan saja
+
+    `
+  },
+    { 
     name: "Teh Pucuk Harum 350ML", 
     price: 65000, 
     img: "images/teh-pucuk.jpg", 
@@ -1509,9 +1599,3 @@ if (document.getElementById("user-map")) {
 }
 
 });
-
-
-
-
-
-
