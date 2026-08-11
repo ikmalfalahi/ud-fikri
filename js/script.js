@@ -101,7 +101,7 @@ if (storeOpen) {
   name: "Aqua Galon", 
   price: 23000, 
   img: "images/aqua-galon.jpg", 
-  category: "AQUA", 
+  category: "MINUMAN", 
   tambahanBiaya: true,
   deskripsi: `
   💧 AQUA Galon Asli – Segar, Bersih, dan Terpercaya!
@@ -118,7 +118,7 @@ if (storeOpen) {
   name: "Aqua 600ml", 
   price: 52000, 
   img: "images/aqua-600ml.jpg", 
-  category: "AQUA", 
+  category: "MINUMAN", 
   tambahanBiaya: true, 
   deskripsi: `
   💧 AQUA 600 ml Original – Segar, Murni, dan Terpercaya!
@@ -136,7 +136,7 @@ if (storeOpen) {
   name: "Aqua 330ml",
   price: 42000, 
   img: "images/aqua-330ml.jpg", 
-  category: "AQUA", 
+  category: "MINUMAN", 
   tambahanBiaya: true,
   deskripsi: `
   💧 AQUA 330 ml Original – Segar, Murni, dan Terpercaya!
@@ -154,7 +154,7 @@ if (storeOpen) {
   name: "Aqua Cube", 
   price: 40000, 
   img: "images/aqua-cube.jpg", 
-  category: "AQUA", 
+  category: "MINUMAN", 
   tambahanBiaya: true,
   deskripsi: `
   💧 AQUA Cube Original – Praktis, Segar, dan Higienis!
@@ -171,7 +171,7 @@ if (storeOpen) {
     name: "Aqua Gelas", 
     price: 35000, 
     img: "images/aqua-gelas.jpg", 
-    category: "AQUA", 
+    category: "MINUMAN", 
     tambahanBiaya: true,
     deskripsi: `
     💧 AQUA Gelas Original – Segar, Higienis, dan Terpercaya!
@@ -189,7 +189,7 @@ if (storeOpen) {
     name: "Aqua 1,5 Liter", 
     price: 55000, 
     img: "images/aqua-1,5ltr.jpg", 
-    category: "AQUA", 
+    category: "MINUMAN", 
     tambahanBiaya: true,
     deskripsi: `
     💧 AQUA Gelas Original – Segar, Higienis, dan Terpercaya!
@@ -207,7 +207,7 @@ if (storeOpen) {
     name: "leMineral Galon", 
     price: 22000, 
     img: "images/lemineral-galon.jpg", 
-    category: "LEMINERAL", 
+    category: "MINUMAN", 
     tambahanBiaya: true,
     deskripsi: `
     💧 Le Minerale – Air Mineral dari Mayora Group
@@ -225,7 +225,7 @@ if (storeOpen) {
     name: "leMineral 330ml", 
     price: 42000, 
     img: "images/lemineral-330ml.jpg", 
-    category: "LEMINERAL", 
+    category: "MINUMAN", 
     tambahanBiaya: true,
     deskripsi: `
     💧 Le Minerale 330 ml Original – Segar, Praktis, dan Kaya Mineral Alami!
@@ -244,7 +244,7 @@ if (storeOpen) {
     name: "leMineral 600ml", 
     price: 52000, 
     img: "images/lemineral-600ml.jpg", 
-    category: "LEMINERAL", 
+    category: "MINUMAN", 
     tambahanBiaya: true,
     deskripsi: `
     💧 Le Minerale 600 ml – Segar, Murni, dan Kaya Mineral Alami!
@@ -313,7 +313,7 @@ if (storeOpen) {
     name: "Tepung Terigu (Lencana Merah)", 
     price: 10000, 
     img: "images/tepung-terigu.jpg", 
-    category: "TEPUNG", 
+    category: "BUMBU DAPUR", 
     tambahanBiaya: true,
     deskripsi: `
     🌾 Tepung Terigu Lencana Merah – Hasil Adonan Lebih Lembut & Mengembang Sempurna!
@@ -330,7 +330,7 @@ if (storeOpen) {
     name: "Tepung Terigu (Segitiga Biru)", 
     price: 13000, 
     img: "images/segitiga-biru.jpg", 
-    category: "TEPUNG", 
+    category: "BUMBU DAPUR", 
     tambahanBiaya: true,
     deskripsi: `
     🌾 Tepung Terigu Segitiga Biru Bogasari 1 kg – Serbaguna & Berkualitas!
@@ -347,7 +347,7 @@ if (storeOpen) {
     name: "Gula Pasir (Kristal) GMP", 
     price: 20000, 
     img: "images/gula-pasir.jpg", 
-    category: "GULA", 
+    category: "BUMBU DAPUR", 
     tambahanBiaya: true,
     deskripsi: `
     🍬 Gula Pasir Kristal GMP – Manis Alami, Bersih, dan Berkualitas!
@@ -687,7 +687,7 @@ if (storeOpen) {
     name: "Teh Pucuk Harum 350ML", 
     price: 65000, 
     img: "images/teh-pucuk.jpg", 
-    category: "TEH", 
+    category: "MINUMAN", 
     tambahanBiaya: true,
     deskripsi: `
     🍃 Teh Pucuk Harum 350 ml – Segarnya Teh dari Pucuk Daun Pilihan!
@@ -705,7 +705,7 @@ if (storeOpen) {
     name: "Teh Sosro Celup", 
     price: 8000, 
     img: "images/teh-sosro.jpg", 
-    category: "TEH", 
+    category: "MINUMAN SASET", 
     tambahanBiaya: true,
     deskripsi: `
     🍵 Teh Celup Sosro Isi 30 – Teh Asli Indonesia, Harum & Berkualitas!
@@ -722,7 +722,7 @@ if (storeOpen) {
     name: "S-TEE", 
     price: 60000, 
     img: "images/s-tee.jpg", 
-    category: "TEH", 
+    category: "MINUMAN", 
     tambahanBiaya: true,
     deskripsi: `
     🍹S-TEE Teh Manis – Segar, Nikmat, dan Pas di Kantong!
@@ -740,7 +740,7 @@ if (storeOpen) {
     name: "Teh Botol Sosro", 
     price: 60000, 
     img: "images/teh-botol.jpg", 
-    category: "TEH", 
+    category: "MINUMAN", 
     tambahanBiaya: true,
     deskripsi: `
     "Ahlinya Teh Sejak 1940"
@@ -798,7 +798,7 @@ if (storeOpen) {
     name: "Prima", 
     price: 40000, 
     img: "images/prima-600ml.jpg", 
-    category: "PRIMA", 
+    category: "MINUMAN", 
     tambahanBiaya: true,
     deskripsi: `
     "Segar, Terjangkau, dan Aman Dikonsumsi Setiap Hari"
@@ -832,7 +832,7 @@ if (storeOpen) {
     name: "VIT Gelas", 
     price: 26000, 
     img: "images/vit-gelas.jpg", 
-    category: "VIT", 
+    category: "MINUMAN", 
     tambahanBiaya: true,
     deskripsi: `
     "Praktis, Higienis, dan Siap Saji"
