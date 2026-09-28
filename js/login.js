@@ -23,6 +23,7 @@ function initLogin() {
 
   if (!form) return;
 
+  document.getElementById("togglePassword")?.addEventListener("click", togglePassword);
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -35,39 +36,34 @@ function initLogin() {
       return;
     }
 
+    const msg = document.getElementById("loginMsg");
+    const button = form.querySelector('button[type="submit"]');
+    button.disabled = true;
     try {
-      const { data, error } = await db
-        .from("admin_users")
-        .select("*")
-        .eq("email", email)
-        .single();
-
-      if (error || !data) {
-        alert("Email tidak ditemukan!");
-        return;
+      const { error } = await db.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      const { data: allowed, error: roleError } = await db.rpc('is_fikri_admin');
+      if (roleError || !allowed) {
+        await db.auth.signOut();
+        throw new Error(roleError ? 'Jalankan setup-produk.sql di Supabase terlebih dahulu.' : 'Email belum terdaftar sebagai pengurus.');
       }
-
-      if (data.password !== password) {
-        alert("Password salah!");
-        return;
-      }
-
-      const storage = remember ? localStorage : sessionStorage;
-      storage.setItem("admin_logged_in", "true");
-      
-      const msg = document.getElementById("loginMsg");
-      msg.textContent = "✅ Berhasil login, diarahkan ke halaman admin...";
-      msg.className = "login-msg success";
-      msg.style.display = "block";
-      
-      setTimeout(() => {
-      window.location.href = "kamar.html";
-      }, 1500);
-
+      // Penanda untuk kompatibilitas dengan halaman kamar yang sudah ada.
+      localStorage.removeItem('admin_logged_in');
+      sessionStorage.removeItem('admin_logged_in');
+      (remember ? localStorage : sessionStorage).setItem('admin_logged_in', 'true');
+      msg.textContent = 'Berhasil masuk. Mengalihkan halaman...';
+      msg.className = 'login-msg success';
+      msg.style.display = 'block';
+      const next = new URLSearchParams(location.search).get('next');
+      location.replace(next === 'produk.html' ? 'produk.html' : 'kamar.html');
     } catch (err) {
-      console.error(err);
-      alert("Terjadi kesalahan. Coba lagi.");
-    }
+      msg.textContent = err.message === 'Invalid login credentials'
+        ? 'Email atau kata sandi Supabase Authentication tidak sesuai. Gunakan akun pengurus yang terdaftar di Supabase Authentication.'
+        : err.message || 'Gagal masuk. Coba lagi.';
+      msg.className = 'login-msg error';
+      msg.style.display = 'block';
+    } finally { button.disabled = false; }
+
   });
 }
 

@@ -491,3 +491,22 @@ from (values
     ', true, null, null, 46)
 ) as seed(name, price, image_url, category, description, tambahan_biaya, promo_qty, promo_price, sort_order)
 where not exists (select 1 from public.catalog_products existing where existing.name = seed.name);
+
+-- Storage publik agar gambar katalog dapat dilihat pengunjung tanpa login.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('produk-fikri', 'produk-fikri', true, 5242880, array['image/jpeg','image/png','image/webp','image/gif'])
+on conflict (id) do update set public = true, file_size_limit = 5242880,
+ allowed_mime_types = excluded.allowed_mime_types;
+drop policy if exists "Gambar produk dibaca publik" on storage.objects;
+create policy "Gambar produk dibaca publik" on storage.objects for select to anon, authenticated
+ using (bucket_id = 'produk-fikri');
+drop policy if exists "Pengurus unggah gambar produk" on storage.objects;
+create policy "Pengurus unggah gambar produk" on storage.objects for insert to authenticated
+ with check (bucket_id = 'produk-fikri' and public.is_fikri_admin());
+drop policy if exists "Pengurus ubah gambar produk" on storage.objects;
+create policy "Pengurus ubah gambar produk" on storage.objects for update to authenticated
+ using (bucket_id = 'produk-fikri' and public.is_fikri_admin())
+ with check (bucket_id = 'produk-fikri' and public.is_fikri_admin());
+drop policy if exists "Pengurus hapus gambar produk" on storage.objects;
+create policy "Pengurus hapus gambar produk" on storage.objects for delete to authenticated
+ using (bucket_id = 'produk-fikri' and public.is_fikri_admin());

@@ -684,7 +684,8 @@ function listenOrdersRealtime() {
 }
 
 /* ==================== LOGOUT ADMIN ==================== */
-function logoutAdmin() {
+async function logoutAdmin() {
+  await window.supabaseClient.auth.signOut();
   localStorage.removeItem("admin_logged_in");
   sessionStorage.removeItem("admin_logged_in");
   window.location.replace("https://ud-fikri.vercel.app");
