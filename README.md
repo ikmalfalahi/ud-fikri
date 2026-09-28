@@ -12,3 +12,8 @@ Menjual GAS ELPIJI 12Kg &amp; 3Kg, AQUA, LEMINERAL, PRIMA, VIT dan bahan pokok s
 6. Gambar lama yang sudah diganti atau produk yang dihapus tidak dihapus otomatis dari Storage, agar gambar yang mungkin masih digunakan oleh data lain tidak hilang.
 
 Catatan: perubahan login adalah migrasi ke Supabase Authentication. Kata sandi dari `admin_users` tidak dipakai lagi. Akun Auth harus disiapkan sebelum menerbitkan situs agar pengurus tetap bisa masuk.
+
+
+## Jika checkout pesanan sembako ditolak (403/RLS)
+
+Jalankan `perbaikan-checkout.sql` di Supabase SQL Editor. Kebijakan ini mengizinkan pelanggan membuat pesanan berstatus `pending` tanpa membuka hak baca, ubah, atau hapus bagi pengunjung. Pembatasan CSP `font-src` di `vercel.json` telah diperbarui agar font `data:` dapat dimuat. Sesudah deploy, coba satu pesanan dan periksa rinciannya di WhatsApp serta Kamar Toko.

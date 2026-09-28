@@ -614,18 +614,21 @@ document.getElementById("checkout").addEventListener("click", async () => {
   let biayaOngkir = hitungOngkir(totalQty);
   let grandTotal = totalBelanja + biayaOngkir;
 
+  // Simpan salinan untuk pesan WhatsApp sebelum keranjang dikosongkan.
+  const itemsPesanan = cart.map(item => ({ ...item }));
+
   // ================= INSERT KE SUPABASE =================
   try {
     const supabase = window.supabaseClient;
     if (!supabase) throw new Error("Supabase client tidak ditemukan!");
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("pesanan_sembako")
       .insert([{
         nama,
         alamat,
         lokasi_map: lokasiMap,
-        items: cart, // Supabase jsonb
+        items: itemsPesanan, // Supabase jsonb
         total: grandTotal,
         metode_pembayaran: metodePembayaran,
         status: "pending",
@@ -657,7 +660,7 @@ document.getElementById("checkout").addEventListener("click", async () => {
   msg += `=====================\n`;
   msg += `*Pesanan:*\n`;
 
-  cart.forEach(item => {
+  itemsPesanan.forEach(item => {
     let subtotal = hitungSubtotal(item);
     msg += `- ${item.name} x${item.qty} = Rp ${subtotal.toLocaleString()}\n`;
   });
